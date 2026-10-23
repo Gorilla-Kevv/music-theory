@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "@fontsource/anton/400.css";
+
+@theme {
+  --color-ink: #0b0d10;
+  --color-ink-2: #14171c;
+  --color-ink-3: #1e222a;
+  --color-paper: #f1f0e9;
+  --color-paper-2: #e7e6dd;
+  --color-paper-3: #d8d7cd;
+  --color-cobalt: #2447ff;
+  --color-cobalt-ink: #1734c5;
+  --color-cadmium: #ff5a1f;
+  --color-cadmium-ink: #b5320c;
+  --color-acid: #d6f33f;
+  --color-muted: #565b62;
+  --color-muted-dark: #a5a9b0;
+  --color-line: #d1d0c6;
+  --color-line-dark: #2b2f37;
+
+  --font-display: "Anton", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-sans: "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "Cascadia Mono", "Consolas", "SFMono-Regular", monospace;
+
+  --radius-card: 2px;
+  --radius-pill: 999px;
+}
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  background: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-cobalt);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+input::placeholder {
+  color: var(--color-muted);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-ink) 26%, transparent) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-ink) 24%, transparent);
+  border: 3px solid var(--color-paper);
+}
+
+.dark-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-paper) 26%, transparent);
+  border-color: var(--color-ink);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.zh-display {
+  font-family: "Microsoft YaHei", "Noto Sans SC", var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reading-column {
+  max-width: 68ch;
+}
+
+.staff svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.staff svg path,
+.staff svg rect {
+  fill: var(--color-ink);
+}
+
+.staff svg text {
+  fill: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+.staff svg .vf-stave path {
+  stroke: var(--color-ink);
+}
+
+@keyframes sleeve-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.4;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+.sleeve-in {
+  animation: sleeve-in 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise-in {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.rise-in {
+  animation: rise-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

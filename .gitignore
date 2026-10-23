@@ -1,0 +1,8 @@
+node_modules
+.npm-cache
+dist
+.vite
+.impeccable
+*.local
+review-state.json
+.DS_Store
