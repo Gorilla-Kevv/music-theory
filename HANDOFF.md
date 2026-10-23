@@ -53,7 +53,7 @@
 - 书库是**完整章目 + 原创笔记**，不是教材电子版：不得 OCR、扫描或整段复制正文。新增 `books/*.ts` 笔记时只写原创摘要、关键点、概念映射与维度。
 - 谱面点击命中区来自 VexFlow `StaveNote.getBoundingBox()`，按行叠加 `rowIndex * 150`；如果改 `ROW_HEIGHT` 或给 SVG 加缩放，需要同步修正命中区坐标。命中区按钮是透明绝对定位按钮，可用 Tab 与 Enter。
 - 钢琴采样：Salamander Grand Piano V3（Alexander Holm，CC BY 3.0）本地子集；文件名 `C3, Ds3, Fs3, A3, C4, Ds4, Fs4, A4, C5`。首次用户手势预取，`ensureSamples` 解码后使用；失败自动回退合成器。替换/新增采样必须保留许可文件。
-- 概念页 `ON THIS PAGE` 在右栏深色卡片（`max-h-[46vh]` 内部滚动），用 `useActiveSection` 的 45% 视口阈值；当前项用 `scrollIntoView({block:'nearest'})` 在卡片内部滚动，避免页面跳动。左侧栏 CATALOG 当前分类下嵌概念目录，chevron 按钮折叠（状态存 localStorage `tonic.rail.catalog.v1`），折叠不会误伤非当前分类；导航+目录区在 `dark-scroll` 容器内滚动。分类高亮同时服务于概念页与 `/library?category=`；目录项只在当前概念页高亮（`isCurrent`）。
+- 概念页 `ON THIS PAGE` 在右栏深色卡片（`max-h-[46vh]` 内部滚动），用 `useActiveSection` 的 45% 视口阈值；当前项用 `scrollIntoView({block:'nearest'})` 在卡片内部滚动，避免页面跳动。左侧栏 CATALOG 当前分类下嵌概念目录，**当前分类整栏是折叠切换按钮**（点任意位置切换，状态存 localStorage `tonic.rail.catalog.v1`）；非当前分类仍是跳转 `/library?category=` 的链接；导航+目录区在 `dark-scroll` 容器内滚动。分类高亮同时服务于概念页与 `/library?category=`；目录项只在当前概念页高亮（`isCurrent`）。
 - `BrowserRouter` 需要 SPA fallback。直接双击 `dist/index.html` 会失败；用 `npm run dev` 或 `npm run preview`，静态托管需把未知路径重写到 `index.html`。
 - 音频必须由用户手势触发；当前使用本地 Salamander 采样 + Web Audio 合成回退，无运行时外网请求。Chrome headless 截图测试需 `--autoplay-policy=no-user-gesture-required` 才能稳定观察播放态。
 - 采样解码是异步的：`play` 会先进入 playing 态并在 `ensureSamples` 完成后调度；如果采样加载失败，`playPreparedVoice` 自动走合成器。不要把这个回退删掉。

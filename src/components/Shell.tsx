@@ -127,41 +127,36 @@ function Rail() {
               const expanded = isActive && catalogOpen;
               return (
                 <li key={category.id}>
-                  <div
-                    className={`flex items-stretch transition-colors ${
-                      isActive
-                        ? "bg-cobalt text-paper"
-                        : "text-paper/60 hover:bg-paper/5 hover:text-paper"
-                    }`}
-                  >
-                    <Link
-                      to={`/library?category=${category.id}`}
-                      aria-current={isActive ? "page" : undefined}
-                      className="flex min-w-0 flex-1 items-center gap-2.5 px-2 py-1.5"
+                  {isActive ? (
+                    <button
+                      type="button"
+                      onClick={toggleCatalog}
+                      aria-expanded={expanded}
+                      aria-label={expanded ? `收起 ${category.name} 目录` : `展开 ${category.name} 目录`}
+                      title={expanded ? "点击收起目录" : "点击展开目录"}
+                      className="group flex w-full cursor-pointer items-center gap-2.5 bg-cobalt px-2 py-1.5 text-left text-paper"
                     >
                       <span className={`h-2 w-2 shrink-0 ${CATEGORY_STYLES[category.id].dot}`} aria-hidden />
                       <span className="flex-1 truncate text-xs">{category.name}</span>
-                      <span className={`mono-label text-[0.6rem] ${isActive ? "text-paper" : "text-paper/65"}`}>
-                        {count}
-                      </span>
+                      <span className="mono-label text-[0.6rem] text-paper">{count}</span>
+                      <ChevronDown
+                        size={14}
+                        className={`shrink-0 text-paper/80 transition-transform group-hover:text-acid ${
+                          expanded ? "" : "-rotate-90"
+                        }`}
+                        aria-hidden
+                      />
+                    </button>
+                  ) : (
+                    <Link
+                      to={`/library?category=${category.id}`}
+                      className="flex items-center gap-2.5 px-2 py-1.5 text-paper/60 transition-colors hover:bg-paper/5 hover:text-paper"
+                    >
+                      <span className={`h-2 w-2 shrink-0 ${CATEGORY_STYLES[category.id].dot}`} aria-hidden />
+                      <span className="flex-1 truncate text-xs">{category.name}</span>
+                      <span className="mono-label text-[0.6rem] text-paper/65">{count}</span>
                     </Link>
-                    {isActive ? (
-                      <button
-                        type="button"
-                        onClick={toggleCatalog}
-                        aria-expanded={expanded}
-                        aria-label={expanded ? `收起 ${category.name} 目录` : `展开 ${category.name} 目录`}
-                        title={expanded ? "收起目录" : "展开目录"}
-                        className="flex items-center px-1.5 text-paper/80 transition-colors hover:text-acid"
-                      >
-                        <ChevronDown
-                          size={14}
-                          className={`transition-transform ${expanded ? "" : "-rotate-90"}`}
-                          aria-hidden
-                        />
-                      </button>
-                    ) : null}
-                  </div>
+                  )}
                   {isActive && expanded ? (
                     <ul className="border-l border-paper/15 pb-1">
                       {CONCEPTS.filter((item) => item.category === category.id).map((item) => {

@@ -286,3 +286,11 @@
 - 风险：`bvid` 字段复用存 CV 号属于务实折中；若后续文章数量增多，考虑把字段改名为通用 `refId`（需要同步 Agent 接口说明）。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 03:45
+
+## 阶段 17 分类目录整栏可点击 [计划时间：10.24 04:00 BY solo-agent][完成时间：10.24 04:05 BY solo-agent]
+
+- 分支：dev
+- 任务定位：用户反馈折叠切换不应只靠行尾小 chevron 按钮——当前分类整条栏都要可以点击。
+- 已完成：左栏 CATALOG 当前分类行由「链接 + 小按钮」改为**整栏切换按钮**（点任意位置展开/收起，`aria-expanded` 与 localStorage 持久化不变，chevron 仅作指示并随 hover 变 acid 色）；非当前分类行保持为 `/library?category=` 跳转链接。去掉了当前分类行上的 `aria-current`（该行不再导航，当前页语义由 LIBRARY 导航项承担）。
+- 测试结果：`npm run typecheck` / `npm run build` 通过；`rail-check.mjs` 直接对 5173 dev 服务实测：点击分类栏中部（名称区）23 项 → 收起 0 项 → 再展开 23 项，PASS。
+- 本次文档更新时间：10.24 04:05
