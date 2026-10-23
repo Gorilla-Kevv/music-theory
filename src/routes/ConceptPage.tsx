@@ -223,10 +223,18 @@ export function ConceptPage() {
   const outlineListRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    const activeLink = outlineListRef.current?.querySelector<HTMLElement>(
-      'a[aria-current="location"]',
-    );
-    activeLink?.scrollIntoView({ block: "nearest" });
+    const list = outlineListRef.current;
+    const activeLink = list?.querySelector<HTMLElement>('a[aria-current="location"]');
+    if (!list || !activeLink) return;
+    // 只滚动卡片内部容器；scrollIntoView 会波及 window（嵌套滚动容器的"nearest"
+    // 会连滚所有祖先），把正在阅读的页面弹回大纲卡片可见的位置。
+    const listRect = list.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    if (linkRect.top < listRect.top) {
+      list.scrollTop += linkRect.top - listRect.top;
+    } else if (linkRect.bottom > listRect.bottom) {
+      list.scrollTop += linkRect.bottom - listRect.bottom;
+    }
   }, [activeSection]);
 
   if (!concept) return <NotFound />;

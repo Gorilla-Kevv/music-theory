@@ -294,3 +294,17 @@
 - 已完成：左栏 CATALOG 当前分类行由「链接 + 小按钮」改为**整栏切换按钮**（点任意位置展开/收起，`aria-expanded` 与 localStorage 持久化不变，chevron 仅作指示并随 hover 变 acid 色）；非当前分类行保持为 `/library?category=` 跳转链接。去掉了当前分类行上的 `aria-current`（该行不再导航，当前页语义由 LIBRARY 导航项承担）。
 - 测试结果：`npm run typecheck` / `npm run build` 通过；`rail-check.mjs` 直接对 5173 dev 服务实测：点击分类栏中部（名称区）23 项 → 收起 0 项 → 再展开 23 项，PASS。
 - 本次文档更新时间：10.24 04:05
+
+## 阶段 18 修复内容页无法向下滚动 [计划时间：10.24 04:20 BY solo-agent][完成时间：10.24 04:35 BY solo-agent]
+
+- 分支：dev
+- 问题定位：用户报告内容页无法翻滚向下查看。CDP 诊断（scroll-trace.mjs 给 scrollTo/scrollIntoView 打补丁）：滚动到 900px → activeSection 变为"白话拆解" → 右栏 ON THIS PAGE 卡片的跟随 effect 调用 `scrollIntoView({block:"nearest"})`，因活动链接位于卡片 `max-h-[46vh]` 内部裁剪区之外，浏览器按"最近"算法把 **window** 也滚回去（900→532→502 死循环收敛），每次向下滚动都被弹回。根因是阶段 15 把大纲挪进右栏限高卡片时引入的嵌套滚动陷阱；旧左栏容器足够高从不裁剪，故此前未暴露。
+- 修复：ConceptPage 大纲跟随 effect 不再用 scrollIntoView，改为 getBoundingClientRect 差值只调整卡片内部容器的 `scrollTop`——window 滚动完全不受影响，卡片内跟随行为保留。
+- 改动文件：src/routes/ConceptPage.tsx、.impeccable/scroll-check.mjs、scroll-probe.mjs、scroll-trace.mjs、outline-follow-check.mjs（新增诊断/回归脚本）、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck`、`npm run build` 通过。
+  - `scroll-trace.mjs` 在 /theory/roman-numerals 与 /theory/melodic-minor-modes：requested→actual 全部一致（200/500/900/1500/2300），修复前 900 即被弹回 502。
+  - `outline-follow-check.mjs`：卡片限高压到 120px 后滚到页底 → scrollY=2322、活动项"本页引用"在卡片可视区内、list.scrollTop>0（内部跟随正常）。
+- 风险与教训：任何在限高滚动容器内"跟随高亮"的实现都必须只滚容器本身；HANDOFF 已把该陷阱记入决策与坑。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 04:35

@@ -66,6 +66,7 @@
 - 体系图布局是“4 列网格 + 6 个系统枢纽”的 MLP 式分层：概念坐标由 `conceptPosition` 生成，改行距/列距时要同步检查 SVG 底部图例（`ATLAS_HEIGHT` 1000，图例在 y=968）与标签截断（`truncate` 默认 8 字）。
 - 图谱边语义固定：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置；`SOURCE_HUBS` 只连接实际相关的来源与枢纽，不要恢复成“每本书连所有枢纽”的噪声图。`/atlas?focus=<slug>` 是概念页“在体系图中查看”的深链。
 - 长按发声：`AudioEngine.holdStart/holdEnd` 独立于 `bus`（走 `holdBus` → dry/reverb），所以示例播放/停止不会切断长按；引擎强制最短发声 0.35s、松手 ~0.3s 淡出，合成回退有 8s 硬上限防无限延音。命中区/琴键用 pointer 事件（按下/抬起/移出/取消），键盘激活靠 click `detail===0` 区分；`useHeldPreview` hook 以 key 管理多个 hold，release 对未按住的 key 是 no-op。CDP 测试用 `.impeccable/hold-check.mjs`（注意先 `scrollIntoView`，否则坐标在视口外）。
+- 🔴 嵌套滚动陷阱：在 `overflow-y-auto` 限高容器（如右栏 ON THIS PAGE 卡片 `max-h-[46vh]`）里对裁剪区外的元素调用 `scrollIntoView({block:"nearest"})`，浏览器会连滚 window——把正在阅读的页面弹回卡片可见位置，表现为"内容页无法向下滚动"。正确做法是只调内部容器的 `scrollTop`（用 getBoundingClientRect 差值计算，见 ConceptPage 的 outline 跟随 effect）。诊断脚本：`.impeccable/scroll-trace.mjs`（给 scrollTo/scrollIntoView 打补丁记录调用方）、`scroll-check.mjs`、`outline-follow-check.mjs`。
 - 移动端菜单与检索面板都做了焦点陷阱与 Escape 关闭；新增模态层请沿用。
 
 ## 命令
