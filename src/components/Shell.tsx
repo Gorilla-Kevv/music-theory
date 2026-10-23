@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   BookMarked,
   BookOpen,
+  ChevronDown,
   House,
   LibraryBig,
   Menu,
@@ -13,7 +14,6 @@ import {
 } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { CATEGORIES, CONCEPTS, getConcept } from "../content";
-import { useActiveSection } from "../hooks/useActiveSection";
 import { useReview } from "../context/ReviewContext";
 import { useSearch } from "./SearchDialog";
 import { TransportDock } from "./TransportDock";
@@ -49,26 +49,25 @@ function Rail() {
   const activeCategory =
     concept?.category ??
     (location.pathname === "/library" ? searchParams.get("category") : null);
+  const [catalogOpen, setCatalogOpen] = useState(() => {
+    try {
+      return localStorage.getItem("tonic.rail.catalog.v1") !== "closed";
+    } catch {
+      return true;
+    }
+  });
 
-  const outlineItems = concept
-    ? [
-        { id: "top", label: "页首" },
-        ...concept.sections.map((section) => ({ id: section.id, label: section.heading })),
-        ...(concept.deepDive ? [{ id: "deep-dive", label: "白话拆解 / In Plain Language" }] : []),
-        ...(concept.examples.length > 0 ? [{ id: "figures", label: "谱例 / Figures" }] : []),
-        ...(concept.visual ? [{ id: "visual", label: "可视化 / Visual" }] : []),
-        { id: "notes", label: "本页引用 / Notes" },
-      ]
-    : [];
-  const activeSection = useActiveSection(outlineItems.map((item) => item.id));
-  const outlineRef = useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    const activeLink = outlineRef.current?.querySelector<HTMLElement>(
-      'a[aria-current="location"]',
-    );
-    activeLink?.scrollIntoView({ block: "nearest" });
-  }, [activeSection]);
+  const toggleCatalog = () => {
+    setCatalogOpen((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("tonic.rail.catalog.v1", next ? "open" : "closed");
+      } catch {
+        // localStorage 不可用时只在会话内生效
+      }
+      return next;
+    });
+  };
 
   return (
     <aside className="fixed bottom-[72px] left-0 top-0 z-30 hidden w-[248px] flex-col border-r border-line-dark bg-ink text-paper lg:flex">
@@ -94,7 +93,8 @@ function Rail() {
         </button>
       </div>
 
-      <nav aria-label="主导航" className="px-3">
+      <div className="dark-scroll min-h-0 flex-1 overflow-y-auto">
+        <nav aria-label="主导航" className="px-3 pt-5">
           <ul className="space-y-1">
             {NAV_ITEMS.map(({ to, label, en, icon: Icon, end }) => (
               <li key={to}>
@@ -118,69 +118,80 @@ function Rail() {
           </ul>
         </nav>
 
-        <div className="mt-6 px-4">
+        <div className="mt-6 px-4 pb-6">
           <p className="mono-label text-paper/65">CATALOG / 分类</p>
           <ul className="mt-2 space-y-0.5">
             {CATEGORIES.map((category) => {
               const count = CONCEPTS.filter((item) => item.category === category.id).length;
               const isActive = activeCategory === category.id;
+              const expanded = isActive && catalogOpen;
               return (
                 <li key={category.id}>
-                  <Link
-                    to={`/library?category=${category.id}`}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`flex items-center gap-2.5 px-2 py-1.5 transition-colors ${
+                  <div
+                    className={`flex items-stretch transition-colors ${
                       isActive
                         ? "bg-cobalt text-paper"
                         : "text-paper/60 hover:bg-paper/5 hover:text-paper"
                     }`}
                   >
-                    <span className={`h-2 w-2 ${CATEGORY_STYLES[category.id].dot}`} aria-hidden />
-                    <span className="flex-1 text-xs">{category.name}</span>
-                    <span className={`mono-label text-[0.6rem] ${isActive ? "text-paper" : "text-paper/65"}`}>
-                      {count}
-                    </span>
-                  </Link>
+                    <Link
+                      to={`/library?category=${category.id}`}
+                      aria-current={isActive ? "page" : undefined}
+                      className="flex min-w-0 flex-1 items-center gap-2.5 px-2 py-1.5"
+                    >
+                      <span className={`h-2 w-2 shrink-0 ${CATEGORY_STYLES[category.id].dot}`} aria-hidden />
+                      <span className="flex-1 truncate text-xs">{category.name}</span>
+                      <span className={`mono-label text-[0.6rem] ${isActive ? "text-paper" : "text-paper/65"}`}>
+                        {count}
+                      </span>
+                    </Link>
+                    {isActive ? (
+                      <button
+                        type="button"
+                        onClick={toggleCatalog}
+                        aria-expanded={expanded}
+                        aria-label={expanded ? `收起 ${category.name} 目录` : `展开 ${category.name} 目录`}
+                        title={expanded ? "收起目录" : "展开目录"}
+                        className="flex items-center px-1.5 text-paper/80 transition-colors hover:text-acid"
+                      >
+                        <ChevronDown
+                          size={14}
+                          className={`transition-transform ${expanded ? "" : "-rotate-90"}`}
+                          aria-hidden
+                        />
+                      </button>
+                    ) : null}
+                  </div>
+                  {isActive && expanded ? (
+                    <ul className="border-l border-paper/15 pb-1">
+                      {CONCEPTS.filter((item) => item.category === category.id).map((item) => {
+                        const isCurrent = item.slug === slug;
+                        return (
+                          <li key={item.slug}>
+                            <Link
+                              to={`/theory/${item.slug}`}
+                              aria-current={isCurrent ? "page" : undefined}
+                              title={item.title}
+                              className={`flex items-baseline gap-2 py-1 pl-4 pr-2 transition-colors ${
+                                isCurrent
+                                  ? "bg-paper/10 text-acid"
+                                  : "text-paper/55 hover:bg-paper/5 hover:text-paper"
+                              }`}
+                            >
+                              <span className="mono-label text-[0.58rem] text-paper/40">{item.number}</span>
+                              <span className="truncate text-xs">{item.title}</span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : null}
                 </li>
               );
             })}
           </ul>
+        </div>
       </div>
-
-        {concept ? (
-          <div className="dark-scroll mt-4 min-h-0 flex-1 overflow-y-auto border-t border-line-dark pb-3">
-            <div className="px-3 pt-4">
-              <div className="flex items-center justify-between px-1">
-                <p className="mono-label text-paper/65">ON THIS PAGE</p>
-                <span className="mono-label text-[0.58rem] text-paper/65">{concept.number}</span>
-              </div>
-              <p className="mt-1 px-1 text-xs font-medium text-paper/80">{concept.title}</p>
-              <ul ref={outlineRef} className="mt-2 space-y-0.5">
-                {outlineItems.map((item) => {
-                  const isActive = activeSection === item.id;
-                  return (
-                    <li key={item.id}>
-                      <a
-                        href={`#${item.id}`}
-                        aria-current={isActive ? "location" : undefined}
-                        className={`flex items-start gap-2 px-2 py-1.5 text-xs leading-snug transition-colors ${
-                          isActive
-                            ? "bg-cobalt text-paper"
-                            : "text-paper/60 hover:bg-paper/5 hover:text-paper"
-                        }`}
-                      >
-                        <span className={`mt-1.5 h-1 w-1 shrink-0 ${isActive ? "bg-acid" : "bg-paper/35"}`} aria-hidden />
-                        <span>{item.label}</span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        ) : (
-          <div className="flex-1" />
-        )}
 
       <div className="border-t border-line-dark px-4 py-5">
         <Link

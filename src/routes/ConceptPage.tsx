@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight, Check, Headphones, Network, Plus } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -21,6 +22,7 @@ import { CATEGORY_STYLES } from "../components/category";
 import { PlayControl } from "../components/ui";
 import { useReview } from "../context/ReviewContext";
 import { useTransport } from "../context/TransportContext";
+import { useActiveSection } from "../hooks/useActiveSection";
 import { NotFound } from "./NotFound";
 
 function CitationSup({
@@ -207,6 +209,26 @@ export function ConceptPage() {
   const { play, stop, state, isExamplePlaying } = useTransport();
   const { isAdded, due } = useReview();
 
+  const outlineItems = concept
+    ? [
+        { id: "top", label: "页首" },
+        ...concept.sections.map((section) => ({ id: section.id, label: section.heading })),
+        ...(concept.deepDive ? [{ id: "deep-dive", label: "白话拆解 / In Plain Language" }] : []),
+        ...(concept.examples.length > 0 ? [{ id: "figures", label: "谱例 / Figures" }] : []),
+        ...(concept.visual ? [{ id: "visual", label: "可视化 / Visual" }] : []),
+        { id: "notes", label: "本页引用 / Notes" },
+      ]
+    : [];
+  const activeSection = useActiveSection(outlineItems.map((item) => item.id));
+  const outlineListRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const activeLink = outlineListRef.current?.querySelector<HTMLElement>(
+      'a[aria-current="location"]',
+    );
+    activeLink?.scrollIntoView({ block: "nearest" });
+  }, [activeSection]);
+
   if (!concept) return <NotFound />;
 
   const categoryMeta = getCategory(concept.category);
@@ -229,14 +251,6 @@ export function ConceptPage() {
   const atlasHubs = getConceptHubs(concept.slug);
   const prerequisites = getPrerequisites(concept.slug);
   const nextConcepts = getNextConcepts(concept.slug);
-  const mobileOutline = [
-    { id: "top", label: "页首" },
-    ...concept.sections.map((section) => ({ id: section.id, label: section.heading })),
-    ...(concept.deepDive ? [{ id: "deep-dive", label: "白话拆解 / In Plain Language" }] : []),
-    ...(concept.examples.length > 0 ? [{ id: "figures", label: "谱例 / Figures" }] : []),
-    ...(concept.visual ? [{ id: "visual", label: "可视化 / Visual" }] : []),
-    { id: "notes", label: "本页引用 / Notes" },
-  ];
 
   return (
     <article>
@@ -315,10 +329,10 @@ export function ConceptPage() {
 
       <details className="border-b border-line bg-paper-2 px-4 py-3 sm:px-8 lg:hidden">
         <summary className="mono-label cursor-pointer text-muted">
-          ON THIS PAGE / 本章大纲 · {mobileOutline.length} ITEMS
+          ON THIS PAGE / 本章大纲 · {outlineItems.length} ITEMS
         </summary>
         <nav aria-label="本章大纲" className="mt-3 grid grid-cols-1 gap-1 sm:grid-cols-2">
-          {mobileOutline.map((item) => (
+          {outlineItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
@@ -472,6 +486,41 @@ export function ConceptPage() {
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-6">
+            <nav aria-label="本页大纲" className="hidden border border-ink bg-ink p-4 text-paper lg:block">
+              <div className="flex items-center justify-between px-1">
+                <p className="mono-label text-paper/65">ON THIS PAGE</p>
+                <span className="mono-label text-[0.58rem] text-paper/65">{concept.number}</span>
+              </div>
+              <p className="mt-1 px-1 text-xs font-medium text-paper/80">{concept.title}</p>
+              <ul
+                ref={outlineListRef}
+                className="dark-scroll mt-2 max-h-[46vh] space-y-0.5 overflow-y-auto"
+              >
+                {outlineItems.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        aria-current={isActive ? "location" : undefined}
+                        className={`flex items-start gap-2 px-2 py-1.5 text-xs leading-snug transition-colors ${
+                          isActive
+                            ? "bg-cobalt text-paper"
+                            : "text-paper/60 hover:bg-paper/5 hover:text-paper"
+                        }`}
+                      >
+                        <span
+                          className={`mt-1.5 h-1 w-1 shrink-0 ${isActive ? "bg-acid" : "bg-paper/35"}`}
+                          aria-hidden
+                        />
+                        <span>{item.label}</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
             <div className="border border-line bg-paper-2 p-4">
               <p className="mono-label text-muted">REVIEW / 强化</p>
               <p className="mt-2 text-sm leading-relaxed">

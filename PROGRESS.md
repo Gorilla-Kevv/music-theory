@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 14 五线谱/琴键长按持续发声（完成）
+- 当前正在开发任务：阶段 15 左栏分类目录与右栏 ON THIS PAGE 布局调整（完成）
 - 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -243,3 +243,22 @@
 - 风险：`touch-none` 使触摸起手落在音符/琴键上时不能从该点滚动页面（可玩性优先）；长按声部不受全局 `stop()` 影响，属预期。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 02:40
+
+## 阶段 15 左栏分类目录与右栏 ON THIS PAGE [计划时间：10.24 03:00 BY solo-agent][完成时间：10.24 03:15 BY solo-agent]
+
+- 分支：dev
+- 任务定位：用户要求 ① 左侧栏显示 `/library?category=` 当前分类的概念目录，进入概念页后该目录可点击展开/收起；② 概念页 ON THIS PAGE 从左栏底部移到右栏，与站点导航做出区分。
+- 已完成：
+  - 15.1 左栏 CATALOG：当前分类行内嵌该分类全部概念的目录（编号 + 标题），当前概念以 acid 色高亮；分类行尾 chevron 按钮切换展开/收起（`aria-expanded`），状态持久化到 localStorage `tonic.rail.catalog.v1`，默认展开；分类名本身仍是到 `/library?category=` 的链接。
+  - 15.2 布局：左栏中部（主导航 + CATALOG）改为 `dark-scroll` 可滚动容器，目录展开过长时容器内滚动，REVIEW QUEUE 仍然贴底；删除原左栏底部的 ON THIS PAGE 块。
+  - 15.3 概念页右栏顶部新增深色 ON THIS PAGE 卡片（`hidden lg:block`，ink 底 + 滚动追踪），与右侧纸质元数据卡形成明暗区分；`useActiveSection` 45% 阈值与当前项 `scrollIntoView({block:'nearest'})` 行为保留；移动端继续使用页面顶部的 `<details>` 大纲（数据源与桌面卡片统一为 `outlineItems`）。
+- 未完成：无。
+- 改动文件：src/components/Shell.tsx、src/routes/ConceptPage.tsx、.impeccable/rail-check.mjs、.impeccable/rail-state-check.mjs（新增交互/状态检查脚本）、AGENTS.md、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck` 与 `npm run build` 通过。
+  - CDP 交互测试（`.impeccable/rail-check.mjs`）：和声分类目录 23 项 → 点击收起 0 项（aria-label 翻转、localStorage=closed）→ 再展开 23 项，PASS。
+  - 状态检查（`rail-state-check.mjs`）：`/library?category=harmony` 目录无高亮项；概念页当前项高亮。
+  - 截图：概念页 1280 左栏目录 + 右栏深色大纲卡渲染正确；375/768 `scrollWidth` 无横向溢出。
+- 风险：目录展开时左栏中部进入内部滚动（内容超过视口高度时）；移动端不受影响（目录仅 lg 显示）。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 03:15

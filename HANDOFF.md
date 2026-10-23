@@ -53,7 +53,7 @@
 - 书库是**完整章目 + 原创笔记**，不是教材电子版：不得 OCR、扫描或整段复制正文。新增 `books/*.ts` 笔记时只写原创摘要、关键点、概念映射与维度。
 - 谱面点击命中区来自 VexFlow `StaveNote.getBoundingBox()`，按行叠加 `rowIndex * 150`；如果改 `ROW_HEIGHT` 或给 SVG 加缩放，需要同步修正命中区坐标。命中区按钮是透明绝对定位按钮，可用 Tab 与 Enter。
 - 钢琴采样：Salamander Grand Piano V3（Alexander Holm，CC BY 3.0）本地子集；文件名 `C3, Ds3, Fs3, A3, C4, Ds4, Fs4, A4, C5`。首次用户手势预取，`ensureSamples` 解码后使用；失败自动回退合成器。替换/新增采样必须保留许可文件。
-- 左轨 `ON THIS PAGE` 用 `useActiveSection` 的 45% 视口阈值；当前项用 `scrollIntoView({block:'nearest'})` 在左轨内部滚动，避免页面跳动。分类高亮同时服务于概念页与 `/library?category=`。
+- 概念页 `ON THIS PAGE` 在右栏深色卡片（`max-h-[46vh]` 内部滚动），用 `useActiveSection` 的 45% 视口阈值；当前项用 `scrollIntoView({block:'nearest'})` 在卡片内部滚动，避免页面跳动。左侧栏 CATALOG 当前分类下嵌概念目录，chevron 按钮折叠（状态存 localStorage `tonic.rail.catalog.v1`），折叠不会误伤非当前分类；导航+目录区在 `dark-scroll` 容器内滚动。分类高亮同时服务于概念页与 `/library?category=`；目录项只在当前概念页高亮（`isCurrent`）。
 - `BrowserRouter` 需要 SPA fallback。直接双击 `dist/index.html` 会失败；用 `npm run dev` 或 `npm run preview`，静态托管需把未知路径重写到 `index.html`。
 - 音频必须由用户手势触发；当前使用本地 Salamander 采样 + Web Audio 合成回退，无运行时外网请求。Chrome headless 截图测试需 `--autoplay-policy=no-user-gesture-required` 才能稳定观察播放态。
 - 采样解码是异步的：`play` 会先进入 playing 态并在 `ensureSamples` 完成后调度；如果采样加载失败，`playPreparedVoice` 自动走合成器。不要把这个回退删掉。
@@ -88,7 +88,7 @@
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
-  - `/theory/ii-v-i` 含引用上标、页末注释、可点击谱面、相关概念；左轨有 ON THIS PAGE 大纲且随滚动高亮。
+  - `/theory/ii-v-i` 含引用上标、页末注释、可点击谱面、相关概念；右栏有深色 ON THIS PAGE 卡片且随滚动高亮；左栏 CATALOG 当前分类展开概念目录，可点击收起/展开（状态持久化）。
   - `/theory/circle-of-fifths` 的五度圈可点击扇区、试听、切大调/关系小调；左轨分类高亮“基础”。
   - `/books` 可切换三本书、按维度筛选、浏览 118 个章目与 85 条笔记；Levine/Laitz 章节显示深入归纳、跨书对应与常见误解。
   - `/theory/modal-characteristics` 显示五条调式谱例（D Dorian / E Phrygian / F Lydian / G Mixolydian / A Aeolian，共用 C 大调集合）。
@@ -106,4 +106,4 @@
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 02:40 BY solo-agent
+- 本次文档更新时间：10.24 03:15 BY solo-agent

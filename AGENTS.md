@@ -111,7 +111,7 @@ src/content/
 - 音频：谱例与琴键由本地 Salamander 钢琴采样（C3–C5，CC BY 3.0，Alexander Holm）驱动，附带合成器回退；见 `public/audio/salamander/LICENSE.txt`。不得替换为需要运行时外网请求的 CDN 音源。
 - 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。按住（长按）通过 `holdStart/holdEnd` 持续发声，松手淡出，高亮跟随按住时间；键盘激活（Enter/Space 的 click `detail===0`）保持一次性试听。
 - 视觉方向：Blue Note 现代主义；平面色块、方形控件、纸面阅读区、墨色外壳；不引入渐变/玻璃拟态/SaaS 圆角卡片。
-- 响应式：375 / 768 / 1280 三视口，无横向溢出；移动端左侧大纲用 `<details>`，桌面用左轨内的 ON THIS PAGE。
+- 响应式：375 / 768 / 1280 三视口，无横向溢出；概念页大纲：移动端用 `<details>`，桌面用右栏深色 ON THIS PAGE 卡片；左侧栏为站点导航 + 当前分类的可折叠概念目录（折叠状态存 localStorage `tonic.rail.catalog.v1`）。
 
 ## 当前范围
 
