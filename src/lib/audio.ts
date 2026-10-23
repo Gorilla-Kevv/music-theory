@@ -20,6 +20,12 @@ export interface PlaybackState {
 
 type Listener = (state: PlaybackState) => void;
 
+interface HoldVoice {
+  gain: GainNode;
+  sources: AudioScheduledSourceNode[];
+  startedAt: number;
+}
+
 const INITIAL_STATE: PlaybackState = {
   isPlaying: false,
   exampleId: null,
@@ -35,6 +41,10 @@ export class AudioEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
   private bus: GainNode | null = null;
+  private dry: GainNode | null = null;
+  private holdBus: GainNode | null = null;
+  private holds = new Map<number, HoldVoice>();
+  private holdSeq = 0;
   private state: PlaybackState = { ...INITIAL_STATE };
   private listeners = new Set<Listener>();
   private example: Example | null = null;
@@ -211,6 +221,12 @@ export class AudioEngine {
       send.connect(dry);
       send.connect(convolver);
       this.bus = send;
+
+      this.dry = dry;
+      const holdBus = this.ctx.createGain();
+      holdBus.connect(dry);
+      holdBus.connect(convolver);
+      this.holdBus = holdBus;
     }
     if (this.ctx.state === "suspended") void this.ctx.resume();
     return this.ctx;
@@ -469,6 +485,90 @@ export class AudioEngine {
 
   previewSequence(midis: number[], stepSeconds = 0.18): void {
     this.schedulePreview(midis, stepSeconds * 1.5, stepSeconds, 0.38);
+  }
+
+  /** 按住发声：返回 hold id，用 holdEnd 释放；最短发声 0.35s，松手 ~0.3s 淡出。 */
+  holdStart(midis: number[]): number {
+    const ctx = this.ensureContext();
+    if (!this.holdBus || midis.length === 0) return -1;
+    const id = ++this.holdSeq;
+    const hold: HoldVoice = {
+      gain: ctx.createGain(),
+      sources: [],
+      startedAt: ctx.currentTime,
+    };
+    hold.gain.gain.value = 1;
+    hold.gain.connect(this.holdBus);
+    this.holds.set(id, hold);
+    void this.ensureSamples(ctx).then(() => {
+      if (!this.ctx || !this.holds.has(id)) return;
+      const start = this.ctx.currentTime + 0.01;
+      hold.startedAt = start;
+      for (const midi of midis) this.startHoldVoice(midi, start, 0.46, hold);
+    });
+    return id;
+  }
+
+  holdEnd(id: number): void {
+    const hold = this.holds.get(id);
+    if (!hold || !this.ctx) return;
+    this.holds.delete(id);
+    const releaseAt = Math.max(this.ctx.currentTime, hold.startedAt + 0.35);
+    hold.gain.gain.setTargetAtTime(0.0001, releaseAt, 0.09);
+    const stopAt = releaseAt + 0.5;
+    for (const source of hold.sources) {
+      try {
+        source.stop(stopAt);
+      } catch {
+        // already stopped
+      }
+    }
+  }
+
+  private startHoldVoice(midi: number, start: number, velocity: number, hold: HoldVoice): void {
+    if (!this.ctx) return;
+    const ctx = this.ctx;
+    const gain = ctx.createGain();
+    const level = Math.max(0.08, Math.min(0.5, velocity * 0.8));
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.linearRampToValueAtTime(level, start + 0.008);
+    gain.connect(hold.gain);
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 6800;
+    filter.Q.value = 0.3;
+    filter.connect(gain);
+
+    const sample = this.nearestSample(midi);
+    if (sample) {
+      const source = ctx.createBufferSource();
+      source.buffer = sample.buffer;
+      source.playbackRate.value = Math.pow(2, (midi - sample.midi) / 12);
+      source.connect(filter);
+      source.start(start);
+      hold.sources.push(source);
+      return;
+    }
+
+    const frequency = midiToFrequency(midi);
+    const carrier = ctx.createOscillator();
+    carrier.type = "sine";
+    carrier.frequency.value = frequency;
+    carrier.connect(filter);
+    carrier.start(start);
+    carrier.stop(start + 8);
+    hold.sources.push(carrier);
+
+    const upper = ctx.createOscillator();
+    upper.type = "sine";
+    upper.frequency.value = frequency * 2.002;
+    const upperGain = ctx.createGain();
+    upperGain.gain.value = 0.1 * velocity;
+    upper.connect(upperGain).connect(filter);
+    upper.start(start);
+    upper.stop(start + 8);
+    hold.sources.push(upper);
   }
 }
 

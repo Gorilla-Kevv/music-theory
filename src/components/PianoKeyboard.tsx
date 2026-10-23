@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent, type PointerEvent } from "react";
 import { noteNameFromMidi } from "../lib/theory";
 
 const START = 48;
@@ -9,6 +9,7 @@ const WHITE_COUNT = 15;
 interface PianoKeyboardProps {
   activeNotes?: number[];
   onNote?: (midi: number) => void;
+  onNotePress?: (midi: number, pressed: boolean) => void;
   compact?: boolean;
   className?: string;
 }
@@ -16,11 +17,32 @@ interface PianoKeyboardProps {
 export function PianoKeyboard({
   activeNotes = [],
   onNote,
+  onNotePress,
   compact = false,
   className = "",
 }: PianoKeyboardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [availableWidth, setAvailableWidth] = useState(0);
+  const onNotePressRef = useRef(onNotePress);
+
+  useLayoutEffect(() => {
+    onNotePressRef.current = onNotePress;
+  }, [onNotePress]);
+
+  const pressHandlers = (midi: number) => ({
+    onClick: (event: MouseEvent) => {
+      // 键盘激活（Enter/Space）走一次性试听；指针按下由 onPointerDown 长按处理。
+      if (event.detail === 0) onNote?.(midi);
+    },
+    onPointerDown: (event: PointerEvent) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      onNotePressRef.current?.(midi, true);
+    },
+    onPointerUp: () => onNotePressRef.current?.(midi, false),
+    onPointerCancel: () => onNotePressRef.current?.(midi, false),
+    onPointerLeave: () => onNotePressRef.current?.(midi, false),
+    onContextMenu: (event: MouseEvent) => event.preventDefault(),
+  });
 
   useLayoutEffect(() => {
     const element = containerRef.current;
@@ -74,10 +96,10 @@ export function PianoKeyboard({
               <button
                 key={midi}
                 type="button"
-                onClick={() => onNote?.(midi)}
+                {...pressHandlers(midi)}
                 aria-label={`播放 ${name}`}
                 aria-pressed={active}
-                className={`border-r border-b-2 border-ink/55 text-[10px] transition-colors ${
+                className={`border-r border-b-2 border-ink/55 text-[10px] transition-colors select-none touch-none ${
                   active
                     ? "bg-cobalt text-paper"
                     : "bg-[#fbfaf3] text-ink/70 hover:bg-paper-2"
@@ -98,10 +120,10 @@ export function PianoKeyboard({
             <button
               key={midi}
               type="button"
-              onClick={() => onNote?.(midi)}
+              {...pressHandlers(midi)}
               aria-label={`播放 ${name}`}
               aria-pressed={active}
-              className={`absolute top-0 z-10 border border-ink/60 transition-colors ${
+              className={`absolute top-0 z-10 border border-ink/60 transition-colors select-none touch-none ${
                 active ? "bg-cadmium" : "bg-ink hover:bg-ink-3"
               }`}
               style={{

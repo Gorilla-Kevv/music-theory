@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Headphones, Search, Sparkle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CATEGORIES, CONCEPTS, CONCEPT_BY_SLUG, TOTAL_CITATIONS } from "../content";
 import type { CategoryId } from "../content/types";
 import { useReview } from "../context/ReviewContext";
 import { useTransport } from "../context/TransportContext";
+import { useHeldPreview } from "../hooks/useHeldPreview";
 import { PianoKeyboard } from "../components/PianoKeyboard";
 import { StaffNotation } from "../components/StaffNotation";
 import { PlayControl } from "../components/ui";
@@ -16,31 +16,30 @@ function HeroSleeve() {
   const example = concept.examples[0];
   const { play, stop, previewNote, previewChord, state, isExamplePlaying } = useTransport();
   const playing = isExamplePlaying(example.id);
-  const [previewNotes, setPreviewNotes] = useState<number[]>([]);
-  const previewTimer = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (previewTimer.current) window.clearTimeout(previewTimer.current);
-    };
-  }, []);
-
-  const flashNotes = (midis: number[]) => {
-    setPreviewNotes(midis);
-    if (previewTimer.current) window.clearTimeout(previewTimer.current);
-    previewTimer.current = window.setTimeout(() => setPreviewNotes([]), 900);
-  };
+  const { previewNotes, flash, press, release } = useHeldPreview();
 
   const handleKey = (midi: number) => {
     previewNote(midi);
-    flashNotes([midi]);
+    flash([midi]);
+  };
+
+  const handleKeyPress = (midi: number, pressed: boolean) => {
+    if (pressed) press(`p${midi}`, [midi]);
+    else release(`p${midi}`);
   };
 
   const handleStaffEvent = (event: { notes: Array<{ midi: number }> }) => {
     const midis = event.notes.map((note) => note.midi);
     if (midis.length === 1) previewNote(midis[0]);
     else previewChord(midis);
-    flashNotes(midis);
+    flash(midis);
+  };
+
+  const handleStaffPress = (event: { notes: Array<{ midi: number }> }, pressed: boolean) => {
+    const key = `e${event.notes.map((note) => note.midi).join(",")}`;
+    const midis = event.notes.map((note) => note.midi);
+    if (pressed) press(key, midis);
+    else release(key);
   };
 
   const activeNotes = playing
@@ -74,11 +73,12 @@ function HeroSleeve() {
           example={example}
           measuresPerRow={3}
           onEventPlay={handleStaffEvent}
+          onEventPress={handleStaffPress}
         />
       </div>
       <div className="border-t border-line px-4 py-3">
         <div className="flex items-center justify-between gap-3">
-          <span className="mono-label text-muted">点击谱面或琴键 · 听见和弦骨架</span>
+          <span className="mono-label text-muted">点击试听 · 按住持续发声 · 听见和弦骨架</span>
           <Link
             to={`/theory/${concept.slug}`}
             className="mono-label inline-flex items-center gap-1 text-cobalt-ink hover:text-ink"
@@ -89,6 +89,7 @@ function HeroSleeve() {
         <PianoKeyboard
           activeNotes={activeNotes}
           onNote={handleKey}
+          onNotePress={handleKeyPress}
           compact
           className="mt-2"
         />

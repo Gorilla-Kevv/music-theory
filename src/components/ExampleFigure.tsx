@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import type { Example, ExampleEvent } from "../content/types";
 import { useTransport } from "../context/TransportContext";
+import { useHeldPreview } from "../hooks/useHeldPreview";
 import { PianoKeyboard } from "./PianoKeyboard";
 import { StaffNotation } from "./StaffNotation";
 import { PlayControl } from "./ui";
@@ -19,39 +19,38 @@ export function ExampleFigure({
 }) {
   const { play, stop, previewNote, previewChord, state, isExamplePlaying } = useTransport();
   const playing = isExamplePlaying(example.id);
-  const [previewNotes, setPreviewNotes] = useState<number[]>([]);
-  const previewTimer = useRef<number | null>(null);
+  const { previewNotes, flash, press, release } = useHeldPreview();
   const active = playing
     ? [...new Set([...state.activeNotes, ...previewNotes])]
     : previewNotes;
-
-  useEffect(() => {
-    return () => {
-      if (previewTimer.current) window.clearTimeout(previewTimer.current);
-    };
-  }, []);
 
   const toggle = () => {
     if (playing) stop();
     else play(example, { conceptSlug, conceptTitle });
   };
 
-  const flashNotes = (midis: number[]) => {
-    setPreviewNotes(midis);
-    if (previewTimer.current) window.clearTimeout(previewTimer.current);
-    previewTimer.current = window.setTimeout(() => setPreviewNotes([]), 900);
-  };
-
   const handleEventPlay = (event: ExampleEvent) => {
     const midis = event.notes.map((note) => note.midi);
     if (midis.length === 1) previewNote(midis[0]);
     else previewChord(midis);
-    flashNotes(midis);
+    flash(midis);
+  };
+
+  const handleEventPress = (event: ExampleEvent, pressed: boolean) => {
+    const key = `e${event.beat}-${event.notes.map((note) => note.midi).join(",")}`;
+    const midis = event.notes.map((note) => note.midi);
+    if (pressed) press(key, midis);
+    else release(key);
   };
 
   const handlePianoNote = (midi: number) => {
     previewNote(midi);
-    flashNotes([midi]);
+    flash([midi]);
+  };
+
+  const handlePianoPress = (midi: number, pressed: boolean) => {
+    if (pressed) press(`p${midi}`, [midi]);
+    else release(`p${midi}`);
   };
 
   return (
@@ -75,13 +74,13 @@ export function ExampleFigure({
       </div>
 
       <div className="px-2 pt-3 sm:px-4">
-        <StaffNotation example={example} onEventPlay={handleEventPlay} />
+        <StaffNotation example={example} onEventPlay={handleEventPlay} onEventPress={handleEventPress} />
       </div>
 
       <div className="border-t border-line px-4 py-4 sm:px-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="mono-label text-muted">
-            STAFF + KEYS / 点击音符、和弦或琴键试听 · 播放时高亮当前音符
+            STAFF + KEYS / 点击试听 · 按住持续发声 · 播放时高亮当前音符
           </p>
           <button
             type="button"
@@ -95,6 +94,7 @@ export function ExampleFigure({
         <PianoKeyboard
           activeNotes={active}
           onNote={handlePianoNote}
+          onNotePress={handlePianoPress}
           compact
           className="mt-3"
         />

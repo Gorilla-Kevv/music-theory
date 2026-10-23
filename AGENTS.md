@@ -109,7 +109,7 @@ src/content/
 - 构建前刷新知识包：`npm run build` 会执行 `prebuild` → `npm run knowledge`。
 - 快速启动：双击项目根 `start.bat`；首次自动安装依赖，已运行时直接打开，`TONIC_NO_OPEN=1` 可只启动服务不打开浏览器。脚本为 ASCII + CRLF，修改后不要保存成 UTF-8/LF，否则 cmd 会吃字符。
 - 音频：谱例与琴键由本地 Salamander 钢琴采样（C3–C5，CC BY 3.0，Alexander Holm）驱动，附带合成器回退；见 `public/audio/salamander/LICENSE.txt`。不得替换为需要运行时外网请求的 CDN 音源。
-- 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。
+- 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。按住（长按）通过 `holdStart/holdEnd` 持续发声，松手淡出，高亮跟随按住时间；键盘激活（Enter/Space 的 click `detail===0`）保持一次性试听。
 - 视觉方向：Blue Note 现代主义；平面色块、方形控件、纸面阅读区、墨色外壳；不引入渐变/玻璃拟态/SaaS 圆角卡片。
 - 响应式：375 / 768 / 1280 三视口，无横向溢出；移动端左侧大纲用 `<details>`，桌面用左轨内的 ON THIS PAGE。
 

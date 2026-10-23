@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 13 台账扩展（新合集 + 风格化创作板块 + 旋律小调概念，已读 7 → 19）
+- 当前正在开发任务：阶段 14 五线谱/琴键长按持续发声（完成）
 - 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -225,3 +225,21 @@
 - 风险：风格化创作板块是编曲演示，主题标签偏配器/律动，理论映射以调式类概念为主；无人声视频的 `via: "frames"` 结论只覆盖画面文字与谱面信息。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 01:55
+
+## 阶段 14 五线谱与琴键长按持续发声 [计划时间：10.24 02:20 BY solo-agent][完成时间：10.24 02:40 BY solo-agent]
+
+- 分支：dev
+- 任务定位：用户反馈谱面点击"只能短按一次且不持续显示"；目标是指针按住即持续发声、钢琴高亮跟随按住时间，松手淡出；快速点击与键盘操作保持原有行为。
+- 已完成：
+  - 14.1 音频引擎新增 `holdStart(midis) → id` / `holdEnd(id)`：长按声部走独立 `holdBus`（→ dry/reverb），不经过 `bus`，因此示例播放/停止互不影响；引擎强制最短发声 0.35s（快速点按也可听）、松手 setTargetAtTime ~0.3s 淡出；采样声部按自然衰减结束，合成回退带 8s 硬上限。
+  - 14.2 新增共享 hook `useHeldPreview`（src/hooks）：统一管理 flash（一次性点击 900ms 高亮）与 press/release（按住高亮 + 松手 600ms 停留），以 key 支持多点按住，release 对未按住的 key 为 no-op，卸载时释放全部 hold。
+  - 14.3 `StaffNotation` 命中区与 `PianoKeyboard` 琴键接入 pointer 事件（down/up/cancel/leave + contextmenu 阻止 + touch-none/select-none），按下时命中区显示钴蓝边框；键盘激活（click `detail===0`）仍走 `previewNote/previewChord` 一次性试听。`ExampleFigure` 与首页 hero 谱例均接线。
+- 未完成：无。
+- 改动文件：src/lib/audio.ts、src/context/TransportContext.tsx、src/hooks/useHeldPreview.ts（新增）、src/components/StaffNotation.tsx、src/components/PianoKeyboard.tsx、src/components/ExampleFigure.tsx、src/routes/Home.tsx、.impeccable/hold-check.mjs（新增交互测试）、AGENTS.md、PRODUCT.md、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck` 与 `npm run build` 通过。
+  - CDP 真实鼠标长按 `/theory/ii-v-i` 的 Dm9 命中区：按住 300ms/1000ms 时 5 个琴键 `aria-pressed=true` 持续点亮，松手 120ms 后仍亮（停留），900ms 后归零；全程无运行时异常（`.impeccable/review/hold-check.json`）。
+  - 测试坑：命中区在首屏之下时必须先 `scrollIntoView`，否则 CDP 坐标落在视口外、`elementFromPoint` 返回 null。
+- 风险：`touch-none` 使触摸起手落在音符/琴键上时不能从该点滚动页面（可玩性优先）；长按声部不受全局 `stop()` 影响，属预期。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 02:40

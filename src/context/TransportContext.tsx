@@ -20,6 +20,8 @@ interface TransportContextValue {
   previewNote: (midi: number) => void;
   previewChord: (midis: number[]) => void;
   previewSequence: (midis: number[], stepSeconds?: number) => void;
+  holdStart: (midis: number[]) => number;
+  holdEnd: (id: number) => void;
   isExamplePlaying: (exampleId: string) => boolean;
 }
 
@@ -52,6 +54,8 @@ export function TransportProvider({ children }: { children: ReactNode }) {
     (midis: number[], stepSeconds?: number) => audioEngine.previewSequence(midis, stepSeconds),
     [],
   );
+  const holdStart = useCallback((midis: number[]) => audioEngine.holdStart(midis), []);
+  const holdEnd = useCallback((id: number) => audioEngine.holdEnd(id), []);
 
   const value = useMemo<TransportContextValue>(
     () => ({
@@ -64,9 +68,11 @@ export function TransportProvider({ children }: { children: ReactNode }) {
       previewNote,
       previewChord,
       previewSequence,
+      holdStart,
+      holdEnd,
       isExamplePlaying: (exampleId) => state.isPlaying && state.exampleId === exampleId,
     }),
-    [state, play, replay, stop, setTempo, toggleLoop, previewNote, previewChord, previewSequence],
+    [state, play, replay, stop, setTempo, toggleLoop, previewNote, previewChord, previewSequence, holdStart, holdEnd],
   );
 
   return <TransportContext.Provider value={value}>{children}</TransportContext.Provider>;

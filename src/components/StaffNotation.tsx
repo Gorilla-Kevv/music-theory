@@ -37,20 +37,28 @@ export function StaffNotation({
   className = "",
   measuresPerRow,
   onEventPlay,
+  onEventPress,
 }: {
   example: Example;
   className?: string;
   measuresPerRow?: number;
   onEventPlay?: (event: ExampleEvent) => void;
+  onEventPress?: (event: ExampleEvent, pressed: boolean) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [hitAreas, setHitAreas] = useState<HitArea[]>([]);
+  const [pressedId, setPressedId] = useState<string | null>(null);
   const onEventPlayRef = useRef(onEventPlay);
+  const onEventPressRef = useRef(onEventPress);
 
   useEffect(() => {
     onEventPlayRef.current = onEventPlay;
   }, [onEventPlay]);
+
+  useEffect(() => {
+    onEventPressRef.current = onEventPress;
+  }, [onEventPress]);
 
   useLayoutEffect(() => {
     const element = containerRef.current;
@@ -178,15 +186,41 @@ export function StaffNotation({
   return (
     <div className={`relative min-w-0 ${className}`} role="group" aria-label={`五线谱：${example.title}`}>
       <div ref={containerRef} className="staff w-full" aria-hidden="true" />
-      {onEventPlay
+      {onEventPlay || onEventPress
         ? hitAreas.map((area) => (
             <button
               key={area.id}
               type="button"
-              onClick={() => onEventPlayRef.current?.(area.event)}
+              onClick={(event) => {
+                // 键盘激活（Enter/Space）的 click 没有 detail，走一次性试听；
+                // 指针按下已由 onPointerDown 处理为长按，这里跳过避免重复发声。
+                if (event.detail === 0) onEventPlayRef.current?.(area.event);
+              }}
+              onPointerDown={(event) => {
+                if (event.pointerType === "mouse" && event.button !== 0) return;
+                setPressedId(area.id);
+                onEventPressRef.current?.(area.event, true);
+              }}
+              onPointerUp={() => {
+                setPressedId(null);
+                onEventPressRef.current?.(area.event, false);
+              }}
+              onPointerCancel={() => {
+                setPressedId(null);
+                onEventPressRef.current?.(area.event, false);
+              }}
+              onPointerLeave={() => {
+                setPressedId(null);
+                onEventPressRef.current?.(area.event, false);
+              }}
+              onContextMenu={(event) => event.preventDefault()}
               aria-label={`播放 ${area.label}`}
-              title={`播放 ${area.label}`}
-              className="absolute z-10 cursor-pointer border border-transparent transition-colors hover:border-cobalt hover:bg-cobalt/10 focus-visible:border-cobalt focus-visible:bg-cobalt/10"
+              title={`点击试听，按住可持续发声：${area.label}`}
+              className={`absolute z-10 cursor-pointer select-none touch-none border border-transparent transition-colors focus-visible:border-cobalt focus-visible:bg-cobalt/10 ${
+                pressedId === area.id
+                  ? "border-cobalt bg-cobalt/10"
+                  : "hover:border-cobalt hover:bg-cobalt/10"
+              }`}
               style={{ left: area.x, top: area.y, width: area.w, height: area.h }}
             />
           ))
