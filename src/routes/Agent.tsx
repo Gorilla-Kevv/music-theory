@@ -145,6 +145,8 @@ npm run theory -- refs --json
 npm run theory -- books
 npm run theory -- source levine-13 --json
 npm run theory -- sources "转调" --book sposobin --dimension relationship
+npm run theory -- videos --status read
+npm run theory -- videos --query "调式"
 npm run theory -- queue --state ./tonic-review-state.json --json`}
             />
           </section>
@@ -165,6 +167,7 @@ const examples = window.TONIC.examples({ concept: "ii-v-i" });
 const book = window.TONIC.bookOutline("levine");
 const note = window.TONIC.sourceNote("sposobin-47");
 const relatedSources = window.TONIC.sources("harmonic-color");
+const videos = window.TONIC.videos({ status: "read" });
 const queue = window.TONIC.reviewQueue();`}
             />
             <CodeBlock
@@ -175,7 +178,8 @@ theoryApi.search("五度圈", { category: "foundations" });
 theoryApi.concept("voice-leading");
 theoryApi.examples({ kind: "progression" });
 theoryApi.searchSources("转调", { book: "sposobin" });
-theoryApi.bookOutline("laitz");`}
+theoryApi.bookOutline("laitz");
+theoryApi.videos({ status: "read" });`}
             />
           </section>
 

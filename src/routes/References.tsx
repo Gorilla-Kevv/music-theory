@@ -2,8 +2,12 @@ import { ArrowUpRight, BookOpen, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   BIBLIOGRAPHY,
+  BILIBILI_READ_COUNT,
+  BILIBILI_SEASON,
+  BILIBILI_VIDEOS,
   CITATION_STYLE_NOTE,
   CONCEPTS,
+  CONCEPT_BY_SLUG,
   collectCitations,
 } from "../content";
 import type { BibliographyEntry, Concept, SourceId } from "../content/types";
@@ -52,13 +56,22 @@ export function References() {
         <p className="reading-column mt-3 max-w-[64ch] text-sm leading-relaxed text-muted">
           本知识库不是教材的摘要，而是以三本著作为依据的原创改写。每条正文断言至少对应一处章节级来源；页码因版次与译本而异，因此不写入。
         </p>
-        <Link
-          to="/books"
-          className="mono-label mt-4 inline-flex items-center gap-1.5 border border-ink/50 px-3 py-2 hover:bg-ink hover:text-paper"
-        >
-          打开书库 / 章节笔记
-          <ArrowUpRight size={12} aria-hidden />
-        </Link>
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <Link
+            to="/books"
+            className="mono-label inline-flex items-center gap-1.5 border border-ink/50 px-3 py-2 hover:bg-ink hover:text-paper"
+          >
+            打开书库 / 章节笔记
+            <ArrowUpRight size={12} aria-hidden />
+          </Link>
+          <a
+            href="#video-research"
+            className="mono-label inline-flex items-center gap-1.5 border border-ink/30 px-3 py-2 text-muted hover:border-ink hover:text-ink"
+          >
+            B站调研台账
+            <ArrowUpRight size={12} aria-hidden />
+          </a>
+        </div>
       </div>
 
       <aside className="mt-5 border border-ink bg-paper-2 p-4">
@@ -158,6 +171,96 @@ export function References() {
           );
         })}
       </div>
+
+      <section id="video-research" className="mt-8 scroll-mt-24 border border-line">
+        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-line p-5 sm:p-6">
+          <div>
+            <p className="mono-label text-cobalt-ink">VIDEO RESEARCH / B站课程调研台账</p>
+            <h2 className="zh-display mt-2 text-2xl sm:text-3xl">已经读过的视频，不重复搜</h2>
+            <p className="reading-column mt-2 max-w-[62ch] text-sm leading-relaxed text-muted">
+              这里只记录已读取字幕或已编目的课程视频，供 Agent 判断是否需要重复检索。视频只用于发现主题与组织顺序，不作为本库的理论依据；台账不保存字幕或正文。
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="mono-label text-muted">{BILIBILI_VIDEOS.length} VIDEOS</span>
+            <span className="mono-label text-muted">{BILIBILI_VIDEOS.length - BILIBILI_READ_COUNT} CATALOGUED</span>
+            <span className="mono-label text-cadmium-ink">{BILIBILI_READ_COUNT} READ</span>
+          </div>
+        </div>
+
+        <div className="p-5 sm:p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="mono-label text-muted">{BILIBILI_SEASON.title} / SEASON {BILIBILI_SEASON.seasonId}</p>
+            <a
+              href={BILIBILI_SEASON.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mono-label inline-flex items-center gap-1.5 text-cobalt-ink hover:text-ink"
+            >
+              打开合集
+              <ExternalLink size={12} aria-hidden />
+            </a>
+          </div>
+
+          <ul className="mt-3 space-y-3">
+            {BILIBILI_VIDEOS.filter((video) => video.status === "read").map((video) => (
+              <li key={video.bvid} className="border border-line p-3 sm:p-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="mono-label bg-cadmium px-2 py-1 text-ink">{video.episode || "READ"}</span>
+                  <a
+                    href={video.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="min-w-0 flex-1 text-sm font-medium hover:text-cobalt-ink"
+                  >
+                    {video.title}
+                  </a>
+                  <span className="mono-label w-full text-muted sm:w-auto">{video.bvid}</span>
+                </div>
+                {video.takeaway ? (
+                  <p className="reading-column mt-2 text-sm leading-relaxed text-muted">{video.takeaway}</p>
+                ) : null}
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  {video.themes.map((theme) => (
+                    <span key={theme} className="border border-ink/15 px-1.5 py-0.5 text-[0.68rem] text-muted">
+                      {theme}
+                    </span>
+                  ))}
+                  {video.usedIn?.map((slug) => {
+                    const concept = CONCEPT_BY_SLUG[slug];
+                    return concept ? (
+                      <Link
+                        key={slug}
+                        to={`/theory/${slug}`}
+                        className="mono-label border border-cobalt/40 px-1.5 py-0.5 text-cobalt-ink hover:bg-cobalt hover:text-paper"
+                      >
+                        {concept.number}
+                      </Link>
+                    ) : null;
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <details className="mt-4 border-t border-line pt-4">
+            <summary className="mono-label cursor-pointer text-muted">
+              CATALOGUED / 已编目 {BILIBILI_VIDEOS.length - BILIBILI_READ_COUNT} 条 · 展开查看
+            </summary>
+            <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+              {BILIBILI_VIDEOS.filter((video) => video.status === "catalogued").map((video) => (
+                <li key={video.bvid} className="flex items-baseline gap-2 border-b border-line/60 py-1.5 text-xs">
+                  <span className="mono-label w-9 shrink-0 text-muted">{video.episode || "—"}</span>
+                  <a href={video.url} target="_blank" rel="noreferrer" className="min-w-0 flex-1 truncate hover:text-cobalt-ink">
+                    {video.title}
+                  </a>
+                  <span className="mono-label shrink-0 text-muted">{video.bvid}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </div>
+      </section>
 
       <div className="mt-8 border-t border-line pt-5">
         <div className="flex flex-wrap items-center justify-between gap-3">

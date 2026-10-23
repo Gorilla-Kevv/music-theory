@@ -77,7 +77,8 @@
 - **书库**：`/books` 用三本“封套”切换；左列完整章目（可搜索、按维度筛选），右列章节笔记（原创摘要、关键点、深入归纳、分析清单、跨书对应、可视化映射、常见误解、概念映射、引用定位）。移动端把左列换成章节下拉。章节蓝点只表示“已展开原创笔记”，不伪造未读正文。
 - **白话拆解**：概念页正文之后增加 `IN PLAIN LANGUAGE / 白话拆解` 板块，钴蓝左线 + 纸面底；每条解释带章节级引用上标，进入页末注释。它解释“为什么容易误解、怎么判断、怎么练”，不重复 summary，也不复制教材原文。
 - **体系图谱**：`/atlas` 用分层 SVG：左侧三本教材来源、中间六个系统枢纽、右侧 43 个概念节点；实线表示来源/体系，虚线表示关联，长虚线表示学习前置。分类/维度可筛选；悬停或点击高亮邻域，选中节点在下方给出维度、前置、后续、概念与书库入口。移动端横向滚动查看全图，页面本身不横向溢出。
-- **可视化**：五度圈、调式轮、半音尺、张力光谱。全部为交互 SVG/数据控件；点击即试听，活动扇区/刻度使用钴蓝或镉橙，并带键盘可达的 `role="button"`、`aria-label`。五度圈外圈慢速旋转虚线仅作世界特征，`prefers-reduced-motion` 下停止。
+- **可视化**：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）。全部为交互 SVG/数据控件；点击即试听，活动扇区/刻度使用钴蓝或镉橙，并带键盘可达的 `role="button"`、`aria-label`。五度圈外圈慢速旋转虚线仅作世界特征，`prefers-reduced-motion` 下停止。
+- **B 站调研台账**：`/references` 底部 `VIDEO RESEARCH` 区域；已读视频显示集号、标题、BV、一句话结论、主题标签与映射概念；仅编目视频折叠在 `<details>` 中。台账只记录元数据与阅读状态，不保存字幕，不作为理论依据。
 - **空状态**：说明为什么为空、下一步去哪里；不使用插画或 emoji。
 
 ## Motion
@@ -112,10 +113,10 @@
 
 ## Agent surface
 
-- `public/knowledge.json`：书目、43 概念、48 谱例、164 条引用、118 章目、85 条章节笔记、工具 schema、引用政策。
+- `public/knowledge.json`：书目、43 概念、52 谱例、164 条引用、118 章目、85 条章节笔记、B 站调研台账、工具 schema、引用政策。
 - `window.TONIC`：浏览器只读查询接口，便于浏览器型 Agent。
 - `npm run theory`：Node CLI，输出表格或 `--json`；学习状态由网页导出后传入。
-- `TOOL_SCHEMAS` 已按 MCP `tools/list` 形状命名：`search_theory`、`get_concept`、`list_examples`、`get_related`、`search_sources`、`get_book_outline`、`get_source_note`、`get_review_queue`、`get_bibliography`、`get_citation_policy`。
+- `TOOL_SCHEMAS` 已按 MCP `tools/list` 形状命名：`search_theory`、`get_concept`、`list_examples`、`get_related`、`search_sources`、`get_book_outline`、`get_source_note`、`get_review_queue`、`get_bibliography`、`get_citation_policy`、`get_video_research`。
 - 首版不启动 server；接口与 schema 稳定，下一阶段直接包装。
 - 书库接口：`window.TONIC.bookOutline(book)`、`sourceNote(chapterId)`、`searchSources(query, { book, dimension })`；CLI 同步暴露。
 

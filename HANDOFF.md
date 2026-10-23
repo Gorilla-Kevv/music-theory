@@ -27,6 +27,7 @@
 - 关键目录：
   - `src/content/`：知识事实源（43 概念、52 谱例、164 条引用、43 条白话拆解）。
   - `src/content/graph/`：体系图谱数据（3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置）。
+  - `src/content/bilibili.ts`：B 站课程调研台账（68 条视频 / 7 条已读 / 61 条仅编目）。
   - `src/content/books/`：三本书的 118 个章目与 85 条原创章节笔记（Levine 24 / Laitz 34 / Sposobin 27），其中 Levine 24/24、Laitz 34/34 带深度归纳。
   - `src/lib/`：音频（采样 + 合成回退）、搜索、SRS、听辨、音符/谱面工具、Agent API。
   - `src/components/`：外壳、检索面板、五线谱（可点击命中区）、钢琴、谱例、可视化、试听坞。
@@ -39,6 +40,7 @@
 - 核心接口：
   - `src/lib/theory-api.ts`：`searchTheory`、`listExamples`、`getRelated`、`searchSources`、`getBookOutline`、`getSourceNote`、`getConceptSources`、`getReviewQueue`、`buildKnowledgePack`、`TOOL_SCHEMAS`。
   - `src/content/graph/index.ts`：`ATLAS_GRAPH`、`ATLAS_HUBS`、`ATLAS_STATS`、`getConceptHubs`、`getPrerequisites`、`getNextConcepts`。
+  - `src/content/bilibili.ts`：`BILIBILI_SEASON`、`BILIBILI_VIDEOS`、`getBilibiliVideo`；`theoryApi.videos({ status, query, theme })` 与 CLI `videos` 查询同一台账。
   - `src/lib/audio.ts`：`AudioEngine.play/stop/replay/setTempo/toggleLoop/previewNote/previewChord/previewSequence/preloadSamples`。
   - `src/lib/search.ts`：CJK bigram + Latin token 的 MiniSearch，精确短语优先。
   - `src/lib/review.ts`：SM-2 轻量实现；localStorage key `tonic.review.v1`。
@@ -81,7 +83,7 @@
 
 ## 状态
 
-- 当前状态：v0.3 进行中；43 概念 / 52 谱例 / 164 条引用 / 43 条白话拆解；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.3 进行中；43 概念 / 52 谱例 / 164 条引用 / 43 条白话拆解；B 站台账 68 条视频 / 7 条已读；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。

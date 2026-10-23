@@ -39,6 +39,7 @@ src/content/
   jazz.ts              爵士 8 条
   jazz-advanced.ts     爵士深化 4 条
   deep-dives.ts        43 条白话拆解（全部概念）
+  bilibili.ts          B 站课程调研台账：68 条视频 / 7 条已读 / 61 条仅编目
   graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置
   books/               三本书的完整章目 + 原创章节笔记
   bibliography.ts      书目、版次、章节定位政策
@@ -70,6 +71,15 @@ src/content/
 - 当前覆盖 43/43：基础 8 + 和声 23 + 爵士 12 全部有白话拆解。
 - 新增 deep dive 时优先写“为什么容易误解”“判断顺序”“一句话/练习”，避免重复 summary。
 
+## B 站课程台账（Video Research）
+
+- 数据：`src/content/bilibili.ts`；页面：`/references` 的 `VIDEO RESEARCH` 区域。
+- 目的：记录已读取/已编目的课程视频，避免 Agent 与人工重复搜索；**视频不作为理论依据**，只用于发现主题与组织顺序。
+- 状态：`read`（已读字幕并做笔记）与 `catalogued`（只登记目录，未读字幕）。新增视频先查 BV 是否已存在，不重复登记。
+- 字段：`bvid`、`title`、`episode`、`chapter`、`duration`、`published`、`url`、`status`、`themes`；已读视频再加 `usedIn`（映射概念 slug）、`takeaway`（一句话结论）、`readAt`。
+- 不保存字幕、转写或视频正文；只保存元数据与原创一句话结论。台账中的结论不能替代三本书的章节级引用。
+- Agent 接口：`get_video_research`、`window.TONIC.videos({ status, query, theme })`、CLI `npm run theory -- videos [--status read] [--query ...]`；离线包 `knowledge.json` 含 `videoResearch` 与 `meta.videoCount/videoReadCount`。
+
 ## Agent 查询路径
 
 1. 需要“某个概念怎么解释”：`search_theory` / `get_concept`。
@@ -98,6 +108,7 @@ src/content/
 - 164 条章节级引用
 - 3 本书 · 118 个章目 · 85 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 27/60）
 - 43 条白话拆解（全部概念）
+- B 站调研台账：68 条视频 / 7 条已读 / 61 条仅编目（以 `read` 为准）
 - 体系图谱：3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退

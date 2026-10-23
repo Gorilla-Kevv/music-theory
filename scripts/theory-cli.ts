@@ -4,6 +4,7 @@ import {
   buildKnowledgePack,
   getRelated,
   listExamples,
+  listVideoResearch,
   searchSources,
   searchTheory,
   TOOL_SCHEMAS,
@@ -30,6 +31,9 @@ const OPTION_VALUE = new Set([
   "out",
   "concept",
   "kind",
+  "status",
+  "query",
+  "theme",
 ]);
 const positional: string[] = [];
 for (let index = 0; index < args.length; index += 1) {
@@ -66,6 +70,7 @@ TONIC theory CLI — 本地乐理知识库
   npm run theory -- books [--book <id>] [--json]
   npm run theory -- source <chapterId> [--json]
   npm run theory -- sources <query> [--book <id>] [--dimension <id>] [--json]
+  npm run theory -- videos [--status read|catalogued] [--query <text>] [--theme <text>] [--json]
   npm run theory -- policy [--json]
   npm run theory -- tools [--json]
   npm run theory -- queue --state <review-state.json> [--json]
@@ -148,6 +153,24 @@ if (command === "related") {
   const related = getRelated(slug);
   if (jsonFlag) printJson(related);
   else related.forEach((item) => console.log(`${item?.slug}  ${item?.title}  [${item?.category}]`));
+  process.exit(0);
+}
+
+if (command === "videos") {
+  const videos = listVideoResearch({
+    status: option("status") as "read" | "catalogued" | undefined,
+    query: option("query"),
+    theme: option("theme"),
+  });
+  if (jsonFlag) printJson(videos);
+  else {
+    for (const video of videos) {
+      console.log(
+        `${video.status === "read" ? "READ" : "CAT "}  ${video.bvid}  ${video.episode || "—"}  ${video.title}`,
+      );
+    }
+    console.log(`\n${videos.length} video(s).`);
+  }
   process.exit(0);
 }
 

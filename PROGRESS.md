@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 11 调式谱例补全与相邻属和弦可视化（完成 10.6 / 10.7）
+- 当前正在开发任务：阶段 12 B 站课程调研台账（已读/已编目，避免重复搜索）
 - 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -178,3 +178,28 @@
 - 风险：dominant-path 的 D7→Eb7 直线横穿圈面，属预期对比（相邻属和弦本就不沿圈走）；后续若加更多路径叠加，需要考虑分层开关，避免噪声。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 00:55
+
+## 阶段 12 B 站课程调研台账（已读/已编目，避免重复搜索）[计划时间：10.24 01:05 BY solo-agent][完成时间：10.24 01:30 BY solo-agent]
+
+- 分支：dev
+- 任务定位：把已经检索/读取过的 B 站课程视频写进知识库，让 Agent 与人工在下一轮调研前先查台账，避免重复搜索。
+- 已完成：
+  - 12.1 新增 `src/content/bilibili.ts`：记录合集「爵士和声理论」（mid 1405367071 / season 762895）全部 68 条视频元数据；每条含 BV、标题、上/下集号、时长、发布日期、链接、状态、主题标签。
+  - 12.2 状态区分 `read`（已读字幕并写一句话结论）与 `catalogued`（仅登记目录）：当前 7 条已读、61 条仅编目；已读条目映射到 `usedIn` 概念并标注 `readAt`。
+  - 12.3 `/references` 新增 `VIDEO RESEARCH` 台账：已读视频显示集号、标题、BV、结论、主题与概念链接；未读视频折叠在 `<details>` 中。
+  - 12.4 Agent 接口：`get_video_research`、`window.TONIC.videos({ status, query, theme })`、CLI `npm run theory -- videos [--status read] [--query ...]`；`knowledge.json` 增加 `videoResearch` 与 `meta.videoCount/videoReadCount`。
+  - 12.5 AGENTS.md 固化台账规则：只存元数据与原创一句话结论，不存字幕/正文；视频不作为理论依据，新增前先查 BV 去重。
+- 未完成：
+  - 12.6 后续每读一集，把 `status` 改为 `read`，补 `takeaway`、`usedIn`、`readAt`；未读集保持 `catalogued`。
+  - 12.7 若要扩展到其他 UP 主或合集，先建第二个 season 条目，不要混进当前合集。
+- 改动文件：src/content/bilibili.ts、src/content/index.ts、src/lib/theory-api.ts、scripts/theory-cli.ts、src/routes/References.tsx、src/routes/Agent.tsx、AGENTS.md、PRODUCT.md、DESIGN.md、HANDOFF.md、PROGRESS.md、public/knowledge.json
+- 测试结果：
+  - `npm run typecheck` 通过。
+  - `npm run knowledge` → 43 concepts / 52 examples / 164 citations；`meta.videoCount=68`、`meta.videoReadCount=7`。
+  - `npm run theory -- videos --status read` 返回 7 条；`--query 调式` 能命中已读条目。
+  - `/references` 台账在 1280/375 渲染正常，未读条目默认折叠。
+- 风险：
+  - 台账是抓取时的快照；B 站标题、时长、播放量可能变化，不把播放量写入台账。
+  - 视频标题与结论只是索引，不是理论依据；所有概念正文仍只引用三本书。
+- 下一阶段入口：回到 9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 01:30

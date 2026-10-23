@@ -2,6 +2,10 @@ import {
   ALL_CHAPTERS,
   ALL_EXAMPLES,
   BIBLIOGRAPHY,
+  BILIBILI_SEASON,
+  BILIBILI_VIDEOS,
+  BILIBILI_VIDEO_COUNT,
+  BILIBILI_READ_COUNT,
   BOOK_OUTLINES,
   BOOK_STATS,
   CATEGORIES,
@@ -11,6 +15,7 @@ import {
   HARMONY_DIMENSIONS,
   SOURCE_NOTES,
   collectCitations,
+  getBilibiliVideo,
   getBookOutline,
   getChaptersForConcept,
   getConcept,
@@ -127,6 +132,19 @@ export const TOOL_SCHEMAS: ToolSchema[] = [
     description: "返回本知识库的论文式引用体例与章节级定位规则。",
     inputSchema: { type: "object", properties: {} },
   },
+  {
+    name: "get_video_research",
+    description:
+      "返回 B 站课程调研台账：已读取/已编目的视频、主题映射与关联概念，用于避免重复搜索；视频不作为理论依据。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        status: { type: "string", enum: ["read", "catalogued"] },
+        query: { type: "string", description: "按 BV、标题、主题或关联概念检索" },
+        theme: { type: "string" },
+      },
+    },
+  },
 ];
 
 export interface KnowledgePack {
@@ -140,6 +158,8 @@ export interface KnowledgePack {
     bookCount: number;
     chapterCount: number;
     sourceNoteCount: number;
+    videoCount: number;
+    videoReadCount: number;
     language: string;
     licenseNote: string;
   };
@@ -149,6 +169,10 @@ export interface KnowledgePack {
   harmonyDimensions: typeof HARMONY_DIMENSIONS;
   books: typeof BOOK_OUTLINES;
   sourceNotes: typeof SOURCE_NOTES;
+  videoResearch: {
+    season: typeof BILIBILI_SEASON;
+    videos: typeof BILIBILI_VIDEOS;
+  };
   concepts: Concept[];
   examples: Array<Example & { conceptSlug: string; conceptTitle: string; category: string }>;
   toolSchemas: ToolSchema[];
@@ -166,6 +190,8 @@ export function buildKnowledgePack(): KnowledgePack {
       bookCount: BOOK_OUTLINES.length,
       chapterCount: ALL_CHAPTERS.length,
       sourceNoteCount: SOURCE_NOTES.length,
+      videoCount: BILIBILI_VIDEO_COUNT,
+      videoReadCount: BILIBILI_READ_COUNT,
       language: "zh-CN + en",
       licenseNote:
         "知识条目为原创改写，引用仅作章节级学术定位；本库不复制教材正文，不得把本库内容当作三本著作的替代版本。",
@@ -176,6 +202,10 @@ export function buildKnowledgePack(): KnowledgePack {
     harmonyDimensions: HARMONY_DIMENSIONS,
     books: BOOK_OUTLINES,
     sourceNotes: SOURCE_NOTES,
+    videoResearch: {
+      season: BILIBILI_SEASON,
+      videos: BILIBILI_VIDEOS,
+    },
     concepts: CONCEPTS,
     examples: ALL_EXAMPLES.map((example) => ({
       id: example.id,
@@ -268,6 +298,32 @@ export function getRelated(slug: string) {
   }).filter(Boolean);
 }
 
+export function listVideoResearch(
+  options: {
+    status?: "read" | "catalogued";
+    query?: string;
+    theme?: string;
+  } = {},
+) {
+  const term = options.query?.trim().toLowerCase();
+  return BILIBILI_VIDEOS.filter((video) => {
+    if (options.status && video.status !== options.status) return false;
+    if (options.theme && !video.themes.includes(options.theme)) return false;
+    if (!term) return true;
+    const haystack = [
+      video.bvid,
+      video.title,
+      video.episode,
+      video.takeaway ?? "",
+      video.themes.join(" "),
+      (video.usedIn ?? []).join(" "),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return haystack.includes(term);
+  });
+}
+
 export function getReviewQueue(state?: ReviewState) {
   const current = state ?? loadReviewState();
   return {
@@ -299,6 +355,9 @@ export const theoryApi = {
   searchSources,
   bookOutline: getBookOutline,
   sourceNote: getSourceNote,
+  videos: listVideoResearch,
+  video: getBilibiliVideo,
+  videoResearch: () => ({ season: BILIBILI_SEASON, videos: BILIBILI_VIDEOS }),
   harmonyDimensions: () => HARMONY_DIMENSIONS,
   bookStats: () => BOOK_STATS,
   reviewQueue: getReviewQueue,
