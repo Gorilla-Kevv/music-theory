@@ -298,4 +298,102 @@ export const JAZZ_ADVANCED: Concept[] = [
       hint: "外部是张力，不是新调。",
     },
   },
+  {
+    id: "melodic-minor-modes",
+    slug: "melodic-minor-modes",
+    number: "J-13",
+    title: "旋律小调调式与调式和弦",
+    titleEn: "MELODIC MINOR MODES & MODAL CHORDS",
+    category: "jazz",
+    level: "高级",
+    aliases: [
+      "旋律小调调式",
+      "旋律小调和声",
+      "melodic minor modes",
+      "Lydian dominant",
+      "Lydian augmented",
+      "altered scale",
+      "locrian #2",
+      "小大七和弦",
+    ],
+    tags: ["旋律小调", "调式", "变化属"],
+    dimensions: ["color", "function", "relationship"],
+    summary:
+      "旋律小调不只是小调的第三种写法：它的七个调式各自对应一组爵士和声最常用的色彩和弦——小大七作主、半减七作二级、Lydian 属七与变化属七作属色彩。",
+    sections: [
+      {
+        id: "modes",
+        heading: "七个调式与代表和弦",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "调式 1（旋律小调本身）：小大七 CmMaj7 作主，也可为 m7 和声加花。",
+              "调式 2（Phrygian ♮6）：Dsus b9 与 Dm7♭5 作二级；sus b9 的紧张最贴近这个调式。",
+              "调式 3（Lydian augmented）：maj7♯5，增利底亚，可作主或属色彩。",
+              "调式 4（Lydian dominant）：7♯11，属色彩，常与 blues、backdoor 进行配合。",
+              "调式 5：少用，常被重写成 7♭13 或上层结构。",
+              "调式 6（Locrian ♮2）：半减七作二级，比 Locrian 多一个还原 2 音。",
+              "调式 7（altered）：7alt，把属和弦能变的音全变，来自旋律小调第七调式。",
+            ],
+            cites: [
+              cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）"),
+              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "按功能分组：小大七是唯一稳定的主功能；半减七（调式 2 或 6）承担二级；sus b9、增利底亚、Lydian 属七与 7alt 都可以充当属色彩。同一条旋律小调能在不换音的前提下提供主、二级、属三种角色，这正是它比大调和声更“经济”的原因。",
+            cites: [cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）")],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "使用边界与快速反应",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "小大七替代小七有边界：它只在自身作主和弦、或为 m7 和声加花时成立；若 m7 是 ii–V 进行的二级，换成 mMaj7 会让属准备失去方向。半减七调式与 Phrygian 的区别在 2 音与 6 音：同一个 sus b9 和弦配 Phrygian 更暗，配旋律小调第二调式更亮。",
+            cites: [
+              cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）"),
+              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "判断顺序",
+            text: "先认来源调（这个和弦来自哪条旋律小调）→ 再认调式级数 → 用代表和弦快速反应 → 最后检查需不需要属解决。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-melodic-minor-modes",
+        title: "C 旋律小调：三个调式的色彩",
+        caption:
+          "CmMaj7 作主 → Dsus b9 二级/属色彩 → F9#11 Lydian 属七 → 回主；四个和弦同出 C 旋律小调，共同音 Eb–G–B 保持连接。",
+        kind: "progression",
+        key: "C",
+        tempo: 66,
+        beats: 16,
+        events: [
+          chord(0, 4, ["C3", "Eb3", "G3", "B3"], { label: "CmMaj7" }),
+          chord(4, 4, ["D3", "Eb3", "G3", "B3"], { label: "Dsus b9" }),
+          chord(8, 4, ["F3", "G3", "B3", "Eb4"], { label: "F9#11" }),
+          chord(12, 4, ["C3", "Eb3", "G3", "B3"], { label: "CmMaj7" }),
+        ],
+      }),
+    ],
+    related: ["chord-scale", "extensions-alterations", "hybrid-chords", "minor-scales"],
+    review: {
+      question: "旋律小调的七个调式分别常用什么代表和弦？",
+      answer:
+        "调式 1 小大七作主；调式 2 sus b9/半减七作二级；调式 3 增利底亚（maj7♯5）；调式 4 Lydian 属七（7♯11）；调式 5 少用；调式 6 半减七（Locrian ♮2）作二级；调式 7 变化属七（7alt）。",
+      hint: "先分调式，再按主/二级/属分组。",
+    },
+  },
 ];

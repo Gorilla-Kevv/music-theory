@@ -1094,4 +1094,26 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
       },
     ],
   },
+  "melodic-minor-modes": {
+    title: "白话解释：旋律小调不是一条音阶，是七种和弦角色",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "最容易卡住的地方，是把旋律小调当成“小调的第三种写法”，背完音阶就结束。爵士里真正用的是它的七个调式各自对应的和弦：把 C 旋律小调从七个音轮流当主音，就得到 CmMaj7、Dsus b9、增利底亚、Lydian 属七、半减七、7alt 这一整套色彩工具。听见一个奇怪的和弦，先问“它来自哪条旋律小调”，比逐个音辨认快得多。",
+        cites: [cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）")],
+      },
+      {
+        type: "p",
+        text:
+          "判断顺序：先认来源调 → 认调式级数 → 用代表和弦反应（mMaj7 / sus b9 / maj7♯5 / 7♯11 / m7♭5 / 7alt）→ 最后问需不需要属解决。注意边界：mMaj7 只在它自己作主、或给 m7 加花时替换 m7；如果那个 m7 是 ii–V 里的二级，换成 mMaj7 会让后面的属七失去准备。",
+        cites: [cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "mMaj7 作主，m7♭5 作二级，其余大多是属色彩；斜线和弦只是它们的快速记法。练习：在 C 旋律小调上把七个代表和弦各弹一遍，再在同一条音阶内串成一条进行，听哪些连接不需要属功能就已经成立。",
+      },
+    ],
+  },
 };

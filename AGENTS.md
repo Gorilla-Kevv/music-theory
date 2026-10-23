@@ -37,10 +37,10 @@ src/content/
   harmony.ts           和声基础 8 条
   harmony-advanced.ts  和声深化 15 条（功能/走向/色彩/明暗/关系/节奏 + 中古调式、调式互换、四度、混合和弦、无功能属和弦、固定结构）
   jazz.ts              爵士 8 条
-  jazz-advanced.ts     爵士深化 4 条
-  deep-dives.ts        43 条白话拆解（全部概念）
-  bilibili.ts          B 站课程调研台账：68 条视频 / 7 条已读 / 61 条仅编目
-  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置
+  jazz-advanced.ts     爵士深化 5 条（含旋律小调调式 melodic-minor-modes）
+  deep-dives.ts        44 条白话拆解（全部概念）
+  bilibili.ts          B 站课程调研台账：4 个合集/板块，111 条视频 / 19 条已读 / 92 条仅编目
+  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置
   books/               三本书的完整章目 + 原创章节笔记
   bibliography.ts      书目、版次、章节定位政策
 ```
@@ -58,7 +58,7 @@ src/content/
 ## 体系图谱（Atlas）
 
 - 页面：`/atlas`；数据：`src/content/graph/index.ts`。
-- 分层：教材来源（Levine / Laitz / Sposobin）→ 系统枢纽（基础语法、功能与句法、色彩与张力、明暗与调式、关系与转调、爵士语言）→ 概念节点（37）。
+- 分层：教材来源（Levine / Laitz / Sposobin）→ 系统枢纽（基础语法、功能与句法、色彩与张力、明暗与调式、关系与转调、爵士语言）→ 概念节点（44）。
 - 边类型：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置。
 - 交互：分类/维度筛选；悬停或点击节点高亮邻域；选中节点显示维度、前置、后续、书库笔记与概念入口；支持 `/atlas?focus=<slug>` 深链。
 - 新增概念时同步检查：`graph/index.ts` 的枢纽归属、`PREREQUISITES` 前置链、`related` 关联；图谱不得出现指向不存在 slug 的边。
@@ -68,17 +68,29 @@ src/content/
 - 数据：`src/content/deep-dives.ts`；由 `CONCEPTS` 自动合并到 `concept.deepDive`。
 - 目的：把术语密集的段落改写成可理解的判断顺序、听觉抓手与练习步骤；不是教材正文的译文或摘录。
 - 每个 block 至少一条 `cites`；引用沿用 `CitationRef` 章节级 locator；`collectCitations` 会把 deep dive 引用纳入页末注释。
-- 当前覆盖 43/43：基础 8 + 和声 23 + 爵士 12 全部有白话拆解。
+- 当前覆盖 44/44：基础 8 + 和声 23 + 爵士 13 全部有白话拆解。
 - 新增 deep dive 时优先写“为什么容易误解”“判断顺序”“一句话/练习”，避免重复 summary。
 
 ## B 站课程台账（Video Research）
 
 - 数据：`src/content/bilibili.ts`；页面：`/references` 的 `VIDEO RESEARCH` 区域。
 - 目的：记录已读取/已编目的课程视频，避免 Agent 与人工重复搜索；**视频不作为理论依据**，只用于发现主题与组织顺序。
-- 状态：`read`（已读字幕并做笔记）与 `catalogued`（只登记目录，未读字幕）。新增视频先查 BV 是否已存在，不重复登记。
-- 字段：`bvid`、`title`、`episode`、`chapter`、`duration`、`published`、`url`、`status`、`themes`；已读视频再加 `usedIn`（映射概念 slug）、`takeaway`（一句话结论）、`readAt`。
+- 结构：多合集（`BILIBILI_COLLECTIONS`）+ 板块。当前 4 个合集：`jazz-harmony`（爵士和声理论 · 爵士-没有派对，68 集）、`jazz-academy`（学院派作曲·爵士理论 · Yulia Music Note，10 集）、`stylized-creation`（**风格化创作** · Gray-Frezical，31 集，独立板块）、`jazz-extras`（同一 UP 的合集外公开课，2 条）。视频条目用 `collection` 字段归属。
+- 状态：`read`（已读并做笔记）与 `catalogued`（只登记目录）。新增视频先查 BV 是否已存在，不重复登记。
+- 字段：`bvid`、`title`、`episode`、`chapter`、`duration`、`published`、`url`、`status`、`themes`、`collection`；已读视频再加 `via`（`subtitle` 字幕 / `asr` 转写 / `frames` 关键帧）、`usedIn`（映射概念 slug）、`takeaway`（一句话结论）、`readAt`。
 - 不保存字幕、转写或视频正文；只保存元数据与原创一句话结论。台账中的结论不能替代三本书的章节级引用。
-- Agent 接口：`get_video_research`、`window.TONIC.videos({ status, query, theme })`、CLI `npm run theory -- videos [--status read] [--query ...]`；离线包 `knowledge.json` 含 `videoResearch` 与 `meta.videoCount/videoReadCount`。
+- Agent 接口：`get_video_research`（支持 `collection` 参数）、`window.TONIC.videos({ status, query, theme, collection })`、CLI `npm run theory -- videos [--status read] [--query ...]`；离线包 `knowledge.json` 含 `videoResearch.collections/videos` 与 `meta.videoCount/videoReadCount`。
+
+### B 站调研工作规范（已固化，无需用户提醒）
+
+用户给出新的 B 站合集或视频链接时，按以下流程一次做完，不要中途请示：
+
+1. **编目**：合集用 `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=<mid>&season_id=<id>&page_num=1&page_size=100` 拉全量目录；单视频用 `bili.mjs video <BV>`。与 `bilibili.ts` 现有 BV 查重，只登记新条目。
+2. **读取**：按主题挑与知识库相关的视频读内容——有字幕轨用 `bili.mjs subtitle`（落盘 UTF-8 后读，避免终端乱码）；无字幕轨用 `bili-duty-local` 的 `data/.venv-asr/Scripts/python.exe data/asr-gemini.py <BV>` 转写；无人声/演示视频用 `shot.mjs` 取关键帧 + 多模态读屏。读过的记 `status: "read"` 并写 `via`、`takeaway`（一句话）、`usedIn`（映射到现有概念 slug）；只编目的记 `catalogued`。
+3. **归板块**：按内容判断合集归属——爵士和声理论类进 `爵士和声` 板块；编曲/配乐/风格演示类进 `风格化创作` 板块（`stylized-creation`）；合集外单视频进 `jazz-extras`。新合集要同时在 `BILIBILI_COLLECTIONS` 登记。
+4. **同步**：`bilibili.ts` 是唯一事实源——改完跑 `npm run knowledge`（刷新 `public/knowledge.json`），页面 `/references` 与 Agent 接口自动生效；涉及新概念时同步图谱前置、书库 `concepts` 映射与白话拆解。
+5. **收尾**：更新 AGENTS.md / PRODUCT.md / HANDOFF.md / PROGRESS.md 统计，typecheck + build 验证后提交 dev。
+6. 纪律不变：视频结论不进理论正文；理论断言仍必须回三本书定位。
 
 ## Agent 查询路径
 
@@ -103,13 +115,13 @@ src/content/
 
 ## 当前范围
 
-- 43 个概念（基础 8 / 和声 23 / 爵士 12）
-- 52 个可听谱例
-- 164 条章节级引用
+- 44 个概念（基础 8 / 和声 23 / 爵士 13）
+- 53 个可听谱例
+- 166 条章节级引用
 - 3 本书 · 118 个章目 · 85 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 27/60）
-- 43 条白话拆解（全部概念）
-- B 站调研台账：68 条视频 / 7 条已读 / 61 条仅编目（以 `read` 为准）
-- 体系图谱：3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置
+- 44 条白话拆解（全部概念）
+- B 站调研台账：4 个合集/板块 · 111 条视频 / 19 条已读 / 92 条仅编目（以 `read` 为准）
+- 体系图谱：3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
 - 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）

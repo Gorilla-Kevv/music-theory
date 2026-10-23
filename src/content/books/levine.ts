@@ -55,7 +55,7 @@ const NOTES: Record<string, NoteSeed> = {
       "音阶负责经过与色彩，和弦三音七音负责落点。",
       "变化属七来自旋律小调第七调式，同时包含 b9、#9、b5、#5。",
     ],
-    concepts: ["chord-scale", "extensions-alterations", "harmonic-color"],
+    concepts: ["chord-scale", "extensions-alterations", "harmonic-color", "melodic-minor-modes"],
     dimensions: ["color", "function", "brightness"],
   },
   "levine-05": {

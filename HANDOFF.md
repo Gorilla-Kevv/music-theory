@@ -25,9 +25,9 @@
 ## 结构
 
 - 关键目录：
-  - `src/content/`：知识事实源（43 概念、52 谱例、164 条引用、43 条白话拆解）。
-  - `src/content/graph/`：体系图谱数据（3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置）。
-  - `src/content/bilibili.ts`：B 站课程调研台账（68 条视频 / 7 条已读 / 61 条仅编目）。
+  - `src/content/`：知识事实源（44 概念、53 谱例、166 条引用、44 条白话拆解）。
+  - `src/content/graph/`：体系图谱数据（3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置）。
+  - `src/content/bilibili.ts`：B 站课程调研台账（4 合集/板块 · 111 条视频 / 19 条已读 / 92 条仅编目）。
   - `src/content/books/`：三本书的 118 个章目与 85 条原创章节笔记（Levine 24 / Laitz 34 / Sposobin 27），其中 Levine 24/24、Laitz 34/34 带深度归纳。
   - `src/lib/`：音频（采样 + 合成回退）、搜索、SRS、听辨、音符/谱面工具、Agent API。
   - `src/components/`：外壳、检索面板、五线谱（可点击命中区）、钢琴、谱例、可视化、试听坞。
@@ -40,7 +40,7 @@
 - 核心接口：
   - `src/lib/theory-api.ts`：`searchTheory`、`listExamples`、`getRelated`、`searchSources`、`getBookOutline`、`getSourceNote`、`getConceptSources`、`getReviewQueue`、`buildKnowledgePack`、`TOOL_SCHEMAS`。
   - `src/content/graph/index.ts`：`ATLAS_GRAPH`、`ATLAS_HUBS`、`ATLAS_STATS`、`getConceptHubs`、`getPrerequisites`、`getNextConcepts`。
-  - `src/content/bilibili.ts`：`BILIBILI_SEASON`、`BILIBILI_VIDEOS`、`getBilibiliVideo`；`theoryApi.videos({ status, query, theme })` 与 CLI `videos` 查询同一台账。
+  - `src/content/bilibili.ts`：`BILIBILI_COLLECTIONS`（合集元数据 + 板块）、`BILIBILI_VIDEOS`、`getBilibiliVideo`；`theoryApi.videos({ status, query, theme, collection })` 与 CLI `videos` 查询同一台账。
   - `src/lib/audio.ts`：`AudioEngine.play/stop/replay/setTempo/toggleLoop/previewNote/previewChord/previewSequence/preloadSamples`。
   - `src/lib/search.ts`：CJK bigram + Latin token 的 MiniSearch，精确短语优先。
   - `src/lib/review.ts`：SM-2 轻量实现；localStorage key `tonic.review.v1`。
@@ -83,7 +83,7 @@
 
 ## 状态
 
-- 当前状态：v0.3 进行中；43 概念 / 52 谱例 / 164 条引用 / 43 条白话拆解；B 站台账 68 条视频 / 7 条已读；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.3 进行中；44 概念 / 53 谱例 / 166 条引用 / 44 条白话拆解；B 站台账 4 合集/板块 · 111 条视频 / 19 条已读；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
@@ -94,7 +94,9 @@
   - `/theory/non-functional-dominants` 的相邻属和弦路径可视化可点击节点试听、播放整条进行；橙线为相邻上行，钴蓝线为下行五度。
   - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点。
   - `/drill` 可完成“显示答案 → 评分 → 下一卡”，并写入 localStorage。
-  - `/library` 检索“五度圈”返回精确结果；清空恢复 43 条。
+  - `/library` 检索“五度圈”返回精确结果；清空恢复 44 条。
+  - `/references` 台账显示 4 个合集卡片（爵士和声理论 / 学院派爵士理论 / 风格化创作 / 合集外公开课）与 19 条已读（含 VIA subtitle/asr/frames 标记）。
+  - `/theory/melodic-minor-modes` 渲染 J-13 概念页（七调式代表和弦、C 旋律小调谱例、白话拆解、图谱前置）。
   - `/agent` 可导出学习状态；`window.TONIC` 与 CLI 可查询同一知识包与书库。
 - 下一步：
   1. 继续深度内容：补 Sposobin 剩余章节笔记与深度字段（9.6）；为 Levine/Laitz 剩余章节补 `confusions`（9.7）。逐调式谱例已完成（阶段 11）。
@@ -103,4 +105,4 @@
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 00:55 BY solo-agent
+- 本次文档更新时间：10.24 01:55 BY solo-agent

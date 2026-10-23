@@ -2,7 +2,7 @@ import {
   ALL_CHAPTERS,
   ALL_EXAMPLES,
   BIBLIOGRAPHY,
-  BILIBILI_SEASON,
+  BILIBILI_COLLECTIONS,
   BILIBILI_VIDEOS,
   BILIBILI_VIDEO_COUNT,
   BILIBILI_READ_COUNT,
@@ -135,13 +135,17 @@ export const TOOL_SCHEMAS: ToolSchema[] = [
   {
     name: "get_video_research",
     description:
-      "返回 B 站课程调研台账：已读取/已编目的视频、主题映射与关联概念，用于避免重复搜索；视频不作为理论依据。",
+      "返回 B 站课程调研台账（多合集/多板块）：已读取/已编目的视频、主题映射与关联概念，用于避免重复搜索；视频不作为理论依据。",
     inputSchema: {
       type: "object",
       properties: {
         status: { type: "string", enum: ["read", "catalogued"] },
         query: { type: "string", description: "按 BV、标题、主题或关联概念检索" },
         theme: { type: "string" },
+        collection: {
+          type: "string",
+          enum: ["jazz-harmony", "jazz-academy", "stylized-creation", "jazz-extras"],
+        },
       },
     },
   },
@@ -170,7 +174,7 @@ export interface KnowledgePack {
   books: typeof BOOK_OUTLINES;
   sourceNotes: typeof SOURCE_NOTES;
   videoResearch: {
-    season: typeof BILIBILI_SEASON;
+    collections: typeof BILIBILI_COLLECTIONS;
     videos: typeof BILIBILI_VIDEOS;
   };
   concepts: Concept[];
@@ -203,7 +207,7 @@ export function buildKnowledgePack(): KnowledgePack {
     books: BOOK_OUTLINES,
     sourceNotes: SOURCE_NOTES,
     videoResearch: {
-      season: BILIBILI_SEASON,
+      collections: BILIBILI_COLLECTIONS,
       videos: BILIBILI_VIDEOS,
     },
     concepts: CONCEPTS,
@@ -303,17 +307,20 @@ export function listVideoResearch(
     status?: "read" | "catalogued";
     query?: string;
     theme?: string;
+    collection?: string;
   } = {},
 ) {
   const term = options.query?.trim().toLowerCase();
   return BILIBILI_VIDEOS.filter((video) => {
     if (options.status && video.status !== options.status) return false;
     if (options.theme && !video.themes.includes(options.theme)) return false;
+    if (options.collection && video.collection !== options.collection) return false;
     if (!term) return true;
     const haystack = [
       video.bvid,
       video.title,
       video.episode,
+      video.collection,
       video.takeaway ?? "",
       video.themes.join(" "),
       (video.usedIn ?? []).join(" "),
@@ -357,7 +364,7 @@ export const theoryApi = {
   sourceNote: getSourceNote,
   videos: listVideoResearch,
   video: getBilibiliVideo,
-  videoResearch: () => ({ season: BILIBILI_SEASON, videos: BILIBILI_VIDEOS }),
+  videoResearch: () => ({ collections: BILIBILI_COLLECTIONS, videos: BILIBILI_VIDEOS }),
   harmonyDimensions: () => HARMONY_DIMENSIONS,
   bookStats: () => BOOK_STATS,
   reviewQueue: getReviewQueue,

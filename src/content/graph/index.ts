@@ -161,6 +161,8 @@ const PREREQUISITES: Array<[string, string]> = [
   ["secondary-dominants", "non-functional-dominants"],
   ["harmonic-sequence", "constant-structure"],
   ["quartal-harmony", "constant-structure"],
+  ["minor-scales", "melodic-minor-modes"],
+  ["chord-scale", "melodic-minor-modes"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {

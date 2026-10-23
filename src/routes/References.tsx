@@ -2,8 +2,8 @@ import { ArrowUpRight, BookOpen, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   BIBLIOGRAPHY,
+  BILIBILI_COLLECTIONS,
   BILIBILI_READ_COUNT,
-  BILIBILI_SEASON,
   BILIBILI_VIDEOS,
   CITATION_STYLE_NOTE,
   CONCEPTS,
@@ -178,7 +178,7 @@ export function References() {
             <p className="mono-label text-cobalt-ink">VIDEO RESEARCH / B站课程调研台账</p>
             <h2 className="zh-display mt-2 text-2xl sm:text-3xl">已经读过的视频，不重复搜</h2>
             <p className="reading-column mt-2 max-w-[62ch] text-sm leading-relaxed text-muted">
-              这里只记录已读取字幕或已编目的课程视频，供 Agent 判断是否需要重复检索。视频只用于发现主题与组织顺序，不作为本库的理论依据；台账不保存字幕或正文。
+              这里按合集与板块记录已读取或已编目的课程视频，供 Agent 判断是否需要重复检索。视频只用于发现主题与组织顺序，不作为本库的理论依据；台账不保存字幕或正文，已读条目注明依据（字幕 / 转写 / 关键帧）。
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -189,21 +189,36 @@ export function References() {
         </div>
 
         <div className="p-5 sm:p-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="mono-label text-muted">{BILIBILI_SEASON.title} / SEASON {BILIBILI_SEASON.seasonId}</p>
-            <a
-              href={BILIBILI_SEASON.url}
-              target="_blank"
-              rel="noreferrer"
-              className="mono-label inline-flex items-center gap-1.5 text-cobalt-ink hover:text-ink"
-            >
-              打开合集
-              <ExternalLink size={12} aria-hidden />
-            </a>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {BILIBILI_COLLECTIONS.map((collection) => {
+              const items = BILIBILI_VIDEOS.filter((video) => video.collection === collection.id);
+              const reads = items.filter((video) => video.status === "read").length;
+              return (
+                <div key={collection.id} className="border border-line p-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="mono-label text-ink">{collection.title}</p>
+                    <a
+                      href={collection.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mono-label inline-flex items-center gap-1 text-cobalt-ink hover:text-ink"
+                    >
+                      {collection.seasonId ? `SEASON ${collection.seasonId}` : "主页"}
+                      <ExternalLink size={11} aria-hidden />
+                    </a>
+                  </div>
+                  <p className="mt-1.5 text-xs text-muted">
+                    {collection.section} · {items.length} 条已登记 / {reads} 已读 · UP：{collection.author}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
-          <ul className="mt-3 space-y-3">
-            {BILIBILI_VIDEOS.filter((video) => video.status === "read").map((video) => (
+          <ul className="mt-4 space-y-3">
+            {BILIBILI_VIDEOS.filter((video) => video.status === "read").map((video) => {
+              const collection = BILIBILI_COLLECTIONS.find((item) => item.id === video.collection);
+              return (
               <li key={video.bvid} className="border border-line p-3 sm:p-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="mono-label bg-cadmium px-2 py-1 text-ink">{video.episode || "READ"}</span>
@@ -221,6 +236,16 @@ export function References() {
                   <p className="reading-column mt-2 text-sm leading-relaxed text-muted">{video.takeaway}</p>
                 ) : null}
                 <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  {collection ? (
+                    <span className="mono-label border border-ink/30 px-1.5 py-0.5 text-muted">
+                      {collection.section} / {collection.id}
+                    </span>
+                  ) : null}
+                  {video.via ? (
+                    <span className="mono-label border border-ink/15 px-1.5 py-0.5 text-muted">
+                      VIA {video.via.toUpperCase()}
+                    </span>
+                  ) : null}
                   {video.themes.map((theme) => (
                     <span key={theme} className="border border-ink/15 px-1.5 py-0.5 text-[0.68rem] text-muted">
                       {theme}
@@ -240,24 +265,38 @@ export function References() {
                   })}
                 </div>
               </li>
-            ))}
+              );
+            })}
           </ul>
 
           <details className="mt-4 border-t border-line pt-4">
             <summary className="mono-label cursor-pointer text-muted">
               CATALOGUED / 已编目 {BILIBILI_VIDEOS.length - BILIBILI_READ_COUNT} 条 · 展开查看
             </summary>
-            <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
-              {BILIBILI_VIDEOS.filter((video) => video.status === "catalogued").map((video) => (
-                <li key={video.bvid} className="flex items-baseline gap-2 border-b border-line/60 py-1.5 text-xs">
-                  <span className="mono-label w-9 shrink-0 text-muted">{video.episode || "—"}</span>
-                  <a href={video.url} target="_blank" rel="noreferrer" className="min-w-0 flex-1 truncate hover:text-cobalt-ink">
-                    {video.title}
-                  </a>
-                  <span className="mono-label shrink-0 text-muted">{video.bvid}</span>
-                </li>
-              ))}
-            </ul>
+            {BILIBILI_COLLECTIONS.map((collection) => {
+              const items = BILIBILI_VIDEOS.filter(
+                (video) => video.status === "catalogued" && video.collection === collection.id,
+              );
+              if (items.length === 0) return null;
+              return (
+                <div key={collection.id} className="mt-4">
+                  <p className="mono-label text-muted">
+                    {collection.title} · {items.length} 条
+                  </p>
+                  <ul className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                    {items.map((video) => (
+                      <li key={video.bvid} className="flex items-baseline gap-2 border-b border-line/60 py-1.5 text-xs">
+                        <span className="mono-label w-9 shrink-0 text-muted">{video.episode || "—"}</span>
+                        <a href={video.url} target="_blank" rel="noreferrer" className="min-w-0 flex-1 truncate hover:text-cobalt-ink">
+                          {video.title}
+                        </a>
+                        <span className="mono-label shrink-0 text-muted">{video.bvid}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </details>
         </div>
       </section>

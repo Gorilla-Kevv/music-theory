@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 12 B 站课程调研台账（已读/已编目，避免重复搜索）
+- 当前正在开发任务：阶段 13 台账扩展（新合集 + 风格化创作板块 + 旋律小调概念，已读 7 → 19）
 - 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -203,3 +203,25 @@
   - 视频标题与结论只是索引，不是理论依据；所有概念正文仍只引用三本书。
 - 下一阶段入口：回到 9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 01:30
+
+## 阶段 13 台账扩展：新合集、风格化创作板块与旋律小调概念 [计划时间：10.24 01:40 BY solo-agent][完成时间：10.24 01:55 BY solo-agent]
+
+- 分支：dev
+- 任务定位：按用户给定的新 B 站内容继续提取并填充知识：新爵士合集（mid 278407980 / season 3336077）、独立板块「风格化创作」（mid 15099599 / season 247985，无人声视频用多模态读帧）、两条合集外补充视频；同时把调研→入库→同步固化为工作规范。
+- 已完成：
+  - 13.1 台账升级为多合集结构：`BILIBILI_COLLECTIONS`（4 合集：jazz-harmony 68 / jazz-academy 10 / stylized-creation 31 / jazz-extras 2，合计 111 条）；视频新增 `collection` 与 `via`（subtitle / asr / frames）字段；`BILIBILI_SEASON` 退役。
+  - 13.2 新读取 12 条（已读总数 7 → 19）：补充视频 2 条（扩展音总览、排列“滚雪球”学习法）；jazz-academy EP01/02/04/07/09/10（调式记忆与明暗排序、一个和弦一个调、调式爵士、斜线和弦、旋律小调和声——EP02 无字幕轨走 Gemini ASR）；风格化创作 4 条无人声视频（Mixolydian 摇滚、Phrygian 史诗张力、中世纪神秘色彩、单和弦铺歌）用关键帧多模态读取。
+  - 13.3 知识填充：新增概念 J-13 `melodic-minor-modes`（旋律小调调式与调式和弦，Levine 第 3 章定位）——2 节正文、C 旋律小调三调式谱例、复习卡、白话拆解、图谱前置（minor-scales / chord-scale → melodic-minor-modes）、levine-03 书库映射；EP09/EP10/补充视频的 `usedIn` 全部落到现有概念。
+  - 13.4 `/references` 台账页改为合集卡片总览 + 已读卡片带板块与 VIA 标记 + 编目列表按合集分组；`get_video_research` 与 `window.TONIC.videos` 支持 `collection` 参数。
+  - 13.5 AGENTS.md 固化「B 站调研工作规范」（编目→读取→归板块→同步→收尾六步），后续同类需求不再需要用户提醒。
+- 未完成：9.6 / 9.7 / 9.8 按原队列继续；jazz-academy EP03/05/06/08 与风格化创作其余 27 条保持 `catalogued` 待读。
+- 改动文件：src/content/bilibili.ts、src/content/jazz-advanced.ts、src/content/deep-dives.ts、src/content/graph/index.ts、src/content/books/levine.ts、src/lib/theory-api.ts、src/routes/References.tsx、.impeccable/capture-section.mjs（新增区块截图脚本）、AGENTS.md、PRODUCT.md、HANDOFF.md、PROGRESS.md、public/knowledge.json
+- 测试结果：
+  - `npm run typecheck` 与 `npm run build` 通过。
+  - `npm run knowledge` → 44 concepts / 53 examples / 166 citations；`meta.videoCount=111`、`videoReadCount=19`。
+  - 图谱统计 → 3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置。
+  - `npm run theory -- videos --status read` 返回 19 条（跨四个合集）。
+  - 截图：`/references` 1280 合集卡片与已读卡片渲染正确，375 `scrollWidth=375` 无溢出；`/theory/melodic-minor-modes` 概念页完整（正文、别名、来源、图谱位置、白话拆解）。
+- 风险：风格化创作板块是编曲演示，主题标签偏配器/律动，理论映射以调式类概念为主；无人声视频的 `via: "frames"` 结论只覆盖画面文字与谱面信息。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 01:55
