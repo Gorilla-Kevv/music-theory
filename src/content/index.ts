@@ -20,10 +20,10 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "harmony",
-    name: "功能和声",
-    nameEn: "FUNCTIONAL HARMONY",
+    name: "和声",
+    nameEn: "HARMONY",
     token: "cadmium",
-    description: "级数、声部进行、终止、离调与转调。",
+    description: "功能与句法、中古调式、调式互换、四度排列与无功能和声。",
   },
   {
     id: "jazz",

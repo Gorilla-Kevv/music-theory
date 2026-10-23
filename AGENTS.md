@@ -34,12 +34,12 @@ TONIC 是一个本地优先的个人乐理强化工作台。核心不是“多�
 ```text
 src/content/
   foundations.ts       基础 8 条
-  harmony.ts           功能和声 8 条
-  harmony-advanced.ts  和声深化 9 条（功能/走向/色彩/明暗/关系/节奏）
+  harmony.ts           和声基础 8 条
+  harmony-advanced.ts  和声深化 15 条（功能/走向/色彩/明暗/关系/节奏 + 中古调式、调式互换、四度、混合和弦、无功能属和弦、固定结构）
   jazz.ts              爵士 8 条
   jazz-advanced.ts     爵士深化 4 条
-  deep-dives.ts        37 条白话拆解（全部概念）
-  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 37 概念 / 86 关联 / 25 前置
+  deep-dives.ts        43 条白话拆解（全部概念）
+  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置
   books/               三本书的完整章目 + 原创章节笔记
   bibliography.ts      书目、版次、章节定位政策
 ```
@@ -67,7 +67,7 @@ src/content/
 - 数据：`src/content/deep-dives.ts`；由 `CONCEPTS` 自动合并到 `concept.deepDive`。
 - 目的：把术语密集的段落改写成可理解的判断顺序、听觉抓手与练习步骤；不是教材正文的译文或摘录。
 - 每个 block 至少一条 `cites`；引用沿用 `CitationRef` 章节级 locator；`collectCitations` 会把 deep dive 引用纳入页末注释。
-- 当前覆盖 37/37：基础 8 + 和声 17 + 爵士 12 全部有白话拆解。
+- 当前覆盖 43/43：基础 8 + 和声 23 + 爵士 12 全部有白话拆解。
 - 新增 deep dive 时优先写“为什么容易误解”“判断顺序”“一句话/练习”，避免重复 summary。
 
 ## Agent 查询路径
@@ -93,12 +93,12 @@ src/content/
 
 ## 当前范围
 
-- 37 个概念（基础 8 / 功能和声 17 / 爵士 12）
-- 42 个可听谱例
-- 136 条章节级引用
+- 43 个概念（基础 8 / 和声 23 / 爵士 12）
+- 48 个可听谱例
+- 164 条章节级引用
 - 3 本书 · 118 个章目 · 85 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 27/60）
-- 37 条白话拆解（全部概念）
-- 体系图谱：3 来源 / 6 枢纽 / 37 概念 / 86 关联 / 25 前置
+- 43 条白话拆解（全部概念）
+- 体系图谱：3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置
 - 视觉：五度圈、调式轮、半音尺、张力光谱、分层体系图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
 - 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）

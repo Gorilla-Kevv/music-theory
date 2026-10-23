@@ -734,4 +734,513 @@ export const HARMONY_ADVANCED: Concept[] = [
       hint: "终止是句法标点。",
     },
   },
+  {
+    id: "modal-characteristics",
+    slug: "modal-characteristics",
+    number: "H-18",
+    title: "中古调式：特征音与调式和弦",
+    titleEn: "CHURCH MODES: CHARACTERISTIC TONES & MODAL CHORDS",
+    category: "harmony",
+    level: "高级",
+    aliases: ["中古调式", "教会调式", "church modes", "特征音", "调式和弦", "modal characteristics"],
+    tags: ["调式", "特征音", "调式终止"],
+    dimensions: ["brightness", "color", "relationship"],
+    summary:
+      "七种中古调式共用同一组音高，但主音不同；每种调式的特征音与包含特征音的和弦，决定它的色彩与“调式终止”，而不是大小调的 V–I。",
+    sections: [
+      {
+        id: "seven-modes",
+        heading: "七种调式与特征音",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Ionian：自然大调；主和弦为大三和弦，特征就是大调本身。",
+              "Dorian：降三、大六；特征音是大六，相对自然小调更明亮。",
+              "Phrygian：降二；特征音是降二，主和弦为小三和弦。",
+              "Lydian：升四；特征音是升四，比自然大调更明亮。",
+              "Mixolydian：降七；特征音是降七，主和弦为大三和弦。",
+              "Aeolian：降三、降六、降七；特征音是降六，即自然小调。",
+              "Locrian：降二、降五、降七；主和弦为减三和弦，常避免单独使用。",
+            ],
+            cites: [
+              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+              cite("levine", "Chapter 2 Major Scale and Progressions（调式）"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "判断调式不能只把大调音阶从不同音开始弹。先以同一主音比较：三音是大三还是小三，决定大调类或小调类；再找与自然大调/自然小调不同的那个音，它就是特征音。没有出现特征音，听者往往仍会把它听回大调或小调。",
+            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+          },
+        ],
+      },
+      {
+        id: "modal-chords",
+        heading: "调式和弦与调式终止",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "调式和声没有完整的 T–PD–D–T 功能链，一级是唯一稳定的主功能。包含特征音的大三和弦或小七和弦可以充当“调式终止”和弦：Dorian 的 IV 大、Phrygian 的 bII 大、Lydian 的 II 大或 vii 小、Mixolydian 的 bVII 大。它们靠特征音回到主和弦，而不是靠导音。",
+            cites: [
+              cite("levine", "Chapter 2 Major Scale and Progressions（调式爵士）"),
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "减三和弦与半减七和弦通常要谨慎：它们含三全音，容易把耳朵拉回大小调的属—主解决。调式音乐更常用持续低音、四度排列与特征音和弦来建立中心，而不是连续 V–I。",
+            cites: [
+              cite("sposobin", "第二十七章 俄罗斯音乐中的自然调式"),
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "判断顺序",
+            text: "主音 → 三音（大/小调类）→ 特征音 → 含特征音的和弦 → 是否靠 V–I 收束。五步都清楚，才说得出“这是哪一种调式”。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-dorian-modal",
+        title: "D Dorian：i7 – IV – i7",
+        caption: "Dm7–G–Dm7；G 大三和弦包含 Dorian 的大六 B，是特征音和弦，不靠导音回主音。",
+        kind: "progression",
+        key: "C",
+        tempo: 70,
+        beats: 12,
+        events: [
+          chord(0, 4, ["D3", "F3", "A3", "C4"], { label: "Dm7" }),
+          chord(4, 4, ["G3", "B3", "D4", "G4"], { label: "IV (Dorian)" }),
+          chord(8, 4, ["D3", "F3", "A3", "C4"], { label: "Dm7" }),
+        ],
+      }),
+    ],
+    related: ["modes", "modal-harmony", "borrowed-chords", "modal-interchange"],
+    review: {
+      question: "Dorian 的特征音是什么？它常用的调式终止和弦是哪一个？",
+      answer:
+        "特征音是大六（相对自然小调）；常用 IV 大三和弦作为含特征音的调式终止和弦，回到 i。",
+      hint: "先比较同主音自然小调，再找大六。",
+    },
+  },
+  {
+    id: "modal-interchange",
+    slug: "modal-interchange",
+    number: "H-19",
+    title: "调式互换：七种调式的借用",
+    titleEn: "MODAL INTERCHANGE",
+    category: "harmony",
+    level: "高级",
+    aliases: ["调式互换", "调式转换", "modal interchange", "modal mixture", "高阶调式转换", "borrowed chords"],
+    tags: ["调式", "借用", "色彩"],
+    dimensions: ["brightness", "color", "relationship"],
+    summary:
+      "调式互换不止从平行小调借 bVI/iv；它可以把同主音的 Dorian、Phrygian、Lydian、Mixolydian 的特征和弦借进当前调，用色彩变化替代转调。",
+    sections: [
+      {
+        id: "beyond-minor",
+        heading: "从平行小调到七种调式",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "传统调式交替主要借平行小调：iv、bVI、bIII、bVII。现代和声把借用扩展到所有同主音调式：C Dorian 的 IV 大（F）、C Phrygian 的 bII（Db）、C Lydian 的 II 大（D）与 #IV（F#）、C Mixolydian 的 bVII（Bb）。它们的共同点是主音仍是 C，只换“灯光”。",
+            cites: [
+              cite("laitz", "Chapter 21 Modal Mixture"),
+              cite("levine", "Chapter 3 Chord/Scale Theory（大调音阶和声）"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "借用和弦的功能取决于它接到哪里：bII 常作为 Phrygian 色彩或那不勒斯式下属，IV 大可以是 Dorian 色彩，bVII 常作为 Mixolydian/后门回到 I。分析时先标借用来源，再看它是否解决回原主音。",
+            cites: [
+              cite("sposobin", "第四十九章 交替大小调体系"),
+              cite("levine", "Chapter 14 Advanced Reharmonization"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "borrow-or-modulate",
+        heading: "借用还是转调",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "借用不搬主音：听者仍知道家在 C，借用后通常回到 C 或 G7。转调则让新调获得自己的属—主与终止，并持续足够长。区分的关键不是变化音，而是“中心有没有搬”。",
+            cites: [
+              cite("laitz", "Chapter 22 Chromatic Modulation and Text-Music Relations"),
+              cite("sposobin", "第三十四章 转调"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "三步检查",
+            text: "先锁低音/主音是否仍是 C；再找特征音来自哪条同主音调式；最后看后面有没有新调的终止。三步都指向 C，就是互换而不是转调。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-interchange",
+        title: "C – Ab – Bb – C",
+        caption: "Ab（bVI，来自 C Aeolian）与 Bb（bVII，来自 C Mixolydian）都围绕 C，最后回到主音。",
+        kind: "progression",
+        key: "C",
+        tempo: 74,
+        beats: 12,
+        events: [
+          chord(0, 3, ["C3", "E3", "G3"], { label: "I" }),
+          chord(3, 3, ["Ab3", "C4", "Eb4"], { label: "bVI" }),
+          chord(6, 3, ["Bb3", "D4", "F4"], { label: "bVII" }),
+          chord(9, 3, ["C3", "E3", "G3"], { label: "I" }),
+        ],
+      }),
+    ],
+    related: ["borrowed-chords", "modal-characteristics", "modal-mixture-color", "modulation"],
+    review: {
+      question: "C 大调里的 bII、IV 大、bVII 分别可以来自哪条同主音调式？",
+      answer: "bII 来自 C Phrygian，IV 大来自 C Dorian，bVII 来自 C Mixolydian。",
+      hint: "先锁主音 C，再找特征音。",
+    },
+  },
+  {
+    id: "quartal-harmony",
+    slug: "quartal-harmony",
+    number: "H-20",
+    title: "四度和声与四度排列",
+    titleEn: "QUARTAL HARMONY",
+    category: "harmony",
+    level: "高级",
+    aliases: ["四度和声", "四度排列", "quartal harmony", "quartal voicing", "So What voicing"],
+    tags: ["排列", "调式", "色彩"],
+    dimensions: ["color", "relationship"],
+    summary:
+      "四度和声用四度叠置代替三度叠置，弱化大小性质，让和弦变成“整体调式颜色”；它常与持续低音、调式化和声结合使用。",
+    sections: [
+      {
+        id: "stacking",
+        heading: "四度叠置与性质模糊",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "四度叠置没有三音，听者很难判断它是大和弦还是小和弦；它听到的是一片音程颜色。调内四度既包含纯四度，也可能包含增四度，后者由音阶自然产生，不需要额外解释成变化音。",
+            cites: [
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "四度和声最适合调式化语境：低音保持主音，上方四度结构移动，整体仍属于同一条调式。它也可以作为调性进行中的色彩插入，但插入后要回到功能和声的目标，否则会失去方向。",
+            cites: [cite("levine", "Chapter 13 Basic Reharmonization")],
+          },
+        ],
+      },
+      {
+        id: "so-what",
+        heading: "So What 排列与持续低音",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "《So What》的经典排列以四度为主：D–G–C–F，再在顶部加一个大三度 A，形成 Dm11 的色彩。两个平行小七和弦相差半音移动，低音与和弦一起上移，没有属—主终止。",
+            cites: [cite("levine", "Chapter 2 Major Scale and Progressions（调式爵士）")],
+          },
+          {
+            type: "callout",
+            title: "写作顺序",
+            text: "先定主音与调式，再选四度排列，保持低音，最后用特征音定位。不要把四度和弦当成“没有根音的和弦”；根音在低音里。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-quartal-so-what",
+        title: "Dm11 四度排列 → Ebm11 → Dm11",
+        caption: "D–G–C–F–A 与 Eb–Ab–Db–Gb–Bb 是同一结构平移半音；低音持续调式中心。",
+        kind: "progression",
+        key: "C",
+        tempo: 62,
+        beats: 12,
+        events: [
+          chord(0, 4, ["D3", "G3", "C4", "F4", "A4"], { label: "Dm11 (quartal)" }),
+          chord(4, 4, ["Eb3", "Ab3", "Db4", "Gb4", "Bb4"], { label: "Ebm11 (quartal)" }),
+          chord(8, 4, ["D3", "G3", "C4", "F4", "A4"], { label: "Dm11" }),
+        ],
+      }),
+    ],
+    related: ["modal-harmony", "modal-characteristics", "hybrid-chords"],
+    review: {
+      question: "四度和弦为什么听起来性质模糊？它靠什么确定调式中心？",
+      answer:
+        "因为它通常没有三音，无法直接区分大小；调式中心由持续低音、音阶与特征音确定，而不是由和弦质量确定。",
+      hint: "没有三音，根音在低音。",
+    },
+  },
+  {
+    id: "hybrid-chords",
+    slug: "hybrid-chords",
+    number: "H-21",
+    title: "混合和弦、复合和弦与斜杠和弦",
+    titleEn: "HYBRID, POLY & SLASH CHORDS",
+    category: "harmony",
+    level: "高级",
+    aliases: ["混合和弦", "复合和弦", "斜杠和弦", "hybrid chords", "poly chords", "upper structure", "slash chords"],
+    tags: ["排列", "色彩", "低音"],
+    dimensions: ["color", "relationship"],
+    summary:
+      "斜杠和弦不只是转位：低音是弦内音时是转位；上方结构缺三音时是混合和弦；两个完整三和弦叠置时是复合和弦。三类都靠低音与上层结构的分离制造色彩。",
+    sections: [
+      {
+        id: "three-types",
+        heading: "三种斜杠结构",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "转位：低音是和弦的根、三、五或七音；功能不变，低音线改变。",
+              "混合和弦：低音与上方结构分离，上方通常省略根音与三音，性质模糊。",
+              "复合和弦：两个完整三和弦/七和弦叠置，上下各有清晰质量，整体形成高叠和弦。",
+            ],
+            cites: [
+              cite("levine", "Chapter 5 Slash Chords"),
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "判断斜杠和弦先问低音是不是弦内音。如果是根/三/五/七，它多半只是转位；如果低音与上方结构无法合并成一个普通和弦，才进入混合或复合的范畴。九、十一、十三音一般不做低音，否则会被听成另一个和弦。",
+            cites: [cite("levine", "Chapter 5 Slash Chords")],
+          },
+        ],
+      },
+      {
+        id: "bass-color",
+        heading: "低音决定功能，上层决定颜色",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "G/C 的低音是 C，上方是 G 三和弦；它没有三音 E，因此既不是普通 C 大三，也不是普通 G。D/C 则把 D 三和弦压在 C 上，得到类似 Cmaj7#11 的色彩。低音提供功能位置，上层结构提供颜色与张力。",
+            cites: [
+              cite("levine", "Chapter 5 Slash Chords"),
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "配器提醒",
+            text: "混合和弦最容易在低音区糊掉。把上层结构放在中高音区，低音只留根音或五音；先用钢琴听清两个结构，再分配给乐队。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-hybrid-slash",
+        title: "C – G/C – D/C – C",
+        caption: "G/C 与 D/C 都保留了 C 低音；上方三和弦改变色彩，但功能位置仍围绕 C。",
+        kind: "progression",
+        key: "C",
+        tempo: 68,
+        beats: 12,
+        events: [
+          chord(0, 3, ["C3", "E3", "G3"], { label: "C" }),
+          chord(3, 3, ["C3", "G3", "B3", "D4"], { label: "G/C" }),
+          chord(6, 3, ["C3", "D4", "F#4", "A4"], { label: "D/C" }),
+          chord(9, 3, ["C3", "E3", "G3", "C4"], { label: "C" }),
+        ],
+      }),
+    ],
+    related: ["bass-line", "rootless-voicings", "quartal-harmony"],
+    review: {
+      question: "斜杠和弦中，转位、混合和弦与复合和弦的区别是什么？",
+      answer:
+        "转位的低音是和弦内音；混合和弦的上层省略根音/三音、性质模糊；复合和弦由两个完整和弦叠置而成。",
+      hint: "先看低音是不是弦内音，再看上层有没有完整三音。",
+    },
+  },
+  {
+    id: "non-functional-dominants",
+    slug: "non-functional-dominants",
+    number: "H-22",
+    title: "无功能属和弦与相邻属和弦",
+    titleEn: "NON-FUNCTIONAL DOMINANTS",
+    category: "harmony",
+    level: "高级",
+    aliases: ["无功能属和弦", "相邻属和弦", "non-functional dominant", "adjacent dominants", "没有属功能的属和弦"],
+    tags: ["属七", "无功能", "模进"],
+    dimensions: ["function", "color", "relationship"],
+    summary:
+      "属七的音响不等于属功能：当属七不向下五度解决，而是平行上行、停留或解决到非主和弦时，它变成色彩和弦/相邻属和弦，功能被悬置。",
+    sections: [
+      {
+        id: "sound-vs-function",
+        heading: "属七音响与属功能",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "属功能由三全音的解决方向定义：三音上行、七音下行，目标通常是主和弦。若一个属七和弦没有这个解决方向，它可能只是借用了属七的音响，例如 bVI7、bIII7、bVII7 或 II7 作为色彩和弦。",
+            cites: [
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+              cite("sposobin", "第五十六章 意外进行"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "分析时不要看到属七就标 V/x。先看根音是否下行五度或小二度解决，再看三全音是否按属功能解决；两者都不成立时，按色彩和弦或相邻属和弦处理，而不是硬套副属。",
+            cites: [
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("levine", "Chapter 14 Advanced Reharmonization"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "adjacent",
+        heading: "相邻属和弦与渐进转调",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "相邻属和弦是连续上行的属七：小二度、大二度或小三度。它们彼此平等，不要求解决，常用来配模进旋律、掩盖功能、延伸终止，或在最后突然解决形成渐进转调。音阶多用 Mixolydian 或 Lydian dominant，而不是解决压力很强的 alt。",
+            cites: [
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+              cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+              cite("sposobin", "第五十五章 转调模进"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "判断顺序",
+            text: "根音是否下行五度/小二度解决？三全音是否按属功能解决？若都没有，先按色彩/相邻属和弦分析；只有目标明确时，才写 V/x。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-adjacent-dominants",
+        title: "C7 – D7 – Eb7 – Ab7 – Db",
+        caption: "相邻属和弦连续上行；最后 Ab7 才下行五度解决到 Db，形成渐进转调。",
+        kind: "progression",
+        key: "C",
+        tempo: 76,
+        beats: 10,
+        events: [
+          chord(0, 2, ["C3", "E3", "G3", "Bb3"], { label: "C7" }),
+          chord(2, 2, ["D3", "F#3", "A3", "C4"], { label: "D7" }),
+          chord(4, 2, ["Eb3", "G3", "Bb3", "Db4"], { label: "Eb7" }),
+          chord(6, 2, ["Ab3", "C4", "Eb4", "Gb4"], { label: "Ab7" }),
+          chord(8, 2, ["Db3", "F3", "Ab3", "Db4"], { label: "Db" }),
+        ],
+      }),
+    ],
+    related: ["secondary-dominants", "tritone-substitution", "harmonic-sequence", "constant-structure"],
+    review: {
+      question: "为什么一个属七和弦不一定该标成 V/x？",
+      answer:
+        "属功能需要三全音的明确解决方向。若它不向下五度/小二度解决，也没有解决到目标和弦，它可能只是色彩和弦或相邻属和弦。",
+      hint: "先听解决方向，再写级数。",
+    },
+  },
+  {
+    id: "constant-structure",
+    slug: "constant-structure",
+    number: "H-23",
+    title: "固定结构与平行和弦",
+    titleEn: "CONSTANT STRUCTURE & PLANING",
+    category: "harmony",
+    level: "高级",
+    aliases: ["固定结构", "平行和弦", "constant structure", "planing", "平行进行"],
+    tags: ["排列", "无功能", "色彩"],
+    dimensions: ["color", "relationship"],
+    summary:
+      "固定结构把同一种和弦质量按固定音程平移，所有和弦“平等”，功能被削弱；它用平行色彩与模进制造方向，而不是属—主解决。",
+    sections: [
+      {
+        id: "parallel",
+        heading: "同质量平移",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "固定结构（constant structure）保持和弦质量不变，只改变根音：连续的大七、连续的小七、连续的属七都可以。每个和弦的内部音程相同，听者听到的是平行色彩带，而不是功能层级。",
+            cites: [
+              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+              cite("levine", "Chapter 14 Advanced Reharmonization"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "平行进行会削弱倾向音的解决：每个声部都按同一方向移动，导音与七音不再各自履行功能。正因如此，固定结构常被用来制造悬浮、梦幻或调式化的段落；若要回到功能，必须在一个明确的目标和弦上停下来。",
+            cites: [cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave")],
+          },
+        ],
+      },
+      {
+        id: "functional-or-not",
+        heading: "有功能与无功能之间",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "固定结构不必然无功能。若平行段落最后接上真正的 V–I，它就被功能收束；若一直平移而没有目标，它更接近无功能和声。判断时要看终点，而不是只看中间是否平行。",
+            cites: [
+              cite("sposobin", "第五十五章 转调模进"),
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "写作抓手",
+            text: "先确定平移音程（半音、全音、小三度），再决定终点是否有功能。平行段越长，终点越需要清楚，否则听众会失去方向。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-constant-structure",
+        title: "Cmaj7 → Dmaj7 → Emaj7 → Fmaj7 → G7 → C",
+        caption: "前四个大七和弦按全音平移，功能被悬置；最后 G7–C 把段落拉回功能收束。",
+        kind: "progression",
+        key: "C",
+        tempo: 72,
+        beats: 12,
+        events: [
+          chord(0, 2, ["C3", "E3", "G3", "B3"], { label: "Cmaj7" }),
+          chord(2, 2, ["D3", "F#3", "A3", "C#4"], { label: "Dmaj7" }),
+          chord(4, 2, ["E3", "G#3", "B3", "D#4"], { label: "Emaj7" }),
+          chord(6, 2, ["F3", "A3", "C4", "E4"], { label: "Fmaj7" }),
+          chord(8, 2, ["G3", "B3", "D4", "F4"], { label: "G7" }),
+          chord(10, 2, ["C3", "E3", "G3", "C4"], { label: "C" }),
+        ],
+      }),
+    ],
+    related: ["harmonic-sequence", "modal-interchange", "non-functional-dominants"],
+    review: {
+      question: "固定结构为什么会削弱功能和声？",
+      answer:
+        "因为它保持和弦质量并平行移动，导音与七音不再按各自倾向解决；功能需要目标与解决方向，而平行色彩带只提供连续颜色。",
+      hint: "平行移动 = 倾向音不再各自解决。",
+    },
+  },
 ];

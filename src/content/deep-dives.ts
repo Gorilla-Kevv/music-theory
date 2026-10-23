@@ -932,4 +932,166 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
       },
     ],
   },
+  "modal-characteristics": {
+    title: "白话解释：调式不是“从不同音开始弹大调”",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "把 C 大调从 D 开始弹，确实能得到 D Dorian 的音高集合，但听者听到的仍可能是 C 大调。真正让 Dorian 成立的，是低音与和声围绕 D 建立中心，并且不断出现它的大六 B。没有特征音，调式就只剩下音阶指法。",
+        cites: [
+          cite("levine", "Chapter 2 Major Scale and Progressions（调式）"),
+          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "判断调式按五步走：主音是谁、三音是大是小、特征音是哪一个、哪个和弦包含特征音、最后是否靠 V–I 收束。Dorian 的 IV 大、Phrygian 的 bII 大、Lydian 的 II 大，都是“含特征音的终止和弦”，它们不靠导音，而靠颜色回到主音。",
+        cites: [
+          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("sposobin", "第二十七章 俄罗斯音乐中的自然调式"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "听觉练习",
+        text: "同一主音先弹自然大调，再弹 Lydian，只改四音；再弹 Mixolydian，只改七音。每次只改一个音，耳朵才会记住“特征音”到底改变了什么。",
+      },
+    ],
+  },
+  "modal-interchange": {
+    title: "白话解释：同一个主音，七种灯光",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "调式互换是把同主音的其他调式当成“颜色库”：C 大调可以从 C Dorian 借 IV 大，从 C Phrygian 借 bII，从 C Lydian 借 II 大，从 C Mixolydian 借 bVII。主音仍是 C，听者不会觉得搬家，只会觉得灯光变了。",
+        cites: [
+          cite("laitz", "Chapter 21 Modal Mixture"),
+          cite("levine", "Chapter 3 Chord/Scale Theory（大调音阶和声）"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "借用是否成立，看后面有没有回到原主音。C–Ab–Bb–C 里，Ab 与 Bb 都没有建立自己的属—主，最后又回到 C，所以是互换；如果 Ab 后面出现 Eb7–Ab 的终止，中心就搬走了，才是转调。",
+        cites: [
+          cite("sposobin", "第四十九章 交替大小调体系"),
+          cite("laitz", "Chapter 22 Chromatic Modulation and Text-Music Relations"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "三步检查",
+        text: "先锁主音，再找特征音来自哪条调式，最后看终止。三步都指向原主音，就是互换；出现新调终止，才是转调。",
+      },
+    ],
+  },
+  "quartal-harmony": {
+    title: "白话解释：四度堆叠像一片雾",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "三度叠置会告诉你“这是大和弦还是小和弦”，四度叠置通常没有三音，所以它不告诉你大小，只给你一片音程颜色。D–G–C–F–A 既像 Dm11，也可以被听成 G 上的挂留，或 C 上的延伸；意义由低音与调式决定。",
+        cites: [
+          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("levine", "Chapter 13 Basic Reharmonization"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "四度和声最适合“低音不动、上方换色”的段落。低音持续 D，上方四度结构移动，整体仍是 D Dorian；如果低音也离开，调式中心就会松动。它也可以作为功能进行中的插色，但插完要回到明确的目标和弦。",
+        cites: [cite("levine", "Chapter 2 Major Scale and Progressions（调式爵士）")],
+      },
+      {
+        type: "callout",
+        title: "写作顺序",
+        text: "先定主音与调式，再选四度排列，保持低音，最后用特征音定位。不要把四度和弦当成“没有根音”；根音在低音里。",
+      },
+    ],
+  },
+  "hybrid-chords": {
+    title: "白话解释：斜杠不是一种和弦，而是三种关系",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "看到 C/E，先问低音 E 是不是 C 和弦的三音；是，它只是转位。看到 G/C，低音 C 不是 G 三和弦的音，上方又没有 E，它就不是普通转位，而是混合和弦。看到两个完整三和弦叠在一起，才是复合和弦。",
+        cites: [
+          cite("levine", "Chapter 5 Slash Chords"),
+          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "低音决定“站在哪里”，上层结构决定“是什么颜色”。G/C 的低音把功能位置钉在 C，上方的 G 三和弦提供 B、D 与 G 的色彩；D/C 则把 D 三和弦压在 C 上，得到类似 Cmaj7#11 的音响。九、十一、十三音一般不做低音，否则会被听成另一个和弦。",
+        cites: [cite("levine", "Chapter 5 Slash Chords")],
+      },
+      {
+        type: "callout",
+        title: "配器提醒",
+        text: "混合和弦最容易在低音区糊掉。上层结构放中高音区，低音只留根音或五音；先用钢琴听清两个结构，再分给乐队。",
+      },
+    ],
+  },
+  "non-functional-dominants": {
+    title: "白话解释：属七的音响，不等于属功能",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "属功能不是“和弦符号带 7”，而是三全音有没有按方向解决：三音上行、七音下行，目标通常是主和弦。bVI7、bIII7、bVII7 也可以有属七音响，但它们不往主和弦走，所以不能一律标成 V/x。",
+        cites: [
+          cite("levine", "Chapter 13 Basic Reharmonization"),
+          cite("sposobin", "第五十六章 意外进行"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "相邻属和弦是连续上行的属七：C7–D7–Eb7。它们彼此平等，不要求解决；可以配模进旋律、掩盖功能，最后突然让 Ab7 下行五度到 Db，形成渐进转调。判断时先看根音方向，再看三全音是否解决。",
+        cites: [
+          cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+          cite("sposobin", "第五十五章 转调模进"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "分析顺序",
+        text: "先听解决方向，再写级数。没有下行五度/小二度解决，也没有明确目标，就先按色彩和弦或相邻属和弦处理。",
+      },
+    ],
+  },
+  "constant-structure": {
+    title: "白话解释：平移的和弦块",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "固定结构像把同一个和弦块沿键盘平移：Cmaj7–Dmaj7–Emaj7 的质量完全相同，只是根音在动。每个声部都按同一方向走，导音与七音不再各自解决，所以功能感被削弱，听感更像一条平行色彩带。",
+        cites: [
+          cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+          cite("levine", "Chapter 14 Advanced Reharmonization"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "它不必然无功能。平行段最后接上 G7–C，整段就被功能收束；如果一直平移、没有目标，才接近无功能和声。判断时看终点，不要只看中间是否平行。",
+        cites: [
+          cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+          cite("sposobin", "第五十五章 转调模进"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "写作抓手",
+        text: "先定平移音程，再定终点。平行段越长，终点越要清楚，否则听众会失去方向。",
+      },
+    ],
+  },
 };

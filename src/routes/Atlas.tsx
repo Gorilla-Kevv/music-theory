@@ -320,7 +320,7 @@ export function Atlas() {
                 );
               })}
 
-              <g transform="translate(80 968)">
+              <g transform="translate(80 1088)">
                 <line x1="0" y1="0" x2="28" y2="0" stroke="var(--color-ink)" strokeOpacity="0.25" strokeDasharray="3 3" />
                 <text x="36" y="4" fill="var(--color-muted)" fontSize="9">关联</text>
                 <line x1="100" y1="0" x2="128" y2="0" stroke="var(--color-cadmium-ink)" strokeOpacity="0.6" strokeDasharray="6 3" />

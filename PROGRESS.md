@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 9 两本教材深度覆盖、白话拆解与体系图谱（持续迭代）
+- 当前正在开发任务：阶段 10 现代和声与中古调式扩展（B 站课程调查后新增 6 个概念）
 - 下一阶段任务：Sposobin 深度字段、Levine/Laitz 剩余 `confusions`、图谱学习路径、stdio MCP server（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -133,3 +133,30 @@
   - 图谱是编辑关系，不是唯一理论体系；后续增加边时必须避免噪声与“每本书连所有枢纽”。
 - 下一阶段入口：9.6 → 9.7 → 9.8 → 9.9；完成后再评估阶段 10。
 - 本次文档更新时间：10.23 23:30
+
+## 阶段 10 现代和声与中古调式扩展（B 站课程调查）[计划时间：10.23 23:40 BY TraeCode][完成时间：10.24 00:20 BY TraeCode]
+
+- 分支：dev
+- 调查方式：用 `bili-duty` 读取 B 站合集「爵士和声理论」（mid 1405367071 / season 762895，共 68 集）的完整目录；按主题抽取 7 集字幕做结构化调查：上02 调式音阶、下44 调式特征音、下45 Lydian、下50 四度和声、下51 组合和弦、下52 固定结构/无功能和声、下34 相邻属和弦。
+- 调查结论（作为选题地图，不作为理论来源）：现有库缺 6 个现代和声节点——中古调式特征音/调式终止、七种调式互换、四度和声、混合/复合/斜杠和弦、无功能属和弦、固定结构/平行和弦。
+- 已完成：
+  - 10.1 新增 6 个概念（H-18..H-23）：`modal-characteristics`、`modal-interchange`、`quartal-harmony`、`hybrid-chords`、`non-functional-dominants`、`constant-structure`。
+  - 10.2 每个概念含 2 节正文、可听谱例、复习卡、关联概念与维度；保留“只引用三本书”的硬约束（Laitz 1A/1C/21/22/28/29/30、Levine 2/3/5/13/14、Sposobin 27/48/55/56）。
+  - 10.3 新增 6 条白话拆解，deep dive 覆盖 43/43。
+  - 10.4 分类“功能和声”更名为“和声”（HARMONY），描述扩展为功能、调式、四度排列与无功能和声；图谱新增 7 条前置链。
+  - 10.5 统计更新：43 概念 / 48 谱例 / 164 条引用 / 43 条白话拆解；图谱 3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置。
+- 未完成：
+  - 10.6 逐调式扩展：为 Lydian、Mixolydian、Dorian、Phrygian、Aeolian 各补一个独立谱例/案例（当前只有 Dorian 综合例）。
+  - 10.7 把“相邻属和弦”的渐进转调做成可视化路径（图谱或五度圈叠加）。
+  - 10.8 Sposobin 深度字段与 Levine/Laitz `confusions` 仍按阶段 9 队列推进。
+- 改动文件：src/content/harmony-advanced.ts、src/content/deep-dives.ts、src/content/graph/index.ts、src/content/index.ts、src/components/SearchDialog.tsx、AGENTS.md、PRODUCT.md、DESIGN.md、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck` 通过。
+  - `npm run knowledge` → 43 concepts / 48 examples / 164 citations；分类 8 + 23 + 12。
+  - 图谱统计 → 104 关联 / 32 前置。
+- 风险：
+  - B 站课程只用于发现主题与组织顺序，具体理论断言仍必须回到三本书；视频中的说法若三本书无法定位，不写入知识库。
+  - 现代和声术语（hybrid/poly/constant structure）在三本书中的译名不完全统一，正文采用“英文术语 + 中文解释”，避免伪造原书原话。
+  - 新增概念集中在高级层，初学者需要先完成基础/功能和声路径；图谱前置链已补但学习路径模式尚未做。
+- 下一阶段入口：10.6 → 10.7，然后回到 9.6/9.7。
+- 本次文档更新时间：10.24 00:20

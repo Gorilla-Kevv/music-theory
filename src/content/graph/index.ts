@@ -36,7 +36,7 @@ export interface AtlasHub {
 }
 
 export const ATLAS_WIDTH = 1200;
-export const ATLAS_HEIGHT = 1000;
+export const ATLAS_HEIGHT = 1120;
 
 export const ATLAS_HUBS: AtlasHub[] = [
   {
@@ -61,7 +61,7 @@ export const ATLAS_HUBS: AtlasHub[] = [
     subtitle: "COLOR & TENSION",
     y: 430,
     dimensions: ["color"],
-    description: "协和/不协和、延伸音、变化音、张力光谱与 voicing 色彩。",
+    description: "协和/不协和、延伸音、变化音、四度排列、混合和弦与 voicing 色彩。",
   },
   {
     id: "hub-brightness",
@@ -69,7 +69,7 @@ export const ATLAS_HUBS: AtlasHub[] = [
     subtitle: "BRIGHTNESS & MODE",
     y: 560,
     dimensions: ["brightness"],
-    description: "大调/小调、同主音交替、借用和弦、那不勒斯与调式色彩。",
+    description: "大调/小调、中古调式、同主音交替、调式互换、那不勒斯与调式色彩。",
   },
   {
     id: "hub-relationship",
@@ -77,7 +77,7 @@ export const ATLAS_HUBS: AtlasHub[] = [
     subtitle: "RELATIONSHIP",
     y: 690,
     dimensions: ["relationship"],
-    description: "调性距离、五度圈、枢轴和弦、等音关系与替代。",
+    description: "调性距离、五度圈、枢轴和弦、等音关系、替代与无功能属和弦。",
   },
   {
     id: "hub-jazz",
@@ -154,6 +154,13 @@ const PREREQUISITES: Array<[string, string]> = [
   ["rootless-voicings", "ii-v-i"],
   ["bebop-scale", "blues"],
   ["coltrane-changes", "rootless-voicings"],
+  ["modes", "modal-characteristics"],
+  ["modal-characteristics", "modal-interchange"],
+  ["modal-interchange", "quartal-harmony"],
+  ["bass-line", "hybrid-chords"],
+  ["secondary-dominants", "non-functional-dominants"],
+  ["harmonic-sequence", "constant-structure"],
+  ["quartal-harmony", "constant-structure"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {
