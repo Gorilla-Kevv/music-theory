@@ -178,7 +178,7 @@ export function References() {
             <p className="mono-label text-cobalt-ink">VIDEO RESEARCH / B站课程调研台账</p>
             <h2 className="zh-display mt-2 text-2xl sm:text-3xl">已经读过的视频，不重复搜</h2>
             <p className="reading-column mt-2 max-w-[62ch] text-sm leading-relaxed text-muted">
-              这里按合集与板块记录已读取或已编目的课程视频，供 Agent 判断是否需要重复检索。视频只用于发现主题与组织顺序，不作为本库的理论依据；台账不保存字幕或正文，已读条目注明依据（字幕 / 转写 / 关键帧）。
+              这里按合集与板块记录已读取或已编目的课程视频与专栏文章，供 Agent 判断是否需要重复检索。视频与文章只用于发现主题与组织顺序，不作为本库的理论依据；台账不保存字幕、转写或正文，已读条目注明依据（字幕 / 转写 / 关键帧 / 图文）。
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -240,6 +240,9 @@ export function References() {
                     <span className="mono-label border border-ink/30 px-1.5 py-0.5 text-muted">
                       {collection.section} / {collection.id}
                     </span>
+                  ) : null}
+                  {video.kind === "article" ? (
+                    <span className="mono-label bg-cobalt px-1.5 py-0.5 text-paper">专栏 ARTICLE</span>
                   ) : null}
                   {video.via ? (
                     <span className="mono-label border border-ink/15 px-1.5 py-0.5 text-muted">

@@ -8,11 +8,12 @@ export type BilibiliCollectionId =
   | "jazz-harmony"
   | "jazz-academy"
   | "stylized-creation"
-  | "jazz-extras";
+  | "jazz-extras"
+  | "theory-articles";
 
 export type BilibiliSection = "爵士和声" | "风格化创作";
 
-export type BilibiliReadVia = "subtitle" | "asr" | "frames";
+export type BilibiliReadVia = "subtitle" | "asr" | "frames" | "text";
 
 export interface BilibiliCollection {
   id: BilibiliCollectionId;
@@ -39,6 +40,7 @@ export interface BilibiliVideo {
   themes: string[];
   collection: BilibiliCollectionId;
   via?: BilibiliReadVia;
+  kind?: "video" | "article";
   usedIn?: string[];
   takeaway?: string;
   readAt?: string;
@@ -92,6 +94,18 @@ export const BILIBILI_COLLECTIONS: BilibiliCollection[] = [
     fetchedAt: "2026-10-24",
     section: "爵士和声",
     note: "同一 UP 的合集外公开课补充视频。",
+  },
+  {
+    id: "theory-articles",
+    title: "B 站专栏归档·和声随笔",
+    author: "多位 UP",
+    mid: "",
+    seasonId: "",
+    url: "https://search.bilibili.com/article?keyword=和声",
+    total: 1,
+    fetchedAt: "2026-10-24",
+    section: "爵士和声",
+    note: "按条归档的专栏文章（kind: article，bvid 字段存 CV 号，duration 为 0，via: text 表示直接读取图文正文）；只记元数据与原创一句话结论。",
   },
 ];
 
@@ -1874,6 +1888,33 @@ export const BILIBILI_VIDEOS: BilibiliVideo[] = [
       "extensions-alterations"
     ],
     takeaway:  "排列不用逐日回头复习：voicing 是滚雪球式累积——音程→三和弦→七和弦→无根排列→扩展音→drop/上层结构，后一步永远在调用前一步。",
+    readAt:  "2026-10-24"
+  },
+  {
+    bvid:  "CV53580498",
+    title:  "【作曲: 如何在传统中创新】学个妙和声之“属降十和弦”",
+    episode:  "专栏",
+    chapter:  "",
+    duration:  0,
+    published:  "2026-10-23",
+    url:  "https://www.bilibili.com/read/cv53580498",
+    status:  "read",
+    themes:  [
+      "布鲁斯",
+      "7#9 和弦",
+      "等音读法",
+      "大小调色彩"
+    ],
+    collection:  "theory-articles",
+    kind:  "article",
+    via:  "text",
+    usedIn:  [
+      "blues",
+      "extensions-alterations",
+      "non-functional-dominants",
+      "modal-mixture-color"
+    ],
+    takeaway:  "布鲁斯的 I7#9（Hendrix 和弦）失去部分属功能，作为音响而非功能使用；它可等音读作 m7 add10，拼写由音阶语境与解决方向决定——往大调用 #9、往小调用 b13；iv 上 9 与 #9 并用，同样是同主音/近关系大小调的色彩争夺。",
     readAt:  "2026-10-24"
   }
 ]

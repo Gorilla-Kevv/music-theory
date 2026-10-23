@@ -39,7 +39,7 @@ src/content/
   jazz.ts              爵士 8 条
   jazz-advanced.ts     爵士深化 5 条（含旋律小调调式 melodic-minor-modes）
   deep-dives.ts        44 条白话拆解（全部概念）
-  bilibili.ts          B 站课程调研台账：4 个合集/板块，111 条视频 / 19 条已读 / 92 条仅编目
+  bilibili.ts          B 站课程调研台账：5 个合集/板块，112 条视频与文章 / 20 条已读 / 92 条仅编目
   graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置
   books/               三本书的完整章目 + 原创章节笔记
   bibliography.ts      书目、版次、章节定位政策
@@ -75,9 +75,9 @@ src/content/
 
 - 数据：`src/content/bilibili.ts`；页面：`/references` 的 `VIDEO RESEARCH` 区域。
 - 目的：记录已读取/已编目的课程视频，避免 Agent 与人工重复搜索；**视频不作为理论依据**，只用于发现主题与组织顺序。
-- 结构：多合集（`BILIBILI_COLLECTIONS`）+ 板块。当前 4 个合集：`jazz-harmony`（爵士和声理论 · 爵士-没有派对，68 集）、`jazz-academy`（学院派作曲·爵士理论 · Yulia Music Note，10 集）、`stylized-creation`（**风格化创作** · Gray-Frezical，31 集，独立板块）、`jazz-extras`（同一 UP 的合集外公开课，2 条）。视频条目用 `collection` 字段归属。
+- 结构：多合集（`BILIBILI_COLLECTIONS`）+ 板块。当前 5 个合集：`jazz-harmony`（爵士和声理论 · 爵士-没有派对，68 集）、`jazz-academy`（学院派作曲·爵士理论 · Yulia Music Note，10 集）、`stylized-creation`（**风格化创作** · Gray-Frezical，31 集，独立板块）、`jazz-extras`（同一 UP 的合集外公开课，2 条）、`theory-articles`（B 站专栏归档·和声随笔，按条归档）。视频条目用 `collection` 字段归属。
 - 状态：`read`（已读并做笔记）与 `catalogued`（只登记目录）。新增视频先查 BV 是否已存在，不重复登记。
-- 字段：`bvid`、`title`、`episode`、`chapter`、`duration`、`published`、`url`、`status`、`themes`、`collection`；已读视频再加 `via`（`subtitle` 字幕 / `asr` 转写 / `frames` 关键帧）、`usedIn`（映射概念 slug）、`takeaway`（一句话结论）、`readAt`。
+- 字段：`bvid`、`title`、`episode`、`chapter`、`duration`、`published`、`url`、`status`、`themes`、`collection`；专栏文章用 `kind: "article"`（`bvid` 字段存 CV 号，`duration: 0`），已读视频再加 `via`（`subtitle` 字幕 / `asr` 转写 / `frames` 关键帧 / `text` 图文正文）、`usedIn`（映射概念 slug）、`takeaway`（一句话结论）、`readAt`。
 - 不保存字幕、转写或视频正文；只保存元数据与原创一句话结论。台账中的结论不能替代三本书的章节级引用。
 - Agent 接口：`get_video_research`（支持 `collection` 参数）、`window.TONIC.videos({ status, query, theme, collection })`、CLI `npm run theory -- videos [--status read] [--query ...]`；离线包 `knowledge.json` 含 `videoResearch.collections/videos` 与 `meta.videoCount/videoReadCount`。
 
@@ -86,7 +86,7 @@ src/content/
 用户给出新的 B 站合集或视频链接时，按以下流程一次做完，不要中途请示：
 
 1. **编目**：合集用 `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=<mid>&season_id=<id>&page_num=1&page_size=100` 拉全量目录；单视频用 `bili.mjs video <BV>`。与 `bilibili.ts` 现有 BV 查重，只登记新条目。
-2. **读取**：按主题挑与知识库相关的视频读内容——有字幕轨用 `bili.mjs subtitle`（落盘 UTF-8 后读，避免终端乱码）；无字幕轨用 `bili-duty-local` 的 `data/.venv-asr/Scripts/python.exe data/asr-gemini.py <BV>` 转写；无人声/演示视频用 `shot.mjs` 取关键帧 + 多模态读屏。读过的记 `status: "read"` 并写 `via`、`takeaway`（一句话）、`usedIn`（映射到现有概念 slug）；只编目的记 `catalogued`。
+2. **读取**：按主题挑与知识库相关的视频读内容——有字幕轨用 `bili.mjs subtitle`（落盘 UTF-8 后读，避免终端乱码）；无字幕轨用 `bili-duty-local` 的 `data/.venv-asr/Scripts/python.exe data/asr-gemini.py <BV>` 转写；无人声/演示视频用 `shot.mjs` 取关键帧 + 多模态读屏；**专栏文章**先用带登录 cookie 的文章搜索 API（`search_type=article`）定位 CV 号，再读图文正文（`via: "text"`）。读过的记 `status: "read"` 并写 `via`、`takeaway`（一句话）、`usedIn`（映射到现有概念 slug）；只编目的记 `catalogued`。
 3. **归板块**：按内容判断合集归属——爵士和声理论类进 `爵士和声` 板块；编曲/配乐/风格演示类进 `风格化创作` 板块（`stylized-creation`）；合集外单视频进 `jazz-extras`。新合集要同时在 `BILIBILI_COLLECTIONS` 登记。
 4. **同步**：`bilibili.ts` 是唯一事实源——改完跑 `npm run knowledge`（刷新 `public/knowledge.json`），页面 `/references` 与 Agent 接口自动生效；涉及新概念时同步图谱前置、书库 `concepts` 映射与白话拆解。
 5. **收尾**：更新 AGENTS.md / PRODUCT.md / HANDOFF.md / PROGRESS.md 统计，typecheck + build 验证后提交 dev。
@@ -120,7 +120,7 @@ src/content/
 - 166 条章节级引用
 - 3 本书 · 118 个章目 · 85 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 27/60）
 - 44 条白话拆解（全部概念）
-- B 站调研台账：4 个合集/板块 · 111 条视频 / 19 条已读 / 92 条仅编目（以 `read` 为准）
+- B 站调研台账：5 个合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目（以 `read` 为准）
 - 体系图谱：3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退

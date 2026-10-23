@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 15 左栏分类目录与右栏 ON THIS PAGE 布局调整（完成）
+- 当前正在开发任务：阶段 16 B 站专栏文章归档（属降十和弦 / 7#9 归纳，完成）
 - 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -262,3 +262,27 @@
 - 风险：目录展开时左栏中部进入内部滚动（内容超过视口高度时）；移动端不受影响（目录仅 lg 显示）。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 03:15
+
+## 阶段 16 B 站专栏归档：属降十和弦归纳 [计划时间：10.24 03:35 BY solo-agent][完成时间：10.24 03:45 BY solo-agent]
+
+- 分支：dev
+- 任务定位：用户提供截图（Nat不会弹吉他《【作曲: 如何在传统中创新】学个妙和声之"属降十和弦"》），要求按既有调研规范归纳入库；首次引入专栏文章类型。
+- 内容归纳（仅入台账，不进理论正文——文章论断为作者个人综合，未做三本书章节级定位）：
+  - 布鲁斯 V7#9（Hendrix 和弦）在布鲁斯中失去部分属功能，文中以 X7#9 指音响而非功能 → 呼应 `non-functional-dominants`（属七音响 ≠ 属功能）。
+  - I7#9 同时包含 3 与等音 b3（#9），可读作 Im7 add10；古典用解决方向判 b10/#9，布鲁斯用音阶（同主音大/小调五声皆可）判断 → 呼应 `extensions-alterations` 与 `blues`。
+  - 4m（iv）可用近关系/同主音小调的音（b6），也可反过来读作"IV major omit 3 add #9"；iv 上 9 与 #9 并用 → 呼应 `modal-mixture-color`。
+  - 结论：大三和弦的 #9/b10 本质是同主音/近关系大小调的色彩争夺；往大调解决用 #9，往小调解决用 b13。
+- 已完成：
+  - 16.1 用带登录 cookie 的文章搜索 API（`search_type=article`）定位文章 CV53580498（2026-10-23 发布，719 字，作者 mid 8934095），并取回 `x/article/view` 元数据。
+  - 16.2 台账 schema 新增 `kind?: "video" | "article"`（`bvid` 存 CV 号、duration 0）与 `via: "text"`；新合集 `theory-articles`（B 站专栏归档·和声随笔，爵士和声板块）。
+  - 16.3 文章条目以 `read` 入库，themes 布鲁斯/7#9 和弦/等音读法/大小调色彩，`usedIn` → blues / extensions-alterations / non-functional-dominants / modal-mixture-color；台账总数 111 → 112，已读 19 → 20。
+  - 16.4 `/references` 已读卡片新增「专栏 ARTICLE」钴蓝标记，说明文案改为"课程视频与专栏文章"；AGENTS.md 工作规范第 2 步补充专栏文章的定位与读取路径。
+- 未完成：文章论断未写入概念正文（来源政策：三本书无法定位的综合判断不进知识库）；若后续在 Levine 布鲁斯/变化属七相关章节完成定位，可再考虑给 `blues` 或 `extensions-alterations` 增补 7#9 谱例。
+- 改动文件：src/content/bilibili.ts、src/routes/References.tsx、AGENTS.md、HANDOFF.md、PROGRESS.md、public/knowledge.json
+- 测试结果：
+  - `npm run typecheck`、`npm run knowledge`（44/53/166 不变）、`npm run build` 通过。
+  - `npm run theory -- videos --query 属降十` 返回 CV53580498（READ / 专栏）。
+  - `/references` 截图：112 VIDEOS / 92 CATALOGUED / 20 READ，五个合集卡片（新增专栏归档），文章卡片含专栏 ARTICLE + VIA TEXT 标记与 4 个概念映射。
+- 风险：`bvid` 字段复用存 CV 号属于务实折中；若后续文章数量增多，考虑把字段改名为通用 `refId`（需要同步 Agent 接口说明）。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 03:45

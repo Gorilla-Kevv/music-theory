@@ -27,7 +27,7 @@
 - 关键目录：
   - `src/content/`：知识事实源（44 概念、53 谱例、166 条引用、44 条白话拆解）。
   - `src/content/graph/`：体系图谱数据（3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置）。
-  - `src/content/bilibili.ts`：B 站课程调研台账（4 合集/板块 · 111 条视频 / 19 条已读 / 92 条仅编目）。
+  - `src/content/bilibili.ts`：B 站课程调研台账（5 合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目）。
   - `src/content/books/`：三本书的 118 个章目与 85 条原创章节笔记（Levine 24 / Laitz 34 / Sposobin 27），其中 Levine 24/24、Laitz 34/34 带深度归纳。
   - `src/lib/`：音频（采样 + 合成回退）、搜索、SRS、听辨、音符/谱面工具、Agent API。
   - `src/components/`：外壳、检索面板、五线谱（可点击命中区）、钢琴、谱例、可视化、试听坞。
@@ -40,7 +40,7 @@
 - 核心接口：
   - `src/lib/theory-api.ts`：`searchTheory`、`listExamples`、`getRelated`、`searchSources`、`getBookOutline`、`getSourceNote`、`getConceptSources`、`getReviewQueue`、`buildKnowledgePack`、`TOOL_SCHEMAS`。
   - `src/content/graph/index.ts`：`ATLAS_GRAPH`、`ATLAS_HUBS`、`ATLAS_STATS`、`getConceptHubs`、`getPrerequisites`、`getNextConcepts`。
-  - `src/content/bilibili.ts`：`BILIBILI_COLLECTIONS`（合集元数据 + 板块）、`BILIBILI_VIDEOS`、`getBilibiliVideo`；`theoryApi.videos({ status, query, theme, collection })` 与 CLI `videos` 查询同一台账。
+  - `src/content/bilibili.ts`：`BILIBILI_COLLECTIONS`（合集元数据 + 板块）、`BILIBILI_VIDEOS`、`getBilibiliVideo`；`theoryApi.videos({ status, query, theme, collection })` 与 CLI `videos` 查询同一台账；专栏文章用 `kind: "article"` + CV 号。
   - `src/lib/audio.ts`：`AudioEngine.play/stop/replay/setTempo/toggleLoop/previewNote/previewChord/previewSequence/preloadSamples`。
   - `src/lib/search.ts`：CJK bigram + Latin token 的 MiniSearch，精确短语优先。
   - `src/lib/review.ts`：SM-2 轻量实现；localStorage key `tonic.review.v1`。
@@ -84,7 +84,7 @@
 
 ## 状态
 
-- 当前状态：v0.3 进行中；44 概念 / 53 谱例 / 166 条引用 / 44 条白话拆解；B 站台账 4 合集/板块 · 111 条视频 / 19 条已读；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.3 进行中；44 概念 / 53 谱例 / 166 条引用 / 44 条白话拆解；B 站台账 5 合集/板块 · 112 条视频与文章 / 20 条已读；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
@@ -106,4 +106,4 @@
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 03:15 BY solo-agent
+- 本次文档更新时间：10.24 03:45 BY solo-agent
