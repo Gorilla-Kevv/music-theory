@@ -2,8 +2,8 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 10 现代和声与中古调式扩展（B 站课程调查后新增 6 个概念）
-- 下一阶段任务：Sposobin 深度字段、Levine/Laitz 剩余 `confusions`、图谱学习路径、stdio MCP server（未排期）
+- 当前正在开发任务：阶段 11 调式谱例补全与相邻属和弦可视化（完成 10.6 / 10.7）
+- 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
 
@@ -160,3 +160,21 @@
   - 新增概念集中在高级层，初学者需要先完成基础/功能和声路径；图谱前置链已补但学习路径模式尚未做。
 - 下一阶段入口：10.6 → 10.7，然后回到 9.6/9.7。
 - 本次文档更新时间：10.24 00:20
+
+## 阶段 11 调式谱例补全与相邻属和弦可视化（完成 10.6 / 10.7）[计划时间：10.24 00:30 BY solo-agent][完成时间：10.24 00:55 BY solo-agent]
+
+- 分支：dev
+- 任务定位：执行阶段 10 遗留的 10.6、10.7 两项，不打断 9.6/9.7 队列。
+- 已完成：
+  - 11.1（=10.6）`modal-characteristics` 新增 4 条调式谱例：E Phrygian（i–bII–i）、F Lydian（I–II–I）、G Mixolydian（I–bVII–I）、A Aeolian（i7–bVI–i7）。五条谱例（含原 D Dorian）共用 C 大调集合，只换主音，呼应概念正文“七种调式共用同一组音高”；正文增加“同一集合试听”提示块。谱例总数 48 → 52。
+  - 11.2（=10.7）新增第五种可视化 `dominant-path`（相邻属和弦路径）：在五度圈上叠加 C7→D7→Eb7→Ab7→Db 路径，橙线为相邻上行（无功能），钴蓝线为下行五度（功能解决）；点击节点试听对应属七/目标三和弦，中心显示该步的判断说明；“播放整条进行”复用概念谱例 `ex-adjacent-dominants` 与全局试听坞。挂载到 `non-functional-dominants` 概念页。
+- 未完成：9.6 / 9.7 / 9.8 / 9.9 按原队列继续。
+- 改动文件：src/content/harmony-advanced.ts、src/content/types.ts、src/components/VisualizationCard.tsx、public/knowledge.json、AGENTS.md、PRODUCT.md、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck` 通过；`npm run build` 通过（prebuild 刷新 knowledge.json）。
+  - `npm run knowledge` → 43 concepts / 52 examples / 164 citations。
+  - 1280 全页截图：`/theory/non-functional-dominants` 可视化路径、图例、中心信息渲染正确；`/theory/modal-characteristics` 显示 FIG.03–07 五条调式谱例。
+  - 375 视口两页 `scrollWidth=375`，无横向溢出。
+- 风险：dominant-path 的 D7→Eb7 直线横穿圈面，属预期对比（相邻属和弦本就不沿圈走）；后续若加更多路径叠加，需要考虑分层开关，避免噪声。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 00:55

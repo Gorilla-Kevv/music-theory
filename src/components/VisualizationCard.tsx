@@ -467,6 +467,204 @@ function TensionSpectrum() {
   );
 }
 
+const DOMINANT_CHORDS: Record<
+  number,
+  { label: string; midis: number[]; note: string }
+> = {
+  0: { label: "C7", midis: [48, 52, 55, 58], note: "起点属七；不解决，功能悬置" },
+  2: { label: "D7", midis: [50, 54, 57, 60], note: "相邻上行，绕开 G" },
+  9: { label: "Eb7", midis: [51, 55, 58, 61], note: "下行五度：Ab 的属七" },
+  8: { label: "Ab7", midis: [56, 60, 63, 66], note: "下行五度，指向 Db" },
+  7: { label: "Db", midis: [49, 53, 56], note: "目标调主和弦落地" },
+};
+
+const DOMINANT_STEPS = [
+  { from: 0, to: 2, kind: "adjacent" as const },
+  { from: 2, to: 9, kind: "adjacent" as const },
+  { from: 9, to: 8, kind: "resolution" as const },
+  { from: 8, to: 7, kind: "resolution" as const },
+];
+
+function DominantPath({ concept }: { concept: Concept }) {
+  const { play, previewChord } = useTransport();
+  const [selected, setSelected] = useState(0);
+  const pathExample = concept.examples.find((item) => item.id === "ex-adjacent-dominants");
+  const node = DOMINANT_CHORDS[selected];
+  const step = DOMINANT_STEPS.find((item) => item.from === selected);
+  const nodePos = (index: number) => polar(CX, CX, 180, index * 30 + 15);
+
+  const shorten = (
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+    d: number,
+  ) => {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const len = Math.hypot(dx, dy);
+    return { x: b.x - (dx / len) * d, y: b.y - (dy / len) * d };
+  };
+
+  const select = (index: number) => {
+    setSelected(index);
+    previewChord(DOMINANT_CHORDS[index].midis);
+  };
+
+  const playPath = () => {
+    if (pathExample) play(pathExample, { conceptSlug: concept.slug, conceptTitle: concept.title });
+    else previewChord(DOMINANT_CHORDS[selected].midis);
+  };
+
+  return (
+    <div>
+      <div>
+        <p className="mono-label text-muted">ADJACENT DOMINANT PATH / 相邻属和弦路径</p>
+        <p className="mt-1 text-sm text-muted">
+          同一张五度圈上的两种走法：相邻属和弦跨圈上行，功能悬置；只有下行五度的两步才沿圈落进新调。点击节点试听。
+        </p>
+      </div>
+
+      <div className="mx-auto mt-2 max-w-[520px]">
+        <svg viewBox="0 0 520 520" className="w-full" role="group" aria-label="相邻属和弦路径">
+          <defs>
+            <marker id="dp-arrow-cadmium" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-cadmium)" />
+            </marker>
+            <marker id="dp-arrow-cobalt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-cobalt)" />
+            </marker>
+          </defs>
+          <circle
+            cx={CX}
+            cy={CX}
+            r={244}
+            fill="none"
+            stroke="var(--color-ink)"
+            strokeOpacity={0.25}
+            strokeDasharray="2 8"
+            className="visual-spin"
+          />
+          {CIRCLE_KEYS.map((key, index) => {
+            if (index in DOMINANT_CHORDS) return null;
+            const label = polar(CX, CX, 206, index * 30 + 15);
+            return (
+              <text
+                key={key.major}
+                x={label.x}
+                y={label.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="var(--color-muted)"
+                fontSize="10"
+                opacity={0.55}
+              >
+                {key.major}
+              </text>
+            );
+          })}
+          {DOMINANT_STEPS.map((item, stepIndex) => {
+            const from = nodePos(item.from);
+            const to = nodePos(item.to);
+            const start = shorten(from, to, 22);
+            const end = shorten(to, from, 26);
+            const adjacent = item.kind === "adjacent";
+            const active = step === item;
+            return (
+              <line
+                key={stepIndex}
+                x1={start.x}
+                y1={start.y}
+                x2={end.x}
+                y2={end.y}
+                stroke={adjacent ? "var(--color-cadmium)" : "var(--color-cobalt)"}
+                strokeWidth={active ? 5 : 3}
+                markerEnd={adjacent ? "url(#dp-arrow-cadmium)" : "url(#dp-arrow-cobalt)"}
+                className="transition-all duration-200"
+              />
+            );
+          })}
+          {Object.keys(DOMINANT_CHORDS).map((key) => {
+            const index = Number(key);
+            const info = DOMINANT_CHORDS[index];
+            const pos = nodePos(index);
+            const active = index === selected;
+            return (
+              <g
+                key={key}
+                role="button"
+                tabIndex={0}
+                aria-label={`${info.label}，${info.note}，点击试听`}
+                onClick={() => select(index)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    select(index);
+                  }
+                }}
+                className="visual-key cursor-pointer focus:outline-none"
+              >
+                <circle
+                  cx={pos.x}
+                  cy={pos.y}
+                  r={17}
+                  fill={active ? "var(--color-cobalt)" : "var(--color-paper)"}
+                  stroke="var(--color-ink)"
+                  strokeWidth={active ? 2 : 1}
+                  className="transition-colors duration-200"
+                />
+                <text
+                  x={pos.x}
+                  y={pos.y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={active ? "var(--color-paper)" : "var(--color-ink)"}
+                  fontSize="12"
+                  fontWeight="700"
+                >
+                  {info.label}
+                </text>
+              </g>
+            );
+          })}
+          <circle cx={CX} cy={CX} r={96} fill="var(--color-paper)" stroke="var(--color-ink)" />
+          <text x={CX} y={CX - 34} textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
+            {step ? (step.kind === "adjacent" ? "ADJACENT · 无功能" : "RESOLUTION · 五度解决") : "GOAL · 目标调"}
+          </text>
+          <text x={CX} y={CX - 2} textAnchor="middle" fill="var(--color-ink)" fontSize="28" fontWeight="700">
+            {node.label}
+          </text>
+          <text x={CX} y={CX + 26} textAnchor="middle" fill="var(--color-muted)" fontSize="11">
+            {node.note}
+          </text>
+        </svg>
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-muted">
+        <span className="flex items-center gap-1.5">
+          <span aria-hidden className="inline-block h-1.5 w-5 bg-cadmium" />
+          相邻上行 · 无功能
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span aria-hidden className="inline-block h-1.5 w-5 bg-cobalt" />
+          下行五度 · 功能解决
+        </span>
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-muted">
+          当前：{node.label} · {node.note}
+        </p>
+        <button
+          type="button"
+          onClick={playPath}
+          className="mono-label border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
+        >
+          播放整条进行
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const VISUAL_META: Record<
   NonNullable<Concept["visual"]>,
   { title: string; caption: string }
@@ -487,6 +685,10 @@ const VISUAL_META: Record<
     title: "张力光谱 / Tension Spectrum",
     caption: "从稳定到紧张的和弦色彩序列；刻度是分析用的相对标记。",
   },
+  "dominant-path": {
+    title: "相邻属和弦路径 / Adjacent Dominant Path",
+    caption: "在五度圈上对比相邻上行与下行五度：橙线跨圈悬置功能，钴蓝线沿圈落进 Db。点击节点试听单个和弦。",
+  },
 };
 
 export function VisualizationCard({ concept }: { concept: Concept }) {
@@ -503,6 +705,8 @@ export function VisualizationCard({ concept }: { concept: Concept }) {
         return <IntervalRuler />;
       case "tension-spectrum":
         return <TensionSpectrum />;
+      case "dominant-path":
+        return <DominantPath concept={concept} />;
       default:
         return null;
     }

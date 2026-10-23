@@ -25,7 +25,7 @@
 ## 结构
 
 - 关键目录：
-  - `src/content/`：知识事实源（43 概念、48 谱例、164 条引用、43 条白话拆解）。
+  - `src/content/`：知识事实源（43 概念、52 谱例、164 条引用、43 条白话拆解）。
   - `src/content/graph/`：体系图谱数据（3 来源 / 6 枢纽 / 43 概念 / 104 关联 / 32 前置）。
   - `src/content/books/`：三本书的 118 个章目与 85 条原创章节笔记（Levine 24 / Laitz 34 / Sposobin 27），其中 Levine 24/24、Laitz 34/34 带深度归纳。
   - `src/lib/`：音频（采样 + 合成回退）、搜索、SRS、听辨、音符/谱面工具、Agent API。
@@ -81,22 +81,24 @@
 
 ## 状态
 
-- 当前状态：v0.3 进行中；43 概念 / 48 谱例 / 164 条引用 / 43 条白话拆解；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.3 进行中；43 概念 / 52 谱例 / 164 条引用 / 43 条白话拆解；3 本书 118 章目 / 85 条原创章节笔记（Levine 24/24、Laitz 34/34 带深度归纳）；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
   - `/theory/ii-v-i` 含引用上标、页末注释、可点击谱面、相关概念；左轨有 ON THIS PAGE 大纲且随滚动高亮。
   - `/theory/circle-of-fifths` 的五度圈可点击扇区、试听、切大调/关系小调；左轨分类高亮“基础”。
   - `/books` 可切换三本书、按维度筛选、浏览 118 个章目与 85 条笔记；Levine/Laitz 章节显示深入归纳、跨书对应与常见误解。
+  - `/theory/modal-characteristics` 显示五条调式谱例（D Dorian / E Phrygian / F Lydian / G Mixolydian / A Aeolian，共用 C 大调集合）。
+  - `/theory/non-functional-dominants` 的相邻属和弦路径可视化可点击节点试听、播放整条进行；橙线为相邻上行，钴蓝线为下行五度。
   - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点。
   - `/drill` 可完成“显示答案 → 评分 → 下一卡”，并写入 localStorage。
   - `/library` 检索“五度圈”返回精确结果；清空恢复 43 条。
   - `/agent` 可导出学习状态；`window.TONIC` 与 CLI 可查询同一知识包与书库。
 - 下一步：
-  1. 继续深度内容：补 Sposobin 剩余章节笔记与深度字段；为 Levine/Laitz 剩余章节补 `confusions`；为 Lydian/Mixolydian/Phrygian/Aeolian 各补独立谱例。
+  1. 继续深度内容：补 Sposobin 剩余章节笔记与深度字段（9.6）；为 Levine/Laitz 剩余章节补 `confusions`（9.7）。逐调式谱例已完成（阶段 11）。
   2. 体系图第二阶段：增加“学习路径/前置链”筛选与章节级来源高亮；保持现有边语义，不把图变成装饰。
   3. 需要时新增 stdio MCP server，直接复用 `TOOL_SCHEMAS` 与 `theoryApi`。
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.23 23:30 BY TraeCode
+- 本次文档更新时间：10.24 00:55 BY solo-agent

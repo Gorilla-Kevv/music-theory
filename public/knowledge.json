@@ -2,9 +2,9 @@
   "meta": {
     "name": "TONIC · 主音",
     "version": "0.3.0",
-    "builtAt": "2026-10-23T14:48:26.381Z",
+    "builtAt": "2026-10-23T16:11:47.030Z",
     "conceptCount": 43,
-    "exampleCount": 48,
+    "exampleCount": 52,
     "citationCount": 164,
     "bookCount": 3,
     "chapterCount": 118,
@@ -12191,6 +12191,11 @@
               "type": "callout",
               "title": "判断顺序",
               "text": "主音 → 三音（大/小调类）→ 特征音 → 含特征音的和弦 → 是否靠 V–I 收束。五步都清楚，才说得出“这是哪一种调式”。"
+            },
+            {
+              "type": "callout",
+              "title": "同一集合试听",
+              "text": "本页五条谱例共用 C 大调集合：D Dorian、E Phrygian、F Lydian、G Mixolydian、A Aeolian——只换主音，不换音高；对照听特征音，比孤立背音阶有效。"
             }
           ]
         }
@@ -12273,6 +12278,286 @@
                 }
               ],
               "label": "Dm7"
+            }
+          ]
+        },
+        {
+          "id": "ex-phrygian-modal",
+          "title": "E Phrygian：i – bII – i",
+          "caption": "Em–F–Em；特征音是与主音相距小二度的 F，bII 大三和弦直接落回 i，不走导音。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 70,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "i"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "bII (Phrygian)"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "i"
+            }
+          ]
+        },
+        {
+          "id": "ex-lydian-modal",
+          "title": "F Lydian：I – II – I",
+          "caption": "F–G–F；G 大三和弦包含升四度 B，II 大是 Lydian 的特征和弦，比自然大调更亮。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 70,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "II (Lydian)"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I"
+            }
+          ]
+        },
+        {
+          "id": "ex-mixolydian-modal",
+          "title": "G Mixolydian：I – bVII – I",
+          "caption": "G–F–G；F 大三和弦包含降七度 F，bVII 回到主音时不经过属功能。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 70,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "bVII (Mixolydian)"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "I"
+            }
+          ]
+        },
+        {
+          "id": "ex-aeolian-modal",
+          "title": "A Aeolian：i7 – bVI – i7",
+          "caption": "Am7–F–Am7；F 大三和弦包含降六度 F，把自然小调的暗色留在主音 A 上。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 70,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "i7"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "bVI (Aeolian)"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "i7"
             }
           ]
         }
@@ -13030,6 +13315,7 @@
         "color",
         "relationship"
       ],
+      "visual": "dominant-path",
       "summary": "属七的音响不等于属功能：当属七不向下五度解决，而是平行上行、停留或解决到非主和弦时，它变成色彩和弦/相邻属和弦，功能被悬置。",
       "sections": [
         {
@@ -19419,6 +19705,298 @@
             }
           ],
           "label": "Dm7"
+        }
+      ],
+      "conceptSlug": "modal-characteristics",
+      "conceptTitle": "中古调式：特征音与调式和弦",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-phrygian-modal",
+      "title": "E Phrygian：i – bII – i",
+      "caption": "Em–F–Em；特征音是与主音相距小二度的 F，bII 大三和弦直接落回 i，不走导音。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 70,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "i"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "bII (Phrygian)"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "i"
+        }
+      ],
+      "conceptSlug": "modal-characteristics",
+      "conceptTitle": "中古调式：特征音与调式和弦",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-lydian-modal",
+      "title": "F Lydian：I – II – I",
+      "caption": "F–G–F；G 大三和弦包含升四度 B，II 大是 Lydian 的特征和弦，比自然大调更亮。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 70,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "II (Lydian)"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I"
+        }
+      ],
+      "conceptSlug": "modal-characteristics",
+      "conceptTitle": "中古调式：特征音与调式和弦",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-mixolydian-modal",
+      "title": "G Mixolydian：I – bVII – I",
+      "caption": "G–F–G；F 大三和弦包含降七度 F，bVII 回到主音时不经过属功能。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 70,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "bVII (Mixolydian)"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "I"
+        }
+      ],
+      "conceptSlug": "modal-characteristics",
+      "conceptTitle": "中古调式：特征音与调式和弦",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-aeolian-modal",
+      "title": "A Aeolian：i7 – bVI – i7",
+      "caption": "Am7–F–Am7；F 大三和弦包含降六度 F，把自然小调的暗色留在主音 A 上。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 70,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "i7"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "bVI (Aeolian)"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "i7"
         }
       ],
       "conceptSlug": "modal-characteristics",

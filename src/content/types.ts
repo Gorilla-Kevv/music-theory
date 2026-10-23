@@ -14,7 +14,8 @@ export type VisualizationKind =
   | "circle-of-fifths"
   | "mode-wheel"
   | "interval-ruler"
-  | "tension-spectrum";
+  | "tension-spectrum"
+  | "dominant-path";
 
 export type SourceId = "levine" | "laitz" | "sposobin";
 
