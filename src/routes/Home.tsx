@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Headphones, Search, Sparkle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CATEGORIES, CONCEPTS, CONCEPT_BY_SLUG, TOTAL_CITATIONS } from "../content";
@@ -13,8 +14,38 @@ import { useSearch } from "../components/SearchDialog";
 function HeroSleeve() {
   const concept = CONCEPT_BY_SLUG["ii-v-i"];
   const example = concept.examples[0];
-  const { play, stop, previewNote, state, isExamplePlaying } = useTransport();
+  const { play, stop, previewNote, previewChord, state, isExamplePlaying } = useTransport();
   const playing = isExamplePlaying(example.id);
+  const [previewNotes, setPreviewNotes] = useState<number[]>([]);
+  const previewTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (previewTimer.current) window.clearTimeout(previewTimer.current);
+    };
+  }, []);
+
+  const flashNotes = (midis: number[]) => {
+    setPreviewNotes(midis);
+    if (previewTimer.current) window.clearTimeout(previewTimer.current);
+    previewTimer.current = window.setTimeout(() => setPreviewNotes([]), 900);
+  };
+
+  const handleKey = (midi: number) => {
+    previewNote(midi);
+    flashNotes([midi]);
+  };
+
+  const handleStaffEvent = (event: { notes: Array<{ midi: number }> }) => {
+    const midis = event.notes.map((note) => note.midi);
+    if (midis.length === 1) previewNote(midis[0]);
+    else previewChord(midis);
+    flashNotes(midis);
+  };
+
+  const activeNotes = playing
+    ? [...new Set([...state.activeNotes, ...previewNotes])]
+    : previewNotes;
 
   const toggle = () => {
     if (playing) stop();
@@ -39,11 +70,15 @@ function HeroSleeve() {
         />
       </div>
       <div className="px-2 pt-2">
-        <StaffNotation example={example} measuresPerRow={3} />
+        <StaffNotation
+          example={example}
+          measuresPerRow={3}
+          onEventPlay={handleStaffEvent}
+        />
       </div>
       <div className="border-t border-line px-4 py-3">
         <div className="flex items-center justify-between gap-3">
-          <span className="mono-label text-muted">点击琴键 · 听见和弦骨架</span>
+          <span className="mono-label text-muted">点击谱面或琴键 · 听见和弦骨架</span>
           <Link
             to={`/theory/${concept.slug}`}
             className="mono-label inline-flex items-center gap-1 text-cobalt-ink hover:text-ink"
@@ -52,8 +87,8 @@ function HeroSleeve() {
           </Link>
         </div>
         <PianoKeyboard
-          activeNotes={playing ? state.activeNotes : []}
-          onNote={previewNote}
+          activeNotes={activeNotes}
+          onNote={handleKey}
           compact
           className="mt-2"
         />

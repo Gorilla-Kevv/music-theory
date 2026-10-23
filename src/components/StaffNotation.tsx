@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Accidental,
   Annotation,
@@ -9,7 +9,7 @@ import {
   StaveNote,
   Voice,
 } from "vexflow";
-import type { Example } from "../content/types";
+import type { Example, ExampleEvent } from "../content/types";
 import { buildMeasures, durationToVex, toVexKey } from "../lib/theory";
 
 const ROW_HEIGHT = 150;
@@ -22,17 +22,35 @@ function choosePerRow(count: number, maxPerRow: number): number {
   return maxPerRow;
 }
 
+interface HitArea {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  label: string;
+  event: ExampleEvent;
+}
+
 export function StaffNotation({
   example,
   className = "",
   measuresPerRow,
+  onEventPlay,
 }: {
   example: Example;
   className?: string;
   measuresPerRow?: number;
+  onEventPlay?: (event: ExampleEvent) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
+  const [hitAreas, setHitAreas] = useState<HitArea[]>([]);
+  const onEventPlayRef = useRef(onEventPlay);
+
+  useEffect(() => {
+    onEventPlayRef.current = onEventPlay;
+  }, [onEventPlay]);
 
   useLayoutEffect(() => {
     const element = containerRef.current;
@@ -58,6 +76,8 @@ export function StaffNotation({
     for (let index = 0; index < measures.length; index += perRow) {
       rows.push(measures.slice(index, index + perRow));
     }
+    const nextHitAreas: HitArea[] = [];
+    let eventIndex = 0;
 
     const clef = example.clef ?? "treble";
     const key = example.key ?? "C";
@@ -79,6 +99,7 @@ export function StaffNotation({
         stave.setContext(context).draw();
 
         const notes: StaveNote[] = [];
+        const rendered: Array<{ note: StaveNote; event?: ExampleEvent }> = [];
         for (const item of items) {
           if (item.kind === "rest") {
             const { code, dots } = durationToVex(item.beats);
@@ -89,6 +110,7 @@ export function StaffNotation({
             });
             if (dots > 0) Dot.buildAndAttach([rest], { all: true });
             notes.push(rest);
+            rendered.push({ note: rest });
             continue;
           }
 
@@ -115,6 +137,7 @@ export function StaffNotation({
             note.addModifier(annotation, 0);
           }
           notes.push(note);
+          rendered.push({ note, event });
         }
 
         const voice = new Voice({ num_beats: numerator, beat_value: denominator });
@@ -128,16 +151,46 @@ export function StaffNotation({
           .joinVoices([voice])
           .format([voice], formatterWidth);
         voice.draw(context, stave);
+
+        for (const item of rendered) {
+          if (!item.event) continue;
+          const box = item.note.getBoundingBox();
+          if (!box) continue;
+          const label =
+            item.event.label ??
+            item.event.notes.map((note) => note.spelling.replace(/(-?\d)$/, "")).join(" / ");
+          nextHitAreas.push({
+            id: `${item.event.beat}-${eventIndex}`,
+            x: Math.max(0, box.getX() - 5),
+            y: Math.max(0, box.getY() + rowIndex * ROW_HEIGHT - 5),
+            w: Math.max(26, box.getW() + 10),
+            h: Math.max(38, box.getH() + 10),
+            label,
+            event: item.event,
+          });
+          eventIndex += 1;
+        }
       });
     });
+    setHitAreas(nextHitAreas);
   }, [example, width, measuresPerRow]);
 
   return (
-    <div
-      ref={containerRef}
-      className={`staff w-full ${className}`}
-      role="img"
-      aria-label={`五线谱：${example.title}`}
-    />
+    <div className={`relative min-w-0 ${className}`} role="group" aria-label={`五线谱：${example.title}`}>
+      <div ref={containerRef} className="staff w-full" aria-hidden="true" />
+      {onEventPlay
+        ? hitAreas.map((area) => (
+            <button
+              key={area.id}
+              type="button"
+              onClick={() => onEventPlayRef.current?.(area.event)}
+              aria-label={`播放 ${area.label}`}
+              title={`播放 ${area.label}`}
+              className="absolute z-10 cursor-pointer border border-transparent transition-colors hover:border-cobalt hover:bg-cobalt/10 focus-visible:border-cobalt focus-visible:bg-cobalt/10"
+              style={{ left: area.x, top: area.y, width: area.w, height: area.h }}
+            />
+          ))
+        : null}
+    </div>
   );
 }

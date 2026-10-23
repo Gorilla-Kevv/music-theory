@@ -87,6 +87,7 @@ export const FOUNDATIONS: Concept[] = [
     level: "基础",
     aliases: ["音程", "度数", "全音", "半音", "interval", "tritone", "三全音"],
     tags: ["音程", "转位", "听辨"],
+    visual: "interval-ruler",
     summary:
       "音程同时有“度数”和“性质”两个维度：度数数线与间，性质由半音数决定。",
     sections: [
@@ -365,6 +366,7 @@ export const FOUNDATIONS: Concept[] = [
     level: "进阶",
     aliases: ["调式", "多利亚", "混合利底亚", "利底亚", "弗里几亚", "dorian", "mixolydian", "lydian", "phrygian"],
     tags: ["调式", "色彩音", "爵士"],
+    visual: "mode-wheel",
     summary:
       "七个教会调式共享大调音阶的音，但以不同音级为主音；每个调式的“特征音”决定它的颜色。",
     sections: [
@@ -453,6 +455,7 @@ export const FOUNDATIONS: Concept[] = [
     level: "基础",
     aliases: ["五度圈", "五度循环", "circle of fifths", "调性关系", "四度"],
     tags: ["调号", "和声进行", "转调"],
+    visual: "circle-of-fifths",
     summary:
       "五度圈既是调号的排序表，也是和声根音运动的地图：根音下行五度时，功能常按主—下属—属—主的方向推进。",
     sections: [

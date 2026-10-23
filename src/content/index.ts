@@ -1,9 +1,12 @@
 import { FOUNDATIONS } from "./foundations";
 import { HARMONY } from "./harmony";
+import { HARMONY_ADVANCED } from "./harmony-advanced";
 import { JAZZ } from "./jazz";
-import type { Category, CitationRef, Concept, Example } from "./types";
+import { JAZZ_ADVANCED } from "./jazz-advanced";
+import type { Category, CitationRef, Concept, Example, HarmonyDimension } from "./types";
 
 export * from "./types";
+export * from "./books";
 export { BIBLIOGRAPHY, BIBLIOGRAPHY_BY_ID, CITATION_STYLE_NOTE } from "./bibliography";
 
 export const CATEGORIES: Category[] = [
@@ -30,7 +33,21 @@ export const CATEGORIES: Category[] = [
   },
 ];
 
-export const CONCEPTS: Concept[] = [...FOUNDATIONS, ...HARMONY, ...JAZZ];
+const CATEGORY_ORDER = { foundations: 0, harmony: 1, jazz: 2 } as const;
+
+const conceptNumber = (concept: Concept) => concept.number.split("-")[1] ?? "";
+
+export const CONCEPTS: Concept[] = [
+  ...FOUNDATIONS,
+  ...HARMONY,
+  ...HARMONY_ADVANCED,
+  ...JAZZ,
+  ...JAZZ_ADVANCED,
+].sort((a, b) => {
+  const categoryDelta = CATEGORY_ORDER[a.category] - CATEGORY_ORDER[b.category];
+  if (categoryDelta !== 0) return categoryDelta;
+  return conceptNumber(a).localeCompare(conceptNumber(b));
+});
 
 export const CONCEPT_BY_SLUG = Object.fromEntries(
   CONCEPTS.map((concept) => [concept.slug, concept]),
@@ -100,3 +117,8 @@ export const TOTAL_CITATIONS = CONCEPTS.reduce(
   (sum, concept) => sum + collectCitations(concept).length,
   0,
 );
+
+export const getConceptsForDimension = (dimension: HarmonyDimension): Concept[] =>
+  CONCEPTS.filter((concept) => concept.dimensions?.includes(dimension));
+
+export const HARMONY_CONCEPTS = CONCEPTS.filter((concept) => concept.category === "harmony");

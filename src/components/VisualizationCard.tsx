@@ -1,0 +1,524 @@
+import { useMemo, useState } from "react";
+import type { Concept } from "../content/types";
+import { useTransport } from "../context/TransportContext";
+
+const CX = 260;
+
+function polar(cx: number, cy: number, radius: number, angle: number) {
+  const radians = ((angle - 90) * Math.PI) / 180;
+  return { x: cx + radius * Math.cos(radians), y: cy + radius * Math.sin(radians) };
+}
+
+function wedgePath(
+  cx: number,
+  cy: number,
+  inner: number,
+  outer: number,
+  startAngle: number,
+  endAngle: number,
+) {
+  const a = polar(cx, cy, outer, startAngle);
+  const b = polar(cx, cy, outer, endAngle);
+  const c = polar(cx, cy, inner, endAngle);
+  const d = polar(cx, cy, inner, startAngle);
+  const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+  return [
+    `M ${a.x} ${a.y}`,
+    `A ${outer} ${outer} 0 ${largeArc} 1 ${b.x} ${b.y}`,
+    `L ${c.x} ${c.y}`,
+    `A ${inner} ${inner} 0 ${largeArc} 0 ${d.x} ${d.y}`,
+    "Z",
+  ].join(" ");
+}
+
+const CIRCLE_KEYS = [
+  { major: "C", minor: "Am", sig: "0", midi: 48 },
+  { major: "G", minor: "Em", sig: "1♯", midi: 55 },
+  { major: "D", minor: "Bm", sig: "2♯", midi: 50 },
+  { major: "A", minor: "F♯m", sig: "3♯", midi: 57 },
+  { major: "E", minor: "C♯m", sig: "4♯", midi: 52 },
+  { major: "B", minor: "G♯m", sig: "5♯", midi: 59 },
+  { major: "F♯", minor: "D♯m", sig: "6♯", midi: 54 },
+  { major: "C♯", minor: "A♯m", sig: "7♯", midi: 49 },
+  { major: "A♭", minor: "Fm", sig: "4♭", midi: 56 },
+  { major: "E♭", minor: "Cm", sig: "3♭", midi: 51 },
+  { major: "B♭", minor: "Gm", sig: "2♭", midi: 58 },
+  { major: "F", minor: "Dm", sig: "1♭", midi: 53 },
+];
+
+function CircleOfFifths() {
+  const { previewChord } = useTransport();
+  const [selected, setSelected] = useState(0);
+  const [quality, setQuality] = useState<"major" | "minor">("major");
+  const item = CIRCLE_KEYS[selected];
+  const root = quality === "major" ? item.midi : item.midi - 3;
+
+  const play = () => {
+    previewChord(
+      quality === "major" ? [root, root + 4, root + 7] : [root, root + 3, root + 7],
+    );
+  };
+
+  const select = (index: number) => {
+    setSelected(index);
+    const next = CIRCLE_KEYS[index];
+    const nextRoot = quality === "major" ? next.midi : next.midi - 3;
+    previewChord(
+      quality === "major"
+        ? [nextRoot, nextRoot + 4, nextRoot + 7]
+        : [nextRoot, nextRoot + 3, nextRoot + 7],
+    );
+  };
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <p className="mono-label text-muted">CIRCLE OF FIFTHS / 五度圈</p>
+          <p className="mt-1 text-sm text-muted">点击任意调性试听主三和弦；切换大调/关系小调。</p>
+        </div>
+        <div className="flex gap-1">
+          {(["major", "minor"] as const).map((value) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setQuality(value)}
+              className={`mono-label border px-2 py-1 ${
+                quality === value
+                  ? "border-ink bg-ink text-paper"
+                  : "border-ink/40 text-muted hover:border-ink hover:text-ink"
+              }`}
+            >
+              {value === "major" ? "MAJOR" : "MINOR"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mx-auto mt-2 max-w-[520px]">
+        <svg viewBox="0 0 520 520" className="w-full" role="group" aria-label="五度圈">
+          <circle
+            cx={CX}
+            cy={CX}
+            r={244}
+            fill="none"
+            stroke="var(--color-ink)"
+            strokeOpacity={0.25}
+            strokeDasharray="2 8"
+            className="visual-spin"
+          />
+          {CIRCLE_KEYS.map((key, index) => {
+            const start = index * 30 + 1.2;
+            const end = start + 27.6;
+            const mid = start + 13.8;
+            const label = polar(CX, CX, 190, mid);
+            const minorLabel = polar(CX, CX, 118, mid);
+            const active = index === selected;
+            return (
+              <g
+                key={key.major}
+                role="button"
+                tabIndex={0}
+                aria-label={`${key.major} 大调 / ${key.minor}，${key.sig}，点击试听`}
+                onClick={() => select(index)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    select(index);
+                  }
+                }}
+                className="visual-key cursor-pointer focus:outline-none"
+              >
+                <title>
+                  {key.major} 大调 / {key.minor}
+                </title>
+                <path
+                  d={wedgePath(CX, CX, 145, 235, start, end)}
+                  fill={active ? "var(--color-cobalt)" : "var(--color-paper-2)"}
+                  stroke="var(--color-ink)"
+                  strokeWidth={1}
+                  className="transition-colors duration-200"
+                />
+                <text
+                  x={label.x}
+                  y={label.y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={active ? "var(--color-paper)" : "var(--color-ink)"}
+                  fontSize="16"
+                  fontWeight="700"
+                >
+                  {key.major}
+                </text>
+                <text
+                  x={minorLabel.x}
+                  y={minorLabel.y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={active ? "var(--color-acid)" : "var(--color-muted)"}
+                  fontSize="11"
+                >
+                  {key.minor}
+                </text>
+              </g>
+            );
+          })}
+          <circle cx={CX} cy={CX} r={92} fill="var(--color-paper)" stroke="var(--color-ink)" />
+          <text x={CX} y={CX - 24} textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
+            SELECTED
+          </text>
+          <text x={CX} y={CX + 2} textAnchor="middle" fill="var(--color-ink)" fontSize="28" fontWeight="700">
+            {quality === "major" ? item.major : item.minor}
+          </text>
+          <text x={CX} y={CX + 24} textAnchor="middle" fill="var(--color-muted)" fontSize="11">
+            {item.sig} · {quality === "major" ? "major" : "relative minor"}
+          </text>
+        </svg>
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-muted">
+          {item.major} 大调 / {item.minor} · 调号 {item.sig}
+        </p>
+        <button
+          type="button"
+          onClick={play}
+          className="mono-label border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
+        >
+          播放 {quality === "major" ? item.major : item.minor}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const MODES = [
+  { name: "Ionian", zh: "伊奥尼亚", character: "大 7", pattern: [0, 2, 4, 5, 7, 9, 11, 12] },
+  { name: "Dorian", zh: "多利亚", character: "自然 6", pattern: [0, 2, 3, 5, 7, 9, 10, 12] },
+  { name: "Phrygian", zh: "弗里几亚", character: "b2", pattern: [0, 1, 3, 5, 7, 8, 10, 12] },
+  { name: "Lydian", zh: "利底亚", character: "#4", pattern: [0, 2, 4, 6, 7, 9, 11, 12] },
+  { name: "Mixolydian", zh: "混合利底亚", character: "b7", pattern: [0, 2, 4, 5, 7, 9, 10, 12] },
+  { name: "Aeolian", zh: "伊奥利亚", character: "b6", pattern: [0, 2, 3, 5, 7, 8, 10, 12] },
+  { name: "Locrian", zh: "洛克里亚", character: "b2 + b5", pattern: [0, 1, 3, 5, 6, 8, 10, 12] },
+];
+
+function ModeWheel() {
+  const { previewSequence } = useTransport();
+  const [selected, setSelected] = useState(1);
+  const mode = MODES[selected];
+
+  const play = () => previewSequence(mode.pattern.map((semitones) => 60 + semitones));
+
+  const select = (index: number) => {
+    setSelected(index);
+    previewSequence(MODES[index].pattern.map((semitones) => 60 + semitones));
+  };
+
+  return (
+    <div>
+      <div>
+        <p className="mono-label text-muted">MODE WHEEL / 调式轮</p>
+        <p className="mt-1 text-sm text-muted">点击调式试听 C 主音上的音阶；中心显示特征音。</p>
+      </div>
+
+      <div className="mx-auto mt-2 max-w-[520px]">
+        <svg viewBox="0 0 520 520" className="w-full" role="group" aria-label="七调式轮">
+          {MODES.map((item, index) => {
+            const step = 360 / MODES.length;
+            const start = index * step + 1.4;
+            const end = start + step - 2.8;
+            const mid = start + (step - 2.8) / 2;
+            const label = polar(CX, CX, 184, mid);
+            const active = index === selected;
+            return (
+              <g
+                key={item.name}
+                role="button"
+                tabIndex={0}
+                aria-label={`${item.zh} ${item.name}，特征音 ${item.character}，点击试听`}
+                onClick={() => select(index)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    select(index);
+                  }
+                }}
+                className="visual-key cursor-pointer focus:outline-none"
+              >
+                <path
+                  d={wedgePath(CX, CX, 132, 235, start, end)}
+                  fill={active ? "var(--color-cadmium)" : "var(--color-paper-2)"}
+                  stroke="var(--color-ink)"
+                  strokeWidth={1}
+                  className="transition-colors duration-200"
+                />
+                <text
+                  x={label.x}
+                  y={label.y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={active ? "var(--color-ink)" : "var(--color-ink)"}
+                  fontSize="13"
+                  fontWeight="600"
+                >
+                  {item.zh}
+                </text>
+                <text
+                  x={label.x}
+                  y={label.y + 16}
+                  textAnchor="middle"
+                  fill={active ? "var(--color-ink)" : "var(--color-muted)"}
+                  fontSize="9"
+                >
+                  {item.character}
+                </text>
+              </g>
+            );
+          })}
+          <circle cx={CX} cy={CX} r={96} fill="var(--color-paper)" stroke="var(--color-ink)" />
+          <text x={CX} y={CX - 26} textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1">
+            C ROOT
+          </text>
+          <text x={CX} y={CX + 2} textAnchor="middle" fill="var(--color-ink)" fontSize="24" fontWeight="700">
+            {mode.name}
+          </text>
+          <text x={CX} y={CX + 24} textAnchor="middle" fill="var(--color-cadmium-ink)" fontSize="11">
+            {mode.character}
+          </text>
+        </svg>
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-muted">
+          {mode.zh} · {mode.name} · 特征音 {mode.character}
+        </p>
+        <button
+          type="button"
+          onClick={play}
+          className="mono-label border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
+        >
+          播放音阶
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const INTERVALS = [
+  "纯一度",
+  "小二度",
+  "大二度",
+  "小三度",
+  "大三度",
+  "纯四度",
+  "三全音",
+  "纯五度",
+  "小六度",
+  "大六度",
+  "小七度",
+  "大七度",
+  "纯八度",
+];
+
+function IntervalRuler() {
+  const { previewChord } = useTransport();
+  const [semitones, setSemitones] = useState(7);
+
+  const select = (value: number) => {
+    setSemitones(value);
+    previewChord([60, 60 + value]);
+  };
+
+  return (
+    <div>
+      <div>
+        <p className="mono-label text-muted">SEMITONE RULER / 半音尺</p>
+        <p className="mt-1 text-sm text-muted">从 C4 出发，点击半音数试听音程；同度与八度会重合。</p>
+      </div>
+
+      <div>
+        <svg viewBox="0 0 560 170" className="mt-3 w-full" role="group" aria-label="音程半音尺">
+        <line x1="40" y1="96" x2="520" y2="96" stroke="var(--color-ink)" strokeWidth="1" />
+        {INTERVALS.map((interval, index) => {
+          const x = 40 + index * 40;
+          const active = index === semitones;
+          return (
+            <g
+              key={interval}
+              role="button"
+              tabIndex={0}
+              aria-label={`${interval}，${index} 个半音，点击试听`}
+              onClick={() => select(index)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  select(index);
+                }
+              }}
+              className="cursor-pointer focus:outline-none"
+            >
+              <line
+                x1={x}
+                y1={active ? 48 : 78}
+                x2={x}
+                y2={112}
+                stroke={active ? "var(--color-cobalt)" : "var(--color-ink)"}
+                strokeWidth={active ? 3 : 1}
+                className="transition-all duration-200"
+              />
+              <circle
+                cx={x}
+                cy={96}
+                r={active ? 9 : 5}
+                fill={active ? "var(--color-cobalt)" : "var(--color-paper)"}
+                stroke="var(--color-ink)"
+                strokeWidth="1"
+                className="transition-all duration-200"
+              />
+              <text x={x} y={132} textAnchor="middle" fill="var(--color-muted)" fontSize="9">
+                {index}
+              </text>
+              {index % 2 === 0 || index === 6 ? (
+                <text x={x} y={150} textAnchor="middle" fill="var(--color-muted)" fontSize="8">
+                  {interval}
+                </text>
+              ) : null}
+            </g>
+          );
+        })}
+        <text x="40" y="32" fill="var(--color-ink)" fontSize="13" fontWeight="600">
+          C4 → {INTERVALS[semitones]}（{semitones} 半音）
+        </text>
+        </svg>
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-muted">当前：C4 → {INTERVALS[semitones]}</p>
+        <button
+          type="button"
+          onClick={() => previewChord([60, 60 + semitones])}
+          className="mono-label border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
+        >
+          播放音程
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const TENSION_CHORDS = [
+  { label: "Cmaj7", notes: [60, 64, 67, 71], tension: 1, style: "bg-acid text-ink" },
+  { label: "Fmaj7", notes: [65, 69, 72, 76], tension: 2, style: "bg-paper-2 text-ink" },
+  { label: "Dm7", notes: [62, 65, 69, 72], tension: 2, style: "bg-cobalt text-paper" },
+  { label: "G7", notes: [67, 71, 74, 77], tension: 4, style: "bg-cadmium text-ink" },
+  { label: "G7alt", notes: [67, 71, 74, 77, 80], tension: 5, style: "bg-ink text-paper" },
+  { label: "Bdim7", notes: [59, 62, 65, 68], tension: 5, style: "bg-ink-3 text-paper" },
+];
+
+function TensionSpectrum() {
+  const { previewChord } = useTransport();
+  const [selected, setSelected] = useState(0);
+
+  const select = (index: number) => {
+    setSelected(index);
+    previewChord(TENSION_CHORDS[index].notes);
+  };
+
+  return (
+    <div>
+      <div>
+        <p className="mono-label text-muted">TENSION SPECTRUM / 张力光谱</p>
+        <p className="mt-1 text-sm text-muted">
+          相对听觉刻度，不是物理测量；点击和弦试听。功能位置与语境仍会改变实际张力。
+        </p>
+      </div>
+
+      <div className="mt-4 flex items-end gap-1.5 sm:gap-2.5">
+        {TENSION_CHORDS.map((chord, index) => {
+          const active = index === selected;
+          return (
+            <button
+              key={chord.label}
+              type="button"
+              onClick={() => select(index)}
+              aria-pressed={active}
+              className={`flex flex-1 flex-col items-center justify-end border px-1 pb-2 pt-2 transition-all ${chord.style} ${
+                active ? "border-ink" : "border-ink/20 hover:border-ink/60"
+              }`}
+              style={{ height: `${48 + chord.tension * 22}px` }}
+            >
+              <span className="mono-label text-[0.55rem]">LEVEL {chord.tension}</span>
+              <span className="mt-1 text-[0.68rem] font-semibold leading-none sm:text-xs">
+                {chord.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-2 flex items-center justify-between border-t border-line pt-2">
+        <span className="mono-label text-muted">稳定 / STABLE</span>
+        <span className="text-xs text-muted">
+          当前：{TENSION_CHORDS[selected].label}
+        </span>
+        <span className="mono-label text-muted">紧张 / TENSE</span>
+      </div>
+    </div>
+  );
+}
+
+const VISUAL_META: Record<
+  NonNullable<Concept["visual"]>,
+  { title: string; caption: string }
+> = {
+  "circle-of-fifths": {
+    title: "五度圈 / Circle of Fifths",
+    caption: "调号、关系大小调与根音方向在同一张图上；点击扇区即可试听。",
+  },
+  "mode-wheel": {
+    title: "调式轮 / Mode Wheel",
+    caption: "七个调式共享 C 主音；中心显示特征音，点击扇区试听整条音阶。",
+  },
+  "interval-ruler": {
+    title: "半音尺 / Semitone Ruler",
+    caption: "把音程听成距离：从 C4 出发，半音数决定性质。",
+  },
+  "tension-spectrum": {
+    title: "张力光谱 / Tension Spectrum",
+    caption: "从稳定到紧张的和弦色彩序列；刻度是分析用的相对标记。",
+  },
+};
+
+export function VisualizationCard({ concept }: { concept: Concept }) {
+  const meta = concept.visual ? VISUAL_META[concept.visual] : null;
+  if (!concept.visual || !meta) return null;
+
+  const content = useMemo(() => {
+    switch (concept.visual) {
+      case "circle-of-fifths":
+        return <CircleOfFifths />;
+      case "mode-wheel":
+        return <ModeWheel />;
+      case "interval-ruler":
+        return <IntervalRuler />;
+      case "tension-spectrum":
+        return <TensionSpectrum />;
+      default:
+        return null;
+    }
+  }, [concept.visual]);
+
+  return (
+    <section id="visual" className="scroll-mt-24 border-t border-line pt-6">
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <p className="mono-label text-muted">VISUAL / 可视化</p>
+          <h2 className="zh-display mt-1.5 text-xl sm:text-2xl">{meta.title}</h2>
+        </div>
+        <span className="mono-label text-muted">INTERACTIVE SVG</span>
+      </div>
+      <div className="mt-4 border border-line bg-paper p-4 sm:p-5">{content}</div>
+      <p className="mt-3 text-xs leading-relaxed text-muted">{meta.caption}</p>
+    </section>
+  );
+}

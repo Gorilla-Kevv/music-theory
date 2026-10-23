@@ -45,7 +45,134 @@ export class AudioEngine {
   private token = 0;
   private frame: number | null = null;
   private loopTimer: number | null = null;
-  private sources = new Set<OscillatorNode>();
+  private sources = new Set<AudioScheduledSourceNode>();
+  private sampleData = new Map<number, ArrayBuffer>();
+  private sampleBuffers = new Map<number, AudioBuffer>();
+  private samplePromise: Promise<void> | null = null;
+  private decodePromise: Promise<void> | null = null;
+
+  private static readonly SAMPLE_FILES: Record<number, string> = {
+    48: "C3",
+    51: "Ds3",
+    54: "Fs3",
+    57: "A3",
+    60: "C4",
+    63: "Ds4",
+    66: "Fs4",
+    69: "A4",
+    72: "C5",
+  };
+
+  preloadSamples(): Promise<void> {
+    if (this.samplePromise) return this.samplePromise;
+    this.samplePromise = Promise.all(
+      Object.entries(AudioEngine.SAMPLE_FILES).map(async ([midi, name]) => {
+        try {
+          const response = await fetch(
+            `${import.meta.env.BASE_URL}audio/salamander/${name}.mp3`,
+          );
+          if (!response.ok) return;
+          this.sampleData.set(Number(midi), await response.arrayBuffer());
+        } catch {
+          // Sample load failure falls back to the synthesized voice.
+        }
+      }),
+    ).then(() => undefined);
+    return this.samplePromise;
+  }
+
+  private async ensureSamples(ctx: AudioContext): Promise<void> {
+    await this.preloadSamples();
+    if (this.sampleBuffers.size > 0) return;
+    if (!this.decodePromise) {
+      this.decodePromise = Promise.all(
+        [...this.sampleData.entries()].map(async ([midi, data]) => {
+          try {
+            const buffer = await ctx.decodeAudioData(data.slice(0));
+            this.sampleBuffers.set(midi, buffer);
+          } catch {
+            // Ignore a single bad sample; the rest and the fallback remain usable.
+          }
+        }),
+      ).then(() => undefined);
+    }
+    await this.decodePromise;
+  }
+
+  private nearestSample(midi: number): { midi: number; buffer: AudioBuffer } | null {
+    let best: { midi: number; buffer: AudioBuffer } | null = null;
+    let distance = Infinity;
+    for (const [sampleMidi, buffer] of this.sampleBuffers) {
+      const delta = Math.abs(sampleMidi - midi);
+      if (delta < distance) {
+        distance = delta;
+        best = { midi: sampleMidi, buffer };
+      }
+    }
+    return best;
+  }
+
+  private scheduleSampleVoice(
+    midi: number,
+    sampleMidi: number,
+    buffer: AudioBuffer,
+    start: number,
+    end: number,
+    velocity: number,
+    destination: AudioNode,
+  ): void {
+    if (!this.ctx) return;
+    const ctx = this.ctx;
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.playbackRate.value = Math.pow(2, (midi - sampleMidi) / 12);
+
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 6800;
+    filter.Q.value = 0.3;
+    source.connect(gain).connect(filter).connect(destination);
+
+    const naturalEnd = start + buffer.duration / source.playbackRate.value;
+    const releaseEnd = Math.max(start + 0.08, end + 0.28);
+    const stopAt = Math.min(naturalEnd, releaseEnd);
+    const fadeStart = Math.max(start + 0.02, stopAt - 0.08);
+    const level = Math.max(0.08, Math.min(0.52, velocity * 0.82));
+
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.linearRampToValueAtTime(level, start + 0.006);
+    gain.gain.setValueAtTime(level, fadeStart);
+    gain.gain.exponentialRampToValueAtTime(0.0001, Math.max(fadeStart + 0.05, stopAt));
+
+    source.start(start);
+    source.stop(Math.max(fadeStart + 0.06, stopAt + 0.02));
+    this.sources.add(source);
+    source.onended = () => this.sources.delete(source);
+  }
+
+  private playPreparedVoice(
+    midi: number,
+    start: number,
+    end: number,
+    velocity: number,
+    destination: AudioNode,
+  ): void {
+    const sample = this.nearestSample(midi);
+    if (sample) {
+      this.scheduleSampleVoice(
+        midi,
+        sample.midi,
+        sample.buffer,
+        start,
+        end,
+        velocity,
+        destination,
+      );
+    } else {
+      this.scheduleVoice(midi, start, end, velocity, destination);
+    }
+  }
 
   subscribe(listener: Listener): () => void {
     this.listeners.add(listener);
@@ -170,7 +297,6 @@ export class AudioEngine {
     this.meta = meta;
     const tempo = this.preferredTempo ?? example.tempo;
     this.beatDuration = 60 / tempo;
-    this.startTime = ctx.currentTime + 0.1;
     this.sources.clear();
 
     if (!this.bus) return;
@@ -178,7 +304,6 @@ export class AudioEngine {
     this.bus.gain.cancelScheduledValues(now);
     this.bus.gain.setValueAtTime(0.0001, now);
     this.bus.gain.linearRampToValueAtTime(1, now + 0.02);
-    this.schedulePass(token, this.startTime);
 
     this.emit({
       isPlaying: true,
@@ -192,8 +317,13 @@ export class AudioEngine {
       activeNotes: [],
     });
 
-    this.startFrame(token);
-    this.armLoopTimer(token, example);
+    void this.ensureSamples(ctx).then(() => {
+      if (token !== this.token || !this.ctx) return;
+      this.startTime = this.ctx.currentTime + 0.08;
+      this.schedulePass(token, this.startTime);
+      this.startFrame(token);
+      this.armLoopTimer(token, example);
+    });
   }
 
   private schedulePass(token: number, startTime: number): void {
@@ -204,8 +334,14 @@ export class AudioEngine {
       const eventStart = startTime + event.beat * beat;
       const eventEnd = startTime + (event.beat + event.duration) * beat;
       event.notes.forEach((note, index) => {
-        const velocity = 0.44 + (index === 0 ? 0.08 : 0) - Math.max(0, note.midi - 76) * 0.004;
-        this.scheduleVoice(note.midi, eventStart, eventEnd, Math.max(0.2, velocity), this.bus!);
+        const velocity = 0.42 + (index === 0 ? 0.07 : 0) - Math.max(0, note.midi - 76) * 0.004;
+        this.playPreparedVoice(
+          note.midi,
+          eventStart,
+          eventEnd,
+          Math.max(0.18, velocity),
+          this.bus!,
+        );
       });
     }
     if (token !== this.token) return;
@@ -300,18 +436,39 @@ export class AudioEngine {
     this.emit({ loop: !this.state.loop });
   }
 
-  previewNote(midi: number): void {
+  private schedulePreview(
+    midis: number[],
+    duration: number,
+    stepSeconds: number,
+    velocity: number,
+  ): void {
     const ctx = this.ensureContext();
-    if (!this.bus) return;
-    const start = ctx.currentTime + 0.02;
-    this.scheduleVoice(midi, start, start + 1.1, 0.5, this.bus);
+    void this.ensureSamples(ctx).then(() => {
+      if (!this.bus) return;
+      const start = ctx.currentTime + 0.02;
+      midis.forEach((midi, index) => {
+        const noteStart = start + index * stepSeconds;
+        this.playPreparedVoice(
+          midi,
+          noteStart,
+          noteStart + duration,
+          velocity,
+          this.bus!,
+        );
+      });
+    });
+  }
+
+  previewNote(midi: number): void {
+    this.schedulePreview([midi], 1.1, 0, 0.5);
   }
 
   previewChord(midis: number[]): void {
-    const ctx = this.ensureContext();
-    if (!this.bus) return;
-    const start = ctx.currentTime + 0.02;
-    midis.forEach((midi) => this.scheduleVoice(midi, start, start + 1.4, 0.4, this.bus!));
+    this.schedulePreview(midis, 1.4, 0, 0.4);
+  }
+
+  previewSequence(midis: number[], stepSeconds = 0.18): void {
+    this.schedulePreview(midis, stepSeconds * 1.5, stepSeconds, 0.38);
   }
 }
 

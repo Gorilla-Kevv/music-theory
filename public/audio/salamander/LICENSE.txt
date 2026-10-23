@@ -1,0 +1,16 @@
+Salamander Grand Piano V3 — sample subset
+========================================
+
+Source: https://tonejs.github.io/audio/salamander/
+Original instrument: Salamander Grand Piano V3
+Author: Alexander Holm
+License: Creative Commons Attribution 3.0 (CC BY 3.0)
+https://creativecommons.org/licenses/by/3.0/
+
+Files used in TONIC:
+C3.mp3, Ds3.mp3, Fs3.mp3, A3.mp3, C4.mp3,
+Ds4.mp3, Fs4.mp3, A4.mp3, C5.mp3
+
+These samples are pitch-shifted at runtime to cover the playable range.
+They are stored locally under public/audio/salamander/; no runtime request
+leaves the local site. Attribution is also shown in the product UI.

@@ -19,6 +19,7 @@ interface TransportContextValue {
   toggleLoop: () => void;
   previewNote: (midi: number) => void;
   previewChord: (midis: number[]) => void;
+  previewSequence: (midis: number[], stepSeconds?: number) => void;
   isExamplePlaying: (exampleId: string) => boolean;
 }
 
@@ -28,6 +29,14 @@ export function TransportProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<PlaybackState>(() => audioEngine.getState());
 
   useEffect(() => audioEngine.subscribe(setState), []);
+
+  useEffect(() => {
+    const preload = () => {
+      void audioEngine.preloadSamples();
+    };
+    window.addEventListener("pointerdown", preload, { once: true });
+    return () => window.removeEventListener("pointerdown", preload);
+  }, []);
 
   const play = useCallback((example: Example, meta?: PlaybackMeta) => {
     audioEngine.play(example, meta);
@@ -39,6 +48,10 @@ export function TransportProvider({ children }: { children: ReactNode }) {
   const toggleLoop = useCallback(() => audioEngine.toggleLoop(), []);
   const previewNote = useCallback((midi: number) => audioEngine.previewNote(midi), []);
   const previewChord = useCallback((midis: number[]) => audioEngine.previewChord(midis), []);
+  const previewSequence = useCallback(
+    (midis: number[], stepSeconds?: number) => audioEngine.previewSequence(midis, stepSeconds),
+    [],
+  );
 
   const value = useMemo<TransportContextValue>(
     () => ({
@@ -50,9 +63,10 @@ export function TransportProvider({ children }: { children: ReactNode }) {
       toggleLoop,
       previewNote,
       previewChord,
+      previewSequence,
       isExamplePlaying: (exampleId) => state.isPlaying && state.exampleId === exampleId,
     }),
-    [state, play, replay, stop, setTempo, toggleLoop, previewNote, previewChord],
+    [state, play, replay, stop, setTempo, toggleLoop, previewNote, previewChord, previewSequence],
   );
 
   return <TransportContext.Provider value={value}>{children}</TransportContext.Provider>;

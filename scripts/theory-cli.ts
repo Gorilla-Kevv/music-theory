@@ -4,16 +4,45 @@ import {
   buildKnowledgePack,
   getRelated,
   listExamples,
+  searchSources,
   searchTheory,
   TOOL_SCHEMAS,
 } from "../src/lib/theory-api";
-import { BIBLIOGRAPHY, CITATION_STYLE_NOTE, getConcept } from "../src/content";
+import {
+  BIBLIOGRAPHY,
+  BOOK_OUTLINES,
+  CITATION_STYLE_NOTE,
+  getConcept,
+  getSourceNote,
+} from "../src/content";
 import { getReviewQueue } from "../src/lib/theory-api";
 import type { ReviewState } from "../src/lib/review";
 
 const args = process.argv.slice(2);
 const jsonFlag = args.includes("--json");
-const positional = args.filter((arg) => !arg.startsWith("--"));
+const OPTION_VALUE = new Set([
+  "book",
+  "dimension",
+  "category",
+  "level",
+  "limit",
+  "state",
+  "out",
+  "concept",
+  "kind",
+]);
+const positional: string[] = [];
+for (let index = 0; index < args.length; index += 1) {
+  const arg = args[index];
+  if (arg.startsWith("--")) {
+    const name = arg.slice(2);
+    if (OPTION_VALUE.has(name) && args[index + 1] && !args[index + 1].startsWith("--")) {
+      index += 1;
+    }
+    continue;
+  }
+  positional.push(arg);
+}
 const [command, ...rest] = positional;
 
 function option(name: string): string | undefined {
@@ -34,6 +63,9 @@ TONIC theory CLI — 本地乐理知识库
   npm run theory -- examples [--concept <slug>] [--kind melody|chord|progression|scale] [--json]
   npm run theory -- related <slug> [--json]
   npm run theory -- refs [--json]
+  npm run theory -- books [--book <id>] [--json]
+  npm run theory -- source <chapterId> [--json]
+  npm run theory -- sources <query> [--book <id>] [--dimension <id>] [--json]
   npm run theory -- policy [--json]
   npm run theory -- tools [--json]
   npm run theory -- queue --state <review-state.json> [--json]
@@ -126,6 +158,52 @@ if (command === "refs") {
       console.log(`${entry.authors}. ${entry.title}. ${entry.publisher}, ${entry.year}. ${entry.edition}.`);
       console.log(`  ${entry.role}`);
       console.log(`  ${entry.locatorNote}\n`);
+    }
+  }
+  process.exit(0);
+}
+
+if (command === "books") {
+  const book = option("book") as "levine" | "laitz" | "sposobin" | undefined;
+  const books = book
+    ? BOOK_OUTLINES.filter((item) => item.id === book)
+    : BOOK_OUTLINES;
+  if (jsonFlag) printJson(books);
+  else {
+    for (const item of books) {
+      console.log(`${item.id}: ${item.chapters.length} chapters, ${item.noteCount} notes`);
+    }
+  }
+  process.exit(0);
+}
+
+if (command === "source") {
+  const chapterId = rest[0];
+  if (!chapterId) fail("Usage: source <chapterId>");
+  const note = getSourceNote(chapterId);
+  if (!note) fail(`Source note not found: ${chapterId}`);
+  if (jsonFlag) printJson(note);
+  else {
+    console.log(`${note.book} ${note.number} ${note.titleZh ?? note.title}`);
+    console.log(note.summary);
+    for (const point of note.keyPoints ?? []) console.log(`- ${point}`);
+    console.log(`dimensions: ${(note.dimensions ?? []).join(", ")}`);
+    console.log(`concepts: ${(note.concepts ?? []).join(", ")}`);
+  }
+  process.exit(0);
+}
+
+if (command === "sources") {
+  const query = rest.join(" ").trim();
+  if (!query) fail("Usage: sources <query>");
+  const notes = searchSources(query, {
+    book: option("book") as never,
+    dimension: option("dimension") as never,
+  });
+  if (jsonFlag) printJson(notes);
+  else {
+    for (const note of notes) {
+      console.log(`${note.id}  ${note.number} ${note.titleZh ?? note.title}${note.expanded ? "  [note]" : ""}`);
     }
   }
   process.exit(0);

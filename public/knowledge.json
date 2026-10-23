@@ -1,13 +1,16 @@
 {
   "meta": {
     "name": "TONIC · 主音",
-    "version": "0.1.0",
-    "builtAt": "2026-10-23T10:40:17.126Z",
-    "conceptCount": 24,
-    "exampleCount": 29,
-    "citationCount": 76,
+    "version": "0.2.0",
+    "builtAt": "2026-10-23T13:34:22.591Z",
+    "conceptCount": 37,
+    "exampleCount": 42,
+    "citationCount": 118,
+    "bookCount": 3,
+    "chapterCount": 118,
+    "sourceNoteCount": 59,
     "language": "zh-CN + en",
-    "licenseNote": "知识条目为原创改写，引用仅作章节级学术定位；不得把本库内容当作三本著作的替代版本。"
+    "licenseNote": "知识条目为原创改写，引用仅作章节级学术定位；本库不复制教材正文，不得把本库内容当作三本著作的替代版本。"
   },
   "citationStyle": "本书库采用论文式上下标引用：正文中以方括号上标标出序号，页末“注释”给出对应著作与章节定位，完整书目见参考文献页。由于三本著作存在多个版次与译本，页码会随印次变化，本库统一采用章节级定位，不虚构页码；需要精确定位时请按手头版本的章名检索。",
   "bibliography": [
@@ -73,6 +76,3260 @@
       "nameEn": "JAZZ LANGUAGE",
       "token": "acid",
       "description": "ii–V–I、和弦音阶、替代与曲式。"
+    }
+  ],
+  "harmonyDimensions": [
+    {
+      "id": "function",
+      "label": "功能",
+      "labelEn": "FUNCTION",
+      "description": "和弦在 T–PD–D–T 中承担什么角色，向哪里走。"
+    },
+    {
+      "id": "direction",
+      "label": "走向",
+      "labelEn": "DIRECTION",
+      "description": "根音运动、低音线、模进与终止如何制造方向。"
+    },
+    {
+      "id": "color",
+      "label": "色彩",
+      "labelEn": "COLOR",
+      "description": "音程内容、张力与延伸音带来的明暗和质感。"
+    },
+    {
+      "id": "brightness",
+      "label": "明暗",
+      "labelEn": "BRIGHTNESS",
+      "description": "大调、小调、同主音交替与借用和弦的明暗轴线。"
+    },
+    {
+      "id": "relationship",
+      "label": "关系",
+      "labelEn": "RELATIONSHIP",
+      "description": "调性远近、共同和弦、等音关系与替代关系。"
+    },
+    {
+      "id": "rhythm",
+      "label": "和声节奏",
+      "labelEn": "HARMONIC RHYTHM",
+      "description": "和弦变化的速率、节拍位置与乐句张力。"
+    }
+  ],
+  "books": [
+    {
+      "id": "levine",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "Basic Theory",
+          "titleZh": "基本理论",
+          "part": "Part I · Theory: Chords and Scales",
+          "id": "levine-01",
+          "book": "levine",
+          "expanded": true,
+          "summary": "从音程、转位与三和弦重新建立爵士和声的最小单位：音程度数决定距离，三音与七音决定和弦质量，转位改变低音与声部连接。",
+          "keyPoints": [
+            "音程同时看“度数”和“半音数”，三全音是属功能张力的核心。",
+            "三和弦的四类质量是后续七和弦、延伸音与替代的构件。"
+          ],
+          "concepts": [
+            "intervals",
+            "triads",
+            "seventh-chords"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ]
+        },
+        {
+          "number": "02",
+          "title": "Major Scale and Progressions",
+          "titleZh": "大调音阶与和弦进行",
+          "part": "Part I · Theory: Chords and Scales",
+          "id": "levine-02",
+          "book": "levine",
+          "expanded": true,
+          "summary": "大调音阶内部七个调式对应不同和弦质量；ii–V–I、声部进行与五度圈把调式、功能和低音方向串成一首曲子的骨架。",
+          "keyPoints": [
+            "Dorian–Mixolydian–Ionian 是 C 大调 ii–V–I 最常用的三块色彩。",
+            "低音下行五度、三音七音半音交换，是进行有方向感的两个来源。"
+          ],
+          "concepts": [
+            "modes",
+            "ii-v-i",
+            "guide-tones",
+            "circle-of-fifths",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "function",
+            "direction",
+            "relationship"
+          ]
+        },
+        {
+          "number": "03",
+          "title": "Chord/Scale Theory",
+          "titleZh": "和弦—音阶理论",
+          "part": "Part I · Theory: Chords and Scales",
+          "id": "levine-03",
+          "book": "levine",
+          "expanded": true,
+          "summary": "和弦—音阶理论把每个和弦质量映射到一条音阶；避免音、延伸音、变化属七与旋律小调各调式共同构成爵士即兴的色彩词汇。",
+          "keyPoints": [
+            "音阶负责经过与色彩，和弦三音七音负责落点。",
+            "变化属七来自旋律小调第七调式，同时包含 b9、#9、b5、#5。"
+          ],
+          "concepts": [
+            "chord-scale",
+            "extensions-alterations",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "color",
+            "function",
+            "brightness"
+          ]
+        },
+        {
+          "number": "04",
+          "title": "How to Practice Scales",
+          "titleZh": "如何练习音阶",
+          "part": "Part I · Theory: Chords and Scales",
+          "id": "levine-04",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "05",
+          "title": "Slash Chords",
+          "titleZh": "斜线和弦",
+          "part": "Part I · Theory: Chords and Scales",
+          "id": "levine-05",
+          "book": "levine",
+          "expanded": true,
+          "summary": "斜线和弦把三和弦叠在另一个低音上，改变和弦的稳定性、低音方向与色彩；它既可以是转位，也可以是独立的和声层。",
+          "keyPoints": [
+            "低音决定“站在哪里”，上方三和弦决定“是什么颜色”。",
+            "斜线和弦常用来制造级进低音、持续音与调式漂移。"
+          ],
+          "concepts": [
+            "bass-line",
+            "rootless-voicings",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "color",
+            "direction",
+            "relationship"
+          ]
+        },
+        {
+          "number": "06",
+          "title": "From Scales to Music",
+          "titleZh": "从音阶到音乐",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-06",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "07",
+          "title": "Bebop Scales",
+          "titleZh": "比波普音阶",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-07",
+          "book": "levine",
+          "expanded": true,
+          "summary": "比波普音阶在自然音阶中加入半音经过音，使和弦音落在强拍；属、大调与旋律小调各有对应的比波普形态。",
+          "keyPoints": [
+            "比波普属音阶 = Mixolydian + 自然 7（作为经过音）。",
+            "经过音不是新的和弦音，它服务于线条的节拍落点。"
+          ],
+          "concepts": [
+            "bebop-scale",
+            "chord-scale"
+          ],
+          "dimensions": [
+            "direction",
+            "color"
+          ]
+        },
+        {
+          "number": "08",
+          "title": "Playing Outside",
+          "titleZh": "演奏“外部”",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-08",
+          "book": "levine",
+          "expanded": true,
+          "summary": "Outside playing 通过叠加与当前和弦无关的音阶或三和弦制造短时张力，再用 guide tones 或目标和弦回到“里面”。",
+          "keyPoints": [
+            "外部音响必须被解决；张力与回归是一对。",
+            "半音位移、三和弦叠加与五声替代是常见入口。"
+          ],
+          "concepts": [
+            "pentatonic-outside",
+            "tritone-substitution",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "color",
+            "relationship"
+          ]
+        },
+        {
+          "number": "09",
+          "title": "Pentatonic Scales",
+          "titleZh": "五声音阶",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-09",
+          "book": "levine",
+          "expanded": true,
+          "summary": "五声音阶省略半音与 tritone，因而稳定、易唱；大调、小调与叠加五声可以在同一和弦上产生不同的“内外”程度。",
+          "keyPoints": [
+            "五声不是简化音阶，而是独立的旋律集合。",
+            "叠加五声的根音与当前和弦根音的距离决定外部感。"
+          ],
+          "concepts": [
+            "pentatonic-outside",
+            "chord-scale"
+          ],
+          "dimensions": [
+            "color",
+            "relationship"
+          ]
+        },
+        {
+          "number": "10",
+          "title": "Blues",
+          "titleZh": "布鲁斯",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-10",
+          "book": "levine",
+          "expanded": true,
+          "summary": "十二小节布鲁斯以 I7–IV7–V7 的循环构成曲式；蓝调音、布鲁斯音阶与属七色彩让“功能和声”让位于风格语言。",
+          "keyPoints": [
+            "I7 的 b7 是布鲁斯色彩，不是功能错误。",
+            "蓝调音 b3、b5、b7 可以与大调三音同时存在。"
+          ],
+          "concepts": [
+            "blues",
+            "harmonic-color",
+            "rhythm-changes"
+          ],
+          "dimensions": [
+            "color",
+            "direction",
+            "rhythm"
+          ]
+        },
+        {
+          "number": "11",
+          "title": "Rhythm Changes",
+          "titleZh": "Rhythm Changes",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-11",
+          "book": "levine",
+          "expanded": true,
+          "summary": "Rhythm Changes 是建立在 I Got Rhythm 和声上的 32 小节 AABA 曲式；A 段 I–vi–ii–V，B 段常用属和弦链与模进。",
+          "keyPoints": [
+            "AABA 的骨架比具体和弦更重要，替换和弦仍保留曲式。",
+            "A 段的 vi–ii–V 是五度圈最常用的切片之一。"
+          ],
+          "concepts": [
+            "rhythm-changes",
+            "circle-of-fifths",
+            "harmonic-rhythm"
+          ],
+          "dimensions": [
+            "rhythm",
+            "direction",
+            "relationship"
+          ]
+        },
+        {
+          "number": "12",
+          "title": "Practice, Practice, Practice",
+          "titleZh": "练习、练习、再练习",
+          "part": "Part II · Improvisation: Playing the Changes",
+          "id": "levine-12",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "13",
+          "title": "Basic Reharmonization",
+          "titleZh": "基础重配和声",
+          "part": "Part III · Reharmonization",
+          "id": "levine-13",
+          "book": "levine",
+          "expanded": true,
+          "summary": "基础重配和声用三全音替代、副属和弦、经过和弦与斜线和弦改变低音与色彩，但不改变原进行的功能方向。",
+          "keyPoints": [
+            "三全音替代用 bII7 替换 V7，共享同一个 tritone。",
+            "重配和声的目标是改变“怎么走”，不是抹掉“去哪里”。"
+          ],
+          "concepts": [
+            "tritone-substitution",
+            "secondary-dominants",
+            "rootless-voicings"
+          ],
+          "dimensions": [
+            "relationship",
+            "color",
+            "direction"
+          ]
+        },
+        {
+          "number": "14",
+          "title": "Advanced Reharmonization",
+          "titleZh": "高级重配和声",
+          "part": "Part III · Reharmonization",
+          "id": "levine-14",
+          "book": "levine",
+          "expanded": true,
+          "summary": "高级重配和声把声部配置、持续音、调式交替与多层替代结合起来；色彩变化必须由 voice leading 支撑，否则只是堆叠。",
+          "keyPoints": [
+            "先写 guide tones 与低音，再决定延伸音与替代。",
+            "同一功能可以有多种色彩，但目标音与解决方向要保持清楚。"
+          ],
+          "concepts": [
+            "rootless-voicings",
+            "harmonic-color",
+            "modal-mixture-color"
+          ],
+          "dimensions": [
+            "color",
+            "brightness",
+            "function"
+          ]
+        },
+        {
+          "number": "15",
+          "title": "Coltrane Changes",
+          "titleZh": "Coltrane Changes",
+          "part": "Part III · Reharmonization",
+          "id": "levine-15",
+          "book": "levine",
+          "expanded": true,
+          "summary": "Coltrane Changes 用大三级循环把八度分成三个调性中心，并在其间插入属和弦或 ii–V，形成快速而对称的调性移动。",
+          "keyPoints": [
+            "C–Ab–E 的大三级循环是 Giant Steps 的骨架。",
+            "即兴时用目标和弦的 guide tones 定位，而不是逐和弦背音阶。"
+          ],
+          "concepts": [
+            "coltrane-changes",
+            "tonal-distance",
+            "guide-tones"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction"
+          ]
+        },
+        {
+          "number": "16",
+          "title": "Three Reharmonizations",
+          "titleZh": "三种重配和声",
+          "part": "Part III · Reharmonization",
+          "id": "levine-16",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "17",
+          "title": "Song Forms and Composition",
+          "titleZh": "曲式与作曲",
+          "part": "Part IV · The Tune",
+          "id": "levine-17",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "18",
+          "title": "Reading a Lead Sheet",
+          "titleZh": "读 Lead Sheet",
+          "part": "Part IV · The Tune",
+          "id": "levine-18",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "19",
+          "title": "Memorizing a Tune",
+          "titleZh": "记曲",
+          "part": "Part IV · The Tune",
+          "id": "levine-19",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "20",
+          "title": "Heads",
+          "titleZh": "Head 旋律",
+          "part": "Part IV · The Tune",
+          "id": "levine-20",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "21",
+          "title": "The Repertoire",
+          "titleZh": "曲目库",
+          "part": "Part IV · The Tune",
+          "id": "levine-21",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "22",
+          "title": "Salsa and Latin Jazz",
+          "titleZh": "Salsa 与拉丁爵士",
+          "part": "Part V · The Rest of It",
+          "id": "levine-22",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "23",
+          "title": "Loose Ends",
+          "titleZh": "杂项",
+          "part": "Part V · The Rest of It",
+          "id": "levine-23",
+          "book": "levine",
+          "expanded": false
+        },
+        {
+          "number": "24",
+          "title": "Listening",
+          "titleZh": "聆听",
+          "part": "Part V · The Rest of It",
+          "id": "levine-24",
+          "book": "levine",
+          "expanded": false
+        }
+      ],
+      "noteCount": 12
+    },
+    {
+      "id": "laitz",
+      "chapters": [
+        {
+          "number": "1A",
+          "title": "Musical Space: Pitches, Scales, and Keys",
+          "titleZh": "音乐空间：音高、音阶与调",
+          "part": "Part 1 · Foundations",
+          "id": "laitz-1a",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "调性空间由音高、音阶与调号共同定义；大调、小调与关系调不是三套孤立音阶，而是同一调号下的功能与主音选择。",
+          "keyPoints": [
+            "音阶结构决定半音位置，调号把结构固定到十二个调。",
+            "关系大小调共享调号，但主音、导音与功能和弦不同。"
+          ],
+          "concepts": [
+            "major-scale",
+            "minor-scales",
+            "circle-of-fifths"
+          ],
+          "dimensions": [
+            "brightness",
+            "relationship"
+          ]
+        },
+        {
+          "number": "1B",
+          "title": "Musical Time: Meter and Rhythm",
+          "titleZh": "音乐时间：拍号与节奏",
+          "part": "Part 1 · Foundations",
+          "id": "laitz-1b",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "1C",
+          "title": "Musical Distance: Intervals",
+          "titleZh": "音乐距离：音程",
+          "part": "Part 1 · Foundations",
+          "id": "laitz-1c",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "音程是调性距离的度量：度数与半音数共同决定性质，转位与协和/不协和判断依赖语境和解决方向。",
+          "keyPoints": [
+            "转位后度数相加为九，大小与增减互换。",
+            "协和不是固定标签，三全音在不同语境可紧张也可作为色彩。"
+          ],
+          "concepts": [
+            "intervals",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "color",
+            "relationship"
+          ]
+        },
+        {
+          "number": "02",
+          "title": "Pitch and Meter Combine: Melody and Counterpoint",
+          "titleZh": "音高与节拍：旋律与对位",
+          "part": "Part 1 · Foundations",
+          "id": "laitz-02",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "03",
+          "title": "Triads, Seventh Chords, and Texture",
+          "titleZh": "三和弦、七和弦与织体",
+          "part": "Part 1 · Foundations",
+          "id": "laitz-03",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "三和弦与七和弦是调性和声的基本词汇；三音、五音、七音与低音共同决定质量、转位与织体。",
+          "keyPoints": [
+            "和弦质量由三音与五音决定，七音进一步区分七和弦类型。",
+            "转位由低音决定，不改变和弦根音身份。"
+          ],
+          "concepts": [
+            "triads",
+            "seventh-chords",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ]
+        },
+        {
+          "number": "04",
+          "title": "The Role of Context: Embellishing Tones and Melodic Shape",
+          "titleZh": "语境中的和弦外音与旋律轮廓",
+          "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+          "id": "laitz-04",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "和弦外音不是“错音”，而是旋律与和声之间的张力层；经过音、辅助音、倚音与延留音按节拍位置和解决方向分类。",
+          "keyPoints": [
+            "强拍外音比弱拍外音更需要解决。",
+            "外音的形状决定旋律轮廓，也影响和声节奏。"
+          ],
+          "concepts": [
+            "harmonic-rhythm"
+          ],
+          "dimensions": [
+            "color",
+            "rhythm"
+          ]
+        },
+        {
+          "number": "05",
+          "title": "Tonic, Dominant, and Voice Leading",
+          "titleZh": "主音、属音与声部进行",
+          "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+          "id": "laitz-05",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "主—属关系是调性的第一根轴；声部进行通过导音、七音与外声部把两个功能和弦连成有方向的运动。",
+          "keyPoints": [
+            "导音上行、和弦七音下行是属功能解决的基本方向。",
+            "平行五八度削弱声部独立，反向进行增强独立性。"
+          ],
+          "concepts": [
+            "voice-leading",
+            "roman-numerals",
+            "cadences"
+          ],
+          "dimensions": [
+            "function",
+            "direction"
+          ]
+        },
+        {
+          "number": "06",
+          "title": "V7 and Two-Level Analysis",
+          "titleZh": "属七与两层分析",
+          "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+          "id": "laitz-06",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "属七和弦把属功能压缩为一个不协和单位；两层分析区分表面和弦与深层功能，解释装饰、转位与替代。",
+          "keyPoints": [
+            "V7 的三全音是属功能张力的物理核心。",
+            "二层分析把局部和弦归入更长的功能和声层。"
+          ],
+          "concepts": [
+            "seventh-chords",
+            "roman-numerals",
+            "guide-tones"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ]
+        },
+        {
+          "number": "07",
+          "title": "Expanding Tonic and Dominant with First-Inversion Triads",
+          "titleZh": "用第一转位扩展主与属",
+          "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+          "id": "laitz-07",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "08",
+          "title": "Inversions of V7 and Leading-Tone Sevenths",
+          "titleZh": "属七转位与导七和弦",
+          "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+          "id": "laitz-08",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "09",
+          "title": "The Pre-Dominant Function and the Phrase Model",
+          "titleZh": "下属功能与乐句模型",
+          "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+          "id": "laitz-09",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "乐句模型把调性和声组织为 T–PD–D–T；下属功能（ii、IV）扩展主音，属功能制造回归压力，终止完成收束。",
+          "keyPoints": [
+            "ii 与 IV 都能当下属，但声部连接与色彩不同。",
+            "终止不是停止，而是乐句句法的标点。"
+          ],
+          "concepts": [
+            "predominant",
+            "cadences",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "function",
+            "direction",
+            "rhythm"
+          ]
+        },
+        {
+          "number": "10",
+          "title": "Accented and Chromatic Embellishing Tones",
+          "titleZh": "强拍与半音和弦外音",
+          "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+          "id": "laitz-10",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "11",
+          "title": "Six-Four Chords and Plagal Motions",
+          "titleZh": "四六和弦与变格进行",
+          "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+          "id": "laitz-11",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "四六和弦有经过、辅助与终止三类；终止四六（I6/4）在强拍上作为属准备，而不是普通的主和弦转位。",
+          "keyPoints": [
+            "终止四六的低音是属音，六音与四音下行解决到五音与三音。",
+            "四六和弦的功能取决于节拍位置与前后和弦。"
+          ],
+          "concepts": [
+            "cadential-six-four",
+            "voice-leading",
+            "cadences"
+          ],
+          "dimensions": [
+            "function",
+            "direction"
+          ]
+        },
+        {
+          "number": "12",
+          "title": "Pre-Dominant Seventh Chords and Embedded Phrase Models",
+          "titleZh": "下属七和弦与内嵌乐句模型",
+          "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+          "id": "laitz-12",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "13",
+          "title": "The Submediant and the Step-Descent Bass",
+          "titleZh": "下中音与级进下行低音",
+          "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+          "id": "laitz-13",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "下中音（vi）与级进下行低音是扩展主音的常见方式；低音线从主音逐级下行，和弦选择随之改变。",
+          "keyPoints": [
+            "vi 既像主功能延伸，也能承担下属替代。",
+            "级进下行低音让转位与声部连接变得自然。"
+          ],
+          "concepts": [
+            "bass-line",
+            "roman-numerals",
+            "predominant"
+          ],
+          "dimensions": [
+            "direction",
+            "function",
+            "color"
+          ]
+        },
+        {
+          "number": "14",
+          "title": "The Mediant and the Back-Relating Dominant",
+          "titleZh": "中音与回指属和弦",
+          "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+          "id": "laitz-14",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "中音（iii）与回指属和弦处理调性中心的边缘地带：它们可以延长主音，也可以把属功能向后拉。",
+          "keyPoints": [
+            "iii 的功能介于主与属之间，取决于上下文。",
+            "回指属和弦制造“已经到达又退回”的句法效果。"
+          ],
+          "concepts": [
+            "roman-numerals",
+            "harmonic-color",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "function",
+            "direction",
+            "color"
+          ]
+        },
+        {
+          "number": "15",
+          "title": "Periods",
+          "titleZh": "乐段",
+          "part": "Part 4 · Small Forms",
+          "id": "laitz-15",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "乐段由前句与后句构成，终止式决定两句的关系：半终止→完全终止是最常见的呼应。",
+          "keyPoints": [
+            "前句常停在半终止，后句用完全终止收束。",
+            "乐段是曲式的最小完整单位，不等于任意四小节。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "cadences",
+            "harmonic-rhythm"
+          ],
+          "dimensions": [
+            "rhythm",
+            "direction",
+            "function"
+          ]
+        },
+        {
+          "number": "16",
+          "title": "Sentences, Double Periods, and Asymmetric Periods",
+          "titleZh": "乐句、双乐段与非对称乐段",
+          "part": "Part 4 · Small Forms",
+          "id": "laitz-16",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "17",
+          "title": "Applied Chords",
+          "titleZh": "副属和弦",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-17",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "副属和弦（applied chords）把目标和弦临时变成主音；V/x 与 V7/x 制造局部离调，但不一定构成转调。",
+          "keyPoints": [
+            "副属和弦的临时升降号属于目标调的属功能。",
+            "解决后若原调继续，仍是离调；新调建立终止才是转调。"
+          ],
+          "concepts": [
+            "secondary-dominants",
+            "tonal-distance",
+            "modulation"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction",
+            "function"
+          ]
+        },
+        {
+          "number": "18",
+          "title": "Modulation",
+          "titleZh": "转调",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-18",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "转调通过共同和弦、半音中介或直接并置建立新调；新调必须获得自己的属—主与终止，才算真正转调。",
+          "keyPoints": [
+            "枢轴和弦在两调中有不同功能解释。",
+            "转调分析要指出新调的属、主与终止，而不只是变化音。"
+          ],
+          "concepts": [
+            "modulation",
+            "tonal-distance",
+            "circle-of-fifths"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction"
+          ]
+        },
+        {
+          "number": "19",
+          "title": "Harmonic Sequences",
+          "titleZh": "和声模进",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-19",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "和声模进把同一模型移到新音级；自然模进保持调内，真实模进保持音程结构，二者都制造方向与延长。",
+          "keyPoints": [
+            "模进是“有目标的重复”，不是无限循环。",
+            "低音线与模进常共同决定段落的方向。"
+          ],
+          "concepts": [
+            "harmonic-sequence",
+            "bass-line"
+          ],
+          "dimensions": [
+            "direction",
+            "relationship"
+          ]
+        },
+        {
+          "number": "20",
+          "title": "Binary Form and Variations",
+          "titleZh": "二部曲式与变奏",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-20",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "21",
+          "title": "Modal Mixture",
+          "titleZh": "调式交替",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-21",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "调式交替从同主音小调借用 iv、bVI、bIII、bVII 等和弦，形成大调内部的明暗轴；主音不变，调号被临时染色。",
+          "keyPoints": [
+            "iv–I 与 bVI–V 是最常见的借用路径。",
+            "借用和弦之后通常回到原调主音；新调终止才是转调。"
+          ],
+          "concepts": [
+            "modal-mixture-color",
+            "borrowed-chords"
+          ],
+          "dimensions": [
+            "brightness",
+            "color",
+            "relationship"
+          ]
+        },
+        {
+          "number": "22",
+          "title": "Chromatic Modulation and Text-Music Relations",
+          "titleZh": "半音转调与音乐—文本关系",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-22",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "半音转调通过半音化声部、等音和弦或突然的调性并置进入远关系调；它强调色彩突变而非平滑枢轴。",
+          "keyPoints": [
+            "半音转调的关键是声部半音移动与目标和弦的属准备。",
+            "远关系转调常需要等音重解释或模进支撑。"
+          ],
+          "concepts": [
+            "modulation",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "relationship",
+            "color",
+            "direction"
+          ]
+        },
+        {
+          "number": "23",
+          "title": "Neapolitan Chords",
+          "titleZh": "那不勒斯和弦",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-23",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "那不勒斯六和弦是降 II 级大三和弦的第一转位，通常作下属接到 V；降二音下行到导音，形成强烈半音解决。",
+          "keyPoints": [
+            "N6 是下属功能，不是属功能。",
+            "bII6 的根音与外声部半音解决决定它的方向感。"
+          ],
+          "concepts": [
+            "neapolitan-aug6",
+            "predominant"
+          ],
+          "dimensions": [
+            "brightness",
+            "color",
+            "function"
+          ]
+        },
+        {
+          "number": "24",
+          "title": "Augmented-Sixth Chords",
+          "titleZh": "增六和弦",
+          "part": "Part 5 · Expressive Color through Chromaticism",
+          "id": "laitz-24",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "增六和弦用 b6 与 #4 的外向扩张强化属；意、法、德三种形态共享增六度，但在声部与解决上不同。",
+          "keyPoints": [
+            "b6 下行到属音，b4 上行到属音，形成八度扩张。",
+            "德国增六与属七等音，但功能与解决方向不同。"
+          ],
+          "concepts": [
+            "neapolitan-aug6",
+            "voice-leading",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "color",
+            "brightness",
+            "function"
+          ]
+        },
+        {
+          "number": "25",
+          "title": "Ternary Form",
+          "titleZh": "三部曲式",
+          "part": "Part 6 · Large Forms",
+          "id": "laitz-25",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "26",
+          "title": "Rondo Form",
+          "titleZh": "回旋曲式",
+          "part": "Part 6 · Large Forms",
+          "id": "laitz-26",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "27",
+          "title": "Sonata Form",
+          "titleZh": "奏鸣曲式",
+          "part": "Part 6 · Large Forms",
+          "id": "laitz-27",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "28",
+          "title": "Tonal Ambiguity and Symmetrically Constructed Harmonies",
+          "titleZh": "调性模糊与对称和声",
+          "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+          "id": "laitz-28",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "对称和声（减七、增三、全音阶）削弱传统调性中心；八度被等分，和弦可被多种方式解释。",
+          "keyPoints": [
+            "对称结构让同一个音响指向多个调性中心。",
+            "调性模糊不是无调性，而是中心被延迟或多重化。"
+          ],
+          "concepts": [
+            "diminished-seventh",
+            "tonal-distance",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "relationship",
+            "color"
+          ]
+        },
+        {
+          "number": "29",
+          "title": "Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave",
+          "titleZh": "对称拉伸调性：半音模进与八等分",
+          "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+          "id": "laitz-29",
+          "book": "laitz",
+          "expanded": true,
+          "summary": "半音模进与八度等分把调性拉伸到边缘；Coltrane Changes 与增三循环都用对称根音运动制造快速转调。",
+          "keyPoints": [
+            "大三级循环把八度分成三个调性中心。",
+            "半音模进让和声方向变得可预测又不断偏移。"
+          ],
+          "concepts": [
+            "coltrane-changes",
+            "harmonic-sequence",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction"
+          ]
+        },
+        {
+          "number": "30",
+          "title": "Centricity, Extended and Non-Tertian Sonorities, and Collections",
+          "titleZh": "中心性、非三度叠置与音高集合",
+          "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+          "id": "laitz-30",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "31",
+          "title": "Analysis with Sets",
+          "titleZh": "集合分析",
+          "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+          "id": "laitz-31",
+          "book": "laitz",
+          "expanded": false
+        },
+        {
+          "number": "32",
+          "title": "Metrical and Serial Techniques",
+          "titleZh": "节拍与序列技术",
+          "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+          "id": "laitz-32",
+          "book": "laitz",
+          "expanded": false
+        }
+      ],
+      "noteCount": 20
+    },
+    {
+      "id": "sposobin",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "大三和弦与小三和弦、四部和声",
+          "part": "上册",
+          "id": "sposobin-01",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "四部和声以三和弦的四类质量与声部距离为起点；重复音、密集/开放排列与声部独立决定和弦的稳定度与色彩。",
+          "keyPoints": [
+            "三和弦质量是后续所有功能与变和弦的构件。",
+            "四声部写作先保证外声部与低音，再填内声部。"
+          ],
+          "concepts": [
+            "triads",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ]
+        },
+        {
+          "number": "02",
+          "title": "正三和弦的功能体系",
+          "part": "上册",
+          "id": "sposobin-02",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "正三和弦构成 T–S–D 的功能轴：主和弦确立调性，下属把音乐推离主音，属和弦制造回归压力。",
+          "keyPoints": [
+            "功能不是和弦标签，而是它在进行中承担的方向。",
+            "T–S–D–T 是俄罗斯功能和声最基础的句法。"
+          ],
+          "concepts": [
+            "roman-numerals",
+            "predominant",
+            "cadences"
+          ],
+          "dimensions": [
+            "function",
+            "direction"
+          ]
+        },
+        {
+          "number": "03",
+          "title": "原位三和弦的连接",
+          "part": "上册",
+          "id": "sposobin-03",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "原位三和弦的连接依赖共同音、级进与跳进的合理分配；平行五八度、声部超越与隐伏五八度是主要禁则。",
+          "keyPoints": [
+            "能保持的共同音尽量保持，倾向音按方向解决。",
+            "反向进行比同类进行更能保持声部独立。"
+          ],
+          "concepts": [
+            "voice-leading",
+            "triads"
+          ],
+          "dimensions": [
+            "direction",
+            "function"
+          ]
+        },
+        {
+          "number": "04",
+          "title": "用正三和弦为旋律配和声",
+          "part": "上册",
+          "id": "sposobin-04",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "05",
+          "title": "和弦的转换",
+          "part": "上册",
+          "id": "sposobin-05",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "06",
+          "title": "为低音配和声",
+          "part": "上册",
+          "id": "sposobin-06",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "07",
+          "title": "三音跳进",
+          "part": "上册",
+          "id": "sposobin-07",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "08",
+          "title": "终止、乐段、乐句",
+          "part": "上册",
+          "id": "sposobin-08",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "终止式是乐句的句法标点：完全终止、不完全终止、半终止与阻碍终止共同决定乐段的收束强度。",
+          "keyPoints": [
+            "完全终止要求 V–I 原位且最高声部落在主音。",
+            "半终止停在 V，阻碍终止用 vi 替换预期的 I。"
+          ],
+          "concepts": [
+            "cadences",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "function",
+            "direction",
+            "rhythm"
+          ]
+        },
+        {
+          "number": "09",
+          "title": "终止四六和弦",
+          "part": "上册",
+          "id": "sposobin-09",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "终止四六和弦在强拍上以属音为低音，作为属功能的双倚音准备；它不是普通的主和弦第二转位。",
+          "keyPoints": [
+            "六音与四音下行解决到属和弦的五音与三音。",
+            "节拍位置决定它是终止四六还是经过/辅助四六。"
+          ],
+          "concepts": [
+            "cadential-six-four",
+            "voice-leading",
+            "cadences"
+          ],
+          "dimensions": [
+            "function",
+            "direction"
+          ]
+        },
+        {
+          "number": "10",
+          "title": "正三和弦的六和弦",
+          "part": "上册",
+          "id": "sposobin-10",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "11",
+          "title": "三和弦与六和弦连接时的跳进",
+          "part": "上册",
+          "id": "sposobin-11",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "12",
+          "title": "两个六和弦的连接",
+          "part": "上册",
+          "id": "sposobin-12",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "13",
+          "title": "经过的与辅助的四六和弦",
+          "part": "上册",
+          "id": "sposobin-13",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "14",
+          "title": "原位属七和弦（D7）",
+          "part": "上册",
+          "id": "sposobin-14",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "原位属七把属功能压缩为不协和单位；三音与七音构成三全音，七音下行解决是功能和声的核心倾向。",
+          "keyPoints": [
+            "D7 的三全音决定属功能的张力。",
+            "七音下行、三音上行是解决的基本方向。"
+          ],
+          "concepts": [
+            "seventh-chords",
+            "voice-leading",
+            "guide-tones"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ]
+        },
+        {
+          "number": "15",
+          "title": "属七和弦的转位",
+          "part": "上册",
+          "id": "sposobin-15",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "16",
+          "title": "属七和弦解决到主和弦时的跳进",
+          "part": "上册",
+          "id": "sposobin-16",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "17",
+          "title": "大调与和声小调的完全功能体系、自然音体系",
+          "part": "上册",
+          "id": "sposobin-17",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "大调与和声小调的完全功能体系把自然音和弦纳入 T/S/D 三组；副三和弦可以替代正三和弦，但功能方向不变。",
+          "keyPoints": [
+            "vi 可作主功能延伸或下属替代。",
+            "和声小调的升七级让属功能获得导音。"
+          ],
+          "concepts": [
+            "roman-numerals",
+            "minor-scales",
+            "predominant"
+          ],
+          "dimensions": [
+            "function",
+            "brightness"
+          ]
+        },
+        {
+          "number": "18",
+          "title": "Ⅱ级六和弦与三和弦（SⅡ6与SⅡ）",
+          "part": "上册",
+          "id": "sposobin-18",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "II 级六和弦与三和弦是下属功能的核心替代；它们比 IV 更柔和，常用于 ii–V–I 的前半。",
+          "keyPoints": [
+            "SII6 的低音是三音，声部连接更平滑。",
+            "ii–V–I 是 T–S–D–T 的爵士压缩形态。"
+          ],
+          "concepts": [
+            "predominant",
+            "ii-v-i",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "function",
+            "direction"
+          ]
+        },
+        {
+          "number": "19",
+          "title": "和声大调",
+          "part": "上册",
+          "id": "sposobin-19",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "和声大调降低第六级，产生 bVI、iv 与 bII 等色彩；它把同主音小调的暗色带入大调。",
+          "keyPoints": [
+            "b6 是和声大调最醒目的色彩音。",
+            "借用和弦不改变主音，却改变调式明暗。"
+          ],
+          "concepts": [
+            "borrowed-chords",
+            "modal-mixture-color",
+            "minor-scales"
+          ],
+          "dimensions": [
+            "brightness",
+            "color"
+          ]
+        },
+        {
+          "number": "20",
+          "title": "Ⅵ级三和弦（TsⅥ）、阻碍终止、扩展乐段的方法",
+          "part": "上册",
+          "id": "sposobin-20",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "VI 级三和弦与阻碍终止把预期的 I 替换为 vi，延长乐段；它是 deceptive motion 的古典核心。",
+          "keyPoints": [
+            "V–vi 的阻碍终止保留属功能张力，却延迟主音。",
+            "vi 也可作主功能延伸，功能取决于上下文。"
+          ],
+          "concepts": [
+            "cadences",
+            "roman-numerals",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "function",
+            "brightness",
+            "direction"
+          ]
+        },
+        {
+          "number": "21",
+          "title": "下属七和弦（SⅡ7）",
+          "part": "上册",
+          "id": "sposobin-21",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "下属七和弦（SII7）把下属功能扩展为四音和弦；三音与七音的解决让 ii–V 的连接更平滑，也更有色彩。",
+          "keyPoints": [
+            "SII7 常接 D7 或 D9，形成 ii–V 的古典形态。",
+            "七音下行解决是下属七和弦的关键声部。"
+          ],
+          "concepts": [
+            "predominant",
+            "seventh-chords",
+            "ii-v-i"
+          ],
+          "dimensions": [
+            "function",
+            "color",
+            "direction"
+          ]
+        },
+        {
+          "number": "22",
+          "title": "导七和弦（DⅦ7）",
+          "part": "上册",
+          "id": "sposobin-22",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "导七和弦（DVII7）以导音为根音，是属功能组的减和弦；减七的对称结构使它可作等音转调枢纽。",
+          "keyPoints": [
+            "DVII7 解决到主和弦，声部倾向强烈。",
+            "减七的四个等音拼写指向不同调性。"
+          ],
+          "concepts": [
+            "diminished-seventh",
+            "seventh-chords",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "function",
+            "color",
+            "relationship"
+          ]
+        },
+        {
+          "number": "23",
+          "title": "属九和弦（D9）",
+          "part": "上册",
+          "id": "sposobin-23",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "24",
+          "title": "属功能组中较少使用的和弦",
+          "part": "上册",
+          "id": "sposobin-24",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "25",
+          "title": "弗里吉亚进行中的自然小调",
+          "part": "上册",
+          "id": "sposobin-25",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "26",
+          "title": "自然（调内）模进和副七和弦（模进和弦）",
+          "part": "上册",
+          "id": "sposobin-26",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "自然模进在调内移动同一和弦模型，副七和弦模进则保持七和弦结构；模进制造方向、延长与段落推力。",
+          "keyPoints": [
+            "模进是“有目标的重复”，需要终止或转调收束。",
+            "低音线的五度/级进运动决定模进的方向感。"
+          ],
+          "concepts": [
+            "harmonic-sequence",
+            "bass-line"
+          ],
+          "dimensions": [
+            "direction",
+            "relationship"
+          ]
+        },
+        {
+          "number": "27",
+          "title": "俄罗斯音乐中的自然调式",
+          "part": "上册",
+          "id": "sposobin-27",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "28",
+          "title": "终止中的重属和弦",
+          "part": "下册",
+          "id": "sposobin-28",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "终止中的重属和弦（V/V）把属和弦临时变成主音，强化终止前的张力；它是最常见的副属和弦。",
+          "keyPoints": [
+            "D7 在 C 大调是 V/V，解决到 G。",
+            "临时升降号属于目标调的属功能，不是新调号。"
+          ],
+          "concepts": [
+            "secondary-dominants",
+            "cadences",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "function",
+            "relationship",
+            "direction"
+          ]
+        },
+        {
+          "number": "29",
+          "title": "结构内的重属和弦",
+          "part": "下册",
+          "id": "sposobin-29",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "30",
+          "title": "重属和弦中的变音",
+          "part": "下册",
+          "id": "sposobin-30",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "31",
+          "title": "调性关系的类型",
+          "part": "下册",
+          "id": "sposobin-31",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "调性关系按调号差距、共同和弦数量与主音距离分级；一级关系调最容易通过枢轴和弦转调。",
+          "keyPoints": [
+            "相差一个调号的调共享更多自然音和弦。",
+            "远关系调需要半音中介、等音或模进。"
+          ],
+          "concepts": [
+            "tonal-distance",
+            "modulation",
+            "circle-of-fifths"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction"
+          ]
+        },
+        {
+          "number": "32",
+          "title": "离调、半音体系",
+          "part": "下册",
+          "id": "sposobin-32",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "离调是局部的副属解决，半音体系则扩大变化音的范围；离调不建立新调中心，转调才建立新调终止。",
+          "keyPoints": [
+            "副属和弦解决后回到原调，是离调。",
+            "新调拥有自己的属—主与终止，才是转调。"
+          ],
+          "concepts": [
+            "secondary-dominants",
+            "modulation",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "relationship",
+            "function"
+          ]
+        },
+        {
+          "number": "33",
+          "title": "半音模进、离调",
+          "part": "下册",
+          "id": "sposobin-33",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "34",
+          "title": "转调",
+          "part": "下册",
+          "id": "sposobin-34",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "转调通过共同和弦、半音声部或直接并置进入新调；新调的属—主与终止是确认调性中心的最终证据。",
+          "keyPoints": [
+            "枢轴和弦在两调中有不同功能解释。",
+            "转调分析要指出新调的属、主与终止。"
+          ],
+          "concepts": [
+            "modulation",
+            "tonal-distance",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction"
+          ]
+        },
+        {
+          "number": "35",
+          "title": "到一级关系调的转调",
+          "part": "下册",
+          "id": "sposobin-35",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "到一级关系调的转调最常用共同和弦与属准备；相差一个调号的调既保留熟悉感，又提供足够的色彩变化。",
+          "keyPoints": [
+            "一级关系调的共同和弦数量最多。",
+            "新调属和弦的出现是转调的关键信号。"
+          ],
+          "concepts": [
+            "modulation",
+            "tonal-distance",
+            "circle-of-fifths"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction",
+            "color"
+          ]
+        },
+        {
+          "number": "36",
+          "title": "在一个声部中的有准备的延留音",
+          "part": "下册",
+          "id": "sposobin-36",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "37",
+          "title": "两个和三个声部中有准备的延留音",
+          "part": "下册",
+          "id": "sposobin-37",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "38",
+          "title": "一个声部中的自然经过音",
+          "part": "下册",
+          "id": "sposobin-38",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "39",
+          "title": "在所有声部中的自然经过音",
+          "part": "下册",
+          "id": "sposobin-39",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "40",
+          "title": "自然的与半音的辅助音",
+          "part": "下册",
+          "id": "sposobin-40",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "41",
+          "title": "半音经过音",
+          "part": "下册",
+          "id": "sposobin-41",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "42",
+          "title": "先现音",
+          "part": "下册",
+          "id": "sposobin-42",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "43",
+          "title": "跳进的辅助音（没有准备的和没有解决的）",
+          "part": "下册",
+          "id": "sposobin-43",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "44",
+          "title": "延留音的各种形式",
+          "part": "下册",
+          "id": "sposobin-44",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "45",
+          "title": "和弦外音的延迟解决",
+          "part": "下册",
+          "id": "sposobin-45",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "46",
+          "title": "属和声组的变和弦",
+          "part": "下册",
+          "id": "sposobin-46",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "属和声组的变和弦通过降低或升高五音、九音改变属七的张力；变化属七增强解决压力，也扩展色彩。",
+          "keyPoints": [
+            "b9、#9、b5、#5 是属功能的主要变化音。",
+            "变化音必须按声部倾向解决到目标和弦。"
+          ],
+          "concepts": [
+            "extensions-alterations",
+            "harmonic-color",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "color",
+            "function",
+            "brightness"
+          ]
+        },
+        {
+          "number": "47",
+          "title": "下属和声组的变和弦",
+          "part": "下册",
+          "id": "sposobin-47",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "下属和声组的变和弦包括那不勒斯与增六和弦；它们用半音化下属强化属准备，制造比 iv 更暗或更尖锐的色彩。",
+          "keyPoints": [
+            "bII6 与增六和弦都常接到 V。",
+            "增六的 b6–#4 外向扩张到属音八度。"
+          ],
+          "concepts": [
+            "neapolitan-aug6",
+            "harmonic-color",
+            "predominant"
+          ],
+          "dimensions": [
+            "color",
+            "brightness",
+            "function"
+          ]
+        },
+        {
+          "number": "48",
+          "title": "持续音",
+          "part": "下册",
+          "id": "sposobin-48",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "49",
+          "title": "交替大小调体系",
+          "part": "下册",
+          "id": "sposobin-49",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "交替大小调体系在同主音大调与小调之间借用和弦；主音不变，调式色彩在小调与大调之间移动。",
+          "keyPoints": [
+            "iv、bVI、bIII、bVII 是大调借用小调的主要和弦。",
+            "借用之后通常回到原调主音，不等同转调。"
+          ],
+          "concepts": [
+            "modal-mixture-color",
+            "borrowed-chords"
+          ],
+          "dimensions": [
+            "brightness",
+            "color",
+            "relationship"
+          ]
+        },
+        {
+          "number": "50",
+          "title": "交替大小调的降Ⅵ级三和弦（tsⅥ）",
+          "part": "下册",
+          "id": "sposobin-50",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "降 VI 级三和弦（tsVI）是交替大小调最醒目的暗色和弦；它常接 V 或 I，制造突然的明暗转折。",
+          "keyPoints": [
+            "bVI 的根音与三音来自同主音小调。",
+            "bVI–V 的半音声部让暗色平滑地回到属功能。"
+          ],
+          "concepts": [
+            "modal-mixture-color",
+            "harmonic-color",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "brightness",
+            "color",
+            "function"
+          ]
+        },
+        {
+          "number": "51",
+          "title": "调性关系的等级、相差两个调号的转调",
+          "part": "下册",
+          "id": "sposobin-51",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "52",
+          "title": "相差三至六个调号的转调",
+          "part": "下册",
+          "id": "sposobin-52",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "53",
+          "title": "经过交替大小调的降Ⅵ级三和弦（tsⅥ）以及经过那不勒斯和弦的转调",
+          "part": "下册",
+          "id": "sposobin-53",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "经过降 VI 级或那不勒斯和弦的转调利用半音中介把远关系调连接起来；这类转调强调色彩与声部，而非共同和弦数量。",
+          "keyPoints": [
+            "bVI 与 N6 都可作为半音中介。",
+            "声部半音移动比和弦标签更能解释转调路径。"
+          ],
+          "concepts": [
+            "neapolitan-aug6",
+            "modulation",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "relationship",
+            "color",
+            "brightness"
+          ]
+        },
+        {
+          "number": "54",
+          "title": "经过同主音主和弦转调",
+          "part": "下册",
+          "id": "sposobin-54",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "55",
+          "title": "转调模进",
+          "part": "下册",
+          "id": "sposobin-55",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "56",
+          "title": "意外进行",
+          "part": "下册",
+          "id": "sposobin-56",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "意外进行用非预期和弦替换功能目标（如 V–vi、V–bVI），制造句法转折；它依赖听者的功能预期被打破。",
+          "keyPoints": [
+            "意外进行不是无功能，而是延迟或替换预期目标。",
+            "阻碍终止是最常见的意外进行之一。"
+          ],
+          "concepts": [
+            "cadences",
+            "harmonic-color",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "function",
+            "color",
+            "direction"
+          ]
+        },
+        {
+          "number": "57",
+          "title": "等音转调、经过减七和弦的转调",
+          "part": "下册",
+          "id": "sposobin-57",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "等音转调利用减七或属七的等音重解释进入远关系调；减七的对称结构尤其适合多方向解决。",
+          "keyPoints": [
+            "减七的四个等音拼写可指向四个调性中心。",
+            "等音转调的关键是重解释后的属准备与终止。"
+          ],
+          "concepts": [
+            "diminished-seventh",
+            "tonal-distance",
+            "modulation"
+          ],
+          "dimensions": [
+            "relationship",
+            "color"
+          ]
+        },
+        {
+          "number": "58",
+          "title": "经过属七和弦的等音转调",
+          "part": "下册",
+          "id": "sposobin-58",
+          "book": "sposobin",
+          "expanded": false
+        },
+        {
+          "number": "59",
+          "title": "作品调性布局的基本原则",
+          "part": "下册",
+          "id": "sposobin-59",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "作品调性布局把各乐章/段落的调性关系组织为整体叙事；主调、属调、下中音调与远关系调承担不同的结构权重。",
+          "keyPoints": [
+            "调性布局是宏观和声，不只是局部进行。",
+            "调性距离与曲式位置共同决定色彩强度。"
+          ],
+          "concepts": [
+            "tonal-distance",
+            "phrase-structure",
+            "circle-of-fifths"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction",
+            "brightness"
+          ]
+        },
+        {
+          "number": "60",
+          "title": "和声分析的某些问题",
+          "part": "下册",
+          "id": "sposobin-60",
+          "book": "sposobin",
+          "expanded": true,
+          "summary": "和声分析把和弦、功能、声部与曲式放在同一张图上；分析不是贴标签，而是解释音乐为何在此处这样走。",
+          "keyPoints": [
+            "先看低音与外声部，再标和弦与功能。",
+            "和声节奏、终止与调性布局共同构成分析结论。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "harmonic-rhythm",
+            "roman-numerals"
+          ],
+          "dimensions": [
+            "function",
+            "direction",
+            "rhythm"
+          ]
+        }
+      ],
+      "noteCount": 27
+    }
+  ],
+  "sourceNotes": [
+    {
+      "number": "01",
+      "title": "Basic Theory",
+      "titleZh": "基本理论",
+      "part": "Part I · Theory: Chords and Scales",
+      "id": "levine-01",
+      "book": "levine",
+      "expanded": true,
+      "summary": "从音程、转位与三和弦重新建立爵士和声的最小单位：音程度数决定距离，三音与七音决定和弦质量，转位改变低音与声部连接。",
+      "keyPoints": [
+        "音程同时看“度数”和“半音数”，三全音是属功能张力的核心。",
+        "三和弦的四类质量是后续七和弦、延伸音与替代的构件。"
+      ],
+      "concepts": [
+        "intervals",
+        "triads",
+        "seventh-chords"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ]
+    },
+    {
+      "number": "02",
+      "title": "Major Scale and Progressions",
+      "titleZh": "大调音阶与和弦进行",
+      "part": "Part I · Theory: Chords and Scales",
+      "id": "levine-02",
+      "book": "levine",
+      "expanded": true,
+      "summary": "大调音阶内部七个调式对应不同和弦质量；ii–V–I、声部进行与五度圈把调式、功能和低音方向串成一首曲子的骨架。",
+      "keyPoints": [
+        "Dorian–Mixolydian–Ionian 是 C 大调 ii–V–I 最常用的三块色彩。",
+        "低音下行五度、三音七音半音交换，是进行有方向感的两个来源。"
+      ],
+      "concepts": [
+        "modes",
+        "ii-v-i",
+        "guide-tones",
+        "circle-of-fifths",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "function",
+        "direction",
+        "relationship"
+      ]
+    },
+    {
+      "number": "03",
+      "title": "Chord/Scale Theory",
+      "titleZh": "和弦—音阶理论",
+      "part": "Part I · Theory: Chords and Scales",
+      "id": "levine-03",
+      "book": "levine",
+      "expanded": true,
+      "summary": "和弦—音阶理论把每个和弦质量映射到一条音阶；避免音、延伸音、变化属七与旋律小调各调式共同构成爵士即兴的色彩词汇。",
+      "keyPoints": [
+        "音阶负责经过与色彩，和弦三音七音负责落点。",
+        "变化属七来自旋律小调第七调式，同时包含 b9、#9、b5、#5。"
+      ],
+      "concepts": [
+        "chord-scale",
+        "extensions-alterations",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "color",
+        "function",
+        "brightness"
+      ]
+    },
+    {
+      "number": "05",
+      "title": "Slash Chords",
+      "titleZh": "斜线和弦",
+      "part": "Part I · Theory: Chords and Scales",
+      "id": "levine-05",
+      "book": "levine",
+      "expanded": true,
+      "summary": "斜线和弦把三和弦叠在另一个低音上，改变和弦的稳定性、低音方向与色彩；它既可以是转位，也可以是独立的和声层。",
+      "keyPoints": [
+        "低音决定“站在哪里”，上方三和弦决定“是什么颜色”。",
+        "斜线和弦常用来制造级进低音、持续音与调式漂移。"
+      ],
+      "concepts": [
+        "bass-line",
+        "rootless-voicings",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "color",
+        "direction",
+        "relationship"
+      ]
+    },
+    {
+      "number": "07",
+      "title": "Bebop Scales",
+      "titleZh": "比波普音阶",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-07",
+      "book": "levine",
+      "expanded": true,
+      "summary": "比波普音阶在自然音阶中加入半音经过音，使和弦音落在强拍；属、大调与旋律小调各有对应的比波普形态。",
+      "keyPoints": [
+        "比波普属音阶 = Mixolydian + 自然 7（作为经过音）。",
+        "经过音不是新的和弦音，它服务于线条的节拍落点。"
+      ],
+      "concepts": [
+        "bebop-scale",
+        "chord-scale"
+      ],
+      "dimensions": [
+        "direction",
+        "color"
+      ]
+    },
+    {
+      "number": "08",
+      "title": "Playing Outside",
+      "titleZh": "演奏“外部”",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-08",
+      "book": "levine",
+      "expanded": true,
+      "summary": "Outside playing 通过叠加与当前和弦无关的音阶或三和弦制造短时张力，再用 guide tones 或目标和弦回到“里面”。",
+      "keyPoints": [
+        "外部音响必须被解决；张力与回归是一对。",
+        "半音位移、三和弦叠加与五声替代是常见入口。"
+      ],
+      "concepts": [
+        "pentatonic-outside",
+        "tritone-substitution",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ]
+    },
+    {
+      "number": "09",
+      "title": "Pentatonic Scales",
+      "titleZh": "五声音阶",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-09",
+      "book": "levine",
+      "expanded": true,
+      "summary": "五声音阶省略半音与 tritone，因而稳定、易唱；大调、小调与叠加五声可以在同一和弦上产生不同的“内外”程度。",
+      "keyPoints": [
+        "五声不是简化音阶，而是独立的旋律集合。",
+        "叠加五声的根音与当前和弦根音的距离决定外部感。"
+      ],
+      "concepts": [
+        "pentatonic-outside",
+        "chord-scale"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ]
+    },
+    {
+      "number": "10",
+      "title": "Blues",
+      "titleZh": "布鲁斯",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-10",
+      "book": "levine",
+      "expanded": true,
+      "summary": "十二小节布鲁斯以 I7–IV7–V7 的循环构成曲式；蓝调音、布鲁斯音阶与属七色彩让“功能和声”让位于风格语言。",
+      "keyPoints": [
+        "I7 的 b7 是布鲁斯色彩，不是功能错误。",
+        "蓝调音 b3、b5、b7 可以与大调三音同时存在。"
+      ],
+      "concepts": [
+        "blues",
+        "harmonic-color",
+        "rhythm-changes"
+      ],
+      "dimensions": [
+        "color",
+        "direction",
+        "rhythm"
+      ]
+    },
+    {
+      "number": "11",
+      "title": "Rhythm Changes",
+      "titleZh": "Rhythm Changes",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-11",
+      "book": "levine",
+      "expanded": true,
+      "summary": "Rhythm Changes 是建立在 I Got Rhythm 和声上的 32 小节 AABA 曲式；A 段 I–vi–ii–V，B 段常用属和弦链与模进。",
+      "keyPoints": [
+        "AABA 的骨架比具体和弦更重要，替换和弦仍保留曲式。",
+        "A 段的 vi–ii–V 是五度圈最常用的切片之一。"
+      ],
+      "concepts": [
+        "rhythm-changes",
+        "circle-of-fifths",
+        "harmonic-rhythm"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction",
+        "relationship"
+      ]
+    },
+    {
+      "number": "13",
+      "title": "Basic Reharmonization",
+      "titleZh": "基础重配和声",
+      "part": "Part III · Reharmonization",
+      "id": "levine-13",
+      "book": "levine",
+      "expanded": true,
+      "summary": "基础重配和声用三全音替代、副属和弦、经过和弦与斜线和弦改变低音与色彩，但不改变原进行的功能方向。",
+      "keyPoints": [
+        "三全音替代用 bII7 替换 V7，共享同一个 tritone。",
+        "重配和声的目标是改变“怎么走”，不是抹掉“去哪里”。"
+      ],
+      "concepts": [
+        "tritone-substitution",
+        "secondary-dominants",
+        "rootless-voicings"
+      ],
+      "dimensions": [
+        "relationship",
+        "color",
+        "direction"
+      ]
+    },
+    {
+      "number": "14",
+      "title": "Advanced Reharmonization",
+      "titleZh": "高级重配和声",
+      "part": "Part III · Reharmonization",
+      "id": "levine-14",
+      "book": "levine",
+      "expanded": true,
+      "summary": "高级重配和声把声部配置、持续音、调式交替与多层替代结合起来；色彩变化必须由 voice leading 支撑，否则只是堆叠。",
+      "keyPoints": [
+        "先写 guide tones 与低音，再决定延伸音与替代。",
+        "同一功能可以有多种色彩，但目标音与解决方向要保持清楚。"
+      ],
+      "concepts": [
+        "rootless-voicings",
+        "harmonic-color",
+        "modal-mixture-color"
+      ],
+      "dimensions": [
+        "color",
+        "brightness",
+        "function"
+      ]
+    },
+    {
+      "number": "15",
+      "title": "Coltrane Changes",
+      "titleZh": "Coltrane Changes",
+      "part": "Part III · Reharmonization",
+      "id": "levine-15",
+      "book": "levine",
+      "expanded": true,
+      "summary": "Coltrane Changes 用大三级循环把八度分成三个调性中心，并在其间插入属和弦或 ii–V，形成快速而对称的调性移动。",
+      "keyPoints": [
+        "C–Ab–E 的大三级循环是 Giant Steps 的骨架。",
+        "即兴时用目标和弦的 guide tones 定位，而不是逐和弦背音阶。"
+      ],
+      "concepts": [
+        "coltrane-changes",
+        "tonal-distance",
+        "guide-tones"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ]
+    },
+    {
+      "number": "1A",
+      "title": "Musical Space: Pitches, Scales, and Keys",
+      "titleZh": "音乐空间：音高、音阶与调",
+      "part": "Part 1 · Foundations",
+      "id": "laitz-1a",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "调性空间由音高、音阶与调号共同定义；大调、小调与关系调不是三套孤立音阶，而是同一调号下的功能与主音选择。",
+      "keyPoints": [
+        "音阶结构决定半音位置，调号把结构固定到十二个调。",
+        "关系大小调共享调号，但主音、导音与功能和弦不同。"
+      ],
+      "concepts": [
+        "major-scale",
+        "minor-scales",
+        "circle-of-fifths"
+      ],
+      "dimensions": [
+        "brightness",
+        "relationship"
+      ]
+    },
+    {
+      "number": "1C",
+      "title": "Musical Distance: Intervals",
+      "titleZh": "音乐距离：音程",
+      "part": "Part 1 · Foundations",
+      "id": "laitz-1c",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "音程是调性距离的度量：度数与半音数共同决定性质，转位与协和/不协和判断依赖语境和解决方向。",
+      "keyPoints": [
+        "转位后度数相加为九，大小与增减互换。",
+        "协和不是固定标签，三全音在不同语境可紧张也可作为色彩。"
+      ],
+      "concepts": [
+        "intervals",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ]
+    },
+    {
+      "number": "03",
+      "title": "Triads, Seventh Chords, and Texture",
+      "titleZh": "三和弦、七和弦与织体",
+      "part": "Part 1 · Foundations",
+      "id": "laitz-03",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "三和弦与七和弦是调性和声的基本词汇；三音、五音、七音与低音共同决定质量、转位与织体。",
+      "keyPoints": [
+        "和弦质量由三音与五音决定，七音进一步区分七和弦类型。",
+        "转位由低音决定，不改变和弦根音身份。"
+      ],
+      "concepts": [
+        "triads",
+        "seventh-chords",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ]
+    },
+    {
+      "number": "04",
+      "title": "The Role of Context: Embellishing Tones and Melodic Shape",
+      "titleZh": "语境中的和弦外音与旋律轮廓",
+      "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+      "id": "laitz-04",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "和弦外音不是“错音”，而是旋律与和声之间的张力层；经过音、辅助音、倚音与延留音按节拍位置和解决方向分类。",
+      "keyPoints": [
+        "强拍外音比弱拍外音更需要解决。",
+        "外音的形状决定旋律轮廓，也影响和声节奏。"
+      ],
+      "concepts": [
+        "harmonic-rhythm"
+      ],
+      "dimensions": [
+        "color",
+        "rhythm"
+      ]
+    },
+    {
+      "number": "05",
+      "title": "Tonic, Dominant, and Voice Leading",
+      "titleZh": "主音、属音与声部进行",
+      "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+      "id": "laitz-05",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "主—属关系是调性的第一根轴；声部进行通过导音、七音与外声部把两个功能和弦连成有方向的运动。",
+      "keyPoints": [
+        "导音上行、和弦七音下行是属功能解决的基本方向。",
+        "平行五八度削弱声部独立，反向进行增强独立性。"
+      ],
+      "concepts": [
+        "voice-leading",
+        "roman-numerals",
+        "cadences"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ]
+    },
+    {
+      "number": "06",
+      "title": "V7 and Two-Level Analysis",
+      "titleZh": "属七与两层分析",
+      "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+      "id": "laitz-06",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "属七和弦把属功能压缩为一个不协和单位；两层分析区分表面和弦与深层功能，解释装饰、转位与替代。",
+      "keyPoints": [
+        "V7 的三全音是属功能张力的物理核心。",
+        "二层分析把局部和弦归入更长的功能和声层。"
+      ],
+      "concepts": [
+        "seventh-chords",
+        "roman-numerals",
+        "guide-tones"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ]
+    },
+    {
+      "number": "09",
+      "title": "The Pre-Dominant Function and the Phrase Model",
+      "titleZh": "下属功能与乐句模型",
+      "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+      "id": "laitz-09",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "乐句模型把调性和声组织为 T–PD–D–T；下属功能（ii、IV）扩展主音，属功能制造回归压力，终止完成收束。",
+      "keyPoints": [
+        "ii 与 IV 都能当下属，但声部连接与色彩不同。",
+        "终止不是停止，而是乐句句法的标点。"
+      ],
+      "concepts": [
+        "predominant",
+        "cadences",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "function",
+        "direction",
+        "rhythm"
+      ]
+    },
+    {
+      "number": "11",
+      "title": "Six-Four Chords and Plagal Motions",
+      "titleZh": "四六和弦与变格进行",
+      "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+      "id": "laitz-11",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "四六和弦有经过、辅助与终止三类；终止四六（I6/4）在强拍上作为属准备，而不是普通的主和弦转位。",
+      "keyPoints": [
+        "终止四六的低音是属音，六音与四音下行解决到五音与三音。",
+        "四六和弦的功能取决于节拍位置与前后和弦。"
+      ],
+      "concepts": [
+        "cadential-six-four",
+        "voice-leading",
+        "cadences"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ]
+    },
+    {
+      "number": "13",
+      "title": "The Submediant and the Step-Descent Bass",
+      "titleZh": "下中音与级进下行低音",
+      "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+      "id": "laitz-13",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "下中音（vi）与级进下行低音是扩展主音的常见方式；低音线从主音逐级下行，和弦选择随之改变。",
+      "keyPoints": [
+        "vi 既像主功能延伸，也能承担下属替代。",
+        "级进下行低音让转位与声部连接变得自然。"
+      ],
+      "concepts": [
+        "bass-line",
+        "roman-numerals",
+        "predominant"
+      ],
+      "dimensions": [
+        "direction",
+        "function",
+        "color"
+      ]
+    },
+    {
+      "number": "14",
+      "title": "The Mediant and the Back-Relating Dominant",
+      "titleZh": "中音与回指属和弦",
+      "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+      "id": "laitz-14",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "中音（iii）与回指属和弦处理调性中心的边缘地带：它们可以延长主音，也可以把属功能向后拉。",
+      "keyPoints": [
+        "iii 的功能介于主与属之间，取决于上下文。",
+        "回指属和弦制造“已经到达又退回”的句法效果。"
+      ],
+      "concepts": [
+        "roman-numerals",
+        "harmonic-color",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "function",
+        "direction",
+        "color"
+      ]
+    },
+    {
+      "number": "15",
+      "title": "Periods",
+      "titleZh": "乐段",
+      "part": "Part 4 · Small Forms",
+      "id": "laitz-15",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "乐段由前句与后句构成，终止式决定两句的关系：半终止→完全终止是最常见的呼应。",
+      "keyPoints": [
+        "前句常停在半终止，后句用完全终止收束。",
+        "乐段是曲式的最小完整单位，不等于任意四小节。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "cadences",
+        "harmonic-rhythm"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction",
+        "function"
+      ]
+    },
+    {
+      "number": "17",
+      "title": "Applied Chords",
+      "titleZh": "副属和弦",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-17",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "副属和弦（applied chords）把目标和弦临时变成主音；V/x 与 V7/x 制造局部离调，但不一定构成转调。",
+      "keyPoints": [
+        "副属和弦的临时升降号属于目标调的属功能。",
+        "解决后若原调继续，仍是离调；新调建立终止才是转调。"
+      ],
+      "concepts": [
+        "secondary-dominants",
+        "tonal-distance",
+        "modulation"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction",
+        "function"
+      ]
+    },
+    {
+      "number": "18",
+      "title": "Modulation",
+      "titleZh": "转调",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-18",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "转调通过共同和弦、半音中介或直接并置建立新调；新调必须获得自己的属—主与终止，才算真正转调。",
+      "keyPoints": [
+        "枢轴和弦在两调中有不同功能解释。",
+        "转调分析要指出新调的属、主与终止，而不只是变化音。"
+      ],
+      "concepts": [
+        "modulation",
+        "tonal-distance",
+        "circle-of-fifths"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ]
+    },
+    {
+      "number": "19",
+      "title": "Harmonic Sequences",
+      "titleZh": "和声模进",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-19",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "和声模进把同一模型移到新音级；自然模进保持调内，真实模进保持音程结构，二者都制造方向与延长。",
+      "keyPoints": [
+        "模进是“有目标的重复”，不是无限循环。",
+        "低音线与模进常共同决定段落的方向。"
+      ],
+      "concepts": [
+        "harmonic-sequence",
+        "bass-line"
+      ],
+      "dimensions": [
+        "direction",
+        "relationship"
+      ]
+    },
+    {
+      "number": "21",
+      "title": "Modal Mixture",
+      "titleZh": "调式交替",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-21",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "调式交替从同主音小调借用 iv、bVI、bIII、bVII 等和弦，形成大调内部的明暗轴；主音不变，调号被临时染色。",
+      "keyPoints": [
+        "iv–I 与 bVI–V 是最常见的借用路径。",
+        "借用和弦之后通常回到原调主音；新调终止才是转调。"
+      ],
+      "concepts": [
+        "modal-mixture-color",
+        "borrowed-chords"
+      ],
+      "dimensions": [
+        "brightness",
+        "color",
+        "relationship"
+      ]
+    },
+    {
+      "number": "22",
+      "title": "Chromatic Modulation and Text-Music Relations",
+      "titleZh": "半音转调与音乐—文本关系",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-22",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "半音转调通过半音化声部、等音和弦或突然的调性并置进入远关系调；它强调色彩突变而非平滑枢轴。",
+      "keyPoints": [
+        "半音转调的关键是声部半音移动与目标和弦的属准备。",
+        "远关系转调常需要等音重解释或模进支撑。"
+      ],
+      "concepts": [
+        "modulation",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "relationship",
+        "color",
+        "direction"
+      ]
+    },
+    {
+      "number": "23",
+      "title": "Neapolitan Chords",
+      "titleZh": "那不勒斯和弦",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-23",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "那不勒斯六和弦是降 II 级大三和弦的第一转位，通常作下属接到 V；降二音下行到导音，形成强烈半音解决。",
+      "keyPoints": [
+        "N6 是下属功能，不是属功能。",
+        "bII6 的根音与外声部半音解决决定它的方向感。"
+      ],
+      "concepts": [
+        "neapolitan-aug6",
+        "predominant"
+      ],
+      "dimensions": [
+        "brightness",
+        "color",
+        "function"
+      ]
+    },
+    {
+      "number": "24",
+      "title": "Augmented-Sixth Chords",
+      "titleZh": "增六和弦",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-24",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "增六和弦用 b6 与 #4 的外向扩张强化属；意、法、德三种形态共享增六度，但在声部与解决上不同。",
+      "keyPoints": [
+        "b6 下行到属音，b4 上行到属音，形成八度扩张。",
+        "德国增六与属七等音，但功能与解决方向不同。"
+      ],
+      "concepts": [
+        "neapolitan-aug6",
+        "voice-leading",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "color",
+        "brightness",
+        "function"
+      ]
+    },
+    {
+      "number": "28",
+      "title": "Tonal Ambiguity and Symmetrically Constructed Harmonies",
+      "titleZh": "调性模糊与对称和声",
+      "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+      "id": "laitz-28",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "对称和声（减七、增三、全音阶）削弱传统调性中心；八度被等分，和弦可被多种方式解释。",
+      "keyPoints": [
+        "对称结构让同一个音响指向多个调性中心。",
+        "调性模糊不是无调性，而是中心被延迟或多重化。"
+      ],
+      "concepts": [
+        "diminished-seventh",
+        "tonal-distance",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "relationship",
+        "color"
+      ]
+    },
+    {
+      "number": "29",
+      "title": "Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave",
+      "titleZh": "对称拉伸调性：半音模进与八等分",
+      "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+      "id": "laitz-29",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "半音模进与八度等分把调性拉伸到边缘；Coltrane Changes 与增三循环都用对称根音运动制造快速转调。",
+      "keyPoints": [
+        "大三级循环把八度分成三个调性中心。",
+        "半音模进让和声方向变得可预测又不断偏移。"
+      ],
+      "concepts": [
+        "coltrane-changes",
+        "harmonic-sequence",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ]
+    },
+    {
+      "number": "01",
+      "title": "大三和弦与小三和弦、四部和声",
+      "part": "上册",
+      "id": "sposobin-01",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "四部和声以三和弦的四类质量与声部距离为起点；重复音、密集/开放排列与声部独立决定和弦的稳定度与色彩。",
+      "keyPoints": [
+        "三和弦质量是后续所有功能与变和弦的构件。",
+        "四声部写作先保证外声部与低音，再填内声部。"
+      ],
+      "concepts": [
+        "triads",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ]
+    },
+    {
+      "number": "02",
+      "title": "正三和弦的功能体系",
+      "part": "上册",
+      "id": "sposobin-02",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "正三和弦构成 T–S–D 的功能轴：主和弦确立调性，下属把音乐推离主音，属和弦制造回归压力。",
+      "keyPoints": [
+        "功能不是和弦标签，而是它在进行中承担的方向。",
+        "T–S–D–T 是俄罗斯功能和声最基础的句法。"
+      ],
+      "concepts": [
+        "roman-numerals",
+        "predominant",
+        "cadences"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ]
+    },
+    {
+      "number": "03",
+      "title": "原位三和弦的连接",
+      "part": "上册",
+      "id": "sposobin-03",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "原位三和弦的连接依赖共同音、级进与跳进的合理分配；平行五八度、声部超越与隐伏五八度是主要禁则。",
+      "keyPoints": [
+        "能保持的共同音尽量保持，倾向音按方向解决。",
+        "反向进行比同类进行更能保持声部独立。"
+      ],
+      "concepts": [
+        "voice-leading",
+        "triads"
+      ],
+      "dimensions": [
+        "direction",
+        "function"
+      ]
+    },
+    {
+      "number": "08",
+      "title": "终止、乐段、乐句",
+      "part": "上册",
+      "id": "sposobin-08",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "终止式是乐句的句法标点：完全终止、不完全终止、半终止与阻碍终止共同决定乐段的收束强度。",
+      "keyPoints": [
+        "完全终止要求 V–I 原位且最高声部落在主音。",
+        "半终止停在 V，阻碍终止用 vi 替换预期的 I。"
+      ],
+      "concepts": [
+        "cadences",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "function",
+        "direction",
+        "rhythm"
+      ]
+    },
+    {
+      "number": "09",
+      "title": "终止四六和弦",
+      "part": "上册",
+      "id": "sposobin-09",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "终止四六和弦在强拍上以属音为低音，作为属功能的双倚音准备；它不是普通的主和弦第二转位。",
+      "keyPoints": [
+        "六音与四音下行解决到属和弦的五音与三音。",
+        "节拍位置决定它是终止四六还是经过/辅助四六。"
+      ],
+      "concepts": [
+        "cadential-six-four",
+        "voice-leading",
+        "cadences"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ]
+    },
+    {
+      "number": "14",
+      "title": "原位属七和弦（D7）",
+      "part": "上册",
+      "id": "sposobin-14",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "原位属七把属功能压缩为不协和单位；三音与七音构成三全音，七音下行解决是功能和声的核心倾向。",
+      "keyPoints": [
+        "D7 的三全音决定属功能的张力。",
+        "七音下行、三音上行是解决的基本方向。"
+      ],
+      "concepts": [
+        "seventh-chords",
+        "voice-leading",
+        "guide-tones"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ]
+    },
+    {
+      "number": "17",
+      "title": "大调与和声小调的完全功能体系、自然音体系",
+      "part": "上册",
+      "id": "sposobin-17",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "大调与和声小调的完全功能体系把自然音和弦纳入 T/S/D 三组；副三和弦可以替代正三和弦，但功能方向不变。",
+      "keyPoints": [
+        "vi 可作主功能延伸或下属替代。",
+        "和声小调的升七级让属功能获得导音。"
+      ],
+      "concepts": [
+        "roman-numerals",
+        "minor-scales",
+        "predominant"
+      ],
+      "dimensions": [
+        "function",
+        "brightness"
+      ]
+    },
+    {
+      "number": "18",
+      "title": "Ⅱ级六和弦与三和弦（SⅡ6与SⅡ）",
+      "part": "上册",
+      "id": "sposobin-18",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "II 级六和弦与三和弦是下属功能的核心替代；它们比 IV 更柔和，常用于 ii–V–I 的前半。",
+      "keyPoints": [
+        "SII6 的低音是三音，声部连接更平滑。",
+        "ii–V–I 是 T–S–D–T 的爵士压缩形态。"
+      ],
+      "concepts": [
+        "predominant",
+        "ii-v-i",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ]
+    },
+    {
+      "number": "19",
+      "title": "和声大调",
+      "part": "上册",
+      "id": "sposobin-19",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "和声大调降低第六级，产生 bVI、iv 与 bII 等色彩；它把同主音小调的暗色带入大调。",
+      "keyPoints": [
+        "b6 是和声大调最醒目的色彩音。",
+        "借用和弦不改变主音，却改变调式明暗。"
+      ],
+      "concepts": [
+        "borrowed-chords",
+        "modal-mixture-color",
+        "minor-scales"
+      ],
+      "dimensions": [
+        "brightness",
+        "color"
+      ]
+    },
+    {
+      "number": "20",
+      "title": "Ⅵ级三和弦（TsⅥ）、阻碍终止、扩展乐段的方法",
+      "part": "上册",
+      "id": "sposobin-20",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "VI 级三和弦与阻碍终止把预期的 I 替换为 vi，延长乐段；它是 deceptive motion 的古典核心。",
+      "keyPoints": [
+        "V–vi 的阻碍终止保留属功能张力，却延迟主音。",
+        "vi 也可作主功能延伸，功能取决于上下文。"
+      ],
+      "concepts": [
+        "cadences",
+        "roman-numerals",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "function",
+        "brightness",
+        "direction"
+      ]
+    },
+    {
+      "number": "21",
+      "title": "下属七和弦（SⅡ7）",
+      "part": "上册",
+      "id": "sposobin-21",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "下属七和弦（SII7）把下属功能扩展为四音和弦；三音与七音的解决让 ii–V 的连接更平滑，也更有色彩。",
+      "keyPoints": [
+        "SII7 常接 D7 或 D9，形成 ii–V 的古典形态。",
+        "七音下行解决是下属七和弦的关键声部。"
+      ],
+      "concepts": [
+        "predominant",
+        "seventh-chords",
+        "ii-v-i"
+      ],
+      "dimensions": [
+        "function",
+        "color",
+        "direction"
+      ]
+    },
+    {
+      "number": "22",
+      "title": "导七和弦（DⅦ7）",
+      "part": "上册",
+      "id": "sposobin-22",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "导七和弦（DVII7）以导音为根音，是属功能组的减和弦；减七的对称结构使它可作等音转调枢纽。",
+      "keyPoints": [
+        "DVII7 解决到主和弦，声部倾向强烈。",
+        "减七的四个等音拼写指向不同调性。"
+      ],
+      "concepts": [
+        "diminished-seventh",
+        "seventh-chords",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "function",
+        "color",
+        "relationship"
+      ]
+    },
+    {
+      "number": "26",
+      "title": "自然（调内）模进和副七和弦（模进和弦）",
+      "part": "上册",
+      "id": "sposobin-26",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "自然模进在调内移动同一和弦模型，副七和弦模进则保持七和弦结构；模进制造方向、延长与段落推力。",
+      "keyPoints": [
+        "模进是“有目标的重复”，需要终止或转调收束。",
+        "低音线的五度/级进运动决定模进的方向感。"
+      ],
+      "concepts": [
+        "harmonic-sequence",
+        "bass-line"
+      ],
+      "dimensions": [
+        "direction",
+        "relationship"
+      ]
+    },
+    {
+      "number": "28",
+      "title": "终止中的重属和弦",
+      "part": "下册",
+      "id": "sposobin-28",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "终止中的重属和弦（V/V）把属和弦临时变成主音，强化终止前的张力；它是最常见的副属和弦。",
+      "keyPoints": [
+        "D7 在 C 大调是 V/V，解决到 G。",
+        "临时升降号属于目标调的属功能，不是新调号。"
+      ],
+      "concepts": [
+        "secondary-dominants",
+        "cadences",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "function",
+        "relationship",
+        "direction"
+      ]
+    },
+    {
+      "number": "31",
+      "title": "调性关系的类型",
+      "part": "下册",
+      "id": "sposobin-31",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "调性关系按调号差距、共同和弦数量与主音距离分级；一级关系调最容易通过枢轴和弦转调。",
+      "keyPoints": [
+        "相差一个调号的调共享更多自然音和弦。",
+        "远关系调需要半音中介、等音或模进。"
+      ],
+      "concepts": [
+        "tonal-distance",
+        "modulation",
+        "circle-of-fifths"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ]
+    },
+    {
+      "number": "32",
+      "title": "离调、半音体系",
+      "part": "下册",
+      "id": "sposobin-32",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "离调是局部的副属解决，半音体系则扩大变化音的范围；离调不建立新调中心，转调才建立新调终止。",
+      "keyPoints": [
+        "副属和弦解决后回到原调，是离调。",
+        "新调拥有自己的属—主与终止，才是转调。"
+      ],
+      "concepts": [
+        "secondary-dominants",
+        "modulation",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "relationship",
+        "function"
+      ]
+    },
+    {
+      "number": "34",
+      "title": "转调",
+      "part": "下册",
+      "id": "sposobin-34",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "转调通过共同和弦、半音声部或直接并置进入新调；新调的属—主与终止是确认调性中心的最终证据。",
+      "keyPoints": [
+        "枢轴和弦在两调中有不同功能解释。",
+        "转调分析要指出新调的属、主与终止。"
+      ],
+      "concepts": [
+        "modulation",
+        "tonal-distance",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ]
+    },
+    {
+      "number": "35",
+      "title": "到一级关系调的转调",
+      "part": "下册",
+      "id": "sposobin-35",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "到一级关系调的转调最常用共同和弦与属准备；相差一个调号的调既保留熟悉感，又提供足够的色彩变化。",
+      "keyPoints": [
+        "一级关系调的共同和弦数量最多。",
+        "新调属和弦的出现是转调的关键信号。"
+      ],
+      "concepts": [
+        "modulation",
+        "tonal-distance",
+        "circle-of-fifths"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction",
+        "color"
+      ]
+    },
+    {
+      "number": "46",
+      "title": "属和声组的变和弦",
+      "part": "下册",
+      "id": "sposobin-46",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "属和声组的变和弦通过降低或升高五音、九音改变属七的张力；变化属七增强解决压力，也扩展色彩。",
+      "keyPoints": [
+        "b9、#9、b5、#5 是属功能的主要变化音。",
+        "变化音必须按声部倾向解决到目标和弦。"
+      ],
+      "concepts": [
+        "extensions-alterations",
+        "harmonic-color",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "color",
+        "function",
+        "brightness"
+      ]
+    },
+    {
+      "number": "47",
+      "title": "下属和声组的变和弦",
+      "part": "下册",
+      "id": "sposobin-47",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "下属和声组的变和弦包括那不勒斯与增六和弦；它们用半音化下属强化属准备，制造比 iv 更暗或更尖锐的色彩。",
+      "keyPoints": [
+        "bII6 与增六和弦都常接到 V。",
+        "增六的 b6–#4 外向扩张到属音八度。"
+      ],
+      "concepts": [
+        "neapolitan-aug6",
+        "harmonic-color",
+        "predominant"
+      ],
+      "dimensions": [
+        "color",
+        "brightness",
+        "function"
+      ]
+    },
+    {
+      "number": "49",
+      "title": "交替大小调体系",
+      "part": "下册",
+      "id": "sposobin-49",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "交替大小调体系在同主音大调与小调之间借用和弦；主音不变，调式色彩在小调与大调之间移动。",
+      "keyPoints": [
+        "iv、bVI、bIII、bVII 是大调借用小调的主要和弦。",
+        "借用之后通常回到原调主音，不等同转调。"
+      ],
+      "concepts": [
+        "modal-mixture-color",
+        "borrowed-chords"
+      ],
+      "dimensions": [
+        "brightness",
+        "color",
+        "relationship"
+      ]
+    },
+    {
+      "number": "50",
+      "title": "交替大小调的降Ⅵ级三和弦（tsⅥ）",
+      "part": "下册",
+      "id": "sposobin-50",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "降 VI 级三和弦（tsVI）是交替大小调最醒目的暗色和弦；它常接 V 或 I，制造突然的明暗转折。",
+      "keyPoints": [
+        "bVI 的根音与三音来自同主音小调。",
+        "bVI–V 的半音声部让暗色平滑地回到属功能。"
+      ],
+      "concepts": [
+        "modal-mixture-color",
+        "harmonic-color",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "brightness",
+        "color",
+        "function"
+      ]
+    },
+    {
+      "number": "53",
+      "title": "经过交替大小调的降Ⅵ级三和弦（tsⅥ）以及经过那不勒斯和弦的转调",
+      "part": "下册",
+      "id": "sposobin-53",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "经过降 VI 级或那不勒斯和弦的转调利用半音中介把远关系调连接起来；这类转调强调色彩与声部，而非共同和弦数量。",
+      "keyPoints": [
+        "bVI 与 N6 都可作为半音中介。",
+        "声部半音移动比和弦标签更能解释转调路径。"
+      ],
+      "concepts": [
+        "neapolitan-aug6",
+        "modulation",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "relationship",
+        "color",
+        "brightness"
+      ]
+    },
+    {
+      "number": "56",
+      "title": "意外进行",
+      "part": "下册",
+      "id": "sposobin-56",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "意外进行用非预期和弦替换功能目标（如 V–vi、V–bVI），制造句法转折；它依赖听者的功能预期被打破。",
+      "keyPoints": [
+        "意外进行不是无功能，而是延迟或替换预期目标。",
+        "阻碍终止是最常见的意外进行之一。"
+      ],
+      "concepts": [
+        "cadences",
+        "harmonic-color",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "function",
+        "color",
+        "direction"
+      ]
+    },
+    {
+      "number": "57",
+      "title": "等音转调、经过减七和弦的转调",
+      "part": "下册",
+      "id": "sposobin-57",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "等音转调利用减七或属七的等音重解释进入远关系调；减七的对称结构尤其适合多方向解决。",
+      "keyPoints": [
+        "减七的四个等音拼写可指向四个调性中心。",
+        "等音转调的关键是重解释后的属准备与终止。"
+      ],
+      "concepts": [
+        "diminished-seventh",
+        "tonal-distance",
+        "modulation"
+      ],
+      "dimensions": [
+        "relationship",
+        "color"
+      ]
+    },
+    {
+      "number": "59",
+      "title": "作品调性布局的基本原则",
+      "part": "下册",
+      "id": "sposobin-59",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "作品调性布局把各乐章/段落的调性关系组织为整体叙事；主调、属调、下中音调与远关系调承担不同的结构权重。",
+      "keyPoints": [
+        "调性布局是宏观和声，不只是局部进行。",
+        "调性距离与曲式位置共同决定色彩强度。"
+      ],
+      "concepts": [
+        "tonal-distance",
+        "phrase-structure",
+        "circle-of-fifths"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction",
+        "brightness"
+      ]
+    },
+    {
+      "number": "60",
+      "title": "和声分析的某些问题",
+      "part": "下册",
+      "id": "sposobin-60",
+      "book": "sposobin",
+      "expanded": true,
+      "summary": "和声分析把和弦、功能、声部与曲式放在同一张图上；分析不是贴标签，而是解释音乐为何在此处这样走。",
+      "keyPoints": [
+        "先看低音与外声部，再标和弦与功能。",
+        "和声节奏、终止与调性布局共同构成分析结论。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "harmonic-rhythm",
+        "roman-numerals"
+      ],
+      "dimensions": [
+        "function",
+        "direction",
+        "rhythm"
+      ]
     }
   ],
   "concepts": [
@@ -236,6 +3493,7 @@
         "转位",
         "听辨"
       ],
+      "visual": "interval-ruler",
       "summary": "音程同时有“度数”和“性质”两个维度：度数数线与间，性质由半音数决定。",
       "sections": [
         {
@@ -1057,6 +4315,7 @@
         "色彩音",
         "爵士"
       ],
+      "visual": "mode-wheel",
       "summary": "七个教会调式共享大调音阶的音，但以不同音级为主音；每个调式的“特征音”决定它的颜色。",
       "sections": [
         {
@@ -1334,6 +4593,7 @@
         "和声进行",
         "转调"
       ],
+      "visual": "circle-of-fifths",
       "summary": "五度圈既是调号的排序表，也是和声根音运动的地图：根音下行五度时，功能常按主—下属—属—主的方向推进。",
       "sections": [
         {
@@ -3551,6 +6811,1923 @@
       }
     },
     {
+      "id": "cadential-six-four",
+      "slug": "cadential-six-four",
+      "number": "H-09",
+      "title": "终止四六与属准备",
+      "titleEn": "THE CADENTIAL SIX-FOUR",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "终止四六",
+        "四六和弦",
+        "I6/4",
+        "cadential 6/4",
+        "double appoggiatura"
+      ],
+      "tags": [
+        "终止",
+        "四六和弦",
+        "声部进行"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ],
+      "summary": "终止四六（I6/4）以属音为低音，在强拍上把主和弦的六音与四音压向属和弦的五音与三音；它是属准备，不是普通的主和弦转位。",
+      "sections": [
+        {
+          "id": "form",
+          "heading": "形态：低音已经是属音",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "在 C 大调，C/G（G–C–E）被称为终止四六：低音 G 是属音，上方 C 与 E 是主和弦的四音与六音。它通常出现在强拍或终止前的重拍，紧接着解决到 G7 或 G。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 11 Six-Four Chords and Plagal Motions"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第九章 终止四六和弦"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "把它标成 I6/4 只描述了音高；从功能上看，它是属功能的双倚音准备：六音 E 下行到五音 D，四音 C 下行到三音 B。低音保持 G，上方两声部同时下行，属功能因此获得更强的落地感。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第九章 终止四六和弦"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第十三章 经过的与辅助的四六和弦"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "function",
+          "heading": "为什么它听起来像属",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "四六和弦的功能取决于节拍位置与前后和弦。经过四六夹在两个和弦之间，辅助四六围绕同一低音；终止四六则在终止前占据重拍，承担属准备。三者的音响相同，句法角色不同。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 11 Six-Four Chords and Plagal Motions"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "分析抓手",
+              "text": "先看低音是不是属音，再看它是否在重拍、后面是否接 V。三个条件同时成立，才是终止四六。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-cadential-64",
+          "title": "I6/4 → V7 → I",
+          "caption": "低音 G 保持；E→D、C→B 同时下行，四六和弦成为属的准备。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 68,
+          "beats": 6,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "I6/4"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "V7"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "cadences",
+        "voice-leading",
+        "predominant"
+      ],
+      "review": {
+        "question": "终止四六为什么不能被简单理解为“主和弦的第二转位”？",
+        "answer": "因为它出现在强拍、低音是属音、上方六音与四音下行解决到属和弦；功能上是属准备/双倚音，而不是稳定的主和弦。",
+        "hint": "看低音、节拍位置与后续和弦。"
+      }
+    },
+    {
+      "id": "harmonic-sequence",
+      "slug": "harmonic-sequence",
+      "title": "和声模进与走向",
+      "titleEn": "HARMONIC SEQUENCE",
+      "number": "H-10",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "和声模进",
+        "模进",
+        "sequence",
+        "diatonic sequence",
+        "real sequence"
+      ],
+      "tags": [
+        "模进",
+        "低音",
+        "方向"
+      ],
+      "dimensions": [
+        "direction",
+        "relationship"
+      ],
+      "summary": "和声模进把同一和弦模型移到新的音级：自然模进留在调内，真实模进保持音程结构；它让和声获得方向、延长与段落推力。",
+      "sections": [
+        {
+          "id": "types",
+          "heading": "自然模进与真实模进",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "自然模进在新的音级上重复同一功能模型，但按调内音阶调整和弦质量；真实模进则保持原模型的确切音程结构，常带半音变化。前者留在调性里，后者更容易把调性推远。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 19 Harmonic Sequences"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第二十六章 自然（调内）模进和副七和弦（模进和弦）"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "模进不是无限循环，而是“有目标的重复”：它需要终止、转调或节奏变化来收束。低音的五度循环、级进下行或半音模进，决定模进的方向感与紧张度。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第三十三章 半音模进、离调"
+                },
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 19 Harmonic Sequences"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "hearing",
+          "heading": "听感：重复如何变成方向",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "连续下行五度的根音运动（A–D–G–C）会自然形成“被吸向主音”的方向；连续上行五度则更像离开。模进的方向与终止的位置共同决定它是推进、延长还是悬置。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 2 Major Scale and Progressions（五度圈）"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "写作提示",
+              "text": "先写低音线，再决定每个模型的和弦质量；不要只复制和弦形状而忽略低音方向。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-descending-fifths-sequence",
+          "title": "下行五度的模进",
+          "caption": "A–D–G–C 连续下行五度；同一模型被移到新音级，方向指向 C。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 76,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "Am7"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "Dm7"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "G7"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "Cmaj7"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "circle-of-fifths",
+        "bass-line",
+        "modulation"
+      ],
+      "review": {
+        "question": "自然模进与真实模进的核心区别是什么？",
+        "answer": "自然模进留在调内，按音阶调整和弦质量；真实模进保持原模型的音程结构，常带半音变化，更容易离开原调。",
+        "hint": "一个守调，一个守形状。"
+      }
+    },
+    {
+      "id": "diminished-seventh",
+      "slug": "diminished-seventh",
+      "title": "减七和弦与等音关系",
+      "titleEn": "DIMINISHED SEVENTH & ENHARMONIC RELATIONS",
+      "number": "H-11",
+      "category": "harmony",
+      "level": "高级",
+      "aliases": [
+        "减七和弦",
+        "dim7",
+        "导七",
+        "等音转调",
+        "enharmonic modulation"
+      ],
+      "tags": [
+        "减七",
+        "等音",
+        "转调"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ],
+      "summary": "减七和弦由连续小三度叠成，四个音可等音重写；同一音响因此能指向多个调性中心，是等音转调最常用的枢纽之一。",
+      "sections": [
+        {
+          "id": "symmetry",
+          "heading": "对称结构：四个等音拼写",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "B–D–F–Ab 是 C 大调的导七和弦（Bdim7）。由于每个音之间都是小三度，把任一音当作根音都能得到同一个音响；四个等音拼写分别指向不同调性。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第二十二章 导七和弦（DⅦ7）"
+                },
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "在传统功能里，导七解决到主和弦，声部倾向强烈；在转调里，同一个减七可以被重解释为目标调的导七或经过和弦，从而滑向远关系调。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第五十七章 等音转调、经过减七和弦的转调"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第五十八章 经过属七和弦的等音转调"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "resolution",
+          "heading": "解决与重解释",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "减七的解决方向由根音与外声部决定：Bdim7 到 C 时，B 上行到 C，D 到 E，F 到 G，Ab 到 G。若把 Ab 重写为 G#，同一音响就可以被解释为 E 大调的导七，指向 E。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第五十七章 等音转调、经过减七和弦的转调"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "听觉提示",
+              "text": "减七的张力是“均匀”的，没有单一解决方向；听觉上要抓住低音与目标音，而不是只凭和弦颜色判断调性。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-dim7-resolution",
+          "title": "Bdim7 → C",
+          "caption": "B–D–F–Ab 解决到 C；把 Ab 重写为 G#，同一音响就能指向 E。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 64,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                },
+                {
+                  "midi": 68,
+                  "spelling": "Ab4"
+                }
+              ],
+              "label": "Bdim7"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "C"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "seventh-chords",
+        "tonal-distance",
+        "neapolitan-aug6"
+      ],
+      "review": {
+        "question": "减七和弦为什么能作为等音转调枢纽？",
+        "answer": "因为它由连续小三度叠成，四个音可等音重写为不同根音的减七，从而分别指向不同调性；重解释后的属准备与终止确认新调。",
+        "hint": "对称结构 + 等音拼写 + 目标调终止。"
+      }
+    },
+    {
+      "id": "harmonic-rhythm",
+      "slug": "harmonic-rhythm",
+      "title": "和声节奏与密度",
+      "titleEn": "HARMONIC RHYTHM",
+      "number": "H-12",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "和声节奏",
+        "harmonic rhythm",
+        "和弦密度",
+        "节拍位置"
+      ],
+      "tags": [
+        "节奏",
+        "密度",
+        "终止"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction"
+      ],
+      "summary": "和声节奏是和弦变化的速率；慢速让色彩停留，快速把音乐推向终止。它决定乐句的呼吸、张力累积与高潮位置。",
+      "sections": [
+        {
+          "id": "rate",
+          "heading": "变化速率就是句法",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "同样四个和弦，一小节一个和一小节两个，会形成完全不同的句法。和声节奏加快通常增加推动力；在终止前加速，会把听众的注意力集中到属—主的落点。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 15 Periods"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第六十章 和声分析的某些问题"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "和声节奏也受旋律与织体影响：旋律音密集时，和弦变化不宜同样密集，否则听感会拥挤。分析时要把和弦变化点与拍号、动机长度一起看。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 9 The Pre-Dominant Function and the Phrase Model"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "density",
+          "heading": "密度与配器",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "快速和声节奏需要更简单的 voicing：省略五音、保留三音七音、把延伸音限制在一个色彩音。慢速和声节奏则可以展开更宽的声部与更多延伸音。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 2 Major Scale and Progressions（声部进行）"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "编曲提示",
+              "text": "先决定每小节几个和弦，再决定 voicing 的密度；不要用复杂和弦去填满快速的和声节奏。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-accelerating-harmony",
+          "title": "和声节奏加速进入终止",
+          "caption": "C 与 F 各占四拍，G7 与 C 各占两拍；变化速率在终止前加快。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 72,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "IV"
+            },
+            {
+              "beat": 8,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "V7"
+            },
+            {
+              "beat": 10,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "phrase-structure",
+        "cadences",
+        "bass-line"
+      ],
+      "review": {
+        "question": "和声节奏加快通常会带来什么句法效果？",
+        "answer": "增加推动力与张力累积，常把注意力推向终止；若过早加速，可能让后面的终止失去空间。",
+        "hint": "加速是为了抵达，而不是一直加速。"
+      }
+    },
+    {
+      "id": "harmonic-color",
+      "slug": "harmonic-color",
+      "title": "和弦色彩与张力光谱",
+      "titleEn": "HARMONIC COLOR & TENSION",
+      "number": "H-13",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "和声色彩",
+        "张力",
+        "tension",
+        "consonance",
+        "dissonance",
+        "chord color"
+      ],
+      "tags": [
+        "色彩",
+        "张力",
+        "延伸音"
+      ],
+      "dimensions": [
+        "color",
+        "brightness",
+        "function"
+      ],
+      "visual": "tension-spectrum",
+      "summary": "和弦色彩是音程内容、张力与语境共同作用的结果；协和与不协和不是二元，而是一条从稳定到紧张的光谱。",
+      "sections": [
+        {
+          "id": "spectrum",
+          "heading": "张力不是二元",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "三和弦比七和弦稳定，七和弦比延伸音和弦稳定；同一个属七加上 b9、#9 或 alt 会进一步增加解决压力。色彩不是“好听/难听”，而是张力位置与解决方向。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 3 Chord/Scale Theory（“避免”音与变化属七）"
+                },
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 1C Musical Distance: Intervals（Consonant and Dissonant Intervals）"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "张力还取决于语境：大七度在终止后可能显得悬浮，在持续音上却可以是稳定的色彩；三全音在属七里要求解决，在调式化和声里可以停留。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 1C Musical Distance: Intervals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "context",
+          "heading": "语境决定颜色",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "同一个 Cmaj7 在 C 大调是主和弦，在 F 大调是 V 级延伸，在 G 大调是 IV 级；功能不同，听感也不同。色彩分析必须同时说明“音程内容”和“功能位置”。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第四十六章 属和声组的变和弦"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "分析顺序",
+              "text": "先标功能，再听张力，最后描述颜色。只写“很爵士”不是分析；要指出哪个音程、哪个延伸音在制造张力。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-tension-spectrum",
+          "title": "从稳定到紧张再收束",
+          "caption": "Cmaj7 → Fmaj7 → Dm7 → G7(b9) → Cmaj9：功能链不变，张力先升后降。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 68,
+          "beats": 10,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "Cmaj7"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "Fmaj7"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "Dm7"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                },
+                {
+                  "midi": 68,
+                  "spelling": "Ab4"
+                }
+              ],
+              "label": "G7(b9)"
+            },
+            {
+              "beat": 8,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "Cmaj9"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "extensions-alterations",
+        "chord-scale",
+        "modal-mixture-color"
+      ],
+      "review": {
+        "question": "为什么同一个和弦在不同调性/进行中会有不同颜色？",
+        "answer": "因为色彩由音程内容、功能位置、前后和弦与声部进行共同决定；同一音高集合在不同功能中承担不同张力与解决方向。",
+        "hint": "音程 + 功能 + 语境。"
+      }
+    },
+    {
+      "id": "modal-mixture-color",
+      "slug": "modal-mixture-color",
+      "title": "明暗轴线：同主音交替",
+      "titleEn": "MODAL MIXTURE & BRIGHTNESS",
+      "number": "H-14",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "调式交替",
+        "同主音大小调",
+        "借用和弦",
+        "modal mixture",
+        "brightness",
+        "bVI",
+        "iv"
+      ],
+      "tags": [
+        "明暗",
+        "借用",
+        "调式"
+      ],
+      "dimensions": [
+        "brightness",
+        "color",
+        "relationship"
+      ],
+      "summary": "同主音大小调交替是调性内部最重要的明暗轴：把平行小调的 iv、bVI、bIII、bVII 借进大调，主音不变而色彩变暗。",
+      "sections": [
+        {
+          "id": "axis",
+          "heading": "明暗不是大调/小调的二元",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "C 大调可以借用 C 小调的 Fm（iv）、Ab（bVI）、Eb（bIII）与 Bb（bVII）。这些和弦不改变主音 C，却把小调的暗色带入大调；借用的程度可以从单个 iv 到整段调式交替。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 21 Modal Mixture"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第四十九章 交替大小调体系"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "iv–I 的变格进行最柔和；bVI–V 制造突然的暗色转折；bVII–I 则像流行/摇滚的“回到主音前的松弛”。同一借用手法在不同功能位置上产生不同明暗强度。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第五十章 交替大小调的降Ⅵ级三和弦（tsⅥ）"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第十九章 和声大调"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "voice-leading",
+          "heading": "借用也要解决",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "借用和弦的变音来自同主音小调，而不是远关系转调。写分析时要标出来源（如 iv from parallel minor），并说明变音如何解决：b6 常下行到 5，b3 常解决到 2 或 1。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 21 Modal Mixture"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "不要和转调混淆",
+              "text": "借用之后通常回到原调主音；如果新调建立自己的终止，才考虑转调。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-mixture-brightness",
+          "title": "I → bVI → iv → V7 → I",
+          "caption": "Ab 与 Fm 来自同主音 C 小调；主音仍是 C，但明暗在四个和弦内完成一次往返。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 68,
+          "beats": 10,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 56,
+                  "spelling": "Ab3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 63,
+                  "spelling": "Eb4"
+                }
+              ],
+              "label": "bVI"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 56,
+                  "spelling": "Ab3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "iv"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "V7"
+            },
+            {
+              "beat": 8,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "borrowed-chords",
+        "neapolitan-aug6",
+        "harmonic-color"
+      ],
+      "review": {
+        "question": "C 大调中的 bVI 与 iv 分别如何改变明暗？",
+        "answer": "bVI（Ab）带来突然的暗色与远距离感，常接 V 或 I；iv（Fm）是下属功能的暗色替换，常用 iv–I 的变格收束。",
+        "hint": "一个偏色彩转折，一个偏下属功能。"
+      }
+    },
+    {
+      "id": "tonal-distance",
+      "slug": "tonal-distance",
+      "title": "调性距离与和声关系",
+      "titleEn": "TONAL DISTANCE & KEY RELATIONS",
+      "number": "H-15",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "调性距离",
+        "调性关系",
+        "tonal distance",
+        "key relations",
+        "近关系调",
+        "远关系调"
+      ],
+      "tags": [
+        "转调",
+        "关系",
+        "调性"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ],
+      "summary": "调性距离由共同和弦数量、调号差距与主音关系共同决定；近关系调用枢轴和弦，远关系调需要半音中介、等音或模进。",
+      "sections": [
+        {
+          "id": "scale",
+          "heading": "距离的刻度",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "相差一个调号的调（如 C 与 G）共享最多自然音和弦，最容易通过共同和弦转调；相差两个调号开始需要更多半音化准备；相差三至六个调号则依赖等音、模进或直接并置。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第三十一章 调性关系的类型"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第五十一章 调性关系的等级、相差两个调号的转调"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第五十二章 相差三至六个调号的转调"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "主音关系也重要：关系大小调共享调号，但主音不同；同主音大小调共享主音，却相差三个调号。两种“近”是不同维度的近。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 18 Modulation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "strategy",
+          "heading": "距离决定策略",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "近关系调优先找枢轴和弦；远关系调可以用半音声部、减七/属七等音重解释，或用模进把听众带到新调。距离越远，越需要更多时间来确认新调。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第三十四章 转调"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第三十五章 到一级关系调的转调"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "分析提示",
+              "text": "不要只算调号。共同和弦、主音关系、终止确认与持续时间共同决定“听起来有多远”。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-pivot-distance",
+          "title": "C 大调 → G 大调",
+          "caption": "Am7 是枢轴：C 的 vi7，也是 G 的 ii7；D7 随后把 G 变成新主音。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 72,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "C: Imaj7"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "vi7 = ii7"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 54,
+                  "spelling": "F#3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "V7 of G"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "G: I"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "modulation",
+        "circle-of-fifths",
+        "secondary-dominants"
+      ],
+      "review": {
+        "question": "一级关系调与二级关系调的核心差别是什么？",
+        "answer": "一级关系调相差一个调号、共同和弦最多，最容易枢轴转调；二级关系调相差两个调号，需要更多半音准备或更长的确认。",
+        "hint": "调号差距 + 共同和弦数量。"
+      }
+    },
+    {
+      "id": "bass-line",
+      "slug": "bass-line",
+      "title": "低音线与和声走向",
+      "titleEn": "THE BASS LINE",
+      "number": "H-16",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "低音线",
+        "bass line",
+        "级进低音",
+        "pedal",
+        "持续音",
+        "line cliché"
+      ],
+      "tags": [
+        "低音",
+        "走向",
+        "转位"
+      ],
+      "dimensions": [
+        "direction",
+        "relationship",
+        "color"
+      ],
+      "summary": "低音线是和声的骨架：级进下行、五度循环、持续音与半音线各自讲述不同的方向；和弦选择常由低音决定。",
+      "sections": [
+        {
+          "id": "narratives",
+          "heading": "低音的四种叙事",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "级进下行：C–B–A–G–F–E–D–G–C，常配转位与经过和弦，形成 line cliché 或 lament 的低音。",
+                "五度循环：A–D–G–C，连续下行五度，方向最明确。",
+                "持续音：低音不动，上方和弦变化，制造调式化/悬浮感。",
+                "半音线：低音半音移动，常用于转调、减七或色彩突变。"
+              ],
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 13 The Submediant and the Step-Descent Bass"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第四十八章 持续音"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "低音不仅决定转位，也决定听者如何理解功能。C/E 与 C 的差别不只是低音，它改变了稳定性与下一个和弦的连接方式。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第三章 原位三和弦的连接"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "writing",
+          "heading": "先写低音，再填和弦",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "写作时先确定低音的走向，再选择和弦质量与转位；这样声部进行会更自然，也更容易避免为了和弦标签而写出不合理的低音跳进。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 13 The Submediant and the Step-Descent Bass"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "听觉练习",
+              "text": "用低音单音弹一条级进线，再在每个低音上试三种和弦：原位、第一转位、七和弦。听哪一种最能保持线的连续。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-stepwise-bass",
+          "title": "级进下行低音",
+          "caption": "低音 C–B–A–G–F–E–D–G–C；和弦随低音改变，但线条保持连续。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 68,
+          "beats": 18,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 47,
+                  "spelling": "B2"
+                },
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "V6"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 45,
+                  "spelling": "A2"
+                },
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                }
+              ],
+              "label": "vi"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 43,
+                  "spelling": "G2"
+                },
+                {
+                  "midi": 47,
+                  "spelling": "B2"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                }
+              ],
+              "label": "I6"
+            },
+            {
+              "beat": 8,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 41,
+                  "spelling": "F2"
+                },
+                {
+                  "midi": 45,
+                  "spelling": "A2"
+                },
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                }
+              ],
+              "label": "IV"
+            },
+            {
+              "beat": 10,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 40,
+                  "spelling": "E2"
+                },
+                {
+                  "midi": 43,
+                  "spelling": "G2"
+                },
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                }
+              ],
+              "label": "I6/4"
+            },
+            {
+              "beat": 12,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "ii7"
+            },
+            {
+              "beat": 14,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 43,
+                  "spelling": "G2"
+                },
+                {
+                  "midi": 47,
+                  "spelling": "B2"
+                },
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                }
+              ],
+              "label": "V7"
+            },
+            {
+              "beat": 16,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "voice-leading",
+        "harmonic-sequence",
+        "tritone-substitution"
+      ],
+      "review": {
+        "question": "级进下行低音常见的和声效果是什么？",
+        "answer": "它制造连续、叹息式或 line-cliché 的走向，让转位与经过和弦自然连接；低音的级进比根音跳进更能保持声部连贯。",
+        "hint": "低音是线，和弦是线上的点。"
+      }
+    },
+    {
+      "id": "phrase-structure",
+      "slug": "phrase-structure",
+      "title": "乐段、乐句与和声句法",
+      "titleEn": "PHRASE STRUCTURE & HARMONIC SYNTAX",
+      "number": "H-17",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "乐段",
+        "乐句",
+        "period",
+        "sentence",
+        "phrase",
+        "句法"
+      ],
+      "tags": [
+        "曲式",
+        "终止",
+        "句法"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction",
+        "function"
+      ],
+      "summary": "乐段由前句与后句构成，终止式决定两句的呼应关系；和声句法不是四小节分组，而是“出发—偏离—回归”的完整动作。",
+      "sections": [
+        {
+          "id": "period",
+          "heading": "前句与后句",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "最常见的前句停在不完全终止或半终止，后句用完全终止回应。前句提出方向，后句完成收束；两句的终止关系比小节数更能定义乐段。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 15 Periods"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第八章 终止、乐段、乐句"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "乐句可以进一步分为乐节与动机；动机的重复、模进与变奏把和声推向终止。句法分析要同时看动机、低音与终止，而不是只看和弦序列。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 16 Sentences, Double Periods, and Asymmetric Periods"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "syntax",
+          "heading": "终止决定句法",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "半终止把音乐停在属，制造“未完”；完全终止把低音与最高声部同时落到主音，制造“完成”。阻碍终止用 vi 延迟完成，扩展乐段。",
+              "cites": [
+                {
+                  "source": "sposobin",
+                  "locator": "第八章 终止、乐段、乐句"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "分析顺序",
+              "text": "先找终止，再划分前句/后句；不要从第一小节开始数四小节。终止是句法的标点。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-period-cadences",
+          "title": "前句半终止 → 后句完全终止",
+          "caption": "前句 C–F–G7 停在半终止；后句 C–Am–Dm–G7–C 用完全终止回应。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 72,
+          "beats": 16,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "IV"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "V7 · HC"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 8,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "vi7"
+            },
+            {
+              "beat": 10,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "ii7"
+            },
+            {
+              "beat": 12,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "V7"
+            },
+            {
+              "beat": 14,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "I · PAC"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "cadences",
+        "harmonic-rhythm",
+        "predominant"
+      ],
+      "review": {
+        "question": "乐段的定义更依赖小节数还是终止关系？",
+        "answer": "更依赖终止关系与前后句的呼应；半终止/完全终止的配对比固定四小节更能定义乐段。",
+        "hint": "终止是句法标点。"
+      }
+    },
+    {
       "id": "ii-v-i",
       "slug": "ii-v-i",
       "number": "J-01",
@@ -5097,6 +10274,757 @@
         "question": "调式化和声与功能和声的核心差别是什么？",
         "answer": "调式化和声靠持续低音与音程色彩，不按 V–I 功能推进；功能和声靠属—主解决建立方向。",
         "hint": "方向 vs 颜色。"
+      }
+    },
+    {
+      "id": "bebop-scale",
+      "slug": "bebop-scale",
+      "number": "J-09",
+      "title": "比波普音阶",
+      "titleEn": "BEBOP SCALES",
+      "category": "jazz",
+      "level": "进阶",
+      "aliases": [
+        "比波普音阶",
+        "bebop scale",
+        "bebop dominant",
+        "bebop major",
+        "bebop melodic minor"
+      ],
+      "tags": [
+        "音阶",
+        "即兴",
+        "经过音"
+      ],
+      "dimensions": [
+        "direction",
+        "color"
+      ],
+      "summary": "比波普音阶在自然音阶中加入一个半音经过音，使和弦音落在强拍；属、大调与旋律小调各有对应的比波普形态。",
+      "sections": [
+        {
+          "id": "structure",
+          "heading": "多出来的半音",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "比波普属音阶是 Mixolydian 加上自然 7：G–A–B–C–D–E–F–F#–G。F# 不是新的和弦音，而是连接 b7 与主音的半音经过音，让 G 落在强拍。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 7 Bebop Scales"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "比波普大调音阶在大调音阶中加入 #5，比波普旋律小调在旋律小调中加入还原 7。三种形态的共同逻辑是：用半音经过音调整音阶的节拍落点。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 7 Bebop Scales"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "usage",
+          "heading": "用法：让和弦音落在强拍",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "比波普音阶常用于下行线条：从和弦音开始，用经过音把下一个和弦音推到强拍。它不是“必须弹的音阶”，而是一种让线条更有方向的节奏工具。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 7 Bebop Scales"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "练习提示",
+              "text": "先在半音经过音上标记重音，再把它藏进八分音符线里；听觉目标是强拍上的和弦音，不是那个经过音。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-bebop-dominant",
+          "title": "G 比波普属音阶",
+          "caption": "G–A–B–C–D–E–F–F#–G；F# 只是经过音，G 才是目标和弦音。",
+          "kind": "scale",
+          "key": "C",
+          "tempo": 88,
+          "beats": 5,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ]
+            },
+            {
+              "beat": 0.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                }
+              ]
+            },
+            {
+              "beat": 1,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ]
+            },
+            {
+              "beat": 1.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ]
+            },
+            {
+              "beat": 2,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ]
+            },
+            {
+              "beat": 2.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 3,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ]
+            },
+            {
+              "beat": 3.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 66,
+                  "spelling": "F#4"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "related": [
+        "chord-scale",
+        "ii-v-i",
+        "blues"
+      ],
+      "review": {
+        "question": "比波普属音阶相对 Mixolydian 多出哪一个音？它为什么存在？",
+        "answer": "多出自然 7（F#），作为 b7 与主音之间的半音经过音，使目标和弦音落在强拍。",
+        "hint": "经过音服务于节拍落点。"
+      }
+    },
+    {
+      "id": "coltrane-changes",
+      "slug": "coltrane-changes",
+      "number": "J-10",
+      "title": "Coltrane Changes",
+      "titleEn": "COLTRANE CHANGES",
+      "category": "jazz",
+      "level": "高级",
+      "aliases": [
+        "Coltrane Changes",
+        "Giant Steps",
+        "大三级循环",
+        "coltrane changes",
+        "三度循环"
+      ],
+      "tags": [
+        "重配和声",
+        "调性关系",
+        "即兴"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ],
+      "summary": "Coltrane Changes 用大三级循环把八度分成三个调性中心，并在其间插入属和弦或 ii–V，形成快速、对称的调性移动。",
+      "sections": [
+        {
+          "id": "cycle",
+          "heading": "大三级循环",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "C–Ab–E 是相隔大三度的三个调性中心；在每个中心前插入属和弦，就得到 Cmaj7–Eb7–Abmaj7–B7–Emaj7–G7–Cmaj7。根音运动在三个调之间快速切换，而不是沿五度圈平滑前进。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 15 Coltrane Changes"
+                },
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "这种进行把调性距离压缩成对称的三等分：每个目标调都相隔大三度，属和弦则用半音或三全音关系连接。即兴时要用目标和弦的 guide tones 定位，而不是逐和弦背音阶。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 15 Coltrane Changes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "improvise",
+          "heading": "即兴策略",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "先听每个目标和弦的三音七音，再把经过的属和弦当作导向目标的张力。速度很快时，减少音阶思考，抓住目标和弦的 guide tones 与包围音。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 15 Coltrane Changes"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "练习顺序",
+              "text": "先只弹目标和弦的根音与 guide tones，再加属和弦；最后才用完整音阶。不要在慢速还没稳定时追求速度。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-coltrane-cycle",
+          "title": "C–Ab–E 的大三级骨架",
+          "caption": "Cmaj7–Eb7–Abmaj7–B7；目标调相隔大三度，属和弦负责连接。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 96,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "Cmaj7"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 51,
+                  "spelling": "Eb3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 58,
+                  "spelling": "Bb3"
+                },
+                {
+                  "midi": 61,
+                  "spelling": "Db4"
+                }
+              ],
+              "label": "Eb7"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 56,
+                  "spelling": "Ab3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 63,
+                  "spelling": "Eb4"
+                },
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "Abmaj7"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 63,
+                  "spelling": "D#4"
+                },
+                {
+                  "midi": 66,
+                  "spelling": "F#4"
+                },
+                {
+                  "midi": 69,
+                  "spelling": "A4"
+                }
+              ],
+              "label": "B7"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "tonal-distance",
+        "harmonic-sequence",
+        "guide-tones"
+      ],
+      "review": {
+        "question": "Coltrane Changes 的调性骨架是什么？",
+        "answer": "相隔大三度的三个调性中心（如 C–Ab–E）循环，并在其间插入属和弦或 ii–V；根音运动对称而快速。",
+        "hint": "八度三等分。"
+      }
+    },
+    {
+      "id": "rootless-voicings",
+      "slug": "rootless-voicings",
+      "number": "J-11",
+      "title": "根音省略与声部配置",
+      "titleEn": "ROOTLESS VOICINGS",
+      "category": "jazz",
+      "level": "进阶",
+      "aliases": [
+        "根音省略",
+        "rootless voicing",
+        "shell voicing",
+        "三音七音",
+        "voicing"
+      ],
+      "tags": [
+        "声部配置",
+        "和弦",
+        "钢琴"
+      ],
+      "dimensions": [
+        "color",
+        "function"
+      ],
+      "summary": "根音省略把低音交给贝斯，钢琴/吉他只保留三音、七音与延伸音；三音七音定义质量，九音与十三音提供色彩。",
+      "sections": [
+        {
+          "id": "shell",
+          "heading": "从 shell 到 rootless",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Shell voicing 通常只弹根音、三音、七音，信息最少但功能清楚。根音省略进一步去掉根音，留下 3–7–9–13 或 7–9–3–13；低音由贝斯提供，和声仍然成立。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 2 Major Scale and Progressions（声部进行）"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Dm9 的根音省略可以是 F–A–C–E（3–5–7–9），G13 可以是 F–A–B–E（7–9–3–13），Cmaj9 可以是 E–G–B–D（3–5–7–9）。关键是三音与七音保持，延伸音只加一个色彩。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 13 Basic Reharmonization"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "register",
+          "heading": "声部与音区",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "根音省略不是把所有音堆在一起。左手与右手要分工：左手给低音/导音，右手给三音七音与色彩；中低音区堆太多延伸音会浑浊。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 2 Major Scale and Progressions（声部进行）"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "配器提示",
+              "text": "如果贝斯已经明确根音，钢琴不必重复低音；把根音留给贝斯，把三音七音留给和声。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-rootless-ii-v-i",
+          "title": "根音省略的 ii–V–I",
+          "caption": "Dm9 → G13 → Cmaj9；三音七音保持，延伸音只负责色彩。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 72,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "Dm9 (rootless)"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "G13 (rootless)"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "Cmaj9 (rootless)"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "guide-tones",
+        "extensions-alterations",
+        "ii-v-i"
+      ],
+      "review": {
+        "question": "根音省略和弦为什么仍能定义和声？",
+        "answer": "三音与七音已经定义和弦质量，延伸音提供色彩；根音由贝斯或低音层提供，因此和声身份仍然清楚。",
+        "hint": "3/7 定义质量，bass 定义根音。"
+      }
+    },
+    {
+      "id": "pentatonic-outside",
+      "slug": "pentatonic-outside",
+      "number": "J-12",
+      "title": "五声音阶与 Outside",
+      "titleEn": "PENTATONICS & PLAYING OUTSIDE",
+      "category": "jazz",
+      "level": "高级",
+      "aliases": [
+        "五声音阶",
+        "pentatonic",
+        "outside",
+        "side-slip",
+        "叠加五声"
+      ],
+      "tags": [
+        "五声",
+        "外部",
+        "即兴"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ],
+      "summary": "五声音阶省略半音与三全音，稳定而易唱；把另一个根音的五声叠加到当前和弦上，会制造短时“外部”张力，再用 guide tones 回到内部。",
+      "sections": [
+        {
+          "id": "structure",
+          "heading": "五声的稳定性",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "大调五声是 1–2–3–5–6，小调五声是 1–b3–4–5–b7；两者都没有半音与三全音，因此听感开放、稳定，适合长句与持续音。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 9 Pentatonic Scales"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "叠加五声是 Outside playing 的入口：在 C7 上弹 Eb 五声，会得到 #9、4、5、b7、1 等色彩；它不属于 C7 的自然音阶，但可以与目标和弦的 guide tones 形成张力。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 8 Playing Outside"
+                },
+                {
+                  "source": "levine",
+                  "locator": "Chapter 9 Pentatonic Scales"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "resolve",
+          "heading": "外部必须回到内部",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Outside 不是永久离开调性，而是短时张力：先在外部五声上停留，再用半音/级进或目标音回到和弦音。没有回归的外部音响，听感会变成随机。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 8 Playing Outside"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "练习提示",
+              "text": "先练 2 拍外部 + 2 拍内部，再缩小到 1 拍；每次都在目标和弦的三音或七音上回归。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-pentatonic-side-slip",
+          "title": "C 五声 → Eb 五声",
+          "caption": "前半是 C 大调五声，后半滑到 Eb 五声；外部色彩需要用目标和弦音收束。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 84,
+          "beats": 5,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ]
+            },
+            {
+              "beat": 0.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ]
+            },
+            {
+              "beat": 1,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 1.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            },
+            {
+              "beat": 2,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 69,
+                  "spelling": "A4"
+                }
+              ]
+            },
+            {
+              "beat": 2.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 63,
+                  "spelling": "Eb4"
+                }
+              ]
+            },
+            {
+              "beat": 3,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ]
+            },
+            {
+              "beat": 3.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 70,
+                  "spelling": "Bb4"
+                }
+              ]
+            },
+            {
+              "beat": 4.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 72,
+                  "spelling": "C5"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "related": [
+        "chord-scale",
+        "tritone-substitution",
+        "harmonic-color"
+      ],
+      "review": {
+        "question": "在 C7 上使用 Eb 五声音阶会产生什么效果？",
+        "answer": "它把 #9、4、5、b7、1 等音带到 C7 上，形成短时外部色彩；需要用 guide tones 或目标和弦音回到内部。",
+        "hint": "外部是张力，不是新调。"
       }
     }
   ],
@@ -7116,6 +13044,1092 @@
       "category": "harmony"
     },
     {
+      "id": "ex-cadential-64",
+      "title": "I6/4 → V7 → I",
+      "caption": "低音 G 保持；E→D、C→B 同时下行，四六和弦成为属的准备。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 68,
+      "beats": 6,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "I6/4"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "V7"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I"
+        }
+      ],
+      "conceptSlug": "cadential-six-four",
+      "conceptTitle": "终止四六与属准备",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-descending-fifths-sequence",
+      "title": "下行五度的模进",
+      "caption": "A–D–G–C 连续下行五度；同一模型被移到新音级，方向指向 C。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 76,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "Am7"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "Dm7"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "G7"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "Cmaj7"
+        }
+      ],
+      "conceptSlug": "harmonic-sequence",
+      "conceptTitle": "和声模进与走向",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-dim7-resolution",
+      "title": "Bdim7 → C",
+      "caption": "B–D–F–Ab 解决到 C；把 Ab 重写为 G#，同一音响就能指向 E。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 64,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            },
+            {
+              "midi": 68,
+              "spelling": "Ab4"
+            }
+          ],
+          "label": "Bdim7"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "C"
+        }
+      ],
+      "conceptSlug": "diminished-seventh",
+      "conceptTitle": "减七和弦与等音关系",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-accelerating-harmony",
+      "title": "和声节奏加速进入终止",
+      "caption": "C 与 F 各占四拍，G7 与 C 各占两拍；变化速率在终止前加快。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 72,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "IV"
+        },
+        {
+          "beat": 8,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "V7"
+        },
+        {
+          "beat": 10,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I"
+        }
+      ],
+      "conceptSlug": "harmonic-rhythm",
+      "conceptTitle": "和声节奏与密度",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-tension-spectrum",
+      "title": "从稳定到紧张再收束",
+      "caption": "Cmaj7 → Fmaj7 → Dm7 → G7(b9) → Cmaj9：功能链不变，张力先升后降。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 68,
+      "beats": 10,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "Cmaj7"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "Fmaj7"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "Dm7"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            },
+            {
+              "midi": 68,
+              "spelling": "Ab4"
+            }
+          ],
+          "label": "G7(b9)"
+        },
+        {
+          "beat": 8,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "Cmaj9"
+        }
+      ],
+      "conceptSlug": "harmonic-color",
+      "conceptTitle": "和弦色彩与张力光谱",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-mixture-brightness",
+      "title": "I → bVI → iv → V7 → I",
+      "caption": "Ab 与 Fm 来自同主音 C 小调；主音仍是 C，但明暗在四个和弦内完成一次往返。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 68,
+      "beats": 10,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 56,
+              "spelling": "Ab3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 63,
+              "spelling": "Eb4"
+            }
+          ],
+          "label": "bVI"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 56,
+              "spelling": "Ab3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "iv"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "V7"
+        },
+        {
+          "beat": 8,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I"
+        }
+      ],
+      "conceptSlug": "modal-mixture-color",
+      "conceptTitle": "明暗轴线：同主音交替",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-pivot-distance",
+      "title": "C 大调 → G 大调",
+      "caption": "Am7 是枢轴：C 的 vi7，也是 G 的 ii7；D7 随后把 G 变成新主音。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 72,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "C: Imaj7"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "vi7 = ii7"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 54,
+              "spelling": "F#3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "V7 of G"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "G: I"
+        }
+      ],
+      "conceptSlug": "tonal-distance",
+      "conceptTitle": "调性距离与和声关系",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-stepwise-bass",
+      "title": "级进下行低音",
+      "caption": "低音 C–B–A–G–F–E–D–G–C；和弦随低音改变，但线条保持连续。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 68,
+      "beats": 18,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 47,
+              "spelling": "B2"
+            },
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "V6"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 45,
+              "spelling": "A2"
+            },
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            }
+          ],
+          "label": "vi"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 43,
+              "spelling": "G2"
+            },
+            {
+              "midi": 47,
+              "spelling": "B2"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            }
+          ],
+          "label": "I6"
+        },
+        {
+          "beat": 8,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 41,
+              "spelling": "F2"
+            },
+            {
+              "midi": 45,
+              "spelling": "A2"
+            },
+            {
+              "midi": 48,
+              "spelling": "C3"
+            }
+          ],
+          "label": "IV"
+        },
+        {
+          "beat": 10,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 40,
+              "spelling": "E2"
+            },
+            {
+              "midi": 43,
+              "spelling": "G2"
+            },
+            {
+              "midi": 48,
+              "spelling": "C3"
+            }
+          ],
+          "label": "I6/4"
+        },
+        {
+          "beat": 12,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "ii7"
+        },
+        {
+          "beat": 14,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 43,
+              "spelling": "G2"
+            },
+            {
+              "midi": 47,
+              "spelling": "B2"
+            },
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 53,
+              "spelling": "F3"
+            }
+          ],
+          "label": "V7"
+        },
+        {
+          "beat": 16,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I"
+        }
+      ],
+      "conceptSlug": "bass-line",
+      "conceptTitle": "低音线与和声走向",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-period-cadences",
+      "title": "前句半终止 → 后句完全终止",
+      "caption": "前句 C–F–G7 停在半终止；后句 C–Am–Dm–G7–C 用完全终止回应。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 72,
+      "beats": 16,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "IV"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "V7 · HC"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 8,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "vi7"
+        },
+        {
+          "beat": 10,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "ii7"
+        },
+        {
+          "beat": 12,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "V7"
+        },
+        {
+          "beat": 14,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "I · PAC"
+        }
+      ],
+      "conceptSlug": "phrase-structure",
+      "conceptTitle": "乐段、乐句与和声句法",
+      "category": "harmony"
+    },
+    {
       "id": "ex-ii-v-i-extended",
       "title": "Dm9–G13–Cmaj9",
       "caption": "延伸音加厚色彩，但骨架仍是 D–G–C 的低音与 F/C→B/F→E/B 的声部。",
@@ -7995,6 +15009,413 @@
       "conceptSlug": "modal-harmony",
       "conceptTitle": "调式化和声",
       "category": "jazz"
+    },
+    {
+      "id": "ex-bebop-dominant",
+      "title": "G 比波普属音阶",
+      "caption": "G–A–B–C–D–E–F–F#–G；F# 只是经过音，G 才是目标和弦音。",
+      "kind": "scale",
+      "key": "C",
+      "tempo": 88,
+      "beats": 5,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ]
+        },
+        {
+          "beat": 0.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            }
+          ]
+        },
+        {
+          "beat": 1,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ]
+        },
+        {
+          "beat": 1.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ]
+        },
+        {
+          "beat": 2,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ]
+        },
+        {
+          "beat": 2.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 3,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ]
+        },
+        {
+          "beat": 3.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 66,
+              "spelling": "F#4"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        }
+      ],
+      "conceptSlug": "bebop-scale",
+      "conceptTitle": "比波普音阶",
+      "category": "jazz"
+    },
+    {
+      "id": "ex-coltrane-cycle",
+      "title": "C–Ab–E 的大三级骨架",
+      "caption": "Cmaj7–Eb7–Abmaj7–B7；目标调相隔大三度，属和弦负责连接。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 96,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "Cmaj7"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 51,
+              "spelling": "Eb3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 58,
+              "spelling": "Bb3"
+            },
+            {
+              "midi": 61,
+              "spelling": "Db4"
+            }
+          ],
+          "label": "Eb7"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 56,
+              "spelling": "Ab3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 63,
+              "spelling": "Eb4"
+            },
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "Abmaj7"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 63,
+              "spelling": "D#4"
+            },
+            {
+              "midi": 66,
+              "spelling": "F#4"
+            },
+            {
+              "midi": 69,
+              "spelling": "A4"
+            }
+          ],
+          "label": "B7"
+        }
+      ],
+      "conceptSlug": "coltrane-changes",
+      "conceptTitle": "Coltrane Changes",
+      "category": "jazz"
+    },
+    {
+      "id": "ex-rootless-ii-v-i",
+      "title": "根音省略的 ii–V–I",
+      "caption": "Dm9 → G13 → Cmaj9；三音七音保持，延伸音只负责色彩。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 72,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "Dm9 (rootless)"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "G13 (rootless)"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "Cmaj9 (rootless)"
+        }
+      ],
+      "conceptSlug": "rootless-voicings",
+      "conceptTitle": "根音省略与声部配置",
+      "category": "jazz"
+    },
+    {
+      "id": "ex-pentatonic-side-slip",
+      "title": "C 五声 → Eb 五声",
+      "caption": "前半是 C 大调五声，后半滑到 Eb 五声；外部色彩需要用目标和弦音收束。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 84,
+      "beats": 5,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ]
+        },
+        {
+          "beat": 0.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ]
+        },
+        {
+          "beat": 1,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 1.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        },
+        {
+          "beat": 2,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 69,
+              "spelling": "A4"
+            }
+          ]
+        },
+        {
+          "beat": 2.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 63,
+              "spelling": "Eb4"
+            }
+          ]
+        },
+        {
+          "beat": 3,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ]
+        },
+        {
+          "beat": 3.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 70,
+              "spelling": "Bb4"
+            }
+          ]
+        },
+        {
+          "beat": 4.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 72,
+              "spelling": "C5"
+            }
+          ]
+        }
+      ],
+      "conceptSlug": "pentatonic-outside",
+      "conceptTitle": "五声音阶与 Outside",
+      "category": "jazz"
     }
   ],
   "toolSchemas": [
@@ -8104,6 +15525,79 @@
             "description": "网页导出的 review state；省略则读取本地浏览器存储（Node 中不可用）"
           }
         }
+      }
+    },
+    {
+      "name": "search_sources",
+      "description": "在三本书的完整章目与原创章节笔记中检索，可筛选书籍与和声维度。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "book": {
+            "type": "string",
+            "enum": [
+              "levine",
+              "laitz",
+              "sposobin"
+            ]
+          },
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "function",
+              "direction",
+              "color",
+              "brightness",
+              "relationship",
+              "rhythm"
+            ]
+          },
+          "onlyExpanded": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "get_book_outline",
+      "description": "读取一本书的完整章目结构，包括已展开笔记的章节与概念映射。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "book": {
+            "type": "string",
+            "enum": [
+              "levine",
+              "laitz",
+              "sposobin"
+            ]
+          }
+        },
+        "required": [
+          "book"
+        ]
+      }
+    },
+    {
+      "name": "get_source_note",
+      "description": "读取一章的原创读书笔记、关键点、和声维度与对应知识库概念。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chapterId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "chapterId"
+        ]
       }
     },
     {

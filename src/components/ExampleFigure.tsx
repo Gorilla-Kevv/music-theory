@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
-import type { Example } from "../content/types";
+import type { Example, ExampleEvent } from "../content/types";
 import { useTransport } from "../context/TransportContext";
 import { PianoKeyboard } from "./PianoKeyboard";
 import { StaffNotation } from "./StaffNotation";
@@ -16,13 +17,41 @@ export function ExampleFigure({
   conceptSlug: string;
   conceptTitle: string;
 }) {
-  const { play, stop, previewNote, state, isExamplePlaying } = useTransport();
+  const { play, stop, previewNote, previewChord, state, isExamplePlaying } = useTransport();
   const playing = isExamplePlaying(example.id);
-  const active = playing ? state.activeNotes : [];
+  const [previewNotes, setPreviewNotes] = useState<number[]>([]);
+  const previewTimer = useRef<number | null>(null);
+  const active = playing
+    ? [...new Set([...state.activeNotes, ...previewNotes])]
+    : previewNotes;
+
+  useEffect(() => {
+    return () => {
+      if (previewTimer.current) window.clearTimeout(previewTimer.current);
+    };
+  }, []);
 
   const toggle = () => {
     if (playing) stop();
     else play(example, { conceptSlug, conceptTitle });
+  };
+
+  const flashNotes = (midis: number[]) => {
+    setPreviewNotes(midis);
+    if (previewTimer.current) window.clearTimeout(previewTimer.current);
+    previewTimer.current = window.setTimeout(() => setPreviewNotes([]), 900);
+  };
+
+  const handleEventPlay = (event: ExampleEvent) => {
+    const midis = event.notes.map((note) => note.midi);
+    if (midis.length === 1) previewNote(midis[0]);
+    else previewChord(midis);
+    flashNotes(midis);
+  };
+
+  const handlePianoNote = (midi: number) => {
+    previewNote(midi);
+    flashNotes([midi]);
   };
 
   return (
@@ -46,13 +75,13 @@ export function ExampleFigure({
       </div>
 
       <div className="px-2 pt-3 sm:px-4">
-        <StaffNotation example={example} />
+        <StaffNotation example={example} onEventPlay={handleEventPlay} />
       </div>
 
       <div className="border-t border-line px-4 py-4 sm:px-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="mono-label text-muted">
-            KEYS / 点击琴键试听 · 播放时高亮当前音符
+            STAFF + KEYS / 点击音符、和弦或琴键试听 · 播放时高亮当前音符
           </p>
           <button
             type="button"
@@ -65,7 +94,7 @@ export function ExampleFigure({
         </div>
         <PianoKeyboard
           activeNotes={active}
-          onNote={previewNote}
+          onNote={handlePianoNote}
           compact
           className="mt-3"
         />

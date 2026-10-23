@@ -1,14 +1,23 @@
 import {
+  ALL_CHAPTERS,
   ALL_EXAMPLES,
   BIBLIOGRAPHY,
+  BOOK_OUTLINES,
+  BOOK_STATS,
   CATEGORIES,
   CITATION_STYLE_NOTE,
   CONCEPTS,
   CONCEPT_BY_SLUG,
+  HARMONY_DIMENSIONS,
+  SOURCE_NOTES,
   collectCitations,
+  getBookOutline,
+  getChaptersForConcept,
   getConcept,
+  getSourceNote,
+  searchSourceNotes,
 } from "../content";
-import type { CategoryId, Concept, Example, Level } from "../content/types";
+import type { CategoryId, Concept, Example, HarmonyDimension, Level, SourceId } from "../content/types";
 import { getDueRecords, getNewConcepts, getStats, loadReviewState, type ReviewState } from "./review";
 import { searchConcepts } from "./search";
 
@@ -74,6 +83,41 @@ export const TOOL_SCHEMAS: ToolSchema[] = [
     },
   },
   {
+    name: "search_sources",
+    description: "在三本书的完整章目与原创章节笔记中检索，可筛选书籍与和声维度。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string" },
+        book: { type: "string", enum: ["levine", "laitz", "sposobin"] },
+        dimension: {
+          type: "string",
+          enum: ["function", "direction", "color", "brightness", "relationship", "rhythm"],
+        },
+        onlyExpanded: { type: "boolean", default: false },
+      },
+      required: ["query"],
+    },
+  },
+  {
+    name: "get_book_outline",
+    description: "读取一本书的完整章目结构，包括已展开笔记的章节与概念映射。",
+    inputSchema: {
+      type: "object",
+      properties: { book: { type: "string", enum: ["levine", "laitz", "sposobin"] } },
+      required: ["book"],
+    },
+  },
+  {
+    name: "get_source_note",
+    description: "读取一章的原创读书笔记、关键点、和声维度与对应知识库概念。",
+    inputSchema: {
+      type: "object",
+      properties: { chapterId: { type: "string" } },
+      required: ["chapterId"],
+    },
+  },
+  {
     name: "get_bibliography",
     description: "返回三本理论著作的完整书目、版次与章节定位说明。",
     inputSchema: { type: "object", properties: {} },
@@ -93,12 +137,18 @@ export interface KnowledgePack {
     conceptCount: number;
     exampleCount: number;
     citationCount: number;
+    bookCount: number;
+    chapterCount: number;
+    sourceNoteCount: number;
     language: string;
     licenseNote: string;
   };
   citationStyle: string;
   bibliography: typeof BIBLIOGRAPHY;
   categories: typeof CATEGORIES;
+  harmonyDimensions: typeof HARMONY_DIMENSIONS;
+  books: typeof BOOK_OUTLINES;
+  sourceNotes: typeof SOURCE_NOTES;
   concepts: Concept[];
   examples: Array<Example & { conceptSlug: string; conceptTitle: string; category: string }>;
   toolSchemas: ToolSchema[];
@@ -108,18 +158,24 @@ export function buildKnowledgePack(): KnowledgePack {
   return {
     meta: {
       name: "TONIC · 主音",
-      version: "0.1.0",
+      version: "0.2.0",
       builtAt: new Date().toISOString(),
       conceptCount: CONCEPTS.length,
       exampleCount: ALL_EXAMPLES.length,
       citationCount: CONCEPTS.reduce((sum, concept) => sum + collectCitations(concept).length, 0),
+      bookCount: BOOK_OUTLINES.length,
+      chapterCount: ALL_CHAPTERS.length,
+      sourceNoteCount: SOURCE_NOTES.length,
       language: "zh-CN + en",
       licenseNote:
-        "知识条目为原创改写，引用仅作章节级学术定位；不得把本库内容当作三本著作的替代版本。",
+        "知识条目为原创改写，引用仅作章节级学术定位；本库不复制教材正文，不得把本库内容当作三本著作的替代版本。",
     },
     citationStyle: CITATION_STYLE_NOTE,
     bibliography: BIBLIOGRAPHY,
     categories: CATEGORIES,
+    harmonyDimensions: HARMONY_DIMENSIONS,
+    books: BOOK_OUTLINES,
+    sourceNotes: SOURCE_NOTES,
     concepts: CONCEPTS,
     examples: ALL_EXAMPLES.map((example) => ({
       id: example.id,
@@ -171,6 +227,30 @@ export function listExamples(options: {
   });
 }
 
+export function searchSources(
+  query: string,
+  options: {
+    book?: SourceId;
+    dimension?: HarmonyDimension;
+    onlyExpanded?: boolean;
+  } = {},
+) {
+  return searchSourceNotes(query, options);
+}
+
+export function getConceptSources(slug: string) {
+  return getChaptersForConcept(slug).map((chapter) => ({
+    id: chapter.id,
+    book: chapter.book,
+    number: chapter.number,
+    title: chapter.title,
+    titleZh: chapter.titleZh,
+    summary: chapter.summary,
+    keyPoints: chapter.keyPoints,
+    dimensions: chapter.dimensions,
+  }));
+}
+
 export function getRelated(slug: string) {
   const concept = getConcept(slug);
   if (!concept) return [];
@@ -215,6 +295,12 @@ export const theoryApi = {
   concept: getConcept,
   examples: listExamples,
   related: getRelated,
+  sources: getConceptSources,
+  searchSources,
+  bookOutline: getBookOutline,
+  sourceNote: getSourceNote,
+  harmonyDimensions: () => HARMONY_DIMENSIONS,
+  bookStats: () => BOOK_STATS,
   reviewQueue: getReviewQueue,
   bibliography: () => BIBLIOGRAPHY,
   citationPolicy: () => CITATION_STYLE_NOTE,

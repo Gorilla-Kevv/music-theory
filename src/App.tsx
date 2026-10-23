@@ -4,6 +4,7 @@ import { SearchProvider } from "./components/SearchDialog";
 import { ReviewProvider } from "./context/ReviewContext";
 import { TransportProvider } from "./context/TransportContext";
 import { Agent } from "./routes/Agent";
+import { Books } from "./routes/Books";
 import { ConceptPage } from "./routes/ConceptPage";
 import { Drill } from "./routes/Drill";
 import { Home } from "./routes/Home";
@@ -21,6 +22,7 @@ export default function App() {
               <Route element={<Shell />}>
                 <Route index element={<Home />} />
                 <Route path="library" element={<Library />} />
+                <Route path="books" element={<Books />} />
                 <Route path="theory/:slug" element={<ConceptPage />} />
                 <Route path="drill" element={<Drill />} />
                 <Route path="references" element={<References />} />

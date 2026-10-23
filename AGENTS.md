@@ -1,0 +1,81 @@
+# AGENTS — TONIC 知识规则
+
+> 本文件即用户所称的 `agent.md`（项目根标准文件名 `AGENTS.md`）。任何接手本项目的 Agent 在写内容、写页面或扩展接口之前，先读本文件。
+
+## 使命
+
+TONIC 是一个本地优先的个人乐理强化工作台。核心不是“多讲一点理论”，而是把三本教材整理成**可检索、可听、可引用、可与 Agent 同步**的知识结构，尤其是和声的功能、走向、色彩、明暗与关系。
+
+## 来源政策（硬约束）
+
+1. 所有理论断言只能来自以下三本书，并给出章节级定位：
+   - Mark Levine, *The Jazz Theory Book*（Sher Music, 1995；中译本《爵士乐宝典》，上海音乐出版社，2017）。
+   - Steven G. Laitz & Michael R. Callahan, *The Complete Musician*, 5th ed.（Oxford University Press, 2023）。
+   - 伊·杜波夫斯基、斯·叶甫谢耶夫、伊·斯波索宾、符·索科洛夫《和声学教程》第 3 版（陈敏译，人民音乐出版社，2021）。
+2. **不得复制、OCR、扫描或逐字搬运教材正文。** 书库只保存完整章目、原创章节笔记、关键点、概念映射与章节定位；不提供教材全文。
+3. 不虚构页码。三本书存在多个版次/译本，统一使用章节级 locator（章号 + 章名/小节名）。
+4. 如果一条理论无法在三本书中定位，标记为“未定位”，不要写进知识库；不要用其他教材或网络文章补位。
+5. 区分“来源结论”和“编辑综合”：概念页可以是跨书综合，但每段至少要能追到一条章节级引用；新增综合判断要说明是编辑层的比较，不冒充原书原话。
+6. 短引文只在必要时使用，并标注章节；不得形成大段摘录。
+
+## 和声知识模型
+
+新增或修改和声概念时，至少标注以下维度（`src/content/types.ts` 的 `HarmonyDimension`）：
+
+- `function` 功能：T–PD–D–T、主/下属/属的角色与替代。
+- `direction` 走向：根音运动、低音线、模进、终止与和声节奏。
+- `color` 色彩：协和/不协和、张力、延伸音、变化音与语境。
+- `brightness` 明暗：大调/小调、同主音交替、借用和弦与那不勒斯。
+- `relationship` 关系：调性距离、共同和弦、枢轴、等音与替代关系。
+- `rhythm` 和声节奏：变化速率、节拍位置、密度与句法。
+
+当前结构：
+
+```text
+src/content/
+  foundations.ts       基础 8 条
+  harmony.ts           功能和声 8 条
+  harmony-advanced.ts  和声深化 9 条（功能/走向/色彩/明暗/关系/节奏）
+  jazz.ts              爵士 8 条
+  jazz-advanced.ts     爵士深化 4 条
+  books/               三本书的完整章目 + 原创章节笔记
+  bibliography.ts      书目、版次、章节定位政策
+```
+
+## 书库结构
+
+- 每本书一个 `BookOutline`：完整章目（章号、英文名、中文名、Part/上册下册）。
+- 已展开章节带 `summary`、`keyPoints`、`concepts`（知识库 slug）、`dimensions`。
+- 未展开章节保留目录条目，不伪造摘要。
+- 书库页面：`/books`；Agent 接口：`get_book_outline`、`get_source_note`、`search_sources`、`window.TONIC.bookOutline/sourceNote/searchSources`。
+- 新增笔记：先确认章节 locator → 写 ≤200 字原创摘要 → 列 2–4 个关键点 → 映射到现有/新增概念 → 标维度。不要在 book 数据里放大段原文。
+
+## Agent 查询路径
+
+1. 需要“某个概念怎么解释”：`search_theory` / `get_concept`。
+2. 需要“原书哪一章支撑”：`get_concept_sources`（`window.TONIC.sources(slug)`）或 `get_source_note`。
+3. 需要“完整章目/某一本书的结构”：`get_book_outline`。
+4. 需要“按和声维度找材料”：`search_sources` + `dimension`。
+5. 需要“可听例子”：`list_examples`。
+6. 需要“今天复习什么”：网页导出的 `review-state.json` → `get_review_queue`。
+7. 需要批量离线：`public/knowledge.json`（`npm run knowledge` 生成）。
+
+## 编辑与构建规则
+
+- 单一事实源：页面、搜索、音频、复习、书库、Agent 都从 `src/content` 读取；不要另建一套 JSON 真相。
+- 概念与谱例必须可通过 `npm run typecheck`；新增 slug 后检查所有 `related` 与书籍 `concepts` 映射。
+- 构建前刷新知识包：`npm run build` 会执行 `prebuild` → `npm run knowledge`。
+- 音频：谱例与琴键由本地 Salamander 钢琴采样（C3–C5，CC BY 3.0，Alexander Holm）驱动，附带合成器回退；见 `public/audio/salamander/LICENSE.txt`。不得替换为需要运行时外网请求的 CDN 音源。
+- 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。
+- 视觉方向：Blue Note 现代主义；平面色块、方形控件、纸面阅读区、墨色外壳；不引入渐变/玻璃拟态/SaaS 圆角卡片。
+- 响应式：375 / 768 / 1280 三视口，无横向溢出；移动端左侧大纲用 `<details>`，桌面用左轨内的 ON THIS PAGE。
+
+## 当前范围
+
+- 37 个概念（基础 8 / 功能和声 17 / 爵士 12）
+- 42 个可听谱例
+- 118 条章节级引用
+- 3 本书 · 118 个章目 · 59 条原创章节笔记
+- 视觉：五度圈、调式轮、半音尺、张力光谱
+- 音频：本地 Salamander 采样 + Web Audio 合成回退
+- 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）

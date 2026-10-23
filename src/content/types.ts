@@ -2,6 +2,20 @@ export type CategoryId = "foundations" | "harmony" | "jazz";
 
 export type Level = "基础" | "进阶" | "高级";
 
+export type HarmonyDimension =
+  | "function"
+  | "direction"
+  | "color"
+  | "brightness"
+  | "relationship"
+  | "rhythm";
+
+export type VisualizationKind =
+  | "circle-of-fifths"
+  | "mode-wheel"
+  | "interval-ruler"
+  | "tension-spectrum";
+
 export type SourceId = "levine" | "laitz" | "sposobin";
 
 export interface BibliographyEntry {
@@ -85,6 +99,8 @@ export interface Concept {
   examples: Example[];
   related: string[];
   review: ReviewCard;
+  dimensions?: HarmonyDimension[];
+  visual?: VisualizationKind;
 }
 
 export interface Category {

@@ -2,10 +2,10 @@
 
 ## 进度看板
 
-- 当前正在开发任务：无；阶段 6 已完成
-- 下一阶段任务：无；首版垂直切片已完成
-- 可提前进行的任务：MCP server、内容扩充、FL Studio 侧适配（均未排期）
-- 未完成的任务：首版范围内无
+- 当前正在开发任务：无；阶段 7 已完成
+- 下一阶段任务：补充更多章节笔记 / stdio MCP server（未排期）
+- 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
+- 未完成的任务：全量教材正文（版权边界，不做）；MCP server
 
 ## 阶段 1 产品事实、技术栈与视觉方向锁定 [计划时间：10.23 09:40 BY TraeCode][完成时间：10.23 18:18 BY TraeCode]
 
@@ -72,3 +72,25 @@
 - 风险：VexFlow chunk 约 311KB gzip；`public/knowledge.json` 在 `prebuild` 中自动刷新。
 - 下一阶段入口：无；后续从 HANDOFF.md 的“下一步”继续。
 - 本次文档更新时间：10.23 18:42
+
+## 阶段 7 和声知识库、书库、左侧大纲、可视化与谱面/采样交互 [计划时间：10.23 19:10 BY TraeCode][完成时间：10.23 21:33 BY TraeCode]
+
+- 分支：dev
+- 已完成：
+  - P0：新增 9 个和声概念（终止四六、模进、减七、和声节奏、色彩、明暗、调性距离、低音线、乐句）与 4 个爵士概念；扩充到 37 概念 / 42 谱例 / 118 条引用。
+  - 三本书整理为 118 个完整章目 + 59 条原创章节笔记（Levine 24/12、Laitz 34/20、Sposobin 60/27），新增 `/books` 书库与章节笔记阅读器。
+  - P1：概念页左轨新增 ON THIS PAGE 大纲，滚动高亮并在左轨内部保持可见；移动端折叠大纲；分类导航按当前概念或 `/library?category=` 高亮。
+  - P1：五度圈、调式轮、半音尺、张力光谱四个交互可视化，点击即试听。
+  - P1：五线谱每个音符/和弦叠加可点击命中区，点击发声并联动钢琴高亮。
+  - P2：用本地 Salamander 钢琴采样（C3–C5，9 个采样，CC BY 3.0）替换纯合成音色，保留合成器回退。
+  - AGENTS.md 固化来源、版权、和声维度与 Agent 查询规则。
+- 未完成：全量教材正文（版权边界，不复制）；stdio MCP server（schema 已固定）。
+- 改动文件：src/content/books/*、harmony-advanced.ts、jazz-advanced.ts、src/routes/Books.tsx、src/components/VisualizationCard.tsx、Shell.tsx、StaffNotation.tsx、ExampleFigure.tsx、src/lib/audio.ts、theory-api.ts、scripts/theory-cli.ts、public/audio/salamander/*、AGENTS.md、PRODUCT.md、DESIGN.md、HANDOFF.md
+- 测试结果：
+  - `npm run typecheck` 通过。
+  - 真实点击谱面 Dm9 命中区 → 钢琴高亮 D3/F3/A3/C4/E4；9 个 Salamander 采样均成功加载。
+  - 五度圈 12 个扇区、点击 A 后中心显示 A / 3♯；书库 Laitz 34 章 / 20 笔记；`searchSources('转调', {book:'sposobin'})` 返回 14 条。
+  - 375 宽度 `scrollWidth=375`，无横向溢出；左轨点击分类后对应分类钴蓝高亮。
+- 风险：教材笔记需持续人工校订；采样仅覆盖 C3–C5 后移调；`getBoundingBox` 命中区依赖 VexFlow 布局。
+- 下一阶段入口：补充更多章节笔记；包装 stdio MCP server；将书库笔记接入复习卡。
+- 本次文档更新时间：10.23 21:33

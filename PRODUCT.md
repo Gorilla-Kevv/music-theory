@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_modules` 与构建产物加载，运行时零外网请求。VexFlow 4 渲染五线谱，MiniSearch 做中英文模糊检索，React Router 负责路由，Web Audio API 合成音频。构建输出静态 `dist/`，通过本地 `vite preview` 或任意静态服务器访问；所有知识内容以 TypeScript 数据模块为唯一事实源，并导出 `public/knowledge.json` 供 Agent 读取。
+Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_modules` 与构建产物加载，运行时零外网请求。VexFlow 4 渲染五线谱，MiniSearch 做中英文模糊检索，React Router 负责路由，Web Audio API + 本地 Salamander 钢琴采样（C3–C5，合成器回退）播放音频。构建输出静态 `dist/`，通过本地 `vite preview` 或任意静态服务器访问；所有知识内容以 TypeScript 数据模块为唯一事实源，并导出 `public/knowledge.json` 供 Agent 读取。
 
 ## Users
 
@@ -27,14 +27,15 @@ Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_module
 - 主要入口是浏览器中的本地站点；构建后离线可用。
 - 与 FL Studio、本地脚本和未来的 MCP 客户端共享 `knowledge.json` 与导出的学习状态。
 - 理论依据限定为三本著作：Mark Levine《The Jazz Theory Book》、Steven G. Laitz & Michael R. Callahan《The Complete Musician》（第 5 版）、斯波索宾等《和声学教程》（第 3 版，陈敏译）。
+- 三本书在本地整理为「完整章目 + 原创章节笔记 + 概念映射」的书库，不复制教材正文；和声概念按功能、走向、色彩、明暗、关系、和声节奏六个维度组织。
 - 引用采用章节级定位，不虚构页码；不同版次/译本的页码差异在引用体例页说明。
 - 中文为正文主语言，英文术语、和弦记号与书目信息保留原文。
 
 ## Capabilities and Constraints
 
-已确认能力：全局模糊检索（Cmd/Ctrl+K）、分类与标签筛选、概念详情、论文式上下标引用与参考文献、每个概念的可听谱例与钢琴键盘、全局试听坞、SM-2 式间隔复习、听辨训练、进度统计、学习状态导入导出、Web 内 Agent 查询接口、Node CLI、结构化知识包导出。
+已确认能力：全局模糊检索（Cmd/Ctrl+K）、分类与标签筛选、概念详情、论文式上下标引用与参考文献、每个概念的可听谱例与可点击五线谱/钢琴键盘、全局试听坞、SM-2 式间隔复习、听辨训练、进度统计、学习状态导入导出、三本书的章目书库与原创章节笔记、五度圈/调式轮/半音尺/张力光谱交互可视化、Web 内 Agent 查询接口、Node CLI、结构化知识包导出。
 
-约束：单用户、无账户、无云端同步、无运行时外部请求、无第三方音频采样；音频由 Web Audio 合成。首版内容为 24 个核心概念的垂直切片，覆盖基础、功能和声、爵士三组；后续按同一 schema 扩充。移动端可用但不作为首版主场景。MCP server 不在首版交付内，接口按 MCP 工具形状预留。
+约束：单用户、无账户、无云端同步、无运行时外部请求；音频采用本地 Salamander 钢琴采样与 Web Audio 合成回退，不使用流媒体或 CDN。当前内容为 37 个概念（基础 8 / 功能和声 17 / 爵士 12）、42 个谱例、118 条章节级引用、118 个章目与 59 条原创章节笔记；后续按同一 schema 扩充。移动端可用但不作为首版主场景。MCP server 不在当前交付内，接口按 MCP 工具形状预留。
 
 ## Brand Commitments
 
@@ -42,16 +43,17 @@ Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_module
 
 ## Evidence on Hand
 
-- 三本著作的版次、出版社与章节目录已核对到公开书目记录/出版社页面；精确页码未核对，因此不写入内容。
+- 三本著作的版次、出版社与章节目录已核对到公开书目记录/出版社页面；Levine 24 章、Laitz 34 章、Sposobin 60 章已整理为本地书库目录；精确页码未核对，因此不写入内容。
 - 参考站点：pianochord.org 的和弦图鉴结构、music-theory.aizcutei.com 的中文长篇章节结构。二者仅作为信息组织参考，不复制其视觉资产或正文。
+- 钢琴采样来自 Salamander Grand Piano V3（Alexander Holm，CC BY 3.0），本地子集与许可文件在 `public/audio/salamander/`。
 - 无现成品牌资产、logo、用户评价或商业数据；不得虚构。
 
 ## Product Principles
 
-1. 一个概念只有一个事实源：页面、搜索、音频、复习卡与 Agent 输出必须来自同一数据结构。
-2. 引用可核对：每条理论断言至少对应一处章节级来源；不确定的内容不写。
-3. 声音先于解释：每个条目必须能立即听到它所描述的音程、和弦或进行。
-4. 检索即学习：搜索面板同时承担快速导航、概念预览与继续学习。
+1. 一个概念只有一个事实源：页面、搜索、音频、复习卡、书库与 Agent 输出必须来自同一数据结构。
+2. 引用可核对：每条理论断言至少对应一处章节级来源；不确定的内容不写，不复制教材正文。
+3. 声音先于解释：每个条目必须能立即听到它所描述的音程、和弦或进行；五线谱音符与和弦本身可点击。
+4. 检索即学习：搜索面板同时承担快速导航、概念预览与继续学习；书库提供章目级定位。
 5. 本地优先：断网、无账户、无遥测也能完整使用。
 
 ## Accessibility & Inclusion

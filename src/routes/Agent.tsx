@@ -9,7 +9,7 @@ import {
   Upload,
   TerminalSquare,
 } from "lucide-react";
-import { ALL_EXAMPLES, CONCEPTS, TOTAL_CITATIONS } from "../content";
+import { ALL_EXAMPLES, BOOK_STATS, CONCEPTS, SOURCE_NOTES, TOTAL_CITATIONS } from "../content";
 import { useReview } from "../context/ReviewContext";
 import { TOOL_SCHEMAS } from "../lib/theory-api";
 import { formatPercent } from "../lib/format";
@@ -74,7 +74,10 @@ export function Agent() {
         <p className="mono-label text-muted">AGENT / 接口</p>
         <h1 className="zh-display mt-2 text-4xl sm:text-5xl">让 Agent 读到同一份乐理</h1>
         <p className="reading-column mt-3 max-w-[64ch] text-sm leading-relaxed text-muted">
-          页面、搜索、谱例、复习卡与 Agent 输出共用一套 TypeScript 数据。首版提供本地知识包、类型化查询函数与 Node CLI；接口按 MCP 工具形状设计，下一阶段可直接包装成 stdio MCP server。
+          页面、搜索、谱例、复习卡、书库与 Agent 输出共用一套 TypeScript 数据。首版提供本地知识包、类型化查询函数与 Node CLI；接口按 MCP 工具形状设计，下一阶段可直接包装成 stdio MCP server。
+        </p>
+        <p className="mono-label mt-3 text-muted">
+          {BOOK_STATS.chapters} CHAPTERS · {SOURCE_NOTES.length} SOURCE NOTES · NO FULL-TEXT COPY
         </p>
       </div>
 
@@ -112,14 +115,16 @@ export function Agent() {
             </div>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
               运行 <code className="font-mono text-xs">npm run knowledge</code> 生成。包含书目、
-              {CONCEPTS.length} 个概念全文、{ALL_EXAMPLES.length} 个谱例的事件级音符、工具 schema
+              {CONCEPTS.length} 个概念全文、{ALL_EXAMPLES.length} 个谱例的事件级音符、
+              {BOOK_STATS.chapters} 个章目、{SOURCE_NOTES.length} 条原创章节笔记、工具 schema
               与引用政策；不含任何外部请求。
             </p>
             <CodeBlock
               label="TERMINAL / 生成"
               code={`npm run knowledge
 # → public/knowledge.json
-# ${CONCEPTS.length} concepts, ${ALL_EXAMPLES.length} examples, ${TOTAL_CITATIONS} citations`}
+# ${CONCEPTS.length} concepts, ${ALL_EXAMPLES.length} examples, ${TOTAL_CITATIONS} citations
+# ${BOOK_STATS.chapters} chapters, ${SOURCE_NOTES.length} source notes`}
             />
           </section>
 
@@ -137,6 +142,9 @@ export function Agent() {
 npm run theory -- concept tritone-substitution --json
 npm run theory -- examples --concept ii-v-i --json
 npm run theory -- refs --json
+npm run theory -- books
+npm run theory -- source levine-13 --json
+npm run theory -- sources "转调" --book sposobin --dimension relationship
 npm run theory -- queue --state ./tonic-review-state.json --json`}
             />
           </section>
@@ -154,6 +162,9 @@ npm run theory -- queue --state ./tonic-review-state.json --json`}
               code={`const hits = window.TONIC.search("ii-V-I");
 const concept = window.TONIC.concept("tritone-substitution");
 const examples = window.TONIC.examples({ concept: "ii-v-i" });
+const book = window.TONIC.bookOutline("levine");
+const note = window.TONIC.sourceNote("sposobin-47");
+const relatedSources = window.TONIC.sources("harmonic-color");
 const queue = window.TONIC.reviewQueue();`}
             />
             <CodeBlock
@@ -162,7 +173,9 @@ const queue = window.TONIC.reviewQueue();`}
 
 theoryApi.search("五度圈", { category: "foundations" });
 theoryApi.concept("voice-leading");
-theoryApi.examples({ kind: "progression" });`}
+theoryApi.examples({ kind: "progression" });
+theoryApi.searchSources("转调", { book: "sposobin" });
+theoryApi.bookOutline("laitz");`}
             />
           </section>
 
@@ -209,6 +222,8 @@ theoryApi.examples({ kind: "progression" });`}
               code={`search_theory({ query: "tritone substitution", category: "jazz" })
 get_concept({ slug: "tritone-substitution" })
 list_examples({ concept: "tritone-substitution" })
+search_sources({ query: "重配和声", book: "levine" })
+get_source_note({ chapterId: "levine-13" })
 get_review_queue({ state: exportedState })`}
             />
           </section>

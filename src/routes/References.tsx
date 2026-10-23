@@ -1,4 +1,4 @@
-import { BookOpen, ExternalLink } from "lucide-react";
+import { ArrowUpRight, BookOpen, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   BIBLIOGRAPHY,
@@ -52,6 +52,13 @@ export function References() {
         <p className="reading-column mt-3 max-w-[64ch] text-sm leading-relaxed text-muted">
           本知识库不是教材的摘要，而是以三本著作为依据的原创改写。每条正文断言至少对应一处章节级来源；页码因版次与译本而异，因此不写入。
         </p>
+        <Link
+          to="/books"
+          className="mono-label mt-4 inline-flex items-center gap-1.5 border border-ink/50 px-3 py-2 hover:bg-ink hover:text-paper"
+        >
+          打开书库 / 章节笔记
+          <ArrowUpRight size={12} aria-hidden />
+        </Link>
       </div>
 
       <aside className="mt-5 border border-ink bg-paper-2 p-4">
@@ -155,7 +162,7 @@ export function References() {
       <div className="mt-8 border-t border-line pt-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="reading-column text-xs leading-relaxed text-muted">
-            外部核对来源：Oxford University Press 官方目录、图书馆书目记录所载中译本与第 3 版目录。书目页仅用于核对版次与章名，不替代原著阅读。
+            外部核对来源：Oxford University Press 官方目录、图书馆书目记录所载中译本与第 3 版目录。书目页仅用于核对版次与章名，不替代原著阅读。钢琴采样：Salamander Grand Piano V3，Alexander Holm，CC BY 3.0；本地文件见 <span className="font-mono">public/audio/salamander/LICENSE.txt</span>。
           </p>
           <a
             href="https://global.oup.com/ushe/product/the-complete-musician-9780190924508"

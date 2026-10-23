@@ -4,15 +4,18 @@ import {
   BIBLIOGRAPHY_BY_ID,
   CITATION_STYLE_NOTE,
   CONCEPTS,
+  HARMONY_DIMENSIONS,
   citationKey,
   citationNumberMap,
   collectCitations,
   getCategory,
+  getChaptersForConcept,
   getConcept,
   getRelatedConcepts,
 } from "../content";
 import type { CitationRef, Concept } from "../content/types";
 import { ExampleFigure } from "../components/ExampleFigure";
+import { VisualizationCard } from "../components/VisualizationCard";
 import { CATEGORY_STYLES } from "../components/category";
 import { PlayControl } from "../components/ui";
 import { useReview } from "../context/ReviewContext";
@@ -185,10 +188,18 @@ export function ConceptPage() {
   const dueRecord = due.find((record) => record.conceptSlug === concept.slug);
 
   const uniqueSources = [...new Set(numbered.map(({ ref }) => ref.source))];
+  const sourceChapters = getChaptersForConcept(concept.slug);
+  const mobileOutline = [
+    { id: "top", label: "页首" },
+    ...concept.sections.map((section) => ({ id: section.id, label: section.heading })),
+    ...(concept.examples.length > 0 ? [{ id: "figures", label: "谱例 / Figures" }] : []),
+    ...(concept.visual ? [{ id: "visual", label: "可视化 / Visual" }] : []),
+    { id: "notes", label: "本页引用 / Notes" },
+  ];
 
   return (
     <article>
-      <header className={`border-b border-line ${style.field}`}>
+      <header id="top" className={`scroll-mt-24 border-b border-line ${style.field}`}>
         <div className="mx-auto max-w-[1400px] px-4 py-7 sm:px-8 sm:py-9 xl:px-12">
           <div className={`flex flex-wrap items-center gap-2 text-[0.7rem] ${mutedText}`}>
             <Link to="/library" className="mono-label hover:underline">
@@ -209,6 +220,17 @@ export function ConceptPage() {
                 <span className={`mono-label border px-2 py-1 ${onDark ? "border-paper/80" : "border-ink/60"}`}>
                   {concept.level}
                 </span>
+                {concept.dimensions?.map((dimension) => {
+                  const meta = HARMONY_DIMENSIONS.find((item) => item.id === dimension);
+                  return (
+                    <span
+                      key={dimension}
+                      className={`mono-label border px-2 py-1 ${onDark ? "border-paper/80" : "border-ink/60"}`}
+                    >
+                      {meta?.label ?? dimension}
+                    </span>
+                  );
+                })}
                 <span className={`mono-label ${mutedText}`}>{concept.examples.length} FIGURES</span>
                 <span className={`mono-label ${mutedText}`}>{numbered.length} REFS</span>
               </div>
@@ -250,6 +272,23 @@ export function ConceptPage() {
         </div>
       </header>
 
+      <details className="border-b border-line bg-paper-2 px-4 py-3 sm:px-8 lg:hidden">
+        <summary className="mono-label cursor-pointer text-muted">
+          ON THIS PAGE / 本章大纲 · {mobileOutline.length} ITEMS
+        </summary>
+        <nav aria-label="本章大纲" className="mt-3 grid grid-cols-1 gap-1 sm:grid-cols-2">
+          {mobileOutline.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className="border border-line bg-paper px-3 py-2 text-xs text-ink/80 hover:border-cobalt hover:text-cobalt-ink"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+
       <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-8 sm:py-10 xl:px-12">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_290px] lg:items-start">
           <div className="min-w-0">
@@ -277,6 +316,8 @@ export function ConceptPage() {
                 </div>
               </section>
             ) : null}
+
+            <VisualizationCard concept={concept} />
 
             <section id="notes" className="scroll-mt-24 border-t border-line pt-6">
               <div className="flex items-end justify-between gap-3">
@@ -453,13 +494,36 @@ export function ConceptPage() {
               </ul>
             </div>
 
+            {sourceChapters.length > 0 ? (
+              <div className="border border-line p-4">
+                <p className="mono-label text-muted">BOOK NOTES / 书库笔记</p>
+                <ul className="mt-2 space-y-2">
+                  {sourceChapters.map((chapter) => (
+                    <li key={chapter.id}>
+                      <Link
+                        to={`/books?book=${chapter.book}&chapter=${chapter.id}`}
+                        className="text-xs hover:text-cobalt-ink"
+                      >
+                        <span className="mono-label text-muted">
+                          {chapter.book.toUpperCase()} {chapter.number}
+                        </span>
+                        <span className="mt-0.5 block font-medium">
+                          {chapter.titleZh ?? chapter.title}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
             <div className="border border-line p-4">
               <p className="mono-label flex items-center gap-1.5 text-muted">
                 <Headphones size={12} aria-hidden />
                 AUDIO
               </p>
               <p className="mt-2 text-xs leading-relaxed text-muted">
-                所有谱例由本地 Web Audio 合成，不加载外部采样。点击任意谱例的播放键或琴键即可试听。
+                所有谱例由本地 Salamander 钢琴采样驱动，Web Audio 合成作为回退；不加载外部采样。点击谱面音符/和弦、播放键或琴键即可试听。
               </p>
             </div>
           </aside>
