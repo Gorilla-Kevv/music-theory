@@ -64,6 +64,7 @@
 
 - 安装：`npm install`（缓存已指向项目内 `.npm-cache`）
 - 开发：`npm run dev`
+- 快速启动：双击项目根 `start.bat`（首次运行自动安装依赖；已运行时直接打开；`TONIC_NO_OPEN=1` 可只启动服务不打开浏览器）
 - 构建：`npm run build`（`prebuild` 自动刷新 `public/knowledge.json`）
 - 预览：`npm run preview`
 - 类型检查：`npm run typecheck`
@@ -90,4 +91,5 @@
   2. 按 `src/content` schema 扩充概念；同时更新 `PRODUCT.md` 的版本说明。
   3. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   4. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
-- 本次文档更新时间：10.23 21:33 BY TraeCode
+- 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
+- 本次文档更新时间：10.23 21:45 BY TraeCode

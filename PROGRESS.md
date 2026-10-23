@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：无；阶段 7 已完成
+- 当前正在开发任务：无；阶段 8 已完成
 - 下一阶段任务：补充更多章节笔记 / stdio MCP server（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server
@@ -94,3 +94,14 @@
 - 风险：教材笔记需持续人工校订；采样仅覆盖 C3–C5 后移调；`getBoundingBox` 命中区依赖 VexFlow 布局。
 - 下一阶段入口：补充更多章节笔记；包装 stdio MCP server；将书库笔记接入复习卡。
 - 本次文档更新时间：10.23 21:33
+
+## 阶段 8 快速启动 bat [计划时间：10.23 21:37 BY TraeCode][完成时间：10.23 21:45 BY TraeCode]
+
+- 分支：dev
+- 已完成：`start.bat` 双击启动；检查 Node/npm；首次自动安装依赖；检测 5173 是否已有 TONIC；非 TONIC 占用则报错；启动 Vite 后 3 秒打开浏览器；支持 `TONIC_NO_OPEN=1` 只启动服务。
+- 未完成：无
+- 改动文件：start.bat、HANDOFF.md、AGENTS.md、PROGRESS.md
+- 测试结果：首次运行 → Vite ready + HTTP 200；第二次运行 → `[READY] TONIC is already running`；ASCII + CRLF 下无乱码。
+- 风险：端口被其他应用占用时会阻止启动，避免误开别的站点；需要用户关闭占用或修改端口。
+- 下一阶段入口：无。
+- 本次文档更新时间：10.23 21:45

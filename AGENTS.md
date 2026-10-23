@@ -65,6 +65,7 @@ src/content/
 - 单一事实源：页面、搜索、音频、复习、书库、Agent 都从 `src/content` 读取；不要另建一套 JSON 真相。
 - 概念与谱例必须可通过 `npm run typecheck`；新增 slug 后检查所有 `related` 与书籍 `concepts` 映射。
 - 构建前刷新知识包：`npm run build` 会执行 `prebuild` → `npm run knowledge`。
+- 快速启动：双击项目根 `start.bat`；首次自动安装依赖，已运行时直接打开，`TONIC_NO_OPEN=1` 可只启动服务不打开浏览器。脚本为 ASCII + CRLF，修改后不要保存成 UTF-8/LF，否则 cmd 会吃字符。
 - 音频：谱例与琴键由本地 Salamander 钢琴采样（C3–C5，CC BY 3.0，Alexander Holm）驱动，附带合成器回退；见 `public/audio/salamander/LICENSE.txt`。不得替换为需要运行时外网请求的 CDN 音源。
 - 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。
 - 视觉方向：Blue Note 现代主义；平面色块、方形控件、纸面阅读区、墨色外壳；不引入渐变/玻璃拟态/SaaS 圆角卡片。
