@@ -60,6 +60,11 @@ export interface NoteSeed {
   keyPoints: string[];
   concepts: string[];
   dimensions: HarmonyDimension[];
+  deepSummary?: string;
+  analysis?: string[];
+  crossBook?: string[];
+  visualHint?: string;
+  confusions?: Array<{ question: string; answer: string }>;
 }
 
 export interface BookChapter extends ChapterSeed {
@@ -70,6 +75,11 @@ export interface BookChapter extends ChapterSeed {
   keyPoints?: string[];
   concepts?: string[];
   dimensions?: HarmonyDimension[];
+  deepSummary?: string;
+  analysis?: string[];
+  crossBook?: string[];
+  visualHint?: string;
+  confusions?: Array<{ question: string; answer: string }>;
 }
 
 export interface BookOutline {

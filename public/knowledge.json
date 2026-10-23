@@ -1,14 +1,14 @@
 {
   "meta": {
     "name": "TONIC · 主音",
-    "version": "0.2.0",
-    "builtAt": "2026-10-23T13:34:22.591Z",
+    "version": "0.3.0",
+    "builtAt": "2026-10-23T14:31:37.826Z",
     "conceptCount": 37,
     "exampleCount": 42,
-    "citationCount": 118,
+    "citationCount": 136,
     "bookCount": 3,
     "chapterCount": 118,
-    "sourceNoteCount": 59,
+    "sourceNoteCount": 85,
     "language": "zh-CN + en",
     "licenseNote": "知识条目为原创改写，引用仅作章节级学术定位；本库不复制教材正文，不得把本库内容当作三本著作的替代版本。"
   },
@@ -141,7 +141,17 @@
           "dimensions": [
             "function",
             "color"
-          ]
+          ],
+          "deepSummary": "音程与三和弦不是入门填空题，而是后续所有替代、张力与声部进行的度量单位。三全音既解释属功能，也解释三全音替代；三音与七音既定义和弦质量，也构成 guide tones。",
+          "analysis": [
+            "把音程听成“距离 + 张力”，再把它映射到和弦质量。",
+            "三和弦转位先看低音，再看声部连接，不要只看和弦名。"
+          ],
+          "crossBook": [
+            "Laitz 1C：音程",
+            "Laitz 3：三和弦与七和弦"
+          ],
+          "visualHint": "半音尺"
         },
         {
           "number": "02",
@@ -167,7 +177,17 @@
             "function",
             "direction",
             "relationship"
-          ]
+          ],
+          "deepSummary": "大调七个调式、ii–V–I、五度圈与声部进行是同一套语法：调式提供色彩，ii–V–I 提供方向，五度圈解释根音引力，guide tones 把三者连成可弹的线。",
+          "analysis": [
+            "先听低音 D–G–C，再听 F/C→B/F→E/B 的 guide tones。",
+            "把同一 ii–V–I 放到不同调式色彩中，比较“方向不变、颜色改变”。"
+          ],
+          "crossBook": [
+            "Laitz 5：主—属—声部进行",
+            "Laitz 9：下属与乐句模型"
+          ],
+          "visualHint": "五度圈 + 体系图"
         },
         {
           "number": "03",
@@ -191,7 +211,17 @@
             "color",
             "function",
             "brightness"
-          ]
+          ],
+          "deepSummary": "和弦—音阶理论不是“给每个和弦配一条音阶”的表格，而是把和弦质量、功能、张力与旋律落点联系起来。避免音、变化音与旋律小调调式共同决定“哪些音可以停留、哪些只能经过”。",
+          "analysis": [
+            "先确定和弦三音七音，再选音阶，最后用目标音检查。",
+            "把“避免音”当作声部冲突，而不是绝对禁音。"
+          ],
+          "crossBook": [
+            "Laitz 3：和弦质量",
+            "Laitz 21：调式交替"
+          ],
+          "visualHint": "张力光谱 + 调式轮"
         },
         {
           "number": "04",
@@ -200,7 +230,36 @@
           "part": "Part I · Theory: Chords and Scales",
           "id": "levine-04",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "音阶练习的目标不是速度，而是把音阶变成可随时调用的线条：慢速、准确、均匀，再逐步加入节奏与目标音。",
+          "keyPoints": [
+            "所有调、所有调式都要能上行、下行、分段与模进。",
+            "练习时必须听节拍与音准，不要用惯性代替耳朵。"
+          ],
+          "concepts": [
+            "chord-scale",
+            "bebop-scale"
+          ],
+          "dimensions": [
+            "direction"
+          ],
+          "deepSummary": "Levine 把音阶视为即兴的字母表，但字母表本身不构成句子。练习应先建立均匀的八分/十六分线条，再把音阶落到 ii–V–I 的三音七音上；速度只是控制力的结果，不是目标。",
+          "analysis": [
+            "先慢速、无重音，检查每个音的准确与均匀。",
+            "加入节拍器、重音移位与不同起拍，避免只会从根音开始。",
+            "把音阶最后两音改成目标和弦音，训练“音阶→落点”的连接。"
+          ],
+          "crossBook": [
+            "Laitz 1A：音阶与调",
+            "Laitz 3：和弦与织体"
+          ],
+          "visualHint": "调式轮 + 半音尺",
+          "confusions": [
+            {
+              "question": "把十二个调的音阶都背下来，就会即兴了吗？",
+              "answer": "不会。即兴还需要节奏、动机、目标音与曲式判断；音阶只是可用音集合。"
+            }
+          ]
         },
         {
           "number": "05",
@@ -224,7 +283,18 @@
             "color",
             "direction",
             "relationship"
-          ]
+          ],
+          "deepSummary": "斜线和弦把“低音的功能”和“上方和弦的颜色”拆成两层：低音决定你站在哪个音级，上方三和弦决定这一刻是什么色彩。它可以是转位，也可以是独立的和声层；判断时要先看低音是否形成级进线或持续音。",
+          "analysis": [
+            "先标低音级数，再问上方三和弦与低音构成什么音程。",
+            "把斜线和弦放回低音线：它是在级进、持续，还是制造半音漂移？",
+            "检查解决：低音下一步去哪里，上方三和弦是否随之改变功能。"
+          ],
+          "crossBook": [
+            "Laitz 13：级进下行低音",
+            "Sposobin 48：持续音"
+          ],
+          "visualHint": "低音线 + 钢琴键盘"
         },
         {
           "number": "06",
@@ -233,7 +303,38 @@
           "part": "Part II · Improvisation: Playing the Changes",
           "id": "levine-06",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "从音阶到音乐，需要动机、节奏、留白与目标和弦音；连续跑音阶不等于有句子。",
+          "keyPoints": [
+            "用短动机与模进组织线条，而不是从头跑到尾。",
+            "强拍落到三音/七音，弱拍用音阶与经过音填充。"
+          ],
+          "concepts": [
+            "chord-scale",
+            "harmonic-sequence",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "direction",
+            "color"
+          ],
+          "deepSummary": "这一章把“音阶材料”转成“语法”：一个动机经过重复、移位、节奏变化，最后用目标和弦音收束。Levine 反复强调听唱片、模仿语气与留白，因为音乐性来自句法，不来自音阶数量。",
+          "analysis": [
+            "先设计 2–4 个音的动机，再决定它在哪些和弦上移位。",
+            "每个乐句至少有一个明确的目标音与一个呼吸点。",
+            "用录音检查：线条是否有开头、发展、收束，而不是平均的十六分音符。"
+          ],
+          "crossBook": [
+            "Laitz 2：旋律与对位",
+            "Laitz 16：乐句与句法"
+          ],
+          "visualHint": "体系图中的“乐句/关系”分支",
+          "confusions": [
+            {
+              "question": "音阶跑得越快越“高级”吗？",
+              "answer": "不是。速度只有在节奏、目标音和句法清楚时才有意义。"
+            }
+          ]
         },
         {
           "number": "07",
@@ -255,7 +356,18 @@
           "dimensions": [
             "direction",
             "color"
-          ]
+          ],
+          "deepSummary": "比波普音阶本质上是节奏工具：加一个半音经过音，让八分音符的强拍落在和弦音上。它不改变和弦功能，只改变线条的落点与摆动；练习时必须先设计和弦音的节拍位置。",
+          "analysis": [
+            "先标每小节 1、3 拍要落哪个和弦音，再填经过音。",
+            "经过音只放弱拍；强拍上的经过音会听起来像错音。",
+            "把同一句移调，检查落点是否仍然稳定。"
+          ],
+          "crossBook": [
+            "Laitz 04：和弦外音",
+            "Levine 03：和弦—音阶"
+          ],
+          "visualHint": "半音尺 + 节奏格"
         },
         {
           "number": "08",
@@ -278,7 +390,18 @@
           "dimensions": [
             "color",
             "relationship"
-          ]
+          ],
+          "deepSummary": "Outside playing 的核心不是“用外面的音”，而是“制造张力并回来”。有效的外部音响通常有清晰的入口、重复的动机与明确的解决点；没有回归的外部音只是错误。",
+          "analysis": [
+            "先决定在哪一拍出去、在哪一拍回来。",
+            "用节奏重复让外部音响听起来像设计，而不是手滑。",
+            "回到目标和弦的三音、七音或 guide tone，确认解决。"
+          ],
+          "crossBook": [
+            "Laitz 22：半音转调",
+            "Levine 13：重配和声"
+          ],
+          "visualHint": "张力光谱"
         },
         {
           "number": "09",
@@ -300,7 +423,18 @@
           "dimensions": [
             "color",
             "relationship"
-          ]
+          ],
+          "deepSummary": "五声音阶省略半音与三全音，因此稳定、易唱，也更难听出“调性方向”。它既可以作为调内旋律材料，也可以整体移位制造外部感；关键在根音与当前和弦的距离。",
+          "analysis": [
+            "先判断五声的根音与当前和弦根音的关系。",
+            "同主音五声偏“里面”，半音或三全音移位偏“外面”。",
+            "用五声写一句，再检查和弦三音七音是否仍被强调。"
+          ],
+          "crossBook": [
+            "Levine 08：演奏外部",
+            "Laitz 1A：音阶"
+          ],
+          "visualHint": "五度圈"
         },
         {
           "number": "10",
@@ -324,7 +458,18 @@
             "color",
             "direction",
             "rhythm"
-          ]
+          ],
+          "deepSummary": "布鲁斯把功能和声暂时放在一边：I、IV、V 都可以是属七，b7 是风格色彩而不是功能错误；蓝调音又与大调三音并存，形成大小三度的双重身份。分析时要同时看十二小节骨架与句子回应。",
+          "analysis": [
+            "先背十二小节骨架，再听每个四小节乐句如何回应。",
+            "标出蓝调音与大调三音同时出现的位置。",
+            "不要把 I7 硬解释成 V7/I；先承认它是布鲁斯语言。"
+          ],
+          "crossBook": [
+            "Levine 07：比波普音阶",
+            "Laitz 1A：音阶与调"
+          ],
+          "visualHint": "十二小节格 + 张力光谱"
         },
         {
           "number": "11",
@@ -348,7 +493,18 @@
             "rhythm",
             "direction",
             "relationship"
-          ]
+          ],
+          "deepSummary": "Rhythm Changes 的价值在曲式模板：32 小节 AABA、A 段 I–vi–ii–V、B 段属和弦循环。和弦可以替换，但每段的目标与转折点必须保留；即兴迷路通常不是音阶问题，而是曲式地图不清。",
+          "analysis": [
+            "先标 A/B 段边界与每段最后一个目标和弦。",
+            "A 段只弹 guide tones，B 段只弹根音走向。",
+            "替换和弦后检查是否仍能在段末落到原目标。"
+          ],
+          "crossBook": [
+            "Laitz 20：二部曲式与变奏",
+            "Levine 02：五度圈"
+          ],
+          "visualHint": "曲式地图 + 五度圈"
         },
         {
           "number": "12",
@@ -357,7 +513,35 @@
           "part": "Part II · Improvisation: Playing the Changes",
           "id": "levine-12",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "练习设计比练习时长更重要：把难点拆成小单元，慢速循环，再放回完整进行。",
+          "keyPoints": [
+            "拆解、慢练、循环、录音复盘是四个基本动作。",
+            "每次练习只解决一个具体问题，不要同时改十件事。"
+          ],
+          "concepts": [
+            "harmonic-rhythm",
+            "guide-tones"
+          ],
+          "dimensions": [
+            "rhythm"
+          ],
+          "deepSummary": "Levine 的练习观接近“刻意练习”：把一段进行拆成和弦连接、guide tones、节奏型或单一声部，慢到能听见每个错误，再逐步加速并放回曲目。练习的成果要用录音与演出检验。",
+          "analysis": [
+            "把 ii–V–I 拆成低音、guide tones、音阶、节奏四层。",
+            "设定可观察目标（不掉拍、不碰错音、能循环四遍）。",
+            "录音回听，记录下一步唯一要修的点。"
+          ],
+          "crossBook": [
+            "Laitz 5：声部进行"
+          ],
+          "visualHint": "试听坞 + 复习卡",
+          "confusions": [
+            {
+              "question": "每天练两小时一定比练四十分钟好吗？",
+              "answer": "不一定。没有目标与反馈的两小时，可能只是重复已有错误。"
+            }
+          ]
         },
         {
           "number": "13",
@@ -381,7 +565,17 @@
             "relationship",
             "color",
             "direction"
-          ]
+          ],
+          "deepSummary": "三全音替代、副属和弦与斜线和弦的共同点是：改变低音与色彩，但保留目标和弦与功能方向。判断重配是否成立，要看旋律目标音与解决方向，而不是看和弦是否“更复杂”。",
+          "analysis": [
+            "先写原进行的低音与 guide tones，再做替代。",
+            "替代后检查每个目标音是否仍能落到原和弦三音/七音。"
+          ],
+          "crossBook": [
+            "Laitz 17：副属和弦",
+            "Laitz 18：转调"
+          ],
+          "visualHint": "张力光谱 + 体系图“关系”分支"
         },
         {
           "number": "14",
@@ -405,7 +599,17 @@
             "color",
             "brightness",
             "function"
-          ]
+          ],
+          "deepSummary": "高级重配把 voicing、持续音、调式交替与替代叠在一起，但每一层都必须有 voice leading 支撑。色彩是结果，不是起点；先决定低音与目标音，再决定延伸音。",
+          "analysis": [
+            "先弹 shell（根/三/七），再加一个色彩音。",
+            "检查低音与旋律是否争抢同一音区。"
+          ],
+          "crossBook": [
+            "Laitz 21：调式交替",
+            "Laitz 23/24：那不勒斯/增六"
+          ],
+          "visualHint": "张力光谱"
         },
         {
           "number": "15",
@@ -428,7 +632,16 @@
           "dimensions": [
             "relationship",
             "direction"
-          ]
+          ],
+          "deepSummary": "Coltrane Changes 把八度分成三个大三级调性中心，用属和弦连接；它听起来复杂，但骨架是“目标调 + guide tones + 对称根音运动”。分析时先标三个目标调，再看属和弦如何指向它们。",
+          "analysis": [
+            "先只弹 Cmaj7–Abmaj7–Emaj7 三个目标和弦。",
+            "再加入 Eb7/B7/G7，听属和弦如何把根音推向下一个目标。"
+          ],
+          "crossBook": [
+            "Laitz 29：对称与八度等分"
+          ],
+          "visualHint": "五度圈/关系网络"
         },
         {
           "number": "16",
@@ -437,7 +650,38 @@
           "part": "Part III · Reharmonization",
           "id": "levine-16",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "同一首曲子的三种重配和声并置，展示低音、色彩与功能可以怎样独立变化而不丢失原曲。",
+          "keyPoints": [
+            "重配和声先保住旋律与 guide tones，再改低音/色彩。",
+            "比较三种版本的“走向”和“明暗”，而不是只比和弦名字。"
+          ],
+          "concepts": [
+            "tritone-substitution",
+            "rootless-voicings",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "relationship",
+            "color"
+          ],
+          "deepSummary": "三种重配不是三个答案，而是三种分析视角：低音替代、色彩替代与功能替代。把它们并排弹奏，可以听出“同一个旋律在三种和声世界中”如何改变重心与明暗。",
+          "analysis": [
+            "第一遍只弹原和弦与旋律，标出旋律落点。",
+            "第二遍改低音（转位/斜线和弦），听方向变化。",
+            "第三遍加三全音替代与延伸音，检查旋律是否冲突。"
+          ],
+          "crossBook": [
+            "Laitz 21：调式交替",
+            "Laitz 24：增六和弦"
+          ],
+          "visualHint": "张力光谱",
+          "confusions": [
+            {
+              "question": "重配和声是不是和弦越复杂越好？",
+              "answer": "不是。重配要服务旋律与曲式；复杂和弦若破坏目标音或句法，就只是堆叠。"
+            }
+          ]
         },
         {
           "number": "17",
@@ -446,7 +690,37 @@
           "part": "Part IV · The Tune",
           "id": "levine-17",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "曲式决定和声节奏与终止位置：AABA、ABAC、布鲁斯与 Rhythm Changes 的段落边界比单个和弦更重要。",
+          "keyPoints": [
+            "先标 A/B 段与终止，再分析局部和弦。",
+            "turnaround 与段落开头的和声决定“循环感”。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "rhythm-changes",
+            "blues"
+          ],
+          "dimensions": [
+            "rhythm",
+            "function"
+          ],
+          "deepSummary": "曲式是宏观句法。Levine 把曲目按 AABA、ABAC、12-bar blues 等模板归类，是为了让即兴者知道“现在处于哪一句、下一句往哪里走”。分析和声时先看段落边界，才能理解为什么某些和弦在此处出现。",
+          "analysis": [
+            "用 A/B 标记段落，标出每段终止类型。",
+            "比较各段开头的低音与和弦；找出 turnaround。",
+            "把旋律动机与曲式边界对齐，判断句法是否呼应。"
+          ],
+          "crossBook": [
+            "Laitz 20/25/26/27：曲式"
+          ],
+          "visualHint": "体系图的“曲式/句法”分支",
+          "confusions": [
+            {
+              "question": "AABA 只是 32 小节吗？",
+              "answer": "AABA 是段落关系；32 小节是常见长度，但很多曲目会扩展或压缩。"
+            }
+          ]
         },
         {
           "number": "18",
@@ -455,7 +729,38 @@
           "part": "Part IV · The Tune",
           "id": "levine-18",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "Lead sheet 是压缩谱：旋律、和弦符号、曲式与节奏提示；演奏者要自己补 voicing、低音与节奏。",
+          "keyPoints": [
+            "和弦符号是功能/色彩指令，不是完整钢琴谱。",
+            "先读旋律与曲式，再决定 voicing 与节奏型。"
+          ],
+          "concepts": [
+            "rootless-voicings",
+            "extensions-alterations",
+            "roman-numerals"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ],
+          "deepSummary": "读 lead sheet 的能力，核心是把符号还原成和声动作：这个和弦在调里是什么功能？三音七音在哪里？旋律音与延伸音是否冲突？Levine 强调用耳朵和曲目经验补足纸面信息。",
+          "analysis": [
+            "先唱旋律，标出强拍与目标音。",
+            "把和弦符号转成级数与功能，判断进行方向。",
+            "选择 rootless/shell voicing，检查与旋律的冲突音。"
+          ],
+          "crossBook": [
+            "Laitz 3：和弦",
+            "Laitz 17：副属和弦"
+          ],
+          "visualHint": "张力光谱 + 钢琴键盘",
+          "confusions": [
+            {
+              "question": "看到 Cmaj7 就必须弹全部四个音吗？",
+              "answer": "不必。三音七音已经定义和弦，根音可交给贝斯，九/十三音按语境选择。"
+            }
+          ]
         },
         {
           "number": "19",
@@ -464,7 +769,37 @@
           "part": "Part IV · The Tune",
           "id": "levine-19",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "背曲靠结构：先记曲式与终止，再记低音与 guide tones，最后填旋律细节。",
+          "keyPoints": [
+            "用段落、终止与低音线建立记忆锚点。",
+            "不要在没记清曲式前死背音符。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "guide-tones",
+            "bass-line"
+          ],
+          "dimensions": [
+            "rhythm",
+            "direction"
+          ],
+          "deepSummary": "Levine 的记曲方法把“记忆”拆成结构记忆与听觉记忆：结构记忆是 A/B、终止、turnaround；听觉记忆是低音、guide tones、旋律轮廓。两者结合，才能在台上不靠纸。",
+          "analysis": [
+            "先听三遍，标出段落与终止。",
+            "用低音和 guide tones 弹一遍，不弹旋律。",
+            "最后加旋律，检查段落连接处是否记得。"
+          ],
+          "crossBook": [
+            "Laitz 15/16：乐段与句法"
+          ],
+          "visualHint": "体系图的曲式路径",
+          "confusions": [
+            {
+              "question": "背曲就是背和弦吗？",
+              "answer": "和弦只是骨架；曲式、旋律、低音与段落关系同样重要。"
+            }
+          ]
         },
         {
           "number": "20",
@@ -473,7 +808,38 @@
           "part": "Part IV · The Tune",
           "id": "levine-20",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "Head 是作曲旋律本身；语气、发音、节奏与句法决定它是否“像爵士”。",
+          "keyPoints": [
+            "先模仿唱片语气，再分析音高与和弦。",
+            "Head 的节奏重音常暗示和声节奏与即兴方向。"
+          ],
+          "concepts": [
+            "rhythm-changes",
+            "blues",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "rhythm",
+            "color"
+          ],
+          "deepSummary": "Head 不是等待即兴开始的过场。它的旋律动机、节奏型与落音往往已经给出整首曲子的语气和即兴素材。Levine 建议从唱片模仿发音、连断与重音，再把它与和弦/曲式对应。",
+          "analysis": [
+            "跟着唱片唱 head，模仿连音、重音与呼吸。",
+            "标出 head 的目标音与和弦变化点。",
+            "把 head 的动机移调到即兴中，形成统一语气。"
+          ],
+          "crossBook": [
+            "Laitz 2：旋律",
+            "Laitz 16：句法"
+          ],
+          "visualHint": "谱例点击 + 试听",
+          "confusions": [
+            {
+              "question": "Head 只要音高对就行了吗？",
+              "answer": "不够。爵士的语气、发音与节奏重音是 head 的一部分。"
+            }
+          ]
         },
         {
           "number": "21",
@@ -482,7 +848,38 @@
           "part": "Part IV · The Tune",
           "id": "levine-21",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "曲目库不是清单，而是和声与曲式的分类系统：布鲁斯、Rhythm Changes、ballad、Latin 各有语法。",
+          "keyPoints": [
+            "按曲式/和声类型学曲目，而不是按字母顺序。",
+            "同一类曲目共享 turnaround、常用替代与即兴策略。"
+          ],
+          "concepts": [
+            "rhythm-changes",
+            "blues",
+            "ii-v-i",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "relationship",
+            "rhythm"
+          ],
+          "deepSummary": "Levine 的曲目观强调“可迁移”：学一首 Rhythm Changes，等于学一类曲目；学一首 blues，等于学和声语言与蓝调词汇。曲目库应组织成语法家族，而不是无限扩张的清单。",
+          "analysis": [
+            "把曲目按 blues / rhythm changes / AABA / ABAC / Latin 分类。",
+            "每类记 2–3 首代表曲，比较 turnarounds 与常用替代。",
+            "用同一套 guide tones/音阶策略迁移到同类曲目。"
+          ],
+          "crossBook": [
+            "Laitz 20/25/26/27：曲式"
+          ],
+          "visualHint": "体系图的曲式森林",
+          "confusions": [
+            {
+              "question": "学的曲目越多越好吗？",
+              "answer": "数量不等于体系；能把曲目归类、提取语法并迁移，才是曲目库的价值。"
+            }
+          ]
         },
         {
           "number": "22",
@@ -491,7 +888,37 @@
           "part": "Part V · The Rest of It",
           "id": "levine-22",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "Salsa 与拉丁爵士把爵士和声放进 clave、montuno 与 tumbao 的节奏结构；和声节奏必须服从节奏层。",
+          "keyPoints": [
+            "clave 是时间组织，不是装饰节奏。",
+            "钢琴 montuno 与贝斯 tumbao 共同定义和声节奏。"
+          ],
+          "concepts": [
+            "rhythm-changes",
+            "harmonic-rhythm",
+            "blues"
+          ],
+          "dimensions": [
+            "rhythm",
+            "color"
+          ],
+          "deepSummary": "拉丁语境中的和声不是独立层：钢琴的 montuno、贝斯的 tumbao 与打击乐的 clave 共同决定何时换和弦、如何留白。把爵士 voicing 直接搬进来，常会与节奏层冲突。",
+          "analysis": [
+            "先锁定 clave 方向与 2-3 / 3-2 感觉。",
+            "让 montuno 的和弦变化与 clave 重音对齐。",
+            "检查贝斯 tumbao 是否与钢琴 voicing 争抢低频。"
+          ],
+          "crossBook": [
+            "Laitz 1B：节拍与节奏"
+          ],
+          "visualHint": "节奏层与和声节奏对照",
+          "confusions": [
+            {
+              "question": "拉丁爵士就是把爵士和弦加上拉丁节奏吗？",
+              "answer": "不是。节奏层会重新组织和声节奏与段落，和声必须服从 clave/montuno 的结构。"
+            }
+          ]
         },
         {
           "number": "23",
@@ -500,7 +927,38 @@
           "part": "Part V · The Rest of It",
           "id": "levine-23",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "杂项章节处理实际演出问题：引子、尾声、变速、动态、乐队沟通与“没有纸”的现场判断。",
+          "keyPoints": [
+            "引子/尾声与 turnaround 常决定演出是否“落地”。",
+            "现场优先级：曲式 > 目标音 > 色彩。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "harmonic-color",
+            "rhythm-changes"
+          ],
+          "dimensions": [
+            "rhythm",
+            "function"
+          ],
+          "deepSummary": "这些看似零散的主题，实际上都在回答“如何在现场保持结构”。Levine 把引子、尾声、节奏与沟通放在同一层，是因为演出中的和声选择必须服务时间与乐队互动，而不是纸面和弦。",
+          "analysis": [
+            "准备 2–3 个通用引子/尾声模板。",
+            "在曲目结尾标记 turnaround 或 final cadence。",
+            "现场先保曲式与目标音，再考虑替代与延伸。"
+          ],
+          "crossBook": [
+            "Laitz 15：乐段",
+            "Laitz 20：曲式"
+          ],
+          "visualHint": "曲式森林 + 试听坞",
+          "confusions": [
+            {
+              "question": "尾声可以随便停吗？",
+              "answer": "不可以。尾声需要和声/节奏的收束信号，否则乐队与听众都无法判断结束。"
+            }
+          ]
         },
         {
           "number": "24",
@@ -509,10 +967,40 @@
           "part": "Part V · The Rest of It",
           "id": "levine-24",
           "book": "levine",
-          "expanded": false
+          "expanded": true,
+          "summary": "聆听是理论的前置条件：主动听唱片、扒谱、比较版本，才能把和声词汇变成听觉直觉。",
+          "keyPoints": [
+            "主动听：标曲式、低音、guide tones、乐句。",
+            "比较不同版本，听同一进行的不同色彩与节奏。"
+          ],
+          "concepts": [
+            "harmonic-color",
+            "guide-tones",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "color"
+          ],
+          "deepSummary": "Levine 把 listening 放在全书末尾，不是附属品，而是回环：所有理论最终都要回到唱片。主动听意味着带着问题听——曲式在哪里、低音怎么走、guide tones 如何解决、乐手如何留白。",
+          "analysis": [
+            "选一首标准曲，听三遍：曲式、低音、旋律。",
+            "扒出 guide tones 与 turnaround。",
+            "比较两个版本，写下一个色彩/节奏差异。"
+          ],
+          "crossBook": [
+            "Laitz 2：旋律",
+            "Laitz 18：转调"
+          ],
+          "visualHint": "试听坞",
+          "confusions": [
+            {
+              "question": "听唱片算学习吗？",
+              "answer": "被动听不算；带着曲式、低音、目标音问题去听并复盘，才算。"
+            }
+          ]
         }
       ],
-      "noteCount": 12
+      "noteCount": 24
     },
     {
       "id": "laitz",
@@ -538,7 +1026,18 @@
           "dimensions": [
             "brightness",
             "relationship"
-          ]
+          ],
+          "deepSummary": "调性空间不是十二个孤立音阶，而是由音高、音阶结构与调号共同定义的坐标。大调与小调是同一坐标上的不同主音与功能选择；关系调共享调号，但导音、属和弦与主音位置不同。",
+          "analysis": [
+            "写出音阶的七个音级，标出半音位置与导音。",
+            "比较关系大小调：哪些和弦共享，哪些因导音改变而不同。",
+            "把调号、主音与功能三件事分开记，避免只背调号。"
+          ],
+          "crossBook": [
+            "Levine 02：大调音阶与进行",
+            "Levine 01：基本理论"
+          ],
+          "visualHint": "五度圈 + 调式轮"
         },
         {
           "number": "1B",
@@ -547,7 +1046,35 @@
           "part": "Part 1 · Foundations",
           "id": "laitz-1b",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "拍号把强弱组织成时间框架；单拍、复拍与混合拍决定乐句的呼吸，切分与跨小节重音改变和声节奏的落点。",
+          "keyPoints": [
+            "先判断拍号是单拍还是复拍，再判断重音层级。",
+            "和声变化点要与节拍重音对齐或有意错位。"
+          ],
+          "concepts": [
+            "harmonic-rhythm"
+          ],
+          "dimensions": [
+            "rhythm"
+          ],
+          "deepSummary": "Laitz 把节拍视为和声的容器：同样的 I–IV–V–I，落在不同的拍号与重音层级，会产生完全不同的句法。复拍（如 6/8）中“每三音一组”的重音会改变和弦变化的自然位置。",
+          "analysis": [
+            "用 2/4、3/4、4/4、6/8 分别弹同一进行，比较落点。",
+            "标出小节重音、次级重音与切分位置。",
+            "检查旋律重音与和声变化是否互相支持。"
+          ],
+          "crossBook": [
+            "Levine 11：Rhythm Changes",
+            "Levine 22：Salsa 与拉丁爵士"
+          ],
+          "visualHint": "和声节奏/节拍网格",
+          "confusions": [
+            {
+              "question": "6/8 和 3/4 都是三拍吗？",
+              "answer": "3/4 是单三拍，每拍分两半；6/8 是复二拍，每拍分三份，重音层级不同。"
+            }
+          ]
         },
         {
           "number": "1C",
@@ -569,7 +1096,18 @@
           "dimensions": [
             "color",
             "relationship"
-          ]
+          ],
+          "deepSummary": "音程是“度数 + 半音数 + 语境”的三重判断：度数给名称，半音数给性质，语境决定协和/不协和与解决方向。转位不是换名字，而是改变低音与张力位置。",
+          "analysis": [
+            "先数度数，再数半音，最后判断性质。",
+            "转位后检查度数相加为九、大小增减互换。",
+            "把同一个音程放进不同和弦，比较协和感是否改变。"
+          ],
+          "crossBook": [
+            "Levine 01：基本理论",
+            "Sposobin 01：四部和声"
+          ],
+          "visualHint": "半音尺 + 钢琴键盘"
         },
         {
           "number": "02",
@@ -578,7 +1116,37 @@
           "part": "Part 1 · Foundations",
           "id": "laitz-02",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "旋律由音高、节奏与轮廓共同组织；动机的重复、模进与对位让旋律与和声互相解释，而不是各走各的。",
+          "keyPoints": [
+            "旋律轮廓与目标音决定和声选择。",
+            "对位关注声部独立与倾向音解决，不只看纵向和弦。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "direction",
+            "rhythm"
+          ],
+          "deepSummary": "Laitz 把旋律与对位放在和声之前，是为了先建立“线条”意识：旋律的顶点、落音与呼吸决定和声节奏；对位则保证各声部有独立方向。只标和弦而不看线条，分析会失去音乐性。",
+          "analysis": [
+            "先画旋律轮廓：上行/下行、顶点、落音。",
+            "把落音与和弦三音七音对齐，检查冲突。",
+            "用反向/斜向进行修正平行五八度。"
+          ],
+          "crossBook": [
+            "Levine 02：声部进行",
+            "Levine 06：从音阶到音乐"
+          ],
+          "visualHint": "旋律轮廓 + 声部线",
+          "confusions": [
+            {
+              "question": "旋律只是和弦的装饰吗？",
+              "answer": "不是。旋律的目标音与轮廓会反过来决定和声选择与和声节奏。"
+            }
+          ]
         },
         {
           "number": "03",
@@ -601,7 +1169,16 @@
           "dimensions": [
             "function",
             "color"
-          ]
+          ],
+          "deepSummary": "三和弦与七和弦的分析不止是“认质量”：根音、低音、三音七音与织体共同决定稳定性、功能与色彩。转位改变低音与声部连接，不改变根音身份。",
+          "analysis": [
+            "先认根音与质量，再看低音判断转位。",
+            "把三音七音标出来，作为后续声部进行的骨架。"
+          ],
+          "crossBook": [
+            "Levine 01：基本理论"
+          ],
+          "visualHint": "和弦构建器/钢琴键盘"
         },
         {
           "number": "04",
@@ -622,7 +1199,18 @@
           "dimensions": [
             "color",
             "rhythm"
-          ]
+          ],
+          "deepSummary": "和弦外音是旋律与和声之间的张力层，不是“错音”。分类取决于它出现在强拍还是弱拍、是否被准备、如何解决；外音的形状同时塑造旋律轮廓与和声节奏。",
+          "analysis": [
+            "标出外音的类型、节拍位置与解决方向。",
+            "强拍外音需要更明确的准备与解决。",
+            "把外音删掉，比较旋律是否失去轮廓。"
+          ],
+          "crossBook": [
+            "Levine 06：从音阶到音乐",
+            "Sposobin 38–44：和弦外音"
+          ],
+          "visualHint": "旋律轮廓 + 节奏格"
         },
         {
           "number": "05",
@@ -645,7 +1233,17 @@
           "dimensions": [
             "function",
             "direction"
-          ]
+          ],
+          "deepSummary": "主—属关系是调性的第一根轴，但真正让它有方向的是声部：导音上行、七音下行、外声部反向。功能和声的“力量”来自倾向音的解决，而不是和弦名字。",
+          "analysis": [
+            "先听低音与最高声部，再填内声部。",
+            "标出导音、七音与共同音。",
+            "检查平行五八度与声部超越。"
+          ],
+          "crossBook": [
+            "Levine 02：声部进行"
+          ],
+          "visualHint": "声部线/五线谱"
         },
         {
           "number": "06",
@@ -668,7 +1266,18 @@
           "dimensions": [
             "function",
             "color"
-          ]
+          ],
+          "deepSummary": "属七把属功能压缩成一个不协和单位：三全音提供张力，导音与七音提供解决方向。两层分析让我们把表面的经过和弦、转位与装饰，归入更长的功能和声层。",
+          "analysis": [
+            "标出 V7 的三音、七音与三全音。",
+            "把表面和弦还原到深层功能，再解释装饰。",
+            "检查解决：导音上行、七音下行是否被保留或延迟。"
+          ],
+          "crossBook": [
+            "Levine 03：和弦—音阶",
+            "Sposobin 14：原位属七"
+          ],
+          "visualHint": "张力光谱 + 功能链"
         },
         {
           "number": "07",
@@ -677,7 +1286,38 @@
           "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
           "id": "laitz-07",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "第一转位三和弦让主与属的扩展更平滑：低音级进、六和弦减轻低音跳进，并让内声部获得更自然的连接。",
+          "keyPoints": [
+            "六和弦的低音是三音，常用于级进低音。",
+            "转位改变稳定性与连接，不改变功能身份。"
+          ],
+          "concepts": [
+            "voice-leading",
+            "roman-numerals",
+            "bass-line"
+          ],
+          "dimensions": [
+            "function",
+            "direction"
+          ],
+          "deepSummary": "第一转位不是“弱化和弦”，而是声部连接的工具。I6 与 V6 可以让低音级进、避免根音跳进，并让外声部更独立；分析时仍按原功能标记。",
+          "analysis": [
+            "比较 I–V 与 I–V6 的低音线。",
+            "观察六和弦如何减少平行五八度与声部跳进。",
+            "检查转位后最高声部是否仍支持旋律。"
+          ],
+          "crossBook": [
+            "Levine 02：斜线和弦/转位",
+            "Sposobin 10：正三和弦的六和弦"
+          ],
+          "visualHint": "低音线 + 声部连接",
+          "confusions": [
+            {
+              "question": "C/E 是 E 和弦吗？",
+              "answer": "不是。它是 C 大三和弦第一转位，根音仍是 C，低音是 E。"
+            }
+          ]
         },
         {
           "number": "08",
@@ -686,7 +1326,38 @@
           "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
           "id": "laitz-08",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "属七转位与导七和弦扩展属功能：转位改变低音与解决路径，导七的减七结构增加张力与等音可能。",
+          "keyPoints": [
+            "V7 转位改变七音与三音的声部位置。",
+            "导七解决到主，减七可作等音枢纽。"
+          ],
+          "concepts": [
+            "seventh-chords",
+            "diminished-seventh",
+            "voice-leading"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ],
+          "deepSummary": "属七的转位不只是低音变化：它改变七音与三音在哪个声部、如何解决，也会影响终止的强度。导七把属功能压缩成减七/半减七，张力更集中。",
+          "analysis": [
+            "比较 V7 原位与 V6/5、V4/3、V4/2 的低音与七音位置。",
+            "标出导七的根音与外声部解决方向。",
+            "检查减七的等音重解释可能。"
+          ],
+          "crossBook": [
+            "Levine 02：属七与声部进行",
+            "Sposobin 14/15/22"
+          ],
+          "visualHint": "减七等音网络",
+          "confusions": [
+            {
+              "question": "属七转位还是属功能吗？",
+              "answer": "是。转位改变低音与解决路径，不改变属功能身份。"
+            }
+          ]
         },
         {
           "number": "09",
@@ -710,7 +1381,18 @@
             "function",
             "direction",
             "rhythm"
-          ]
+          ],
+          "deepSummary": "乐句模型 T–PD–D–T 不是四个和弦的公式，而是“离开主音—制造压力—回归”的句法。下属可以扩展、属可以延迟，终止决定句法是否完成。",
+          "analysis": [
+            "标出 T/PD/D/T 的功能层，而不是逐和弦贴标签。",
+            "找终止，判断乐句是否完整。",
+            "比较 ii 与 IV 的声部与色彩差异。"
+          ],
+          "crossBook": [
+            "Levine 02：ii–V–I",
+            "Sposobin 2：功能体系"
+          ],
+          "visualHint": "功能链/体系图"
         },
         {
           "number": "10",
@@ -719,7 +1401,37 @@
           "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
           "id": "laitz-10",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "强拍与半音和弦外音把张力放在句法关键位置；倚音、延留音与半音经过音需要更明确的准备与解决。",
+          "keyPoints": [
+            "强拍外音比弱拍外音更需要解决。",
+            "半音外音常制造色彩转折或导向副属和弦。"
+          ],
+          "concepts": [
+            "harmonic-color",
+            "harmonic-rhythm"
+          ],
+          "dimensions": [
+            "color",
+            "rhythm"
+          ],
+          "deepSummary": "外音的“位置”决定它的重量：弱拍经过音可以只是流动，强拍倚音则会被听成临时和弦音。Laitz 关注外音与和声节奏的互动，而不是把外音当作孤立装饰。",
+          "analysis": [
+            "标出外音在强拍还是弱拍、上行还是下行。",
+            "检查外音是否与和弦三音形成小九度冲突。",
+            "判断它是否需要准备/延迟解决。"
+          ],
+          "crossBook": [
+            "Levine 02：声部进行",
+            "Sposobin 36–45：外音"
+          ],
+          "visualHint": "张力光谱 + 节拍网格",
+          "confusions": [
+            {
+              "question": "外音都要立即解决吗？",
+              "answer": "不一定。弱拍经过/辅助音可以自由流动；强拍倚音与延留音通常需要明确解决。"
+            }
+          ]
         },
         {
           "number": "11",
@@ -742,7 +1454,18 @@
           "dimensions": [
             "function",
             "direction"
-          ]
+          ],
+          "deepSummary": "四六和弦的功能由节拍位置与前后和弦决定：经过四六夹在两个和弦之间，辅助四六围绕一个持续和弦，终止四六则在强拍上充当属准备。把终止四六当成普通主和弦转位，会误读它的句法角色。",
+          "analysis": [
+            "先看低音是不是属音，再看是否在强拍。",
+            "区分经过、辅助与终止三类，不按和弦符号硬判。",
+            "追踪六音与四音的下行解决。"
+          ],
+          "crossBook": [
+            "Sposobin 9/13：终止与经过四六",
+            "Levine 05：斜线和弦"
+          ],
+          "visualHint": "功能链 + 低音线"
         },
         {
           "number": "12",
@@ -751,7 +1474,38 @@
           "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
           "id": "laitz-12",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "下属七和弦把下属功能扩展为四音和弦；ii7/IV7 通过三音七音连接属和弦，形成更平滑的 ii–V–I 与内嵌乐句。",
+          "keyPoints": [
+            "下属七和弦的七音通常下行解决。",
+            "ii7–V7–I 是最典型的嵌入模型。"
+          ],
+          "concepts": [
+            "predominant",
+            "seventh-chords",
+            "ii-v-i"
+          ],
+          "dimensions": [
+            "function",
+            "color"
+          ],
+          "deepSummary": "下属七和弦让下属功能拥有自己的七音张力，而不只是三和弦色彩。它把 T–PD–D–T 的中间阶段加厚，并让 ii–V 的声部连接更自然。",
+          "analysis": [
+            "比较 IV 与 ii7 接到 V7 时的声部。",
+            "标出下属七音的解决方向。",
+            "检查 ii7–V7–I 是否形成完整 T–PD–D–T。"
+          ],
+          "crossBook": [
+            "Levine 02：ii–V–I",
+            "Sposobin 21：下属七和弦"
+          ],
+          "visualHint": "张力光谱 + 体系图功能链",
+          "confusions": [
+            {
+              "question": "ii7 和 IV 都是下属，可以互换吗？",
+              "answer": "功能相近但声部与色彩不同；ii7 有七音张力，IV 更稳定，选择取决于旋律与低音。"
+            }
+          ]
         },
         {
           "number": "13",
@@ -775,7 +1529,18 @@
             "direction",
             "function",
             "color"
-          ]
+          ],
+          "deepSummary": "下中音 vi 与级进下行低音是扩展主音的常用方式：低音从主音逐级下行，和弦选择随之改变，转位与声部连接变得自然。vi 既像主功能延伸，也能承担下属替代，取决于低音与后续走向。",
+          "analysis": [
+            "先写低音线（如 1–7–6–5），再为每个低音选和弦。",
+            "判断 vi 是主功能延伸还是下属替代：看它往哪里走。",
+            "检查转位后外声部是否仍然平滑。"
+          ],
+          "crossBook": [
+            "Levine 05：斜线和弦",
+            "Sposobin 20：VI级与阻碍终止"
+          ],
+          "visualHint": "低音线 + 五线谱"
         },
         {
           "number": "14",
@@ -799,7 +1564,18 @@
             "function",
             "direction",
             "color"
-          ]
+          ],
+          "deepSummary": "中音 iii 与回指属和弦处理调性中心的边缘：iii 的功能介于主与属之间，既可延长主音，也可作为弱的属准备；回指属和弦则制造“已经到达又退回”的句法效果。它们的意义来自上下文，而不是固定标签。",
+          "analysis": [
+            "先判断 iii 前后是否围绕主音，还是已经走向属。",
+            "回指属和弦后面通常需要再次解决，检查它是否延长了句法。",
+            "不要把 iii 一律当作主功能或属功能，先看低音与终止。"
+          ],
+          "crossBook": [
+            "Sposobin 20：VI级与阻碍终止",
+            "Levine 02：声部进行"
+          ],
+          "visualHint": "功能链"
         },
         {
           "number": "15",
@@ -823,7 +1599,18 @@
             "rhythm",
             "direction",
             "function"
-          ]
+          ],
+          "deepSummary": "乐段是曲式的最小完整单位：前句提出、后句回应，终止式决定两句的关系。最常见的是前句半终止、后句完全终止；但平行乐段、对比乐段与非对称乐段会在动机与长度上变化。",
+          "analysis": [
+            "先找两个终止，再判断前后句关系。",
+            "比较前后句的动机：重复、变化还是对比。",
+            "不要用固定小节数切分乐段，终止才是标点。"
+          ],
+          "crossBook": [
+            "Sposobin 8：终止、乐段、乐句",
+            "Levine 17：曲式与作曲"
+          ],
+          "visualHint": "曲式地图"
         },
         {
           "number": "16",
@@ -832,7 +1619,37 @@
           "part": "Part 4 · Small Forms",
           "id": "laitz-16",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "乐句（sentence）由基本乐思、重复与延续构成；双乐段与非对称乐段扩展了乐段的平衡与比例。",
+          "keyPoints": [
+            "sentence 的核心是“陈述—重复—延续—终止”。",
+            "非对称乐段仍靠终止关系维持完整性。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "cadences"
+          ],
+          "dimensions": [
+            "rhythm",
+            "direction"
+          ],
+          "deepSummary": "Laitz 区分 period 与 sentence：period 是前句/后句的呼应，sentence 是基本乐思的重复与延续。两者都靠终止与比例建立“完整感”，但句法路径不同。",
+          "analysis": [
+            "标出基本乐思、重复与延续段。",
+            "找终止位置，判断前后句比例。",
+            "比较 period 与 sentence 的终止安排。"
+          ],
+          "crossBook": [
+            "Levine 17：曲式",
+            "Sposobin 8：终止、乐段、乐句"
+          ],
+          "visualHint": "句法树/乐段结构",
+          "confusions": [
+            {
+              "question": "四小节就一定是乐句吗？",
+              "answer": "不一定。乐句由终止与句法功能定义，长度可以不对称。"
+            }
+          ]
         },
         {
           "number": "17",
@@ -856,7 +1673,18 @@
             "relationship",
             "direction",
             "function"
-          ]
+          ],
+          "deepSummary": "副属和弦把目标和弦临时变成主音，制造局部离调。判断它是离调还是转调，要看解决后原调是否继续、新调是否建立终止。",
+          "analysis": [
+            "标出 V/x 的目标和弦与临时主音。",
+            "检查变化音的解决方向。",
+            "看后续是否有新调终止。"
+          ],
+          "crossBook": [
+            "Levine 13：重配和声",
+            "Sposobin 28/29/32"
+          ],
+          "visualHint": "调性距离网络"
         },
         {
           "number": "18",
@@ -879,7 +1707,18 @@
           "dimensions": [
             "relationship",
             "direction"
-          ]
+          ],
+          "deepSummary": "转调是调性中心的迁移，不只是出现变化音。枢轴和弦、半音中介与终止确认共同决定新调是否成立；距离越远，确认所需时间越长。",
+          "analysis": [
+            "找枢轴和弦及其两调功能解释。",
+            "标出新调属—主与终止。",
+            "判断旧调是否还能解释后续和弦。"
+          ],
+          "crossBook": [
+            "Levine 15：Coltrane Changes",
+            "Sposobin 34/35"
+          ],
+          "visualHint": "五度圈/调性距离"
         },
         {
           "number": "19",
@@ -901,7 +1740,18 @@
           "dimensions": [
             "direction",
             "relationship"
-          ]
+          ],
+          "deepSummary": "和声模进把同一模型移到新音级：自然模进留在调内，音程结构会随音阶调整；真实模进保持原结构，可能离开原调。模进的方向由低音线与目标终止决定，不是无限循环。",
+          "analysis": [
+            "标出模型与每一次复制，比较音程结构是否改变。",
+            "先听低音方向，再判断模进要走向哪个终止。",
+            "检查模进结束后是否回到原调或进入新调。"
+          ],
+          "crossBook": [
+            "Sposobin 26：自然模进",
+            "Levine 02：五度圈"
+          ],
+          "visualHint": "五度圈 + 模进楼梯"
         },
         {
           "number": "20",
@@ -910,7 +1760,38 @@
           "part": "Part 5 · Expressive Color through Chromaticism",
           "id": "laitz-20",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "二部曲式与变奏用重复、对比与调性关系组织更大结构；变奏可以改旋律、和声、节奏或织体。",
+          "keyPoints": [
+            "二部曲式常用调性对比与回归建立整体感。",
+            "变奏不是装饰，而是对同一结构的多次重新解释。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "harmonic-sequence",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "rhythm",
+            "relationship"
+          ],
+          "deepSummary": "二部曲式把两个段落组织成“出发—回归”的宏观句法；变奏则在同一和声/旋律骨架上改变表面。分析时要区分“结构音”和“装饰层”。",
+          "analysis": [
+            "标出二部曲式的段落与调性关系。",
+            "在变奏中找出保持不变的结构音。",
+            "比较每段变奏改变了旋律、和声还是织体。"
+          ],
+          "crossBook": [
+            "Levine 17：曲式",
+            "Levine 21：曲目库"
+          ],
+          "visualHint": "曲式森林",
+          "confusions": [
+            {
+              "question": "变奏就是加装饰音吗？",
+              "answer": "不只是。变奏可以改变和声、节奏、织体、调式甚至曲式比例。"
+            }
+          ]
         },
         {
           "number": "21",
@@ -933,7 +1814,18 @@
             "brightness",
             "color",
             "relationship"
-          ]
+          ],
+          "deepSummary": "调式交替是调性内部的明暗轴：主音不变，借用平行小调的 iv、bVI、bIII、bVII，改变色彩与功能细节。它常被误当成转调，关键在终止是否建立新主音。",
+          "analysis": [
+            "标出借用来源（parallel minor）。",
+            "检查变音如何解决、是否回到原主音。",
+            "比较借用前后的功能与明暗。"
+          ],
+          "crossBook": [
+            "Levine 14：高级重配",
+            "Sposobin 49/50"
+          ],
+          "visualHint": "明暗轴/张力光谱"
         },
         {
           "number": "22",
@@ -956,7 +1848,18 @@
             "relationship",
             "color",
             "direction"
-          ]
+          ],
+          "deepSummary": "半音转调靠半音化声部、等音重解释或突然并置进入远关系调；它强调色彩突变，而不是平滑枢轴。判断是否真正转调，仍要看新调是否建立属—主与终止。",
+          "analysis": [
+            "标出半音移动的声部与它要解决的目标音。",
+            "检查等音重解释：同一音响在另一个调里叫什么。",
+            "确认新调的属、主与终止是否出现。"
+          ],
+          "crossBook": [
+            "Sposobin 57：等音转调",
+            "Levine 15：Coltrane Changes"
+          ],
+          "visualHint": "调性距离 + 半音尺"
         },
         {
           "number": "23",
@@ -979,7 +1882,18 @@
             "brightness",
             "color",
             "function"
-          ]
+          ],
+          "deepSummary": "那不勒斯六和弦是降 II 级大三和弦的第一转位，功能是下属而非属。它的 b2 下行到导音、低音级进到属音，形成强烈的半音方向。",
+          "analysis": [
+            "标出 N6 的低音与 bII 根音。",
+            "追踪 b2 与外声部的半音解决。",
+            "确认它接 V 而不是 I。"
+          ],
+          "crossBook": [
+            "Levine 13：重配和声",
+            "Sposobin 47/53"
+          ],
+          "visualHint": "半音尺/调性距离"
         },
         {
           "number": "24",
@@ -1003,7 +1917,18 @@
             "color",
             "brightness",
             "function"
-          ]
+          ],
+          "deepSummary": "增六和弦用 b6 与 #4 的外向扩张强化属；意/法/德三种形态共享增六度，但内部音与解决不同。德国增六与属七等音，却不是属功能。",
+          "analysis": [
+            "标出 b6–#4 的增六度。",
+            "检查外向扩张到属音八度。",
+            "区分意/法/德三式的内部音。"
+          ],
+          "crossBook": [
+            "Levine 13：重配和声",
+            "Sposobin 47"
+          ],
+          "visualHint": "半音扩张/张力光谱"
         },
         {
           "number": "25",
@@ -1012,7 +1937,37 @@
           "part": "Part 6 · Large Forms",
           "id": "laitz-25",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "三部曲式用 A–B–A 的回归建立大尺度平衡；B 段常提供调性/主题对比，A 回归带来完成感。",
+          "keyPoints": [
+            "A 段的回归需要有可识别的主题/调性标志。",
+            "B 段的对比越强，回归越有结构重量。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "rhythm",
+            "relationship"
+          ],
+          "deepSummary": "三部曲式的核心不是“三个段落”，而是“离开—对比—回归”的心理过程。B 段可以转调、改调式或改织体；A 回归时常用变奏而非原样重复。",
+          "analysis": [
+            "标出 A/B/A 边界与调性。",
+            "找出 B 段的对比维度（调性、主题、织体）。",
+            "观察 A 回归是否原样、变奏或缩短。"
+          ],
+          "crossBook": [
+            "Levine 17：曲式",
+            "Sposobin 59：调性布局"
+          ],
+          "visualHint": "曲式森林",
+          "confusions": [
+            {
+              "question": "A–B–A 的 A 必须完全相同吗？",
+              "answer": "不必。回归常带变奏、缩短或调性调整，但仍需可识别。"
+            }
+          ]
         },
         {
           "number": "26",
@@ -1021,7 +1976,37 @@
           "part": "Part 6 · Large Forms",
           "id": "laitz-26",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "回旋曲式用 A 的多次回归与插部对比组织长段落；每次回归都可变奏，插部常带来调性/材料对比。",
+          "keyPoints": [
+            "A 的回归是结构锚点，插部负责对比。",
+            "调性布局与回归频率决定整体张力。"
+          ],
+          "concepts": [
+            "phrase-structure",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "rhythm",
+            "relationship"
+          ],
+          "deepSummary": "回旋曲式把“回归”变成结构原则：听众每次听到 A，都在确认主调与主题；插部则提供偏离。分析重点是 A 的回归方式与插部的调性对比。",
+          "analysis": [
+            "标出 A 的每次回归与插部。",
+            "比较插部的调性距离与材料。",
+            "观察 A 回归是否变奏/缩短。"
+          ],
+          "crossBook": [
+            "Levine 17：曲式",
+            "Laitz 18：转调"
+          ],
+          "visualHint": "曲式森林",
+          "confusions": [
+            {
+              "question": "回旋曲式就是 ABACA 吗？",
+              "answer": "ABACA 是常见形式，但回归次数与插部数量可以变化。"
+            }
+          ]
         },
         {
           "number": "27",
@@ -1030,7 +2015,38 @@
           "part": "Part 6 · Large Forms",
           "id": "laitz-27",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "奏鸣曲式把呈示、展开与再现组织成调性叙事：呈示建立主/属对比，展开制造不稳定，再现解决调性冲突。",
+          "keyPoints": [
+            "呈示部的调性对比是后续结构的动力。",
+            "再现部常把副题拉回主调，完成调性闭环。"
+          ],
+          "concepts": [
+            "tonal-distance",
+            "modulation",
+            "phrase-structure"
+          ],
+          "dimensions": [
+            "relationship",
+            "direction"
+          ],
+          "deepSummary": "奏鸣曲式是调性距离的宏观戏剧：呈示部确立主调与副调，展开部把距离拉远，再现部把副调收回主调。分析和声时要把局部和弦放进这个调性叙事。",
+          "analysis": [
+            "标出主部/副部主题与调性。",
+            "追踪展开部的调性路径与不稳定和弦。",
+            "观察再现部如何解决呈示部的调性冲突。"
+          ],
+          "crossBook": [
+            "Levine 17：曲式",
+            "Sposobin 59：调性布局"
+          ],
+          "visualHint": "调性距离网络",
+          "confusions": [
+            {
+              "question": "奏鸣曲式只是 A–B–A 吗？",
+              "answer": "不是。它的核心是调性对比与解决，呈示/展开/再现各自承担不同功能。"
+            }
+          ]
         },
         {
           "number": "28",
@@ -1053,7 +2069,18 @@
           "dimensions": [
             "relationship",
             "color"
-          ]
+          ],
+          "deepSummary": "对称和声（减七、增三、全音阶）削弱传统调性中心，因为同一个音响可以被多种方式解释。减七的等音多解、增三的对称循环与全音阶的均匀间距，让“家”被延迟或多重化。",
+          "analysis": [
+            "把减七写成四种等音拼法，分别指向四个调。",
+            "检查增三循环如何把八度分成三等分。",
+            "区分“调性模糊”与“无调性”：中心是否仍被暗示。"
+          ],
+          "crossBook": [
+            "Levine 03：变化属七",
+            "Sposobin 22/57：导七与等音"
+          ],
+          "visualHint": "对称轮 + 张力光谱"
         },
         {
           "number": "29",
@@ -1076,7 +2103,18 @@
           "dimensions": [
             "relationship",
             "direction"
-          ]
+          ],
+          "deepSummary": "对称拉伸调性把八度等分：大三级循环、半音模进与增三循环让和声在多个调性中心之间快速移动。Coltrane Changes 是典型例子；分析时先标目标调，再看属和弦如何指向它们。",
+          "analysis": [
+            "先标出三个大三级目标调，再填每组的 ii–V。",
+            "检查半音模进是把调性拉远，还是仍围绕原中心。",
+            "用 guide tones 追踪每个目标调，而不是只背和弦。"
+          ],
+          "crossBook": [
+            "Levine 15：Coltrane Changes",
+            "Sposobin 55：转调模进"
+          ],
+          "visualHint": "五度圈/对称轮"
         },
         {
           "number": "30",
@@ -1085,7 +2123,37 @@
           "part": "Part 7 · Near, At, and Past the Edges of Tonality",
           "id": "laitz-30",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "中心性、非三度叠置与音高集合把调性扩展到三和弦之外；中心仍可能存在，但不再由功能和声独占地定义。",
+          "keyPoints": [
+            "中心性可以由持续音、重复、音程细胞或集合建立。",
+            "非三度叠置和弦的“功能”需要重新定义。"
+          ],
+          "concepts": [
+            "harmonic-color",
+            "tonal-distance"
+          ],
+          "dimensions": [
+            "color",
+            "relationship"
+          ],
+          "deepSummary": "当和弦不再按三度叠置，传统功能标签会失效；但音乐仍可以通过持续音、动机回归或音高中心建立“家”。分析要从“中心如何被建立”而不是“这是几级和弦”出发。",
+          "analysis": [
+            "找出持续音、重复音型或音高中心。",
+            "标出非三度叠置的和弦结构。",
+            "判断功能是来自传统和声还是细胞/集合关系。"
+          ],
+          "crossBook": [
+            "Levine 08：Outside",
+            "Levine 15：对称和声"
+          ],
+          "visualHint": "音高集合/关系网络",
+          "confusions": [
+            {
+              "question": "没有三和弦就没有中心吗？",
+              "answer": "不一定。中心可以由持续音、重复、音程细胞或集合关系建立。"
+            }
+          ]
         },
         {
           "number": "31",
@@ -1094,7 +2162,36 @@
           "part": "Part 7 · Near, At, and Past the Edges of Tonality",
           "id": "laitz-31",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "集合分析用音高集合、标准型与音程向量描述非调性音乐；它补充功能和声无法覆盖的结构关系。",
+          "keyPoints": [
+            "集合分析关注音高关系，不依赖和弦功能。",
+            "音程向量描述集合的张力与对称性。"
+          ],
+          "concepts": [
+            "intervals",
+            "harmonic-color"
+          ],
+          "dimensions": [
+            "color"
+          ],
+          "deepSummary": "集合分析不是替代功能和声，而是处理功能失效后的结构。它把音高组织成集合，比较移位/倒影关系，并用音程向量描述色彩；对爵士的对称音阶/和弦也有解释力。",
+          "analysis": [
+            "把音高转成整数音级，找标准型。",
+            "比较集合之间的移位/倒影关系。",
+            "用音程向量解释张力与对称性。"
+          ],
+          "crossBook": [
+            "Levine 15：Coltrane 对称",
+            "Laitz 28：对称和声"
+          ],
+          "visualHint": "音高集合圆环",
+          "confusions": [
+            {
+              "question": "集合分析能解释调性音乐吗？",
+              "answer": "可以补充局部色彩与对称关系，但不能取代功能/声部分析。"
+            }
+          ]
         },
         {
           "number": "32",
@@ -1103,10 +2200,38 @@
           "part": "Part 7 · Near, At, and Past the Edges of Tonality",
           "id": "laitz-32",
           "book": "laitz",
-          "expanded": false
+          "expanded": true,
+          "summary": "节拍与序列技术把音乐组织从和声转向时间、音高序列与过程；分析要关注重复、变形与结构位置。",
+          "keyPoints": [
+            "序列技术关注音高/节奏的变形与排列。",
+            "节拍结构可以独立于和声制造张力。"
+          ],
+          "concepts": [
+            "harmonic-rhythm",
+            "intervals"
+          ],
+          "dimensions": [
+            "rhythm"
+          ],
+          "deepSummary": "当和声不再承担主要结构功能，节拍与序列成为组织手段。分析要追踪材料如何移位、倒影、逆行与节奏变形，以及这些过程如何替代传统终止。",
+          "analysis": [
+            "标出序列原型与变形（移位/倒影/逆行）。",
+            "观察节拍重音与分组如何组织段落。",
+            "判断结构边界由什么替代传统终止。"
+          ],
+          "crossBook": [
+            "Levine 15：对称/序列思维"
+          ],
+          "visualHint": "序列矩阵/节拍网格",
+          "confusions": [
+            {
+              "question": "序列音乐没有结构吗？",
+              "answer": "有，只是结构由序列变形、节拍与过程而非功能和声建立。"
+            }
+          ]
         }
       ],
-      "noteCount": 20
+      "noteCount": 34
     },
     {
       "id": "sposobin",
@@ -2004,7 +3129,17 @@
       "dimensions": [
         "function",
         "color"
-      ]
+      ],
+      "deepSummary": "音程与三和弦不是入门填空题，而是后续所有替代、张力与声部进行的度量单位。三全音既解释属功能，也解释三全音替代；三音与七音既定义和弦质量，也构成 guide tones。",
+      "analysis": [
+        "把音程听成“距离 + 张力”，再把它映射到和弦质量。",
+        "三和弦转位先看低音，再看声部连接，不要只看和弦名。"
+      ],
+      "crossBook": [
+        "Laitz 1C：音程",
+        "Laitz 3：三和弦与七和弦"
+      ],
+      "visualHint": "半音尺"
     },
     {
       "number": "02",
@@ -2030,7 +3165,17 @@
         "function",
         "direction",
         "relationship"
-      ]
+      ],
+      "deepSummary": "大调七个调式、ii–V–I、五度圈与声部进行是同一套语法：调式提供色彩，ii–V–I 提供方向，五度圈解释根音引力，guide tones 把三者连成可弹的线。",
+      "analysis": [
+        "先听低音 D–G–C，再听 F/C→B/F→E/B 的 guide tones。",
+        "把同一 ii–V–I 放到不同调式色彩中，比较“方向不变、颜色改变”。"
+      ],
+      "crossBook": [
+        "Laitz 5：主—属—声部进行",
+        "Laitz 9：下属与乐句模型"
+      ],
+      "visualHint": "五度圈 + 体系图"
     },
     {
       "number": "03",
@@ -2054,6 +3199,54 @@
         "color",
         "function",
         "brightness"
+      ],
+      "deepSummary": "和弦—音阶理论不是“给每个和弦配一条音阶”的表格，而是把和弦质量、功能、张力与旋律落点联系起来。避免音、变化音与旋律小调调式共同决定“哪些音可以停留、哪些只能经过”。",
+      "analysis": [
+        "先确定和弦三音七音，再选音阶，最后用目标音检查。",
+        "把“避免音”当作声部冲突，而不是绝对禁音。"
+      ],
+      "crossBook": [
+        "Laitz 3：和弦质量",
+        "Laitz 21：调式交替"
+      ],
+      "visualHint": "张力光谱 + 调式轮"
+    },
+    {
+      "number": "04",
+      "title": "How to Practice Scales",
+      "titleZh": "如何练习音阶",
+      "part": "Part I · Theory: Chords and Scales",
+      "id": "levine-04",
+      "book": "levine",
+      "expanded": true,
+      "summary": "音阶练习的目标不是速度，而是把音阶变成可随时调用的线条：慢速、准确、均匀，再逐步加入节奏与目标音。",
+      "keyPoints": [
+        "所有调、所有调式都要能上行、下行、分段与模进。",
+        "练习时必须听节拍与音准，不要用惯性代替耳朵。"
+      ],
+      "concepts": [
+        "chord-scale",
+        "bebop-scale"
+      ],
+      "dimensions": [
+        "direction"
+      ],
+      "deepSummary": "Levine 把音阶视为即兴的字母表，但字母表本身不构成句子。练习应先建立均匀的八分/十六分线条，再把音阶落到 ii–V–I 的三音七音上；速度只是控制力的结果，不是目标。",
+      "analysis": [
+        "先慢速、无重音，检查每个音的准确与均匀。",
+        "加入节拍器、重音移位与不同起拍，避免只会从根音开始。",
+        "把音阶最后两音改成目标和弦音，训练“音阶→落点”的连接。"
+      ],
+      "crossBook": [
+        "Laitz 1A：音阶与调",
+        "Laitz 3：和弦与织体"
+      ],
+      "visualHint": "调式轮 + 半音尺",
+      "confusions": [
+        {
+          "question": "把十二个调的音阶都背下来，就会即兴了吗？",
+          "answer": "不会。即兴还需要节奏、动机、目标音与曲式判断；音阶只是可用音集合。"
+        }
       ]
     },
     {
@@ -2078,6 +3271,57 @@
         "color",
         "direction",
         "relationship"
+      ],
+      "deepSummary": "斜线和弦把“低音的功能”和“上方和弦的颜色”拆成两层：低音决定你站在哪个音级，上方三和弦决定这一刻是什么色彩。它可以是转位，也可以是独立的和声层；判断时要先看低音是否形成级进线或持续音。",
+      "analysis": [
+        "先标低音级数，再问上方三和弦与低音构成什么音程。",
+        "把斜线和弦放回低音线：它是在级进、持续，还是制造半音漂移？",
+        "检查解决：低音下一步去哪里，上方三和弦是否随之改变功能。"
+      ],
+      "crossBook": [
+        "Laitz 13：级进下行低音",
+        "Sposobin 48：持续音"
+      ],
+      "visualHint": "低音线 + 钢琴键盘"
+    },
+    {
+      "number": "06",
+      "title": "From Scales to Music",
+      "titleZh": "从音阶到音乐",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-06",
+      "book": "levine",
+      "expanded": true,
+      "summary": "从音阶到音乐，需要动机、节奏、留白与目标和弦音；连续跑音阶不等于有句子。",
+      "keyPoints": [
+        "用短动机与模进组织线条，而不是从头跑到尾。",
+        "强拍落到三音/七音，弱拍用音阶与经过音填充。"
+      ],
+      "concepts": [
+        "chord-scale",
+        "harmonic-sequence",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "direction",
+        "color"
+      ],
+      "deepSummary": "这一章把“音阶材料”转成“语法”：一个动机经过重复、移位、节奏变化，最后用目标和弦音收束。Levine 反复强调听唱片、模仿语气与留白，因为音乐性来自句法，不来自音阶数量。",
+      "analysis": [
+        "先设计 2–4 个音的动机，再决定它在哪些和弦上移位。",
+        "每个乐句至少有一个明确的目标音与一个呼吸点。",
+        "用录音检查：线条是否有开头、发展、收束，而不是平均的十六分音符。"
+      ],
+      "crossBook": [
+        "Laitz 2：旋律与对位",
+        "Laitz 16：乐句与句法"
+      ],
+      "visualHint": "体系图中的“乐句/关系”分支",
+      "confusions": [
+        {
+          "question": "音阶跑得越快越“高级”吗？",
+          "answer": "不是。速度只有在节奏、目标音和句法清楚时才有意义。"
+        }
       ]
     },
     {
@@ -2100,7 +3344,18 @@
       "dimensions": [
         "direction",
         "color"
-      ]
+      ],
+      "deepSummary": "比波普音阶本质上是节奏工具：加一个半音经过音，让八分音符的强拍落在和弦音上。它不改变和弦功能，只改变线条的落点与摆动；练习时必须先设计和弦音的节拍位置。",
+      "analysis": [
+        "先标每小节 1、3 拍要落哪个和弦音，再填经过音。",
+        "经过音只放弱拍；强拍上的经过音会听起来像错音。",
+        "把同一句移调，检查落点是否仍然稳定。"
+      ],
+      "crossBook": [
+        "Laitz 04：和弦外音",
+        "Levine 03：和弦—音阶"
+      ],
+      "visualHint": "半音尺 + 节奏格"
     },
     {
       "number": "08",
@@ -2123,7 +3378,18 @@
       "dimensions": [
         "color",
         "relationship"
-      ]
+      ],
+      "deepSummary": "Outside playing 的核心不是“用外面的音”，而是“制造张力并回来”。有效的外部音响通常有清晰的入口、重复的动机与明确的解决点；没有回归的外部音只是错误。",
+      "analysis": [
+        "先决定在哪一拍出去、在哪一拍回来。",
+        "用节奏重复让外部音响听起来像设计，而不是手滑。",
+        "回到目标和弦的三音、七音或 guide tone，确认解决。"
+      ],
+      "crossBook": [
+        "Laitz 22：半音转调",
+        "Levine 13：重配和声"
+      ],
+      "visualHint": "张力光谱"
     },
     {
       "number": "09",
@@ -2145,7 +3411,18 @@
       "dimensions": [
         "color",
         "relationship"
-      ]
+      ],
+      "deepSummary": "五声音阶省略半音与三全音，因此稳定、易唱，也更难听出“调性方向”。它既可以作为调内旋律材料，也可以整体移位制造外部感；关键在根音与当前和弦的距离。",
+      "analysis": [
+        "先判断五声的根音与当前和弦根音的关系。",
+        "同主音五声偏“里面”，半音或三全音移位偏“外面”。",
+        "用五声写一句，再检查和弦三音七音是否仍被强调。"
+      ],
+      "crossBook": [
+        "Levine 08：演奏外部",
+        "Laitz 1A：音阶"
+      ],
+      "visualHint": "五度圈"
     },
     {
       "number": "10",
@@ -2169,7 +3446,18 @@
         "color",
         "direction",
         "rhythm"
-      ]
+      ],
+      "deepSummary": "布鲁斯把功能和声暂时放在一边：I、IV、V 都可以是属七，b7 是风格色彩而不是功能错误；蓝调音又与大调三音并存，形成大小三度的双重身份。分析时要同时看十二小节骨架与句子回应。",
+      "analysis": [
+        "先背十二小节骨架，再听每个四小节乐句如何回应。",
+        "标出蓝调音与大调三音同时出现的位置。",
+        "不要把 I7 硬解释成 V7/I；先承认它是布鲁斯语言。"
+      ],
+      "crossBook": [
+        "Levine 07：比波普音阶",
+        "Laitz 1A：音阶与调"
+      ],
+      "visualHint": "十二小节格 + 张力光谱"
     },
     {
       "number": "11",
@@ -2193,6 +3481,54 @@
         "rhythm",
         "direction",
         "relationship"
+      ],
+      "deepSummary": "Rhythm Changes 的价值在曲式模板：32 小节 AABA、A 段 I–vi–ii–V、B 段属和弦循环。和弦可以替换，但每段的目标与转折点必须保留；即兴迷路通常不是音阶问题，而是曲式地图不清。",
+      "analysis": [
+        "先标 A/B 段边界与每段最后一个目标和弦。",
+        "A 段只弹 guide tones，B 段只弹根音走向。",
+        "替换和弦后检查是否仍能在段末落到原目标。"
+      ],
+      "crossBook": [
+        "Laitz 20：二部曲式与变奏",
+        "Levine 02：五度圈"
+      ],
+      "visualHint": "曲式地图 + 五度圈"
+    },
+    {
+      "number": "12",
+      "title": "Practice, Practice, Practice",
+      "titleZh": "练习、练习、再练习",
+      "part": "Part II · Improvisation: Playing the Changes",
+      "id": "levine-12",
+      "book": "levine",
+      "expanded": true,
+      "summary": "练习设计比练习时长更重要：把难点拆成小单元，慢速循环，再放回完整进行。",
+      "keyPoints": [
+        "拆解、慢练、循环、录音复盘是四个基本动作。",
+        "每次练习只解决一个具体问题，不要同时改十件事。"
+      ],
+      "concepts": [
+        "harmonic-rhythm",
+        "guide-tones"
+      ],
+      "dimensions": [
+        "rhythm"
+      ],
+      "deepSummary": "Levine 的练习观接近“刻意练习”：把一段进行拆成和弦连接、guide tones、节奏型或单一声部，慢到能听见每个错误，再逐步加速并放回曲目。练习的成果要用录音与演出检验。",
+      "analysis": [
+        "把 ii–V–I 拆成低音、guide tones、音阶、节奏四层。",
+        "设定可观察目标（不掉拍、不碰错音、能循环四遍）。",
+        "录音回听，记录下一步唯一要修的点。"
+      ],
+      "crossBook": [
+        "Laitz 5：声部进行"
+      ],
+      "visualHint": "试听坞 + 复习卡",
+      "confusions": [
+        {
+          "question": "每天练两小时一定比练四十分钟好吗？",
+          "answer": "不一定。没有目标与反馈的两小时，可能只是重复已有错误。"
+        }
       ]
     },
     {
@@ -2217,7 +3553,17 @@
         "relationship",
         "color",
         "direction"
-      ]
+      ],
+      "deepSummary": "三全音替代、副属和弦与斜线和弦的共同点是：改变低音与色彩，但保留目标和弦与功能方向。判断重配是否成立，要看旋律目标音与解决方向，而不是看和弦是否“更复杂”。",
+      "analysis": [
+        "先写原进行的低音与 guide tones，再做替代。",
+        "替代后检查每个目标音是否仍能落到原和弦三音/七音。"
+      ],
+      "crossBook": [
+        "Laitz 17：副属和弦",
+        "Laitz 18：转调"
+      ],
+      "visualHint": "张力光谱 + 体系图“关系”分支"
     },
     {
       "number": "14",
@@ -2241,7 +3587,17 @@
         "color",
         "brightness",
         "function"
-      ]
+      ],
+      "deepSummary": "高级重配把 voicing、持续音、调式交替与替代叠在一起，但每一层都必须有 voice leading 支撑。色彩是结果，不是起点；先决定低音与目标音，再决定延伸音。",
+      "analysis": [
+        "先弹 shell（根/三/七），再加一个色彩音。",
+        "检查低音与旋律是否争抢同一音区。"
+      ],
+      "crossBook": [
+        "Laitz 21：调式交替",
+        "Laitz 23/24：那不勒斯/增六"
+      ],
+      "visualHint": "张力光谱"
     },
     {
       "number": "15",
@@ -2264,6 +3620,371 @@
       "dimensions": [
         "relationship",
         "direction"
+      ],
+      "deepSummary": "Coltrane Changes 把八度分成三个大三级调性中心，用属和弦连接；它听起来复杂，但骨架是“目标调 + guide tones + 对称根音运动”。分析时先标三个目标调，再看属和弦如何指向它们。",
+      "analysis": [
+        "先只弹 Cmaj7–Abmaj7–Emaj7 三个目标和弦。",
+        "再加入 Eb7/B7/G7，听属和弦如何把根音推向下一个目标。"
+      ],
+      "crossBook": [
+        "Laitz 29：对称与八度等分"
+      ],
+      "visualHint": "五度圈/关系网络"
+    },
+    {
+      "number": "16",
+      "title": "Three Reharmonizations",
+      "titleZh": "三种重配和声",
+      "part": "Part III · Reharmonization",
+      "id": "levine-16",
+      "book": "levine",
+      "expanded": true,
+      "summary": "同一首曲子的三种重配和声并置，展示低音、色彩与功能可以怎样独立变化而不丢失原曲。",
+      "keyPoints": [
+        "重配和声先保住旋律与 guide tones，再改低音/色彩。",
+        "比较三种版本的“走向”和“明暗”，而不是只比和弦名字。"
+      ],
+      "concepts": [
+        "tritone-substitution",
+        "rootless-voicings",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "relationship",
+        "color"
+      ],
+      "deepSummary": "三种重配不是三个答案，而是三种分析视角：低音替代、色彩替代与功能替代。把它们并排弹奏，可以听出“同一个旋律在三种和声世界中”如何改变重心与明暗。",
+      "analysis": [
+        "第一遍只弹原和弦与旋律，标出旋律落点。",
+        "第二遍改低音（转位/斜线和弦），听方向变化。",
+        "第三遍加三全音替代与延伸音，检查旋律是否冲突。"
+      ],
+      "crossBook": [
+        "Laitz 21：调式交替",
+        "Laitz 24：增六和弦"
+      ],
+      "visualHint": "张力光谱",
+      "confusions": [
+        {
+          "question": "重配和声是不是和弦越复杂越好？",
+          "answer": "不是。重配要服务旋律与曲式；复杂和弦若破坏目标音或句法，就只是堆叠。"
+        }
+      ]
+    },
+    {
+      "number": "17",
+      "title": "Song Forms and Composition",
+      "titleZh": "曲式与作曲",
+      "part": "Part IV · The Tune",
+      "id": "levine-17",
+      "book": "levine",
+      "expanded": true,
+      "summary": "曲式决定和声节奏与终止位置：AABA、ABAC、布鲁斯与 Rhythm Changes 的段落边界比单个和弦更重要。",
+      "keyPoints": [
+        "先标 A/B 段与终止，再分析局部和弦。",
+        "turnaround 与段落开头的和声决定“循环感”。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "rhythm-changes",
+        "blues"
+      ],
+      "dimensions": [
+        "rhythm",
+        "function"
+      ],
+      "deepSummary": "曲式是宏观句法。Levine 把曲目按 AABA、ABAC、12-bar blues 等模板归类，是为了让即兴者知道“现在处于哪一句、下一句往哪里走”。分析和声时先看段落边界，才能理解为什么某些和弦在此处出现。",
+      "analysis": [
+        "用 A/B 标记段落，标出每段终止类型。",
+        "比较各段开头的低音与和弦；找出 turnaround。",
+        "把旋律动机与曲式边界对齐，判断句法是否呼应。"
+      ],
+      "crossBook": [
+        "Laitz 20/25/26/27：曲式"
+      ],
+      "visualHint": "体系图的“曲式/句法”分支",
+      "confusions": [
+        {
+          "question": "AABA 只是 32 小节吗？",
+          "answer": "AABA 是段落关系；32 小节是常见长度，但很多曲目会扩展或压缩。"
+        }
+      ]
+    },
+    {
+      "number": "18",
+      "title": "Reading a Lead Sheet",
+      "titleZh": "读 Lead Sheet",
+      "part": "Part IV · The Tune",
+      "id": "levine-18",
+      "book": "levine",
+      "expanded": true,
+      "summary": "Lead sheet 是压缩谱：旋律、和弦符号、曲式与节奏提示；演奏者要自己补 voicing、低音与节奏。",
+      "keyPoints": [
+        "和弦符号是功能/色彩指令，不是完整钢琴谱。",
+        "先读旋律与曲式，再决定 voicing 与节奏型。"
+      ],
+      "concepts": [
+        "rootless-voicings",
+        "extensions-alterations",
+        "roman-numerals"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ],
+      "deepSummary": "读 lead sheet 的能力，核心是把符号还原成和声动作：这个和弦在调里是什么功能？三音七音在哪里？旋律音与延伸音是否冲突？Levine 强调用耳朵和曲目经验补足纸面信息。",
+      "analysis": [
+        "先唱旋律，标出强拍与目标音。",
+        "把和弦符号转成级数与功能，判断进行方向。",
+        "选择 rootless/shell voicing，检查与旋律的冲突音。"
+      ],
+      "crossBook": [
+        "Laitz 3：和弦",
+        "Laitz 17：副属和弦"
+      ],
+      "visualHint": "张力光谱 + 钢琴键盘",
+      "confusions": [
+        {
+          "question": "看到 Cmaj7 就必须弹全部四个音吗？",
+          "answer": "不必。三音七音已经定义和弦，根音可交给贝斯，九/十三音按语境选择。"
+        }
+      ]
+    },
+    {
+      "number": "19",
+      "title": "Memorizing a Tune",
+      "titleZh": "记曲",
+      "part": "Part IV · The Tune",
+      "id": "levine-19",
+      "book": "levine",
+      "expanded": true,
+      "summary": "背曲靠结构：先记曲式与终止，再记低音与 guide tones，最后填旋律细节。",
+      "keyPoints": [
+        "用段落、终止与低音线建立记忆锚点。",
+        "不要在没记清曲式前死背音符。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "guide-tones",
+        "bass-line"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction"
+      ],
+      "deepSummary": "Levine 的记曲方法把“记忆”拆成结构记忆与听觉记忆：结构记忆是 A/B、终止、turnaround；听觉记忆是低音、guide tones、旋律轮廓。两者结合，才能在台上不靠纸。",
+      "analysis": [
+        "先听三遍，标出段落与终止。",
+        "用低音和 guide tones 弹一遍，不弹旋律。",
+        "最后加旋律，检查段落连接处是否记得。"
+      ],
+      "crossBook": [
+        "Laitz 15/16：乐段与句法"
+      ],
+      "visualHint": "体系图的曲式路径",
+      "confusions": [
+        {
+          "question": "背曲就是背和弦吗？",
+          "answer": "和弦只是骨架；曲式、旋律、低音与段落关系同样重要。"
+        }
+      ]
+    },
+    {
+      "number": "20",
+      "title": "Heads",
+      "titleZh": "Head 旋律",
+      "part": "Part IV · The Tune",
+      "id": "levine-20",
+      "book": "levine",
+      "expanded": true,
+      "summary": "Head 是作曲旋律本身；语气、发音、节奏与句法决定它是否“像爵士”。",
+      "keyPoints": [
+        "先模仿唱片语气，再分析音高与和弦。",
+        "Head 的节奏重音常暗示和声节奏与即兴方向。"
+      ],
+      "concepts": [
+        "rhythm-changes",
+        "blues",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "rhythm",
+        "color"
+      ],
+      "deepSummary": "Head 不是等待即兴开始的过场。它的旋律动机、节奏型与落音往往已经给出整首曲子的语气和即兴素材。Levine 建议从唱片模仿发音、连断与重音，再把它与和弦/曲式对应。",
+      "analysis": [
+        "跟着唱片唱 head，模仿连音、重音与呼吸。",
+        "标出 head 的目标音与和弦变化点。",
+        "把 head 的动机移调到即兴中，形成统一语气。"
+      ],
+      "crossBook": [
+        "Laitz 2：旋律",
+        "Laitz 16：句法"
+      ],
+      "visualHint": "谱例点击 + 试听",
+      "confusions": [
+        {
+          "question": "Head 只要音高对就行了吗？",
+          "answer": "不够。爵士的语气、发音与节奏重音是 head 的一部分。"
+        }
+      ]
+    },
+    {
+      "number": "21",
+      "title": "The Repertoire",
+      "titleZh": "曲目库",
+      "part": "Part IV · The Tune",
+      "id": "levine-21",
+      "book": "levine",
+      "expanded": true,
+      "summary": "曲目库不是清单，而是和声与曲式的分类系统：布鲁斯、Rhythm Changes、ballad、Latin 各有语法。",
+      "keyPoints": [
+        "按曲式/和声类型学曲目，而不是按字母顺序。",
+        "同一类曲目共享 turnaround、常用替代与即兴策略。"
+      ],
+      "concepts": [
+        "rhythm-changes",
+        "blues",
+        "ii-v-i",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "relationship",
+        "rhythm"
+      ],
+      "deepSummary": "Levine 的曲目观强调“可迁移”：学一首 Rhythm Changes，等于学一类曲目；学一首 blues，等于学和声语言与蓝调词汇。曲目库应组织成语法家族，而不是无限扩张的清单。",
+      "analysis": [
+        "把曲目按 blues / rhythm changes / AABA / ABAC / Latin 分类。",
+        "每类记 2–3 首代表曲，比较 turnarounds 与常用替代。",
+        "用同一套 guide tones/音阶策略迁移到同类曲目。"
+      ],
+      "crossBook": [
+        "Laitz 20/25/26/27：曲式"
+      ],
+      "visualHint": "体系图的曲式森林",
+      "confusions": [
+        {
+          "question": "学的曲目越多越好吗？",
+          "answer": "数量不等于体系；能把曲目归类、提取语法并迁移，才是曲目库的价值。"
+        }
+      ]
+    },
+    {
+      "number": "22",
+      "title": "Salsa and Latin Jazz",
+      "titleZh": "Salsa 与拉丁爵士",
+      "part": "Part V · The Rest of It",
+      "id": "levine-22",
+      "book": "levine",
+      "expanded": true,
+      "summary": "Salsa 与拉丁爵士把爵士和声放进 clave、montuno 与 tumbao 的节奏结构；和声节奏必须服从节奏层。",
+      "keyPoints": [
+        "clave 是时间组织，不是装饰节奏。",
+        "钢琴 montuno 与贝斯 tumbao 共同定义和声节奏。"
+      ],
+      "concepts": [
+        "rhythm-changes",
+        "harmonic-rhythm",
+        "blues"
+      ],
+      "dimensions": [
+        "rhythm",
+        "color"
+      ],
+      "deepSummary": "拉丁语境中的和声不是独立层：钢琴的 montuno、贝斯的 tumbao 与打击乐的 clave 共同决定何时换和弦、如何留白。把爵士 voicing 直接搬进来，常会与节奏层冲突。",
+      "analysis": [
+        "先锁定 clave 方向与 2-3 / 3-2 感觉。",
+        "让 montuno 的和弦变化与 clave 重音对齐。",
+        "检查贝斯 tumbao 是否与钢琴 voicing 争抢低频。"
+      ],
+      "crossBook": [
+        "Laitz 1B：节拍与节奏"
+      ],
+      "visualHint": "节奏层与和声节奏对照",
+      "confusions": [
+        {
+          "question": "拉丁爵士就是把爵士和弦加上拉丁节奏吗？",
+          "answer": "不是。节奏层会重新组织和声节奏与段落，和声必须服从 clave/montuno 的结构。"
+        }
+      ]
+    },
+    {
+      "number": "23",
+      "title": "Loose Ends",
+      "titleZh": "杂项",
+      "part": "Part V · The Rest of It",
+      "id": "levine-23",
+      "book": "levine",
+      "expanded": true,
+      "summary": "杂项章节处理实际演出问题：引子、尾声、变速、动态、乐队沟通与“没有纸”的现场判断。",
+      "keyPoints": [
+        "引子/尾声与 turnaround 常决定演出是否“落地”。",
+        "现场优先级：曲式 > 目标音 > 色彩。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "harmonic-color",
+        "rhythm-changes"
+      ],
+      "dimensions": [
+        "rhythm",
+        "function"
+      ],
+      "deepSummary": "这些看似零散的主题，实际上都在回答“如何在现场保持结构”。Levine 把引子、尾声、节奏与沟通放在同一层，是因为演出中的和声选择必须服务时间与乐队互动，而不是纸面和弦。",
+      "analysis": [
+        "准备 2–3 个通用引子/尾声模板。",
+        "在曲目结尾标记 turnaround 或 final cadence。",
+        "现场先保曲式与目标音，再考虑替代与延伸。"
+      ],
+      "crossBook": [
+        "Laitz 15：乐段",
+        "Laitz 20：曲式"
+      ],
+      "visualHint": "曲式森林 + 试听坞",
+      "confusions": [
+        {
+          "question": "尾声可以随便停吗？",
+          "answer": "不可以。尾声需要和声/节奏的收束信号，否则乐队与听众都无法判断结束。"
+        }
+      ]
+    },
+    {
+      "number": "24",
+      "title": "Listening",
+      "titleZh": "聆听",
+      "part": "Part V · The Rest of It",
+      "id": "levine-24",
+      "book": "levine",
+      "expanded": true,
+      "summary": "聆听是理论的前置条件：主动听唱片、扒谱、比较版本，才能把和声词汇变成听觉直觉。",
+      "keyPoints": [
+        "主动听：标曲式、低音、guide tones、乐句。",
+        "比较不同版本，听同一进行的不同色彩与节奏。"
+      ],
+      "concepts": [
+        "harmonic-color",
+        "guide-tones",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "color"
+      ],
+      "deepSummary": "Levine 把 listening 放在全书末尾，不是附属品，而是回环：所有理论最终都要回到唱片。主动听意味着带着问题听——曲式在哪里、低音怎么走、guide tones 如何解决、乐手如何留白。",
+      "analysis": [
+        "选一首标准曲，听三遍：曲式、低音、旋律。",
+        "扒出 guide tones 与 turnaround。",
+        "比较两个版本，写下一个色彩/节奏差异。"
+      ],
+      "crossBook": [
+        "Laitz 2：旋律",
+        "Laitz 18：转调"
+      ],
+      "visualHint": "试听坞",
+      "confusions": [
+        {
+          "question": "听唱片算学习吗？",
+          "answer": "被动听不算；带着曲式、低音、目标音问题去听并复盘，才算。"
+        }
       ]
     },
     {
@@ -2287,6 +4008,54 @@
       "dimensions": [
         "brightness",
         "relationship"
+      ],
+      "deepSummary": "调性空间不是十二个孤立音阶，而是由音高、音阶结构与调号共同定义的坐标。大调与小调是同一坐标上的不同主音与功能选择；关系调共享调号，但导音、属和弦与主音位置不同。",
+      "analysis": [
+        "写出音阶的七个音级，标出半音位置与导音。",
+        "比较关系大小调：哪些和弦共享，哪些因导音改变而不同。",
+        "把调号、主音与功能三件事分开记，避免只背调号。"
+      ],
+      "crossBook": [
+        "Levine 02：大调音阶与进行",
+        "Levine 01：基本理论"
+      ],
+      "visualHint": "五度圈 + 调式轮"
+    },
+    {
+      "number": "1B",
+      "title": "Musical Time: Meter and Rhythm",
+      "titleZh": "音乐时间：拍号与节奏",
+      "part": "Part 1 · Foundations",
+      "id": "laitz-1b",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "拍号把强弱组织成时间框架；单拍、复拍与混合拍决定乐句的呼吸，切分与跨小节重音改变和声节奏的落点。",
+      "keyPoints": [
+        "先判断拍号是单拍还是复拍，再判断重音层级。",
+        "和声变化点要与节拍重音对齐或有意错位。"
+      ],
+      "concepts": [
+        "harmonic-rhythm"
+      ],
+      "dimensions": [
+        "rhythm"
+      ],
+      "deepSummary": "Laitz 把节拍视为和声的容器：同样的 I–IV–V–I，落在不同的拍号与重音层级，会产生完全不同的句法。复拍（如 6/8）中“每三音一组”的重音会改变和弦变化的自然位置。",
+      "analysis": [
+        "用 2/4、3/4、4/4、6/8 分别弹同一进行，比较落点。",
+        "标出小节重音、次级重音与切分位置。",
+        "检查旋律重音与和声变化是否互相支持。"
+      ],
+      "crossBook": [
+        "Levine 11：Rhythm Changes",
+        "Levine 22：Salsa 与拉丁爵士"
+      ],
+      "visualHint": "和声节奏/节拍网格",
+      "confusions": [
+        {
+          "question": "6/8 和 3/4 都是三拍吗？",
+          "answer": "3/4 是单三拍，每拍分两半；6/8 是复二拍，每拍分三份，重音层级不同。"
+        }
       ]
     },
     {
@@ -2309,6 +4078,56 @@
       "dimensions": [
         "color",
         "relationship"
+      ],
+      "deepSummary": "音程是“度数 + 半音数 + 语境”的三重判断：度数给名称，半音数给性质，语境决定协和/不协和与解决方向。转位不是换名字，而是改变低音与张力位置。",
+      "analysis": [
+        "先数度数，再数半音，最后判断性质。",
+        "转位后检查度数相加为九、大小增减互换。",
+        "把同一个音程放进不同和弦，比较协和感是否改变。"
+      ],
+      "crossBook": [
+        "Levine 01：基本理论",
+        "Sposobin 01：四部和声"
+      ],
+      "visualHint": "半音尺 + 钢琴键盘"
+    },
+    {
+      "number": "02",
+      "title": "Pitch and Meter Combine: Melody and Counterpoint",
+      "titleZh": "音高与节拍：旋律与对位",
+      "part": "Part 1 · Foundations",
+      "id": "laitz-02",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "旋律由音高、节奏与轮廓共同组织；动机的重复、模进与对位让旋律与和声互相解释，而不是各走各的。",
+      "keyPoints": [
+        "旋律轮廓与目标音决定和声选择。",
+        "对位关注声部独立与倾向音解决，不只看纵向和弦。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "direction",
+        "rhythm"
+      ],
+      "deepSummary": "Laitz 把旋律与对位放在和声之前，是为了先建立“线条”意识：旋律的顶点、落音与呼吸决定和声节奏；对位则保证各声部有独立方向。只标和弦而不看线条，分析会失去音乐性。",
+      "analysis": [
+        "先画旋律轮廓：上行/下行、顶点、落音。",
+        "把落音与和弦三音七音对齐，检查冲突。",
+        "用反向/斜向进行修正平行五八度。"
+      ],
+      "crossBook": [
+        "Levine 02：声部进行",
+        "Levine 06：从音阶到音乐"
+      ],
+      "visualHint": "旋律轮廓 + 声部线",
+      "confusions": [
+        {
+          "question": "旋律只是和弦的装饰吗？",
+          "answer": "不是。旋律的目标音与轮廓会反过来决定和声选择与和声节奏。"
+        }
       ]
     },
     {
@@ -2332,7 +4151,16 @@
       "dimensions": [
         "function",
         "color"
-      ]
+      ],
+      "deepSummary": "三和弦与七和弦的分析不止是“认质量”：根音、低音、三音七音与织体共同决定稳定性、功能与色彩。转位改变低音与声部连接，不改变根音身份。",
+      "analysis": [
+        "先认根音与质量，再看低音判断转位。",
+        "把三音七音标出来，作为后续声部进行的骨架。"
+      ],
+      "crossBook": [
+        "Levine 01：基本理论"
+      ],
+      "visualHint": "和弦构建器/钢琴键盘"
     },
     {
       "number": "04",
@@ -2353,7 +4181,18 @@
       "dimensions": [
         "color",
         "rhythm"
-      ]
+      ],
+      "deepSummary": "和弦外音是旋律与和声之间的张力层，不是“错音”。分类取决于它出现在强拍还是弱拍、是否被准备、如何解决；外音的形状同时塑造旋律轮廓与和声节奏。",
+      "analysis": [
+        "标出外音的类型、节拍位置与解决方向。",
+        "强拍外音需要更明确的准备与解决。",
+        "把外音删掉，比较旋律是否失去轮廓。"
+      ],
+      "crossBook": [
+        "Levine 06：从音阶到音乐",
+        "Sposobin 38–44：和弦外音"
+      ],
+      "visualHint": "旋律轮廓 + 节奏格"
     },
     {
       "number": "05",
@@ -2376,7 +4215,17 @@
       "dimensions": [
         "function",
         "direction"
-      ]
+      ],
+      "deepSummary": "主—属关系是调性的第一根轴，但真正让它有方向的是声部：导音上行、七音下行、外声部反向。功能和声的“力量”来自倾向音的解决，而不是和弦名字。",
+      "analysis": [
+        "先听低音与最高声部，再填内声部。",
+        "标出导音、七音与共同音。",
+        "检查平行五八度与声部超越。"
+      ],
+      "crossBook": [
+        "Levine 02：声部进行"
+      ],
+      "visualHint": "声部线/五线谱"
     },
     {
       "number": "06",
@@ -2399,6 +4248,97 @@
       "dimensions": [
         "function",
         "color"
+      ],
+      "deepSummary": "属七把属功能压缩成一个不协和单位：三全音提供张力，导音与七音提供解决方向。两层分析让我们把表面的经过和弦、转位与装饰，归入更长的功能和声层。",
+      "analysis": [
+        "标出 V7 的三音、七音与三全音。",
+        "把表面和弦还原到深层功能，再解释装饰。",
+        "检查解决：导音上行、七音下行是否被保留或延迟。"
+      ],
+      "crossBook": [
+        "Levine 03：和弦—音阶",
+        "Sposobin 14：原位属七"
+      ],
+      "visualHint": "张力光谱 + 功能链"
+    },
+    {
+      "number": "07",
+      "title": "Expanding Tonic and Dominant with First-Inversion Triads",
+      "titleZh": "用第一转位扩展主与属",
+      "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+      "id": "laitz-07",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "第一转位三和弦让主与属的扩展更平滑：低音级进、六和弦减轻低音跳进，并让内声部获得更自然的连接。",
+      "keyPoints": [
+        "六和弦的低音是三音，常用于级进低音。",
+        "转位改变稳定性与连接，不改变功能身份。"
+      ],
+      "concepts": [
+        "voice-leading",
+        "roman-numerals",
+        "bass-line"
+      ],
+      "dimensions": [
+        "function",
+        "direction"
+      ],
+      "deepSummary": "第一转位不是“弱化和弦”，而是声部连接的工具。I6 与 V6 可以让低音级进、避免根音跳进，并让外声部更独立；分析时仍按原功能标记。",
+      "analysis": [
+        "比较 I–V 与 I–V6 的低音线。",
+        "观察六和弦如何减少平行五八度与声部跳进。",
+        "检查转位后最高声部是否仍支持旋律。"
+      ],
+      "crossBook": [
+        "Levine 02：斜线和弦/转位",
+        "Sposobin 10：正三和弦的六和弦"
+      ],
+      "visualHint": "低音线 + 声部连接",
+      "confusions": [
+        {
+          "question": "C/E 是 E 和弦吗？",
+          "answer": "不是。它是 C 大三和弦第一转位，根音仍是 C，低音是 E。"
+        }
+      ]
+    },
+    {
+      "number": "08",
+      "title": "Inversions of V7 and Leading-Tone Sevenths",
+      "titleZh": "属七转位与导七和弦",
+      "part": "Part 2 · Fusing Melody, Harmony, and Counterpoint",
+      "id": "laitz-08",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "属七转位与导七和弦扩展属功能：转位改变低音与解决路径，导七的减七结构增加张力与等音可能。",
+      "keyPoints": [
+        "V7 转位改变七音与三音的声部位置。",
+        "导七解决到主，减七可作等音枢纽。"
+      ],
+      "concepts": [
+        "seventh-chords",
+        "diminished-seventh",
+        "voice-leading"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ],
+      "deepSummary": "属七的转位不只是低音变化：它改变七音与三音在哪个声部、如何解决，也会影响终止的强度。导七把属功能压缩成减七/半减七，张力更集中。",
+      "analysis": [
+        "比较 V7 原位与 V6/5、V4/3、V4/2 的低音与七音位置。",
+        "标出导七的根音与外声部解决方向。",
+        "检查减七的等音重解释可能。"
+      ],
+      "crossBook": [
+        "Levine 02：属七与声部进行",
+        "Sposobin 14/15/22"
+      ],
+      "visualHint": "减七等音网络",
+      "confusions": [
+        {
+          "question": "属七转位还是属功能吗？",
+          "answer": "是。转位改变低音与解决路径，不改变属功能身份。"
+        }
       ]
     },
     {
@@ -2423,6 +4363,56 @@
         "function",
         "direction",
         "rhythm"
+      ],
+      "deepSummary": "乐句模型 T–PD–D–T 不是四个和弦的公式，而是“离开主音—制造压力—回归”的句法。下属可以扩展、属可以延迟，终止决定句法是否完成。",
+      "analysis": [
+        "标出 T/PD/D/T 的功能层，而不是逐和弦贴标签。",
+        "找终止，判断乐句是否完整。",
+        "比较 ii 与 IV 的声部与色彩差异。"
+      ],
+      "crossBook": [
+        "Levine 02：ii–V–I",
+        "Sposobin 2：功能体系"
+      ],
+      "visualHint": "功能链/体系图"
+    },
+    {
+      "number": "10",
+      "title": "Accented and Chromatic Embellishing Tones",
+      "titleZh": "强拍与半音和弦外音",
+      "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+      "id": "laitz-10",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "强拍与半音和弦外音把张力放在句法关键位置；倚音、延留音与半音经过音需要更明确的准备与解决。",
+      "keyPoints": [
+        "强拍外音比弱拍外音更需要解决。",
+        "半音外音常制造色彩转折或导向副属和弦。"
+      ],
+      "concepts": [
+        "harmonic-color",
+        "harmonic-rhythm"
+      ],
+      "dimensions": [
+        "color",
+        "rhythm"
+      ],
+      "deepSummary": "外音的“位置”决定它的重量：弱拍经过音可以只是流动，强拍倚音则会被听成临时和弦音。Laitz 关注外音与和声节奏的互动，而不是把外音当作孤立装饰。",
+      "analysis": [
+        "标出外音在强拍还是弱拍、上行还是下行。",
+        "检查外音是否与和弦三音形成小九度冲突。",
+        "判断它是否需要准备/延迟解决。"
+      ],
+      "crossBook": [
+        "Levine 02：声部进行",
+        "Sposobin 36–45：外音"
+      ],
+      "visualHint": "张力光谱 + 节拍网格",
+      "confusions": [
+        {
+          "question": "外音都要立即解决吗？",
+          "answer": "不一定。弱拍经过/辅助音可以自由流动；强拍倚音与延留音通常需要明确解决。"
+        }
       ]
     },
     {
@@ -2446,6 +4436,57 @@
       "dimensions": [
         "function",
         "direction"
+      ],
+      "deepSummary": "四六和弦的功能由节拍位置与前后和弦决定：经过四六夹在两个和弦之间，辅助四六围绕一个持续和弦，终止四六则在强拍上充当属准备。把终止四六当成普通主和弦转位，会误读它的句法角色。",
+      "analysis": [
+        "先看低音是不是属音，再看是否在强拍。",
+        "区分经过、辅助与终止三类，不按和弦符号硬判。",
+        "追踪六音与四音的下行解决。"
+      ],
+      "crossBook": [
+        "Sposobin 9/13：终止与经过四六",
+        "Levine 05：斜线和弦"
+      ],
+      "visualHint": "功能链 + 低音线"
+    },
+    {
+      "number": "12",
+      "title": "Pre-Dominant Seventh Chords and Embedded Phrase Models",
+      "titleZh": "下属七和弦与内嵌乐句模型",
+      "part": "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model",
+      "id": "laitz-12",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "下属七和弦把下属功能扩展为四音和弦；ii7/IV7 通过三音七音连接属和弦，形成更平滑的 ii–V–I 与内嵌乐句。",
+      "keyPoints": [
+        "下属七和弦的七音通常下行解决。",
+        "ii7–V7–I 是最典型的嵌入模型。"
+      ],
+      "concepts": [
+        "predominant",
+        "seventh-chords",
+        "ii-v-i"
+      ],
+      "dimensions": [
+        "function",
+        "color"
+      ],
+      "deepSummary": "下属七和弦让下属功能拥有自己的七音张力，而不只是三和弦色彩。它把 T–PD–D–T 的中间阶段加厚，并让 ii–V 的声部连接更自然。",
+      "analysis": [
+        "比较 IV 与 ii7 接到 V7 时的声部。",
+        "标出下属七音的解决方向。",
+        "检查 ii7–V7–I 是否形成完整 T–PD–D–T。"
+      ],
+      "crossBook": [
+        "Levine 02：ii–V–I",
+        "Sposobin 21：下属七和弦"
+      ],
+      "visualHint": "张力光谱 + 体系图功能链",
+      "confusions": [
+        {
+          "question": "ii7 和 IV 都是下属，可以互换吗？",
+          "answer": "功能相近但声部与色彩不同；ii7 有七音张力，IV 更稳定，选择取决于旋律与低音。"
+        }
       ]
     },
     {
@@ -2470,7 +4511,18 @@
         "direction",
         "function",
         "color"
-      ]
+      ],
+      "deepSummary": "下中音 vi 与级进下行低音是扩展主音的常用方式：低音从主音逐级下行，和弦选择随之改变，转位与声部连接变得自然。vi 既像主功能延伸，也能承担下属替代，取决于低音与后续走向。",
+      "analysis": [
+        "先写低音线（如 1–7–6–5），再为每个低音选和弦。",
+        "判断 vi 是主功能延伸还是下属替代：看它往哪里走。",
+        "检查转位后外声部是否仍然平滑。"
+      ],
+      "crossBook": [
+        "Levine 05：斜线和弦",
+        "Sposobin 20：VI级与阻碍终止"
+      ],
+      "visualHint": "低音线 + 五线谱"
     },
     {
       "number": "14",
@@ -2494,7 +4546,18 @@
         "function",
         "direction",
         "color"
-      ]
+      ],
+      "deepSummary": "中音 iii 与回指属和弦处理调性中心的边缘：iii 的功能介于主与属之间，既可延长主音，也可作为弱的属准备；回指属和弦则制造“已经到达又退回”的句法效果。它们的意义来自上下文，而不是固定标签。",
+      "analysis": [
+        "先判断 iii 前后是否围绕主音，还是已经走向属。",
+        "回指属和弦后面通常需要再次解决，检查它是否延长了句法。",
+        "不要把 iii 一律当作主功能或属功能，先看低音与终止。"
+      ],
+      "crossBook": [
+        "Sposobin 20：VI级与阻碍终止",
+        "Levine 02：声部进行"
+      ],
+      "visualHint": "功能链"
     },
     {
       "number": "15",
@@ -2518,6 +4581,56 @@
         "rhythm",
         "direction",
         "function"
+      ],
+      "deepSummary": "乐段是曲式的最小完整单位：前句提出、后句回应，终止式决定两句的关系。最常见的是前句半终止、后句完全终止；但平行乐段、对比乐段与非对称乐段会在动机与长度上变化。",
+      "analysis": [
+        "先找两个终止，再判断前后句关系。",
+        "比较前后句的动机：重复、变化还是对比。",
+        "不要用固定小节数切分乐段，终止才是标点。"
+      ],
+      "crossBook": [
+        "Sposobin 8：终止、乐段、乐句",
+        "Levine 17：曲式与作曲"
+      ],
+      "visualHint": "曲式地图"
+    },
+    {
+      "number": "16",
+      "title": "Sentences, Double Periods, and Asymmetric Periods",
+      "titleZh": "乐句、双乐段与非对称乐段",
+      "part": "Part 4 · Small Forms",
+      "id": "laitz-16",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "乐句（sentence）由基本乐思、重复与延续构成；双乐段与非对称乐段扩展了乐段的平衡与比例。",
+      "keyPoints": [
+        "sentence 的核心是“陈述—重复—延续—终止”。",
+        "非对称乐段仍靠终止关系维持完整性。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "cadences"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction"
+      ],
+      "deepSummary": "Laitz 区分 period 与 sentence：period 是前句/后句的呼应，sentence 是基本乐思的重复与延续。两者都靠终止与比例建立“完整感”，但句法路径不同。",
+      "analysis": [
+        "标出基本乐思、重复与延续段。",
+        "找终止位置，判断前后句比例。",
+        "比较 period 与 sentence 的终止安排。"
+      ],
+      "crossBook": [
+        "Levine 17：曲式",
+        "Sposobin 8：终止、乐段、乐句"
+      ],
+      "visualHint": "句法树/乐段结构",
+      "confusions": [
+        {
+          "question": "四小节就一定是乐句吗？",
+          "answer": "不一定。乐句由终止与句法功能定义，长度可以不对称。"
+        }
       ]
     },
     {
@@ -2542,7 +4655,18 @@
         "relationship",
         "direction",
         "function"
-      ]
+      ],
+      "deepSummary": "副属和弦把目标和弦临时变成主音，制造局部离调。判断它是离调还是转调，要看解决后原调是否继续、新调是否建立终止。",
+      "analysis": [
+        "标出 V/x 的目标和弦与临时主音。",
+        "检查变化音的解决方向。",
+        "看后续是否有新调终止。"
+      ],
+      "crossBook": [
+        "Levine 13：重配和声",
+        "Sposobin 28/29/32"
+      ],
+      "visualHint": "调性距离网络"
     },
     {
       "number": "18",
@@ -2565,7 +4689,18 @@
       "dimensions": [
         "relationship",
         "direction"
-      ]
+      ],
+      "deepSummary": "转调是调性中心的迁移，不只是出现变化音。枢轴和弦、半音中介与终止确认共同决定新调是否成立；距离越远，确认所需时间越长。",
+      "analysis": [
+        "找枢轴和弦及其两调功能解释。",
+        "标出新调属—主与终止。",
+        "判断旧调是否还能解释后续和弦。"
+      ],
+      "crossBook": [
+        "Levine 15：Coltrane Changes",
+        "Sposobin 34/35"
+      ],
+      "visualHint": "五度圈/调性距离"
     },
     {
       "number": "19",
@@ -2587,6 +4722,57 @@
       "dimensions": [
         "direction",
         "relationship"
+      ],
+      "deepSummary": "和声模进把同一模型移到新音级：自然模进留在调内，音程结构会随音阶调整；真实模进保持原结构，可能离开原调。模进的方向由低音线与目标终止决定，不是无限循环。",
+      "analysis": [
+        "标出模型与每一次复制，比较音程结构是否改变。",
+        "先听低音方向，再判断模进要走向哪个终止。",
+        "检查模进结束后是否回到原调或进入新调。"
+      ],
+      "crossBook": [
+        "Sposobin 26：自然模进",
+        "Levine 02：五度圈"
+      ],
+      "visualHint": "五度圈 + 模进楼梯"
+    },
+    {
+      "number": "20",
+      "title": "Binary Form and Variations",
+      "titleZh": "二部曲式与变奏",
+      "part": "Part 5 · Expressive Color through Chromaticism",
+      "id": "laitz-20",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "二部曲式与变奏用重复、对比与调性关系组织更大结构；变奏可以改旋律、和声、节奏或织体。",
+      "keyPoints": [
+        "二部曲式常用调性对比与回归建立整体感。",
+        "变奏不是装饰，而是对同一结构的多次重新解释。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "harmonic-sequence",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "rhythm",
+        "relationship"
+      ],
+      "deepSummary": "二部曲式把两个段落组织成“出发—回归”的宏观句法；变奏则在同一和声/旋律骨架上改变表面。分析时要区分“结构音”和“装饰层”。",
+      "analysis": [
+        "标出二部曲式的段落与调性关系。",
+        "在变奏中找出保持不变的结构音。",
+        "比较每段变奏改变了旋律、和声还是织体。"
+      ],
+      "crossBook": [
+        "Levine 17：曲式",
+        "Levine 21：曲目库"
+      ],
+      "visualHint": "曲式森林",
+      "confusions": [
+        {
+          "question": "变奏就是加装饰音吗？",
+          "answer": "不只是。变奏可以改变和声、节奏、织体、调式甚至曲式比例。"
+        }
       ]
     },
     {
@@ -2610,7 +4796,18 @@
         "brightness",
         "color",
         "relationship"
-      ]
+      ],
+      "deepSummary": "调式交替是调性内部的明暗轴：主音不变，借用平行小调的 iv、bVI、bIII、bVII，改变色彩与功能细节。它常被误当成转调，关键在终止是否建立新主音。",
+      "analysis": [
+        "标出借用来源（parallel minor）。",
+        "检查变音如何解决、是否回到原主音。",
+        "比较借用前后的功能与明暗。"
+      ],
+      "crossBook": [
+        "Levine 14：高级重配",
+        "Sposobin 49/50"
+      ],
+      "visualHint": "明暗轴/张力光谱"
     },
     {
       "number": "22",
@@ -2633,7 +4830,18 @@
         "relationship",
         "color",
         "direction"
-      ]
+      ],
+      "deepSummary": "半音转调靠半音化声部、等音重解释或突然并置进入远关系调；它强调色彩突变，而不是平滑枢轴。判断是否真正转调，仍要看新调是否建立属—主与终止。",
+      "analysis": [
+        "标出半音移动的声部与它要解决的目标音。",
+        "检查等音重解释：同一音响在另一个调里叫什么。",
+        "确认新调的属、主与终止是否出现。"
+      ],
+      "crossBook": [
+        "Sposobin 57：等音转调",
+        "Levine 15：Coltrane Changes"
+      ],
+      "visualHint": "调性距离 + 半音尺"
     },
     {
       "number": "23",
@@ -2656,7 +4864,18 @@
         "brightness",
         "color",
         "function"
-      ]
+      ],
+      "deepSummary": "那不勒斯六和弦是降 II 级大三和弦的第一转位，功能是下属而非属。它的 b2 下行到导音、低音级进到属音，形成强烈的半音方向。",
+      "analysis": [
+        "标出 N6 的低音与 bII 根音。",
+        "追踪 b2 与外声部的半音解决。",
+        "确认它接 V 而不是 I。"
+      ],
+      "crossBook": [
+        "Levine 13：重配和声",
+        "Sposobin 47/53"
+      ],
+      "visualHint": "半音尺/调性距离"
     },
     {
       "number": "24",
@@ -2680,6 +4899,135 @@
         "color",
         "brightness",
         "function"
+      ],
+      "deepSummary": "增六和弦用 b6 与 #4 的外向扩张强化属；意/法/德三种形态共享增六度，但内部音与解决不同。德国增六与属七等音，却不是属功能。",
+      "analysis": [
+        "标出 b6–#4 的增六度。",
+        "检查外向扩张到属音八度。",
+        "区分意/法/德三式的内部音。"
+      ],
+      "crossBook": [
+        "Levine 13：重配和声",
+        "Sposobin 47"
+      ],
+      "visualHint": "半音扩张/张力光谱"
+    },
+    {
+      "number": "25",
+      "title": "Ternary Form",
+      "titleZh": "三部曲式",
+      "part": "Part 6 · Large Forms",
+      "id": "laitz-25",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "三部曲式用 A–B–A 的回归建立大尺度平衡；B 段常提供调性/主题对比，A 回归带来完成感。",
+      "keyPoints": [
+        "A 段的回归需要有可识别的主题/调性标志。",
+        "B 段的对比越强，回归越有结构重量。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "rhythm",
+        "relationship"
+      ],
+      "deepSummary": "三部曲式的核心不是“三个段落”，而是“离开—对比—回归”的心理过程。B 段可以转调、改调式或改织体；A 回归时常用变奏而非原样重复。",
+      "analysis": [
+        "标出 A/B/A 边界与调性。",
+        "找出 B 段的对比维度（调性、主题、织体）。",
+        "观察 A 回归是否原样、变奏或缩短。"
+      ],
+      "crossBook": [
+        "Levine 17：曲式",
+        "Sposobin 59：调性布局"
+      ],
+      "visualHint": "曲式森林",
+      "confusions": [
+        {
+          "question": "A–B–A 的 A 必须完全相同吗？",
+          "answer": "不必。回归常带变奏、缩短或调性调整，但仍需可识别。"
+        }
+      ]
+    },
+    {
+      "number": "26",
+      "title": "Rondo Form",
+      "titleZh": "回旋曲式",
+      "part": "Part 6 · Large Forms",
+      "id": "laitz-26",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "回旋曲式用 A 的多次回归与插部对比组织长段落；每次回归都可变奏，插部常带来调性/材料对比。",
+      "keyPoints": [
+        "A 的回归是结构锚点，插部负责对比。",
+        "调性布局与回归频率决定整体张力。"
+      ],
+      "concepts": [
+        "phrase-structure",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "rhythm",
+        "relationship"
+      ],
+      "deepSummary": "回旋曲式把“回归”变成结构原则：听众每次听到 A，都在确认主调与主题；插部则提供偏离。分析重点是 A 的回归方式与插部的调性对比。",
+      "analysis": [
+        "标出 A 的每次回归与插部。",
+        "比较插部的调性距离与材料。",
+        "观察 A 回归是否变奏/缩短。"
+      ],
+      "crossBook": [
+        "Levine 17：曲式",
+        "Laitz 18：转调"
+      ],
+      "visualHint": "曲式森林",
+      "confusions": [
+        {
+          "question": "回旋曲式就是 ABACA 吗？",
+          "answer": "ABACA 是常见形式，但回归次数与插部数量可以变化。"
+        }
+      ]
+    },
+    {
+      "number": "27",
+      "title": "Sonata Form",
+      "titleZh": "奏鸣曲式",
+      "part": "Part 6 · Large Forms",
+      "id": "laitz-27",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "奏鸣曲式把呈示、展开与再现组织成调性叙事：呈示建立主/属对比，展开制造不稳定，再现解决调性冲突。",
+      "keyPoints": [
+        "呈示部的调性对比是后续结构的动力。",
+        "再现部常把副题拉回主调，完成调性闭环。"
+      ],
+      "concepts": [
+        "tonal-distance",
+        "modulation",
+        "phrase-structure"
+      ],
+      "dimensions": [
+        "relationship",
+        "direction"
+      ],
+      "deepSummary": "奏鸣曲式是调性距离的宏观戏剧：呈示部确立主调与副调，展开部把距离拉远，再现部把副调收回主调。分析和声时要把局部和弦放进这个调性叙事。",
+      "analysis": [
+        "标出主部/副部主题与调性。",
+        "追踪展开部的调性路径与不稳定和弦。",
+        "观察再现部如何解决呈示部的调性冲突。"
+      ],
+      "crossBook": [
+        "Levine 17：曲式",
+        "Sposobin 59：调性布局"
+      ],
+      "visualHint": "调性距离网络",
+      "confusions": [
+        {
+          "question": "奏鸣曲式只是 A–B–A 吗？",
+          "answer": "不是。它的核心是调性对比与解决，呈示/展开/再现各自承担不同功能。"
+        }
       ]
     },
     {
@@ -2703,7 +5051,18 @@
       "dimensions": [
         "relationship",
         "color"
-      ]
+      ],
+      "deepSummary": "对称和声（减七、增三、全音阶）削弱传统调性中心，因为同一个音响可以被多种方式解释。减七的等音多解、增三的对称循环与全音阶的均匀间距，让“家”被延迟或多重化。",
+      "analysis": [
+        "把减七写成四种等音拼法，分别指向四个调。",
+        "检查增三循环如何把八度分成三等分。",
+        "区分“调性模糊”与“无调性”：中心是否仍被暗示。"
+      ],
+      "crossBook": [
+        "Levine 03：变化属七",
+        "Sposobin 22/57：导七与等音"
+      ],
+      "visualHint": "对称轮 + 张力光谱"
     },
     {
       "number": "29",
@@ -2726,6 +5085,131 @@
       "dimensions": [
         "relationship",
         "direction"
+      ],
+      "deepSummary": "对称拉伸调性把八度等分：大三级循环、半音模进与增三循环让和声在多个调性中心之间快速移动。Coltrane Changes 是典型例子；分析时先标目标调，再看属和弦如何指向它们。",
+      "analysis": [
+        "先标出三个大三级目标调，再填每组的 ii–V。",
+        "检查半音模进是把调性拉远，还是仍围绕原中心。",
+        "用 guide tones 追踪每个目标调，而不是只背和弦。"
+      ],
+      "crossBook": [
+        "Levine 15：Coltrane Changes",
+        "Sposobin 55：转调模进"
+      ],
+      "visualHint": "五度圈/对称轮"
+    },
+    {
+      "number": "30",
+      "title": "Centricity, Extended and Non-Tertian Sonorities, and Collections",
+      "titleZh": "中心性、非三度叠置与音高集合",
+      "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+      "id": "laitz-30",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "中心性、非三度叠置与音高集合把调性扩展到三和弦之外；中心仍可能存在，但不再由功能和声独占地定义。",
+      "keyPoints": [
+        "中心性可以由持续音、重复、音程细胞或集合建立。",
+        "非三度叠置和弦的“功能”需要重新定义。"
+      ],
+      "concepts": [
+        "harmonic-color",
+        "tonal-distance"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ],
+      "deepSummary": "当和弦不再按三度叠置，传统功能标签会失效；但音乐仍可以通过持续音、动机回归或音高中心建立“家”。分析要从“中心如何被建立”而不是“这是几级和弦”出发。",
+      "analysis": [
+        "找出持续音、重复音型或音高中心。",
+        "标出非三度叠置的和弦结构。",
+        "判断功能是来自传统和声还是细胞/集合关系。"
+      ],
+      "crossBook": [
+        "Levine 08：Outside",
+        "Levine 15：对称和声"
+      ],
+      "visualHint": "音高集合/关系网络",
+      "confusions": [
+        {
+          "question": "没有三和弦就没有中心吗？",
+          "answer": "不一定。中心可以由持续音、重复、音程细胞或集合关系建立。"
+        }
+      ]
+    },
+    {
+      "number": "31",
+      "title": "Analysis with Sets",
+      "titleZh": "集合分析",
+      "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+      "id": "laitz-31",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "集合分析用音高集合、标准型与音程向量描述非调性音乐；它补充功能和声无法覆盖的结构关系。",
+      "keyPoints": [
+        "集合分析关注音高关系，不依赖和弦功能。",
+        "音程向量描述集合的张力与对称性。"
+      ],
+      "concepts": [
+        "intervals",
+        "harmonic-color"
+      ],
+      "dimensions": [
+        "color"
+      ],
+      "deepSummary": "集合分析不是替代功能和声，而是处理功能失效后的结构。它把音高组织成集合，比较移位/倒影关系，并用音程向量描述色彩；对爵士的对称音阶/和弦也有解释力。",
+      "analysis": [
+        "把音高转成整数音级，找标准型。",
+        "比较集合之间的移位/倒影关系。",
+        "用音程向量解释张力与对称性。"
+      ],
+      "crossBook": [
+        "Levine 15：Coltrane 对称",
+        "Laitz 28：对称和声"
+      ],
+      "visualHint": "音高集合圆环",
+      "confusions": [
+        {
+          "question": "集合分析能解释调性音乐吗？",
+          "answer": "可以补充局部色彩与对称关系，但不能取代功能/声部分析。"
+        }
+      ]
+    },
+    {
+      "number": "32",
+      "title": "Metrical and Serial Techniques",
+      "titleZh": "节拍与序列技术",
+      "part": "Part 7 · Near, At, and Past the Edges of Tonality",
+      "id": "laitz-32",
+      "book": "laitz",
+      "expanded": true,
+      "summary": "节拍与序列技术把音乐组织从和声转向时间、音高序列与过程；分析要关注重复、变形与结构位置。",
+      "keyPoints": [
+        "序列技术关注音高/节奏的变形与排列。",
+        "节拍结构可以独立于和声制造张力。"
+      ],
+      "concepts": [
+        "harmonic-rhythm",
+        "intervals"
+      ],
+      "dimensions": [
+        "rhythm"
+      ],
+      "deepSummary": "当和声不再承担主要结构功能，节拍与序列成为组织手段。分析要追踪材料如何移位、倒影、逆行与节奏变形，以及这些过程如何替代传统终止。",
+      "analysis": [
+        "标出序列原型与变形（移位/倒影/逆行）。",
+        "观察节拍重音与分组如何组织段落。",
+        "判断结构边界由什么替代传统终止。"
+      ],
+      "crossBook": [
+        "Levine 15：对称/序列思维"
+      ],
+      "visualHint": "序列矩阵/节拍网格",
+      "confusions": [
+        {
+          "question": "序列音乐没有结构吗？",
+          "answer": "有，只是结构由序列变形、节拍与过程而非功能和声建立。"
+        }
       ]
     },
     {
@@ -3469,6 +5953,40 @@
         "question": "高音谱号的螺旋围绕哪一个音？中央 C 在高音谱号中位于哪里？",
         "answer": "螺旋围绕 G4；中央 C 位于高音谱号下方第一条加线。",
         "hint": "先记谱号的参照音，再数加线。"
+      },
+      "deepDive": {
+        "title": "白话解释：五线谱是坐标，不是图画",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "五线谱先给音高一个纵向坐标：线与间的位置决定音名，谱号决定这套坐标从哪个音开始读。加线不是装饰，而是坐标向上下延伸；同一个音换谱号后位置会变，但音高不变。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第一章 大三和弦与小三和弦、四部和声"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "读谱时不要逐线数。先记三个锚点：高音谱号第二线是 G，低音谱号第四线是 F，中央 C 在高音谱号下加一线、低音谱号上加一线。其余音按线与间的顺序推算，速度会快很多。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习",
+            "text": "任选一个音，写出它在高音谱号与低音谱号中的位置；再用钢琴找到它，确认眼睛与耳朵指的是同一个音。"
+          }
+        ]
       }
     },
     {
@@ -3679,6 +6197,40 @@
         "question": "大六度转位后是什么音程？为什么？",
         "answer": "小三度。度数相加为九（9 − 6 = 3），大转小。",
         "hint": "先算度数，再翻转性质。"
+      },
+      "deepDive": {
+        "title": "白话解释：音程同时看“度数”和“半音数”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "度数只数字母：C 到 E 是三度，C 到 F 是四度。半音数决定性质：大三度四个半音，小三度三个半音。只数半音会把增二度与小三度混为一谈，只数度数又分不出大小，所以两者必须一起看。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1C Musical Distance: Intervals"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 1 Basic Theory"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "协和与不协和不是固定标签。三全音在属七里是张力核心，在布鲁斯里却可以当色彩；同一个音程放在不同和弦、不同声部位置，听感会变。判断音程时要同时问：它在什么语境里、下一步往哪里解决。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1C Musical Distance: Intervals"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "转位口诀",
+            "text": "度数相加为九，大小互换、增减互换；纯音程转位后仍是纯音程。先用口诀算，再用耳朵确认。"
+          }
+        ]
       }
     },
     {
@@ -3928,6 +6480,40 @@
         "question": "三个降号的调号是什么大调？它的关系小调是什么？",
         "answer": "Eb 大调；C 小调。三个降号是 Bb、Eb、Ab。",
         "hint": "最后一个降号是下属音。"
+      },
+      "deepDive": {
+        "title": "白话解释：大调是一条有固定台阶的楼梯",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "大调音阶的全半音排列是“全全半全全全半”。这个结构固定后，你从任何一个音出发都能搭出同一条楼梯；调号只是把这条楼梯固定到某个主音上，避免每次写升降号。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "主音不是“第一个音”这么简单，它是听感的重力中心。大调的导音（第七级）向上强烈倾向主音，属和弦又围绕这个倾向工作；所以音阶结构与功能和声是同一件事的两面。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习",
+            "text": "不要只背十二个调号。先在 C 大调唱出全半音结构，再把同一结构搬到 G、F、D，听主音与导音的位置是否改变。"
+          }
+        ]
       }
     },
     {
@@ -4289,6 +6875,40 @@
         "question": "和声小调相对自然小调改变了哪一个音？这带来什么和声后果？",
         "answer": "第 7 级升高半音，形成导音，使 V7–i 的解决更有方向；同时 b6 与 7 之间出现增二度。",
         "hint": "导音与增二度是一体两面。"
+      },
+      "deepDive": {
+        "title": "白话解释：小调不是“悲伤的大调”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "自然小调的结构是“全半全全半全全”，它没有上方导音，所以属和弦不够有拉力。和声小调把第七级升高，制造导音；旋律小调再在上行时升高第六级，避免增二度，下行时又常回到自然小调。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第十七章 大调与和声小调的完全功能体系、自然音体系"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "三种小调不是三首不同的曲子，而是同一主音上的不同音高选择。和声小调的升七级让 V7–i 成立；旋律小调的升六级让旋律更平滑。分析时要说清当前用的是哪一种，而不是笼统写“小调”。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第十七章 大调与和声小调的完全功能体系、自然音体系"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "听觉抓手",
+            "text": "先听第六级与第七级：自然小调两者都低，和声小调第七级高，旋律小调上行时第六、七级都高。"
+          }
+        ]
       }
     },
     {
@@ -4571,6 +7191,40 @@
         "question": "D Dorian 与 D Aeolian 的关键差别在哪一个音？",
         "answer": "第 6 级：Dorian 是自然 B，Aeolian 是降 Bb。",
         "hint": "两者的 3、7 级都是降的。"
+      },
+      "deepDive": {
+        "title": "白话解释：调式是同一组音的不同“重力中心”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "把 C 大调的七个音分别当作主音，就得到七条调式。音高集合相同，但主音不同，因而半音位置与稳定音不同：Dorian 的第六级明亮，Lydian 的第四级升高，Mixolydian 的第七级降低。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（调式）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "调式不是“从音阶不同位置开始弹”这么简单。真正决定调式的是低音与和声围绕哪个音建立中心；没有主音支撑，同一组音很容易听回大调或小调。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（调式）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "明暗顺序",
+            "text": "从最亮到最暗大致是 Lydian–Ionian–Mixolydian–Dorian–Aeolian–Phrygian–Locrian；先听特征音，再记名字。"
+          }
+        ]
       }
     },
     {
@@ -4762,6 +7416,40 @@
         "question": "C 大调中 vi–ii–V–I 的根音分别是什么？它们如何对应五度圈？",
         "answer": "A–D–G–C，连续下行五度（或上行四度）。",
         "hint": "从 A 开始，每次向下五度。"
+      },
+      "deepDive": {
+        "title": "白话解释：五度圈是调性距离的地图",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "五度圈把十二个调按纯五度排列：顺时针每次加一个升号，逆时针每次加一个降号。相邻调只差一个调号，共同和弦多，最容易转调；隔得越远，共同和弦越少。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（五度圈）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 1A Musical Space: Pitches, Scales, and Keys"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "它不只是墙上的海报。ii–V–I 的根音运动、副属和弦的目标、三全音替代的对称关系，都能在圈上读出来。分析进行时，先看根音在圈上走几步，再谈功能和色彩。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（五度圈）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习",
+            "text": "任选一个调，顺时针说出它的属调，逆时针说出它的下属调；再找它关系小调的位置。用耳朵确认主音距离。"
+          }
+        ]
       }
     },
     {
@@ -4956,6 +7644,44 @@
         "question": "C 大三和弦的第一转位低音是什么？数字低音写作什么？",
         "answer": "低音是 E；写作 C/E 或 6（E–G–C）。",
         "hint": "第一转位把三音放到低音。"
+      },
+      "deepDive": {
+        "title": "白话解释：三和弦是“根音 + 两个性格音”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "三和弦由根音、三音、五音叠成。三音决定大小性质，五音决定稳定与张力；根音给身份，低音给位置。转位只改变低音，不改变根音，所以 C/E 仍然是 C 和弦，只是站的位置不同。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 3 Triads, Seventh Chords, and Texture"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第一章 大三和弦与小三和弦、四部和声"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "判断和弦不要只看三个音的名字。先找根音，再看三音与五音的音程，最后看低音是不是转位。斜线和弦则把低音进一步独立出来：上方三和弦决定颜色，低音决定功能位置。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第三章 原位三和弦的连接"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 5 Slash Chords"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "常见错误",
+            "text": "把转位当成换和弦，或把斜线和弦当成新根音。先问“根音是谁”，再问“低音是谁”。"
+          }
+        ]
       }
     },
     {
@@ -5137,6 +7863,40 @@
         "question": "Cmaj7 与 C7 的区别是什么？",
         "answer": "七音不同：Cmaj7 是 B（大七度），C7 是 Bb（小七度）；C7 是属七和弦。",
         "hint": "三音相同，七音决定大七/属七。"
+      },
+      "deepDive": {
+        "title": "白话解释：七音让和弦从“颜色”变成“方向”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "在 triad 上再叠一个七度就得到七和弦。七音不只是加厚：它引入新的不协和与解决方向。属七的三音与七音构成三全音，直接指向主和弦；大七与小七则更多是色彩与稳定性的区别。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 3 Triads, Seventh Chords, and Texture"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第十四章 原位属七和弦（D7）"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "七和弦的转位由低音决定，数字标记（7、6/5、4/3、4/2）告诉你七音在第几声部。分析时先认根音与质量，再看低音与七音位置；不要只背数字。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第十五章 属七和弦的转位"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "听觉抓手",
+            "text": "先听三音与七音：它们决定和弦是属七、大七还是小七。根音可以交给贝斯，三音七音必须清楚。"
+          }
+        ]
       }
     },
     {
@@ -5316,6 +8076,40 @@
         "question": "C 大调中 Dm7 的级数标记是什么？属于哪个功能组？",
         "answer": "ii7；下属功能组。",
         "hint": "D 是第二级，七和弦写作 ii7。"
+      },
+      "deepDive": {
+        "title": "白话解释：级数标记的是功能，不是和弦绰号",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "罗马数字表示和弦根音在调内的级数，大小写表示质量：I 是大三，ii 是小三，vi 是小三，vii° 是减三。它把具体音名翻译成功能位置，所以同一进行可以在十二个调里复用。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 5 Tonic, Dominant, and Voice Leading"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第二章 正三和弦的功能体系"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "转位用数字标记：6 表示第一转位，6/4 表示第二转位，7 与 6/5、4/3、4/2 表示七和弦及其转位。级数分析还要说明调性；离开调性谈 V–I 没有意义。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 3 Triads, Seventh Chords, and Texture"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "不要混淆",
+            "text": "罗马数字是相对功能，和弦符号（C、G7、Dm7）是绝对音高。分析时先写级数，再写具体和弦，两个层次不要混在一行。"
+          }
+        ]
       }
     },
     {
@@ -5488,6 +8282,44 @@
         "question": "在 V7–I 中，属七的三音与七音通常分别向哪里解决？",
         "answer": "三音（导音）上行到主音；七音下行级进到主和弦的三音。",
         "hint": "导音向上，七音向下。"
+      },
+      "deepDive": {
+        "title": "白话解释：四个声部像四个人一起走路",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "四部和声不是把四个音堆在一起，而是让四个声部各走一条线。共同音尽量保持，其余声部就近级进；外声部多用反向进行，内声部填补空隙。听感是否平滑，取决于每一对相邻声部的距离与方向，而不是和弦符号是否漂亮。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 5 Tonic, Dominant, and Voice Leading"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第三章 原位三和弦的连接"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "平行五度、平行八度之所以被限制，是因为两个声部完全同向同距时，听觉上会短暂“合并成一个声部”，独立线条消失。隐伏五八在终止等重要位置也要避免，因为外声部的目标会被提前听见。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 5 Tonic, Dominant, and Voice Leading"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第一章 大三和弦与小三和弦、四部和声"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "检查顺序",
+            "text": "先看低音方向，再找共同音，然后处理三音与七音，最后检查平行五八、声部超越与间距。顺序反了，就会只顾和弦标签而忽略线条。"
+          }
+        ]
       }
     },
     {
@@ -5763,6 +8595,40 @@
         "question": "完全终止（PAC）的三个条件是什么？",
         "answer": "V–I；两个和弦都在原位；最高声部结束在主音。",
         "hint": "和弦、转位、外声部。"
+      },
+      "deepDive": {
+        "title": "白话解释：终止就是音乐的标点符号",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "完全终止像句号：V–I 都在原位，旋律落在主音上，听者明确知道“到站了”。半终止像逗号：停在 V，话还没说完。阻碍终止像剧情反转：V 本来要去 I，却拐到 vi，把段落延长。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 9 The Pre-Dominant Function and the Phrase Model"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第八章 终止、乐段、乐句"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "判断终止不要只看最后一个和弦。先听低音是否完成 V–I，再听旋律是否落在主音或三音；同样结束在 I，旋律落主音是完全终止，落三音则是不完全终止。半终止后如果继续发展，它只是分句，不是全曲的结束。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 15 Periods"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "听辨抓手",
+            "text": "闭眼听低音：V–I 是“关门”，停在 V 是“门开着”，V–vi 是“走错房间”。先定性，再数和弦。"
+          }
+        ]
       }
     },
     {
@@ -5974,6 +8840,44 @@
         "question": "在 C 大调，ii7 与 V7 分别是什么和弦？它们在乐句模型里承担什么功能？",
         "answer": "Dm7（下属）与 G7（属）；ii 准备 V，V 准备 I。",
         "hint": "功能链 T–PD–D–T。"
+      },
+      "deepDive": {
+        "title": "白话解释：下属是离开家之前的那口气",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "主和弦是家，属和弦是门口，下属功能负责让你先离开沙发。ii 与 IV 都把音乐从主功能推开，为 V 制造期待；ii–V 之所以常见，是因为低声部五度下行最顺，声部也能用共同音与级进连接。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 9 The Pre-Dominant Function and the Phrase Model"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第十七章 大调与和声小调的完全功能体系、自然音体系"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "IV 保留主音，听感更像“同一片土地上的离开”；ii 引入上主音与下属音，离开得更远。ii7 再添一个小七度，解决到 V7 时七音下行、三音保持，推动力更强。需要更暗的颜色时，可用同主音小调的 iv。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第二十一章 下属七和弦（SⅡ7）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 21 Modal Mixture"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "选择顺序",
+            "text": "要强推动用 ii7；要合唱式、保留主音用 IV；要突然变暗用 iv。选完再检查和弦七音是否妥善解决。"
+          }
+        ]
       }
     },
     {
@@ -6189,6 +9093,44 @@
         "question": "C 大调中 D7 的级数标记是什么？它解决到哪个和弦？",
         "answer": "V/V；解决到 G（V）。",
         "hint": "D 是 G 的属。"
+      },
+      "deepDive": {
+        "title": "白话解释：给某个和弦临时“升格”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "在 C 大调里，A7 出现在 Dm 前面，那个 C# 并不是转调到 D 小调，而是把 Dm 临时当成主音，给它配了一个自己的属。副属和弦的音往往带临时升降号，但它的任务只是把目标和弦“扶正”一小节。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 17 Applied Chords"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第二十八章 终止中的重属和弦"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "识别方法很直接：副属和弦的根音，是目标和弦根音上方五度；它的三音是目标和弦的导音，通常半音上行解决。V/V 解决到 V，V/ii 解决到 ii，V/vi 解决到 vi。连续使用会形成副属链，但每一环都要有明确目标。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第二十九章 结构内的重属和弦"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第三十章 重属和弦中的变音"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "写法提醒",
+            "text": "分析时写 V/ii，不要写成 II7；后者会让人误以为它是调内的二级和弦。副属的关键信息是“它属于谁”。"
+          }
+        ]
       }
     },
     {
@@ -6388,6 +9330,44 @@
         "question": "从 C 大调转到 G 大调，Am7 可以怎样解释？为什么它能当枢轴？",
         "answer": "在 C 是 vi7，在 G 是 ii7；同一和弦在两调都有自然音功能，因此可作枢轴。",
         "hint": "同一和弦，两套功能解释。"
+      },
+      "deepDive": {
+        "title": "白话解释：转调是搬家，不只是出门",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "从 C 大调去 G 大调，Am7 可以当枢轴：在 C 里它是 vi7，在 G 里它是 ii7。同一个和弦有两套身份，音乐借它完成视角切换，随后 D7–G 的终止确认新家。枢轴本身不是转调，它只是两套功能解释的交汇点。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 18 Modulation"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第三十四章 转调"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "确认转调要看三件事：新调有没有自己的属和弦，有没有解决到新主音，后面有没有新调的终止。调号变化只是线索，不是证据；很多转调在调号出现之前就已经靠临时升降号完成了。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第三十五章 到一级关系调的转调"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第五十一章 调性关系的等级、相差两个调号的转调"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "离调与转调",
+            "text": "副属解决后马上回到原调，是离调；新调获得属—主与终止，并持续足够长，才是转调。分界不在变化音，而在“家有没有搬”。"
+          }
+        ]
       }
     },
     {
@@ -6568,6 +9548,44 @@
         "question": "C 大调中的 Fm 和弦来自哪里？它属于什么手法？",
         "answer": "来自同主音 C 小调的下属（iv）；属于调式交替/借用和弦。",
         "hint": "主音不变，三音降了。"
+      },
+      "deepDive": {
+        "title": "白话解释：同一个主音，换一套灯光",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "同主音交替不改变主音，只从平行小调借和弦：C 大调可以借来 Ab（bVI）、Eb（bIII）、Bb（bVII）与 Fm（iv）。听者仍然知道家在 C，但墙面的颜色变暗了。这种“主音不变、调式变色”的效果，就是借用和弦的核心。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 21 Modal Mixture"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第四十九章 交替大小调体系"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "借用和弦常出现在下属位置：bVI 可以走向 V，iv 可以形成变暗的变格终止，bVII 在流行与摇滚里常作为“后门”回到 I。判断借用还是转调，要问低音是否仍围绕原主音，以及后面有没有新调的终止。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第五十章 交替大小调的降Ⅵ级三和弦（tsⅥ）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 22 Chromatic Modulation and Text-Music Relations"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "听觉抓手",
+            "text": "听到 bVI 或 iv 时先别急着说转调：低音还在 C 吗？后面有没有回到 C 或 G7？如果都成立，更像借用。"
+          }
+        ]
       }
     },
     {
@@ -6808,6 +9826,40 @@
         "question": "C 大调的那不勒斯六和弦是什么？低音是什么？",
         "answer": "Db 大三和弦的第一转位，低音 F（F–Ab–Db）。",
         "hint": "降 II 级，第一转位。"
+      },
+      "deepDive": {
+        "title": "白话解释：两个吓人的名字，其实都在加强下属",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "那不勒斯六和弦就是降二级大三和弦的第一转位，在 C 大调写作 Db/F。低音是降二级，上方有 F 与 Ab，听感像“下属功能被压暗了一层”。它通常走向 V，是比 iv 更强烈的下属替代。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 23 Neapolitan Chords"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第五十三章 经过交替大小调的降Ⅵ级三和弦（tsⅥ）以及经过那不勒斯和弦的转调"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "增六和弦的名字来自一个音程：低音与上方某音构成增六度，两个音向外扩张到八度。意大利、法国、德国增六和弦的区别在于中间加了哪些音；它们都强烈指向属和弦，常出现在终止前。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 24 Augmented-Sixth Chords"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "不要混淆",
+            "text": "那不勒斯六和弦是一个三和弦的转位，增六和弦的核心是那个增六度音程。前者看低音 b2，后者看两个外音向外解决。"
+          }
+        ]
       }
     },
     {
@@ -6979,6 +10031,40 @@
         "question": "终止四六为什么不能被简单理解为“主和弦的第二转位”？",
         "answer": "因为它出现在强拍、低音是属音、上方六音与四音下行解决到属和弦；功能上是属准备/双倚音，而不是稳定的主和弦。",
         "hint": "看低音、节拍位置与后续和弦。"
+      },
+      "deepDive": {
+        "title": "白话解释：它为什么不是“主和弦的第二转位”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "先把低音弹出来：G。此时你听到的低音已经站在属的位置上，上方的 C 和 E 只是暂时压在它上面。它们不是稳定的主和弦，而是两个要被“拉下来”的音：E 向下滑到 D，C 向下滑到 B。等 G7 出现时，这两个音落下，属功能才真正站稳。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 11 Six-Four Chords and Plagal Motions"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第九章 终止四六和弦"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "如果把它当成普通 I6/4，你会以为音乐“先回到主再离开”，但听觉上它并没有回家：低音仍在属音上，张力一直悬着，直到 V7 才解决。功能和声看的是“听者期待什么”，而不是和弦符号像什么。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第九章 终止四六和弦"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "判断顺序",
+            "text": "低音是不是属音？是否在重拍？后面是否接 V？三个条件都满足，才按终止四六理解；否则可能只是经过/辅助四六。"
+          }
+        ]
       }
     },
     {
@@ -7177,6 +10263,40 @@
         "question": "自然模进与真实模进的核心区别是什么？",
         "answer": "自然模进留在调内，按音阶调整和弦质量；真实模进保持原模型的音程结构，常带半音变化，更容易离开原调。",
         "hint": "一个守调，一个守形状。"
+      },
+      "deepDive": {
+        "title": "白话解释：模进像一段有方向的楼梯",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "模进不是随便重复，而是把一个“楼梯模型”搬到新的高度。自然模进留在调内，楼梯的每一级会根据音阶自动变宽或变窄；真实模进保持原来的形状，哪怕因此离开原调。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 19 Harmonic Sequences"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第二十六章 自然（调内）模进和副七和弦（模进和弦）"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "听模进时先抓低音：低音在连续下行五度，方向就非常明确；低音在级进或半音移动，模进更像“爬坡”。当低音停止、终止出现，模进就到达了目的地。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（五度圈）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话",
+            "text": "模进是“有目标的重复”：没有终止或转调收束的重复，只是循环。"
+          }
+        ]
       }
     },
     {
@@ -7329,6 +10449,40 @@
         "question": "减七和弦为什么能作为等音转调枢纽？",
         "answer": "因为它由连续小三度叠成，四个音可等音重写为不同根音的减七，从而分别指向不同调性；重解释后的属准备与终止确认新调。",
         "hint": "对称结构 + 等音拼写 + 目标调终止。"
+      },
+      "deepDive": {
+        "title": "白话解释：同一个房间的四扇门",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "减七和弦像四个等距的房间：B–D–F–Ab。你把其中任意一个音当作根音，房间的形状不变，只是门牌换了。正因为形状对称，它可以用四种等音写法指向四个不同的调。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第二十二章 导七和弦（DⅦ7）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "在 C 大调里，Bdim7 的 B 是导音，听感自然想上到 C；但如果你把 Ab 改写成 G#，同一音响就变成 E 大调的导七。等音转调不是“换个名字”，而是让耳朵换一个目标。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第五十七章 等音转调、经过减七和弦的转调"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "听辨抓手",
+            "text": "减七的张力是均匀的；先听低音和目标音，再决定它往哪个调解决，不要只凭“颜色”判断。"
+          }
+        ]
       }
     },
     {
@@ -7514,6 +10668,40 @@
         "question": "和声节奏加快通常会带来什么句法效果？",
         "answer": "增加推动力与张力累积，常把注意力推向终止；若过早加速，可能让后面的终止失去空间。",
         "hint": "加速是为了抵达，而不是一直加速。"
+      },
+      "deepDive": {
+        "title": "白话解释：和声节奏是音乐的呼吸",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "把每小节想成一次呼吸：一小节换一个和弦，呼吸长；一小节换四个和弦，呼吸短。呼吸突然变短，听者会本能地期待“要发生什么了”，所以和声节奏常被用来把音乐推向终止。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 15 Periods"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第六十章 和声分析的某些问题"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "但呼吸不能一直加速。太早把和弦换得太密，后面的终止就没有空间；太慢则会让段落失去方向。好的和声节奏是在“稳定—加速—落地”之间分配时间。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 9 The Pre-Dominant Function and the Phrase Model"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "编曲提示",
+            "text": "先数每小节几个和弦，再决定 voicing 的密度；快速和声节奏配简单 voicing，慢速才展开延伸音。"
+          }
+        ]
       }
     },
     {
@@ -7742,6 +10930,40 @@
         "question": "为什么同一个和弦在不同调性/进行中会有不同颜色？",
         "answer": "因为色彩由音程内容、功能位置、前后和弦与声部进行共同决定；同一音高集合在不同功能中承担不同张力与解决方向。",
         "hint": "音程 + 功能 + 语境。"
+      },
+      "deepDive": {
+        "title": "白话解释：色彩不是形容词，是张力位置",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "说一个和弦“暖、暗、亮、紧张”很容易变成玄学。更可靠的做法是问：它比三和弦多了哪个音？这个音和和弦三音/根音形成什么音程？它要求解决，还是可以停留？",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（“避免”音与变化属七）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 1C Musical Distance: Intervals（Consonant and Dissonant Intervals）"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "同一个 Cmaj7，在 C 大调是“家”，在 F 大调是 V 级延伸，在 G 大调是 IV 级；音高一样，功能位置不同，听感就不同。所以色彩分析必须同时说“音程内容”和“功能语境”。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第四十六章 属和声组的变和弦"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "分析顺序",
+            "text": "先标功能，再听张力，最后才用形容词。只写“很爵士”不是分析。"
+          }
+        ]
       }
     },
     {
@@ -7954,6 +11176,44 @@
         "question": "C 大调中的 bVI 与 iv 分别如何改变明暗？",
         "answer": "bVI（Ab）带来突然的暗色与远距离感，常接 V 或 I；iv（Fm）是下属功能的暗色替换，常用 iv–I 的变格收束。",
         "hint": "一个偏色彩转折，一个偏下属功能。"
+      },
+      "deepDive": {
+        "title": "白话解释：主音不变，灯光变暗",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "同主音交替像在同一个房间里换灯光：主音 C 没变，但你把平行小调的 Fm、Ab、Eb 借了进来。听者仍知道“家”是 C，只是墙面的颜色变暗了。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 21 Modal Mixture"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第四十九章 交替大小调体系"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "借用和转调的区别不在变化音，而在“家有没有搬”。借用之后通常回到 C；如果新调建立了自己的属—主与终止，才是转调。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第五十章 交替大小调的降Ⅵ级三和弦（tsⅥ）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 21 Modal Mixture"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "听觉抓手",
+            "text": "听到 bVI 或 iv 时先问：低音还在 C 吗？后面有没有回到 C？如果都成立，更像借用而不是转调。"
+          }
+        ]
       }
     },
     {
@@ -8157,6 +11417,40 @@
         "question": "一级关系调与二级关系调的核心差别是什么？",
         "answer": "一级关系调相差一个调号、共同和弦最多，最容易枢轴转调；二级关系调相差两个调号，需要更多半音准备或更长的确认。",
         "hint": "调号差距 + 共同和弦数量。"
+      },
+      "deepDive": {
+        "title": "白话解释：调性距离像城市之间的距离",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "近关系调像隔壁城市：共享很多和弦，坐一趟车（枢轴和弦）就能到。远关系调像跨省：共同和弦少，需要换乘（半音中介、等音或模进），还要花时间确认“真的到了”。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第三十一章 调性关系的类型"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第五十一章 调性关系的等级、相差两个调号的转调"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "调号差距只是地图上的直线距离；真正的“远”还取决于共同和弦、主音关系与终止确认。关系大小调调号相同，但主音不同；同主音大小调主音相同，却差三个调号。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 18 Modulation"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "转调检查",
+            "text": "新调有没有自己的属—主？有没有终止？旧调还能不能解释后面的和弦？三个问题决定“到了没有”。"
+          }
+        ]
       }
     },
     {
@@ -8449,6 +11743,40 @@
         "question": "级进下行低音常见的和声效果是什么？",
         "answer": "它制造连续、叹息式或 line-cliché 的走向，让转位与经过和弦自然连接；低音的级进比根音跳进更能保持声部连贯。",
         "hint": "低音是线，和弦是线上的点。"
+      },
+      "deepDive": {
+        "title": "白话解释：低音是地铁线路",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "把低音想成地铁线：级进下行是一条慢线，每站都能停；五度循环是一条快线，方向最明确；持续音是环线，原地转；半音线是支线，常通往转调或色彩站。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 13 The Submediant and the Step-Descent Bass"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第四十八章 持续音"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "和弦选择常由低音决定：C/E 和 C 的差别不只是低音，它改变了稳定性与下一步的连接。先写低音线，再填和弦，声部会更自然。",
+            "cites": [
+              {
+                "source": "sposobin",
+                "locator": "第三章 原位三和弦的连接"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习",
+            "text": "用单音弹 C–B–A–G–F–E–D–G–C，再在每个低音上试原位、转位、七和弦；听哪种最能保持线的连续。"
+          }
+        ]
       }
     },
     {
@@ -8725,6 +12053,40 @@
         "question": "乐段的定义更依赖小节数还是终止关系？",
         "answer": "更依赖终止关系与前后句的呼应；半终止/完全终止的配对比固定四小节更能定义乐段。",
         "hint": "终止是句法标点。"
+      },
+      "deepDive": {
+        "title": "白话解释：乐段像一问一答",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "前句提出一个问题，后句给出回答。前句常停在半终止（未完），后句用完全终止（完成）。所以乐段的关键不是“四小节”，而是“问句和答句的终止关系”。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 15 Periods"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第八章 终止、乐段、乐句"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "句法分析先找终止，再划分前后句；不要从第一小节开始数四小节。终止是标点，动机是词语，低音与和声节奏是语气。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 16 Sentences, Double Periods, and Asymmetric Periods"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话",
+            "text": "乐段不是长度单位，是“出发—偏离—回归”的完整动作。"
+          }
+        ]
       }
     },
     {
@@ -8905,6 +12267,40 @@
         "question": "C 大调的 ii–V–I 是哪三个和弦？三音与七音如何连接？",
         "answer": "Dm7–G7–Cmaj7；Dm7 的 F/C，G7 的 B/F，Cmaj7 的 E/B；C→B、F→E 为半音下行，B 保持。",
         "hint": "先写 guide tones，再听低音 D–G–C。"
+      },
+      "deepDive": {
+        "title": "白话解释：爵士的“句号”是怎么写出来的",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "ii7–V7–Imaj7 把功能和声的 T–PD–D–T 压缩成三个和弦：Dm7 离开家，G7 制造张力，Cmaj7 落地。低音连续五度下行，三音与七音则半音级进，所以它既稳定又有方向。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（Ⅱ-Ⅴ-Ⅰ进行）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 9 The Pre-Dominant Function and the Phrase Model"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "小调 ii–V–i 把 ii 换成半减七，V 换成变化属七，解决到小主和弦。b9 与变化音让张力更大，但三音与七音的骨架仍然决定走向。很多标准曲的调性转换，都是把同一组 ii–V 搬到不同主音上。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（变化属七和弦）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习顺序",
+            "text": "先只弹两条 guide tones，再加根音，最后才加延伸音。骨架不稳时堆九音十三音，只会听成一片颜色。"
+          }
+        ]
       }
     },
     {
@@ -9045,6 +12441,40 @@
         "question": "Dm7–G7–Cmaj7 的 guide tones 怎样移动？",
         "answer": "Dm7：F/C；G7：B/F；Cmaj7：E/B。C→B 与 F→E 半音下行，B 保持。",
         "hint": "三音与七音互换位置。"
+      },
+      "deepDive": {
+        "title": "白话解释：耳朵只需要抓住两条线",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "三音决定和弦是大是小，七音决定它是大七、属七还是小七。ii–V–I 里，Dm7 的 F 与 C 分别走到 G7 的 F 与 B，再走到 Cmaj7 的 E 与 B；两条线几乎都是半音或保持，所以听感自然。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（声部进行）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 5 Tonic, Dominant, and Voice Leading"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "guide tones 也是重配和声的检查工具：三全音替代之所以成立，是因为它保留了同一个三全音；rootless voicing 之所以好听，是因为它把三音与七音放在最容易听见的位置。先写两条线，再决定和弦叫什么。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 13 Basic Reharmonization"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "每天五分钟",
+            "text": "在所有十二个调上，只弹 ii–V–I 的三音与七音，不加根音。能连续走完，再谈 voicing。"
+          }
+        ]
       }
     },
     {
@@ -9390,6 +12820,40 @@
         "question": "C 大调 ii–V–I 中，Dm7、G7、Cmaj7 最常用的和弦音阶分别是什么？",
         "answer": "D Dorian、G Mixolydian、C Ionian。",
         "hint": "每条音阶的主音就是和弦根音。"
+      },
+      "deepDive": {
+        "title": "白话解释：音阶是地图，不是许可证",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "和弦—音阶理论给每个和弦配一条音阶：Dm7 用 Dorian，G7 用 Mixolydian，Cmaj7 用 Ionian。三条音阶可能共享同一组白键，但主音不同，重力方向就不同；即兴时真正决定落点的仍是大三音、小七音这些和弦音。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（为什么是音阶?）"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "所谓“避免音”不是禁止弹，而是它与和弦三音形成小九度，听感容易卡住，需要尽快解决。Cmaj7 上的自然 11、G7 上的自然 4 都属于这种情况。变化属七则用变化音阶，把 b9、#9、b5、#5 变成有方向的张力。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（“避免”音）"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（变化属七和弦）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "选择顺序",
+            "text": "先看和弦质量与功能，再选音阶，最后用目标音检查。不要从一条音阶反推它该配什么和弦。"
+          }
+        ]
       }
     },
     {
@@ -9570,6 +13034,40 @@
         "question": "G7alt 常用哪条音阶？它包含哪些变化音？",
         "answer": "Ab 旋律小调的第七调式（变化音阶），包含 b9、#9、b5、#5。",
         "hint": "从属和弦根音上行半音的小调音阶。"
+      },
+      "deepDive": {
+        "title": "白话解释：加延伸音是加颜色，不是加音量",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "九、十一、十三是在七和弦之上继续叠三度，它们改变颜色，不改变功能。Cmaj9 比 Cmaj7 多一个 D，Cmaj7#11 多一个 F#；根音与三音仍然是“这是 C 大和弦”的证据。延伸音越多，越需要声部之间留出空间。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（大调音阶和声）"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "变化属七同时改变五音与九音：b9、#9、b5、#5。它们让解决压力更大，常用于小调 ii–V–i 或终止前。选择哪一种变化音，要看旋律里出现了什么音，以及它是否能让目标音被更清楚地听见。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（变化属七和弦）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "配器提醒",
+            "text": "钢琴上同时弹三音、七音和两三个延伸音很容易糊成一片。保留三音、七音与一个色彩音，其余交给贝斯或旋律。"
+          }
+        ]
       }
     },
     {
@@ -9734,6 +13232,36 @@
         "question": "C 大调中 G7 的三全音替代是什么？它们共享哪两个音？",
         "answer": "Db7；共享 F 与 B（Db7 写作 Cb），即同一个三全音。",
         "hint": "根音相差三全音。"
+      },
+      "deepDive": {
+        "title": "白话解释：同一个三全音，换一个低音方向",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "G7 的三音 B 与七音 F 构成三全音；Db7 的三音 F 与七音 Cb（等音 B）构成同一个三全音。所以 Db7 可以替代 G7，属功能与解决目标不变，变的只是低音：原本 G 上行到 C，现在 Db 下行到 C。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 13 Basic Reharmonization（三全音替代）"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "替代后 ii–V–I 可以写成 ii–bII7–I，低音形成 D–Db–C 的半音下行。替代属常配 Lydian dominant（在 Db 上是 Db Mixolydian #11），因为它保留了三全音又避免自然四与三音的冲突。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 13 Basic Reharmonization"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "使用前提",
+            "text": "先看旋律有没有原属和弦的根音 G。如果旋律正停在 G 上，Db7 会与它形成冲突；这时替代要谨慎，或把 G 当作经过音处理。"
+          }
+        ]
       }
     },
     {
@@ -9921,6 +13449,36 @@
         "question": "Rhythm Changes 的曲式与 A 段核心进行是什么？",
         "answer": "32 小节 AABA；A 段常见 I–vi–ii–V（如 Bb–G7–Cm7–F7）。",
         "hint": "AABA 与 I–vi–ii–V。"
+      },
+      "deepDive": {
+        "title": "白话解释：32 小节是一张可复用的城市地图",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Rhythm Changes 把 32 小节分成四个八小节：A–A–B–A。A 段的核心是 I–vi–ii–V，B 段常围绕属和弦循环或五度模进。曲式像地图，和弦可以替换，但街道的走向不能乱。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 11 Rhythm Changes"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "即兴时最容易在 B 段迷路，因为那里的和声移动更密。练习时先把 A 段与 B 段分开循环，记住每段的目标和弦，再把两段接起来；不要一开始就从头到尾硬背。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 11 Rhythm Changes"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习顺序",
+            "text": "A 段只弹和弦与 guide tones，B 段只弹根音走向，最后合起来。先有地图，再谈装饰。"
+          }
+        ]
       }
     },
     {
@@ -10109,6 +13667,36 @@
         "question": "十二小节布鲁斯的基本和弦骨架是什么？为什么 I 级也用属七？",
         "answer": "I7–IV7–V7 的十二小节循环；I7 的 b7 是布鲁斯风格色彩，不是功能错误。",
         "hint": "属七不是只在 V 级出现。"
+      },
+      "deepDive": {
+        "title": "白话解释：十二小节是一种语言，不是填空题",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "十二小节布鲁斯的 I、IV、V 常全部用属七，因为 b7 在这里是风格色彩，不是功能错误。蓝调音 b3、b5、b7 又常与大调的三音、五音并存，形成“同一时间大小三度都在”的张力。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 10 Blues"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "十二小节更像一问一答的语法：前四小节提出问题，中间四小节回应，最后四小节收束。即兴时先唱一句，再在琴上重复它的节奏与落点；只跑布鲁斯音阶，听起来会像练习而不是说话。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 10 Blues"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "即兴提示",
+            "text": "先决定这一句在第几小节结束、落在哪个和弦音，再选择音阶。句子有目标，蓝调音才不会变成装饰。"
+          }
+        ]
       }
     },
     {
@@ -10274,6 +13862,36 @@
         "question": "调式化和声与功能和声的核心差别是什么？",
         "answer": "调式化和声靠持续低音与音程色彩，不按 V–I 功能推进；功能和声靠属—主解决建立方向。",
         "hint": "方向 vs 颜色。"
+      },
+      "deepDive": {
+        "title": "白话解释：不赶路，也能有方向",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "调式化和声不急着解决。它常在一个低音或少数和弦上停留，让听者关注音程颜色、旋律动机与节奏，而不是 V–I 的方向。方向来自旋律的呼吸与低音的持续，而不是和弦的连锁。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（调式爵士）"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "《So What》用 Dm7 与 Ebm7 的平行移动：两个小七和弦结构相同，根音相差半音，低音与和弦一起上移。没有属—主终止，但半音移动本身制造了“换景”的效果。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（调式爵士）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "写作抓手",
+            "text": "先定主音与音阶，再选能突出特征音的和弦配置：Dorian 的自然 6、Lydian 的 #4、Mixolydian 的 b7。把特征音放在能被听见的声部。"
+          }
+        ]
       }
     },
     {
@@ -10462,6 +14080,36 @@
         "question": "比波普属音阶相对 Mixolydian 多出哪一个音？它为什么存在？",
         "answer": "多出自然 7（F#），作为 b7 与主音之间的半音经过音，使目标和弦音落在强拍。",
         "hint": "经过音服务于节拍落点。"
+      },
+      "deepDive": {
+        "title": "白话解释：为了让八分音符落在正确的拍子上",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "比波普音阶是在七声音阶里加一个半音经过音，让八分音符的强拍自然落在和弦音上。属七的比波普音阶在 b7 与主音之间加自然七，大调的比波普音阶在 5 与 6 之间加 #5。它首先是一条节奏工具，其次才是音高材料。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 7 Bebop Scales"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "经过音要放在弱拍，否则会把强拍的和弦音挤走。练习时先把重音放在 1、3 拍的和弦音上，再让经过音从指间滑过；先慢后快，听的是落点，不是音阶跑动。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 7 Bebop Scales"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "常见错误",
+            "text": "从音阶第一音开始平均地跑，听起来像练习曲。先设计和弦音的节奏位置，再填经过音。"
+          }
+        ]
       }
     },
     {
@@ -10656,6 +14304,36 @@
         "question": "Coltrane Changes 的调性骨架是什么？",
         "answer": "相隔大三度的三个调性中心（如 C–Ab–E）循环，并在其间插入属和弦或 ii–V；根音运动对称而快速。",
         "hint": "八度三等分。"
+      },
+      "deepDive": {
+        "title": "白话解释：把 ii–V–I 拆成三个调",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Coltrane changes 把八度分成三个大三度：B–G–Eb。每个主音都配一组 ii–V，于是和声在三个调之间循环。《Giant Steps》的难点不是和弦多，而是要在快速移动中保持目标音。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 15 Coltrane Changes"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "练习时先只追踪三个主音，再在每个主音上弹 ii–V，最后才加延伸音。guide tones 在大三度循环里会不断改变方向，所以要先听清“现在在哪个调”，再谈音阶。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 15 Coltrane Changes"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习顺序",
+            "text": "主音 → ii–V 骨架 → guide tones → 音阶。跳过前三步直接跑音阶，最容易在循环里迷路。"
+          }
+        ]
       }
     },
     {
@@ -10823,6 +14501,40 @@
         "question": "根音省略和弦为什么仍能定义和声？",
         "answer": "三音与七音已经定义和弦质量，延伸音提供色彩；根音由贝斯或低音层提供，因此和声身份仍然清楚。",
         "hint": "3/7 定义质量，bass 定义根音。"
+      },
+      "deepDive": {
+        "title": "白话解释：贝斯已经给了根音，钢琴不必重复",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "无根音 voicing 把三音、七音、九音、十三音放在左手或双手的中间音域，让贝斯负责根音。这样和弦更轻、更清晰，也不会与低音打架。常见两种手型：3–7–9–13 与 7–9–3–13，在 ii–V–I 中只需小幅移动。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（声部进行）"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 13 Basic Reharmonization"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "连接时优先保留共同音，其余声部级进。Dm7 到 G7 时，F 与 C 可以保持或半音移动；G7 到 Cmaj7 时，B 与 F 解决到 B 与 E。根音缺席时，三音与七音必须清楚，否则和弦质量会听不出来。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 2 Major Scale and Progressions（声部进行）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "没有贝斯时",
+            "text": "独奏或没有贝斯时，可以偶尔在低音补根音，但不要每个和弦都砸根音，否则又回到块状和弦。"
+          }
+        ]
       }
     },
     {
@@ -11025,6 +14737,40 @@
         "question": "在 C7 上使用 Eb 五声音阶会产生什么效果？",
         "answer": "它把 #9、4、5、b7、1 等音带到 C7 上，形成短时外部色彩；需要用 guide tones 或目标和弦音回到内部。",
         "hint": "外部是张力，不是新调。"
+      },
+      "deepDive": {
+        "title": "白话解释：“出去”要有回来的路",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Outside playing 常用移位的五声音阶或音阶片段，制造暂时脱离当前和弦的张力。关键不在“用了怪音”，而在张力之后能否回到目标和弦音；没有解决的“外面”，只是错误。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 8 Playing Outside"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 9 Pentatonic Scales"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "常见做法是把五声音阶上移或下移半音，或在属七上使用相距三全音的五声音阶。重复一个节奏动机能让“外面”听起来像刻意设计，而不是手滑；随后在下一小节落回和弦音。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 8 Playing Outside"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "练习",
+            "text": "先在小节末制造一个不协和音，再在下一小节第一拍解决到三音或七音。每次只出去两拍，确保回来的路清楚。"
+          }
+        ]
       }
     }
   ],
@@ -15587,7 +19333,7 @@
     },
     {
       "name": "get_source_note",
-      "description": "读取一章的原创读书笔记、关键点、和声维度与对应知识库概念。",
+      "description": "读取一章的原创读书笔记、深度归纳、分析清单、跨书对应、常见误解、和声维度与对应知识库概念。",
       "inputSchema": {
         "type": "object",
         "properties": {

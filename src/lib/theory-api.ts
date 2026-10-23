@@ -110,7 +110,7 @@ export const TOOL_SCHEMAS: ToolSchema[] = [
   },
   {
     name: "get_source_note",
-    description: "读取一章的原创读书笔记、关键点、和声维度与对应知识库概念。",
+    description: "读取一章的原创读书笔记、深度归纳、分析清单、跨书对应、常见误解、和声维度与对应知识库概念。",
     inputSchema: {
       type: "object",
       properties: { chapterId: { type: "string" } },
@@ -158,7 +158,7 @@ export function buildKnowledgePack(): KnowledgePack {
   return {
     meta: {
       name: "TONIC · 主音",
-      version: "0.2.0",
+      version: "0.3.0",
       builtAt: new Date().toISOString(),
       conceptCount: CONCEPTS.length,
       exampleCount: ALL_EXAMPLES.length,

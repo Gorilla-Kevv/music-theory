@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, Headphones, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Headphones, Network, Plus } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import {
   BIBLIOGRAPHY_BY_ID,
@@ -14,6 +14,7 @@ import {
   getRelatedConcepts,
 } from "../content";
 import type { CitationRef, Concept } from "../content/types";
+import { getConceptHubs, getNextConcepts, getPrerequisites } from "../content/graph";
 import { ExampleFigure } from "../components/ExampleFigure";
 import { VisualizationCard } from "../components/VisualizationCard";
 import { CATEGORY_STYLES } from "../components/category";
@@ -68,6 +69,64 @@ function CitedText({
   );
 }
 
+function Blocks({
+  blocks,
+  numberMap,
+}: {
+  blocks: Concept["sections"][number]["blocks"];
+  numberMap: Map<string, number>;
+}) {
+  return (
+    <>
+      {blocks.map((block, index) => {
+        if (block.type === "list") {
+          return (
+            <div key={index} className="mt-4">
+              <ul className="reading-column list-disc space-y-2 pl-5 text-[1.0625rem] leading-[1.8]">
+                {block.items?.map((item, itemIndex) => (
+                  <li key={`${item}-${itemIndex}`}>
+                    {item}
+                    {itemIndex === (block.items?.length ?? 0) - 1 ? (
+                      <CitationSup cites={block.cites} numberMap={numberMap} />
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+        if (block.type === "callout") {
+          return (
+            <aside key={index} className="mt-5 border border-ink/20 bg-paper-2 p-4">
+              {block.title ? <p className="mono-label text-cobalt-ink">{block.title}</p> : null}
+              <p className="reading-column mt-2 text-sm leading-relaxed">
+                <CitedText text={block.text} cites={block.cites} numberMap={numberMap} />
+              </p>
+            </aside>
+          );
+        }
+        if (block.type === "quote") {
+          return (
+            <blockquote key={index} className="reading-column mt-5 border-y border-line py-4">
+              <p className="text-lg italic leading-relaxed">
+                <CitedText text={block.text} cites={block.cites} numberMap={numberMap} />
+              </p>
+            </blockquote>
+          );
+        }
+        return (
+          <p
+            key={index}
+            className="reading-column mt-4 text-[1.0625rem] leading-[1.85] text-ink/90"
+          >
+            <CitedText text={block.text} cites={block.cites} numberMap={numberMap} />
+          </p>
+        );
+      })}
+    </>
+  );
+}
+
 function SectionBody({
   concept,
   numberMap,
@@ -80,56 +139,34 @@ function SectionBody({
       {concept.sections.map((section) => (
         <section key={section.id} id={section.id} className="scroll-mt-24 border-t border-line pt-6">
           <h2 className="zh-display text-xl sm:text-2xl">{section.heading}</h2>
-          {section.blocks.map((block, index) => {
-            if (block.type === "list") {
-              return (
-                <div key={index} className="mt-4">
-                  <ul className="reading-column list-disc space-y-2 pl-5 text-[1.0625rem] leading-[1.8]">
-                    {block.items?.map((item, itemIndex) => (
-                      <li key={`${item}-${itemIndex}`}>
-                        {item}
-                        {itemIndex === (block.items?.length ?? 0) - 1 ? (
-                          <CitationSup cites={block.cites} numberMap={numberMap} />
-                        ) : null}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            }
-            if (block.type === "callout") {
-              return (
-                <aside key={index} className="mt-5 border border-ink/20 bg-paper-2 p-4">
-                  {block.title ? (
-                    <p className="mono-label text-cobalt-ink">{block.title}</p>
-                  ) : null}
-                  <p className="reading-column mt-2 text-sm leading-relaxed">
-                    <CitedText text={block.text} cites={block.cites} numberMap={numberMap} />
-                  </p>
-                </aside>
-              );
-            }
-            if (block.type === "quote") {
-              return (
-                <blockquote key={index} className="reading-column mt-5 border-y border-line py-4">
-                  <p className="text-lg italic leading-relaxed">
-                    <CitedText text={block.text} cites={block.cites} numberMap={numberMap} />
-                  </p>
-                </blockquote>
-              );
-            }
-            return (
-              <p
-                key={index}
-                className="reading-column mt-4 text-[1.0625rem] leading-[1.85] text-ink/90"
-              >
-                <CitedText text={block.text} cites={block.cites} numberMap={numberMap} />
-              </p>
-            );
-          })}
+          <Blocks blocks={section.blocks} numberMap={numberMap} />
         </section>
       ))}
     </>
+  );
+}
+
+function DeepDiveSection({
+  concept,
+  numberMap,
+}: {
+  concept: Concept;
+  numberMap: Map<string, number>;
+}) {
+  if (!concept.deepDive) return null;
+  return (
+    <section id="deep-dive" className="scroll-mt-24 border-t border-line pt-6">
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <p className="mono-label text-muted">IN PLAIN LANGUAGE / 白话拆解</p>
+          <h2 className="zh-display mt-1.5 text-xl sm:text-2xl">{concept.deepDive.title}</h2>
+        </div>
+        <span className="mono-label shrink-0 text-muted">DEEP DIVE</span>
+      </div>
+      <div className="mt-2 border-l-2 border-cobalt pl-4">
+        <Blocks blocks={concept.deepDive.blocks} numberMap={numberMap} />
+      </div>
+    </section>
   );
 }
 
@@ -189,9 +226,13 @@ export function ConceptPage() {
 
   const uniqueSources = [...new Set(numbered.map(({ ref }) => ref.source))];
   const sourceChapters = getChaptersForConcept(concept.slug);
+  const atlasHubs = getConceptHubs(concept.slug);
+  const prerequisites = getPrerequisites(concept.slug);
+  const nextConcepts = getNextConcepts(concept.slug);
   const mobileOutline = [
     { id: "top", label: "页首" },
     ...concept.sections.map((section) => ({ id: section.id, label: section.heading })),
+    ...(concept.deepDive ? [{ id: "deep-dive", label: "白话拆解 / In Plain Language" }] : []),
     ...(concept.examples.length > 0 ? [{ id: "figures", label: "谱例 / Figures" }] : []),
     ...(concept.visual ? [{ id: "visual", label: "可视化 / Visual" }] : []),
     { id: "notes", label: "本页引用 / Notes" },
@@ -293,6 +334,8 @@ export function ConceptPage() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_290px] lg:items-start">
           <div className="min-w-0">
             <SectionBody concept={concept} numberMap={numberMap} />
+
+            <DeepDiveSection concept={concept} numberMap={numberMap} />
 
             {concept.examples.length > 0 ? (
               <section id="figures" className="scroll-mt-24 border-t border-line pt-6">
@@ -492,6 +535,42 @@ export function ConceptPage() {
                   );
                 })}
               </ul>
+            </div>
+
+            <div className="border border-line p-4">
+              <p className="mono-label flex items-center gap-1.5 text-muted">
+                <Network size={12} aria-hidden />
+                ATLAS / 体系位置
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted">
+                {atlasHubs.length ? atlasHubs.map((hub) => hub.label).join(" / ") : "尚未归入系统枢纽"}
+              </p>
+              <Link
+                to={`/atlas?focus=${concept.slug}`}
+                className="mono-label mt-2 inline-flex items-center gap-1 text-cobalt-ink hover:text-ink"
+              >
+                在体系图中查看 <ArrowRight size={12} aria-hidden />
+              </Link>
+              <div className="mt-3 border-t border-line pt-2">
+                <p className="mono-label text-muted">前置 / PREREQUISITES</p>
+                <div className="mt-1 flex flex-wrap gap-1.5">
+                  {prerequisites.length ? prerequisites.map((item) => (
+                    <Link key={item.slug} to={`/theory/${item.slug}`} className="border border-ink/20 px-1.5 py-0.5 text-[0.68rem] hover:border-cobalt hover:text-cobalt-ink">
+                      {item.number}
+                    </Link>
+                  )) : <span className="text-xs text-muted">无</span>}
+                </div>
+              </div>
+              <div className="mt-2">
+                <p className="mono-label text-muted">后续 / NEXT</p>
+                <div className="mt-1 flex flex-wrap gap-1.5">
+                  {nextConcepts.length ? nextConcepts.map((item) => (
+                    <Link key={item.slug} to={`/theory/${item.slug}`} className="border border-ink/20 px-1.5 py-0.5 text-[0.68rem] hover:border-cobalt hover:text-cobalt-ink">
+                      {item.number}
+                    </Link>
+                  )) : <span className="text-xs text-muted">无</span>}
+                </div>
+              </div>
             </div>
 
             {sourceChapters.length > 0 ? (

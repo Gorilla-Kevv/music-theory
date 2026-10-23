@@ -282,6 +282,57 @@ export function Books() {
                     </ul>
                   </div>
 
+                  {selected.deepSummary ? (
+                    <div className="mt-5 border-t border-line pt-4">
+                      <p className="mono-label text-cobalt-ink">DEEPEN / 深入归纳</p>
+                      <p className="reading-column mt-2 text-sm leading-relaxed">{selected.deepSummary}</p>
+                      {selected.analysis?.length ? (
+                        <ul className="mt-3 space-y-2">
+                          {selected.analysis.map((item) => (
+                            <li key={item} className="flex gap-2 text-sm leading-relaxed">
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-cobalt" aria-hidden />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {selected.crossBook?.length ? (
+                    <div className="mt-5 border-t border-line pt-4">
+                      <p className="mono-label text-muted">CROSS-BOOK / 跨书对应</p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {selected.crossBook.map((item) => (
+                          <span key={item} className="border border-ink/20 px-2 py-1 text-xs text-muted">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {selected.visualHint ? (
+                    <div className="mt-5 border-t border-line pt-4">
+                      <p className="mono-label text-muted">VISUAL / 可视化映射</p>
+                      <p className="mt-1 text-sm">{selected.visualHint}</p>
+                    </div>
+                  ) : null}
+
+                  {selected.confusions?.length ? (
+                    <div className="mt-5 border-t border-line pt-4">
+                      <p className="mono-label text-muted">COMMON CONFUSIONS / 常见误解</p>
+                      <dl className="mt-2 space-y-3">
+                        {selected.confusions.map((item) => (
+                          <div key={item.question}>
+                            <dt className="text-sm font-medium">Q：{item.question}</dt>
+                            <dd className="mt-1 text-sm leading-relaxed text-muted">A：{item.answer}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  ) : null}
+
                   <div className="mt-5 border-t border-line pt-4">
                     <p className="mono-label text-muted">MAPPED CONCEPTS / 对应概念</p>
                     <div className="mt-2 flex flex-wrap gap-1.5">

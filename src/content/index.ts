@@ -1,3 +1,4 @@
+import { DEEP_DIVES } from "./deep-dives";
 import { FOUNDATIONS } from "./foundations";
 import { HARMONY } from "./harmony";
 import { HARMONY_ADVANCED } from "./harmony-advanced";
@@ -43,11 +44,17 @@ export const CONCEPTS: Concept[] = [
   ...HARMONY_ADVANCED,
   ...JAZZ,
   ...JAZZ_ADVANCED,
-].sort((a, b) => {
-  const categoryDelta = CATEGORY_ORDER[a.category] - CATEGORY_ORDER[b.category];
-  if (categoryDelta !== 0) return categoryDelta;
-  return conceptNumber(a).localeCompare(conceptNumber(b));
-});
+]
+  .map((concept) =>
+    concept.deepDive || !DEEP_DIVES[concept.slug]
+      ? concept
+      : { ...concept, deepDive: DEEP_DIVES[concept.slug] },
+  )
+  .sort((a, b) => {
+    const categoryDelta = CATEGORY_ORDER[a.category] - CATEGORY_ORDER[b.category];
+    if (categoryDelta !== 0) return categoryDelta;
+    return conceptNumber(a).localeCompare(conceptNumber(b));
+  });
 
 export const CONCEPT_BY_SLUG = Object.fromEntries(
   CONCEPTS.map((concept) => [concept.slug, concept]),
@@ -94,8 +101,8 @@ export interface NumberedCitation {
 
 export function collectCitations(concept: Concept): NumberedCitation[] {
   const seen = new Map<string, NumberedCitation>();
-  for (const section of concept.sections) {
-    for (const block of section.blocks) {
+  const collect = (blocks: Concept["sections"][number]["blocks"]) => {
+    for (const block of blocks) {
       for (const ref of block.cites ?? []) {
         const key = citationKey(ref);
         if (!seen.has(key)) {
@@ -103,7 +110,9 @@ export function collectCitations(concept: Concept): NumberedCitation[] {
         }
       }
     }
-  }
+  };
+  for (const section of concept.sections) collect(section.blocks);
+  if (concept.deepDive) collect(concept.deepDive.blocks);
   return [...seen.values()];
 }
 

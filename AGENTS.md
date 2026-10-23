@@ -38,6 +38,8 @@ src/content/
   harmony-advanced.ts  和声深化 9 条（功能/走向/色彩/明暗/关系/节奏）
   jazz.ts              爵士 8 条
   jazz-advanced.ts     爵士深化 4 条
+  deep-dives.ts        37 条白话拆解（全部概念）
+  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 37 概念 / 86 关联 / 25 前置
   books/               三本书的完整章目 + 原创章节笔记
   bibliography.ts      书目、版次、章节定位政策
 ```
@@ -45,10 +47,28 @@ src/content/
 ## 书库结构
 
 - 每本书一个 `BookOutline`：完整章目（章号、英文名、中文名、Part/上册下册）。
-- 已展开章节带 `summary`、`keyPoints`、`concepts`（知识库 slug）、`dimensions`。
+- 已展开章节带 `summary`、`keyPoints`、`concepts`（知识库 slug）、`dimensions`；深度笔记再带 `deepSummary`、`analysis`、`crossBook`、`visualHint`、`confusions`。
+- 当前覆盖：Levine 24/24 章、Laitz 34/34 章均有原创笔记与 `deepSummary`；Sposobin 60 章 / 27 条笔记。
 - 未展开章节保留目录条目，不伪造摘要。
 - 书库页面：`/books`；Agent 接口：`get_book_outline`、`get_source_note`、`search_sources`、`window.TONIC.bookOutline/sourceNote/searchSources`。
-- 新增笔记：先确认章节 locator → 写 ≤200 字原创摘要 → 列 2–4 个关键点 → 映射到现有/新增概念 → 标维度。不要在 book 数据里放大段原文。
+- 新增笔记：先确认章节 locator → 写 ≤200 字原创摘要 → 列 2–4 个关键点 → 写 `deepSummary`/`analysis`/`crossBook` → 映射到现有/新增概念 → 标维度。不要在 book 数据里放大段原文。
+- 深度字段也受来源约束：`deepSummary` 与 `analysis` 可以跨书综合，但必须能在三本书中找到章节级支撑；`crossBook` 只写真实存在的章号与章名。
+
+## 体系图谱（Atlas）
+
+- 页面：`/atlas`；数据：`src/content/graph/index.ts`。
+- 分层：教材来源（Levine / Laitz / Sposobin）→ 系统枢纽（基础语法、功能与句法、色彩与张力、明暗与调式、关系与转调、爵士语言）→ 概念节点（37）。
+- 边类型：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置。
+- 交互：分类/维度筛选；悬停或点击节点高亮邻域；选中节点显示维度、前置、后续、书库笔记与概念入口；支持 `/atlas?focus=<slug>` 深链。
+- 新增概念时同步检查：`graph/index.ts` 的枢纽归属、`PREREQUISITES` 前置链、`related` 关联；图谱不得出现指向不存在 slug 的边。
+
+## 白话拆解（Deep Dive）
+
+- 数据：`src/content/deep-dives.ts`；由 `CONCEPTS` 自动合并到 `concept.deepDive`。
+- 目的：把术语密集的段落改写成可理解的判断顺序、听觉抓手与练习步骤；不是教材正文的译文或摘录。
+- 每个 block 至少一条 `cites`；引用沿用 `CitationRef` 章节级 locator；`collectCitations` 会把 deep dive 引用纳入页末注释。
+- 当前覆盖 37/37：基础 8 + 和声 17 + 爵士 12 全部有白话拆解。
+- 新增 deep dive 时优先写“为什么容易误解”“判断顺序”“一句话/练习”，避免重复 summary。
 
 ## Agent 查询路径
 
@@ -75,8 +95,10 @@ src/content/
 
 - 37 个概念（基础 8 / 功能和声 17 / 爵士 12）
 - 42 个可听谱例
-- 118 条章节级引用
-- 3 本书 · 118 个章目 · 59 条原创章节笔记
-- 视觉：五度圈、调式轮、半音尺、张力光谱
+- 136 条章节级引用
+- 3 本书 · 118 个章目 · 85 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 27/60）
+- 37 条白话拆解（全部概念）
+- 体系图谱：3 来源 / 6 枢纽 / 37 概念 / 86 关联 / 25 前置
+- 视觉：五度圈、调式轮、半音尺、张力光谱、分层体系图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
 - 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）

@@ -101,6 +101,10 @@ export interface Concept {
   review: ReviewCard;
   dimensions?: HarmonyDimension[];
   visual?: VisualizationKind;
+  deepDive?: {
+    title: string;
+    blocks: ContentBlock[];
+  };
 }
 
 export interface Category {

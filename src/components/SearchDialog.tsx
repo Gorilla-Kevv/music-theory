@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { ArrowDown, ArrowUp, BookMarked, BookOpen, CornerDownLeft, Repeat2, Search, TerminalSquare, X } from "lucide-react";
+import { ArrowDown, ArrowUp, BookMarked, BookOpen, CornerDownLeft, Network, Repeat2, Search, TerminalSquare, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { searchConcepts } from "../lib/search";
 import { CategoryTag } from "./ui";
@@ -24,6 +24,7 @@ const SearchContext = createContext<SearchContextValue | null>(null);
 const QUICK_LINKS = [
   { to: "/library", label: "知识库", body: "按分类、级别与标签浏览 37 个概念。", icon: BookMarked },
   { to: "/books", label: "书库", body: "三本书的完整章目与原创和声笔记。", icon: BookOpen },
+  { to: "/atlas", label: "体系图谱", body: "按来源、系统枢纽与概念层浏览关系。", icon: Network },
   { to: "/drill", label: "复习与听辨", body: "到期复习卡、间隔重复与听辨训练。", icon: Repeat2 },
   { to: "/references", label: "参考文献", body: "三本著作的书目、版次与章节定位。", icon: BookMarked },
   { to: "/agent", label: "Agent 接口", body: "本地知识包、CLI、TS API 与 MCP 工具形状。", icon: TerminalSquare },

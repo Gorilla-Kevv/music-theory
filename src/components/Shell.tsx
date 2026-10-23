@@ -5,6 +5,7 @@ import {
   House,
   LibraryBig,
   Menu,
+  Network,
   Repeat2,
   Search,
   TerminalSquare,
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { to: "/", label: "工作台", en: "DESK", icon: House, end: true },
   { to: "/library", label: "知识库", en: "LIBRARY", icon: LibraryBig },
   { to: "/books", label: "书库", en: "BOOKS", icon: BookOpen },
+  { to: "/atlas", label: "体系", en: "ATLAS", icon: Network },
   { to: "/drill", label: "复习与听辨", en: "DRILL", icon: Repeat2 },
   { to: "/references", label: "参考文献", en: "SOURCES", icon: BookMarked },
   { to: "/agent", label: "Agent 接口", en: "AGENT", icon: TerminalSquare },
@@ -52,6 +54,7 @@ function Rail() {
     ? [
         { id: "top", label: "页首" },
         ...concept.sections.map((section) => ({ id: section.id, label: section.heading })),
+        ...(concept.deepDive ? [{ id: "deep-dive", label: "白话拆解 / In Plain Language" }] : []),
         ...(concept.examples.length > 0 ? [{ id: "figures", label: "谱例 / Figures" }] : []),
         ...(concept.visual ? [{ id: "visual", label: "可视化 / Visual" }] : []),
         { id: "notes", label: "本页引用 / Notes" },

@@ -2,10 +2,10 @@
 
 ## 进度看板
 
-- 当前正在开发任务：无；阶段 8 已完成
-- 下一阶段任务：补充更多章节笔记 / stdio MCP server（未排期）
+- 当前正在开发任务：阶段 9 两本教材深度覆盖、白话拆解与体系图谱（持续迭代）
+- 下一阶段任务：Sposobin 深度字段、Levine/Laitz 剩余 `confusions`、图谱学习路径、stdio MCP server（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
-- 未完成的任务：全量教材正文（版权边界，不做）；MCP server
+- 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
 
 ## 阶段 1 产品事实、技术栈与视觉方向锁定 [计划时间：10.23 09:40 BY TraeCode][完成时间：10.23 18:18 BY TraeCode]
 
@@ -105,3 +105,31 @@
 - 风险：端口被其他应用占用时会阻止启动，避免误开别的站点；需要用户关闭占用或修改端口。
 - 下一阶段入口：无。
 - 本次文档更新时间：10.23 21:45
+
+## 阶段 9 两本教材深度覆盖、白话拆解与体系图谱 [计划时间：10.23 22:05 BY TraeCode][完成时间：10.23 23:30 BY TraeCode]
+
+- 分支：dev
+- 任务定位：用户当前唯一优先任务。目标不是“再多写一点”，而是把 The Complete Musician 与《爵士乐宝典》整理成可检索、可解释、可视化的专业进阶知识结构；该阶段会持续迭代，不把“字典式目录”视为完成。
+- 已完成：
+  - 9.1 书库覆盖：Levine 24/24 章、Laitz 34/34 章均有原创笔记与 `deepSummary`；三本书合计 85 条笔记（Levine 24 / Laitz 34 / Sposobin 27）。
+  - 9.2 深度字段：`NoteSeed` / `BookChapter` 新增 `deepSummary`、`analysis`、`crossBook`、`visualHint`、`confusions`；Books 页渲染“深入归纳 / 跨书对应 / 可视化映射 / 常见误解”。
+  - 9.3 白话拆解：新增 37 条 `deepDive`，覆盖基础 8 + 和声 17 + 爵士 12 全部概念；概念页新增 `IN PLAIN LANGUAGE / 白话拆解` 板块，左轨与移动端大纲同步；引用进入页末注释。
+  - 9.4 体系图谱：新增 `/atlas`，3 来源 / 6 系统枢纽 / 37 概念 / 86 关联 / 25 前置；支持分类与六维筛选、悬停/点击邻域高亮、`?focus=slug` 深链；概念页右栏新增“ATLAS / 体系位置”。
+  - 9.5 视觉与可读性：图谱从 4 列密排调整为 1000 高分层布局，标签截断到 8 字，来源→枢纽按真实相关性连接；1280 与 375 截图检查通过，移动端仅图内横向滚动，页面无横向溢出。
+- 未完成（下一批，按优先级）：
+  - 9.6 Sposobin 27 条笔记补 `deepSummary` / `analysis` / `crossBook`；其余 33 章仍只有目录，不伪造摘要。
+  - 9.7 Levine/Laitz 剩余章节补 `confusions`（当前 12/24、14/34）；基础 8 条白话拆解已完成（37/37）。
+  - 9.8 体系图第二阶段：章节级来源高亮、学习路径/前置链模式、概念页与图谱的章节联动。
+  - 9.9 书库笔记接入复习卡；为长笔记增加“要点回链概念”的跳转。
+- 改动文件：src/content/deep-dives.ts、src/content/graph/index.ts、src/routes/Atlas.tsx、src/routes/ConceptPage.tsx、src/components/Shell.tsx、src/content/books/levine.ts、src/content/books/laitz.ts、src/content/books/types.ts、src/content/types.ts、src/content/index.ts、src/routes/Books.tsx、AGENTS.md、PRODUCT.md、DESIGN.md、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck` 通过。
+  - `npm run knowledge` → 37 concepts / 42 examples / 136 citations；书库 24+34+27=85 notes。
+  - 概念页 `/theory/cadential-six-four` 出现白话拆解与左轨大纲项；书库 `levine-13` 显示深入归纳、跨书对应、可视化映射。
+  - 1280 截图检查通过；375 下 `scrollWidth=375`，体系图在容器内横向滚动。
+- 风险：
+  - 深度笔记与白话解释仍需人工校订；所有定位只到章，不写页码。
+  - 教材正文版权边界：不复制、不 OCR、不整段搬运；用户若持有合法电子版，只能在本地私有阅读器中使用，不进入仓库。
+  - 图谱是编辑关系，不是唯一理论体系；后续增加边时必须避免噪声与“每本书连所有枢纽”。
+- 下一阶段入口：9.6 → 9.7 → 9.8 → 9.9；完成后再评估阶段 10。
+- 本次文档更新时间：10.23 23:30

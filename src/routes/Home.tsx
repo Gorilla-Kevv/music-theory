@@ -241,12 +241,20 @@ export function Home() {
             <p className="mono-label text-muted">CATALOG / 知识库</p>
             <h2 className="zh-display mt-2 text-3xl sm:text-4xl">三条学习线，一套语法</h2>
           </div>
-          <Link
-            to="/library"
-            className="mono-label inline-flex items-center gap-1.5 text-cobalt-ink hover:text-ink"
-          >
-            打开完整索引 <ArrowRight size={13} aria-hidden />
-          </Link>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              to="/atlas"
+              className="mono-label inline-flex items-center gap-1.5 text-cobalt-ink hover:text-ink"
+            >
+              打开体系图谱 <ArrowRight size={13} aria-hidden />
+            </Link>
+            <Link
+              to="/library"
+              className="mono-label inline-flex items-center gap-1.5 text-cobalt-ink hover:text-ink"
+            >
+              打开完整索引 <ArrowRight size={13} aria-hidden />
+            </Link>
+          </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
