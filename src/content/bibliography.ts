@@ -44,6 +44,20 @@ export const BIBLIOGRAPHY: BibliographyEntry[] = [
       "引用使用第 3 版中译本章号与章名（共 60 章）。同一章在不同印次中页码会移动，因此不写页码。",
     verifiedVia: "图书馆书目记录所载第 3 版（2021）完整目录。",
   },
+  {
+    id: "soundquest",
+    authors: "SoundQuest（日文原站）；自由派音乐理论（中译站）",
+    title: "SoundQuest · 自由派音乐理论",
+    publisher: "soundquest.jp / music-theory.aizcutei.com",
+    year: "持续更新的网页版",
+    edition: "网页版（和弦篇 C1–C75、旋律篇、节奏篇等）",
+    language: "日文 / 中文译本",
+    role:
+      "扩展来源（Tier 2）：三本书未覆盖的站点理论框架——泛音列、连接系统论、轴心体系、新里曼理论、Lydian Chromatic Concept 等。站点条目为原创归纳，不复制正文。",
+    locatorNote:
+      "引用定位到站内篇章编号与小节名（如 和弦篇 C64「轴心体系」）；站点持续增删，引用以抓取时的目录为准。",
+    verifiedVia: "WebFetch 抓取页面后归纳；日文原站与中译站对照。",
+  },
 ];
 
 export const BIBLIOGRAPHY_BY_ID = Object.fromEntries(
@@ -51,7 +65,7 @@ export const BIBLIOGRAPHY_BY_ID = Object.fromEntries(
 ) as Record<SourceId, BibliographyEntry>;
 
 export const CITATION_STYLE_NOTE =
-  "本书库采用论文式上下标引用：正文中以方括号上标标出序号，页末“注释”给出对应著作与章节定位，完整书目见参考文献页。由于三本著作存在多个版次与译本，页码会随印次变化，本库统一采用章节级定位，不虚构页码；需要精确定位时请按手头版本的章名检索。";
+  "本书库采用论文式上下标引用：正文中以方括号上标标出序号，页末“注释”给出对应来源与章节/页面定位，完整书目见参考文献页。三本著作存在多个版次/译本，页码会随印次变化，统一采用章节级定位；站点来源（SoundQuest）定位到篇章编号与小节名。均不虚构页码；需要精确定位时请按手头版本检索。";
 
 export const cite = (source: SourceId, locator: string, note?: string): CitationRef => ({
   source,

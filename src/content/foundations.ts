@@ -930,4 +930,81 @@ export const FOUNDATIONS: Concept[] = [
       hint: "去倾向，留骨架。",
     },
   },
+  {
+    id: "harmonic-series",
+    slug: "harmonic-series",
+    number: "F-12",
+    title: "泛音列：音程协和的物理底座",
+    titleEn: "THE HARMONIC SERIES",
+    category: "foundations",
+    level: "基础",
+    aliases: ["泛音列", "泛音", "倍音", "分音", "overtone series", "harmonic series", "基音"],
+    tags: ["音程", "声学", "协和"],
+    dimensions: ["color", "function"],
+    summary:
+      "把一个音的频率按整数倍展开就是泛音列：八度最先出现，五度次之，大三再次——音程的协和度与频率比的简单程度对应；它是“为什么大三和弦听起来自然”的物理解释。",
+    sections: [
+      {
+        id: "structure",
+        heading: "基音与分音",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "以 A3（220Hz）为基音，频率乘整数倍得到一系列分音：×2 是 A4（八度）、×3 接近 E4（五度）、×4 又是八度、×5 接近 C♯5（大三度）。八度最简单（2:1），所以听感如同“同一个音”；五度（3:2）与大三（5:4）紧随其后——频率比越简单，音程越协和。",
+            cites: [cite("soundquest", "和弦篇 C4「度数和泛音列」")],
+          },
+          {
+            type: "p",
+            text:
+              "把 1、3、5 号分音同时发声，就得到“基音+五度+大三度”的骨架——大三和弦的物理原型。更高的分音产生七度、九度等更浑浊的音程；这解释了为什么三和弦稳定、七和弦有张力、更密的叠置越来越紧。",
+            cites: [cite("soundquest", "和弦篇 C4「度数和泛音列」")],
+          },
+        ],
+      },
+      {
+        id: "use-limits",
+        heading: "用处与边界",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "泛音列还给音程分组提供依据：三/六度决定大小色彩（软），四/五度加固基体（硬），二/七度制造冲突；转位互换（3↔6、4↔5、2↔7）时属性随转位颠倒。配器上，泛音分配就是音色本身——叠加到高位分音声音变亮，混入非整数倍频率则趋向噪声。",
+            cites: [cite("soundquest", "和弦篇 C4「度数和泛音列」")],
+          },
+          {
+            type: "callout",
+            title: "边界提醒",
+            text: "第 5、7 分音与十二平均律并不精确吻合（纯律大三比平均律略低）；泛音列是理解协和的有效模型，不是精确的平均律证明。把它当底座，别当教条。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-harmonic-series",
+        title: "A3 的前五号分音",
+        caption: "A3→A4→E4→A4→C♯4（移低八度示意）：八度、五度、大三依次浮现，末端三音即大三和弦骨架。",
+        kind: "melody",
+        key: "C",
+        tempo: 72,
+        beats: 8,
+        events: [
+          melody(0, 1, "A2", { label: "基音" }),
+          melody(1, 1, "A3", { label: "×2" }),
+          melody(2, 1, "E4", { label: "×3" }),
+          melody(3, 1, "A3", { label: "×4" }),
+          melody(4, 2, "C#4", { label: "×5" }),
+          chord(6, 2, ["A2", "E3", "C#4"], { label: "A 大三和弦" }),
+        ],
+      }),
+    ],
+    related: ["intervals", "triads", "harmonic-color"],
+    review: {
+      question: "为什么八度、五度、大三度的协和度依次递减？",
+      answer:
+        "它们分别对应频率比 2:1、3:2、5:4——在泛音列中出现的次序就是频率比的复杂度次序；比越简单，两音的分音重合越多，听感越融合。",
+      hint: "看分音出现的先后。",
+    },
+  },
 ];

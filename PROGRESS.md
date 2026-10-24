@@ -2,8 +2,8 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 19 站点目录驱动的知识扩充（新增 6 概念，完成）
-- 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
+- 当前正在开发任务：阶段 20 来源政策放开 + 站点理论入库 + Sposobin 补全（完成）
+- 下一阶段任务：书库深度深化（需三本书电子版，见 HANDOFF“书库深化”）；SoundQuest 元音乐理论（C63 建设中）待读；图谱学习路径
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
 
@@ -308,6 +308,21 @@
   - 回归：`scroll-trace.mjs` 在新页 `/theory/symmetric-scales` 滚动全程正常（阶段 18 修复未被破坏）。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 11:05
+
+## 阶段 20 来源政策放开、站点理论入库与 Sposobin 补全 [计划时间：10.24 11:30 BY solo-agent][完成时间：10.24 12:00 BY solo-agent]
+
+- 分支：dev
+- 用户指令：① 取消“站点自己的理论框架不搬”，以前丢弃的内容全部入库；② 审查三本书的书库解读（“看起来和原版没有任何关系”）。
+- 已完成：
+  - 20.1 来源政策改为两层制：Tier 1 三本书（章节级 locator，不变）；Tier 2 SoundQuest 站点（`source: "soundquest"`，篇章级 locator 如 `和弦篇 C64「轴心体系」`）。`SourceId` 扩展、书目加站点条目、References/Books 样式跟进。红线不变：全部原创归纳，不复制正文。
+  - 20.2 站点理论入库 5 条（WebFetch 抓取页面后原创归纳）：F-12 `harmonic-series` 泛音列（C4）、H-26 `connection-system` 连接系统论（C15/C16/C23）、H-27 `axis-system` 轴心体系（C64，含 Kárpáti 批评）、H-28 `neo-riemannian` 新里曼 PLR（超流派）、J-15 `lydian-chromatic-concept` LCC（C65，明示“公设非定理”）。每条含正文、可听谱例、复习卡、白话拆解、图谱前置（11 条新前置链）。元音乐理论（C63）站点建设中（404），记入待读。
+  - 20.3 Sposobin 书库笔记 27 → 60/60 全覆盖：补 04/05/06/07/10–13/15/16/23–25/27/29/30/33/36–45/48/51/52/54/55/58 共 33 条（基于章名的初稿，概念映射到 non-chord-tones/voice-leading/tonal-distance 等现有 slug；待持书深化）。
+  - 20.4 统计：55 概念（基础 12 / 和声 28 / 爵士 15）/ 65 谱例 / 188 引用 / 55 白话拆解；图谱 147 关联 / 54 前置；书库 118/118。
+- 书库审查结论（对用户如实汇报）：Levine/Laitz 24+34 条与 Sposobin 前 27 条有 summary/deepSummary，但**全部笔记未经书的正文核对**（无正文可用），是从章目+专业知识写的原创重构——这是“看起来和原版没关系”的根本原因；Sposobin 新补 33 条仅章名级。深化路径已写入 HANDOFF：用户把合法电子版放本地 gitignore 目录，Agent 逐章读后升级笔记（仍不复制原文）。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/188）/ `npm run build` 通过；`/books?book=sposobin` 显示 60 NOTES；`/theory/axis-system` 375 无横向溢出。
+- 风险：站点自创理论（轴心/LCC）的条目已明示学界批评与“工具非真理”定位；站点持续增删页面，locator 以抓取时目录为准。
+- 下一阶段入口：书库深化（等电子版）→ 元音乐理论待读 → 图谱学习路径。
+- 本次文档更新时间：10.24 12:00
 
 ## 阶段 17 分类目录整栏可点击 [计划时间：10.24 04:00 BY solo-agent][完成时间：10.24 04:05 BY solo-agent]
 

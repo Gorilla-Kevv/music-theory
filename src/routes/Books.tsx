@@ -19,12 +19,14 @@ const BOOK_FIELD: Record<SourceId, string> = {
   levine: "bg-cadmium text-ink",
   laitz: "bg-cobalt text-paper",
   sposobin: "bg-acid text-ink",
+  soundquest: "bg-ink text-acid",
 };
 
 const BOOK_SHORT: Record<SourceId, string> = {
   levine: "Jazz Theory",
   laitz: "Complete Musician",
   sposobin: "Harmony",
+  soundquest: "SoundQuest",
 };
 
 export function Books() {

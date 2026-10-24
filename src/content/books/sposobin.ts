@@ -334,6 +334,336 @@ const NOTES: Record<string, NoteSeed> = {
     concepts: ["phrase-structure", "harmonic-rhythm", "roman-numerals"],
     dimensions: ["function", "direction", "rhythm"],
   },
+  "sposobin-04": {
+    summary:
+      "为旋律配和声先判断调性与乐句结构，在每个旋律音位上选择 T/S/D 功能；旋律强拍音与和弦音的重合度决定和声是否“包得住”旋律。",
+    keyPoints: [
+      "先定终止，再回填中间；句读决定和声方案。",
+      "旋律音可以是和弦音，也可以是有解决方向的外音。",
+    ],
+    concepts: ["roman-numerals", "cadences", "non-chord-tones"],
+    dimensions: ["function", "direction"],
+  },
+  "sposobin-05": {
+    summary:
+      "同一和弦换旋律位置而不换低音（和弦转换），可以在不增加新和弦的情况下让内声部流动；转换的条件是至少一个声部保持。",
+    keyPoints: [
+      "转换用于填充长音、活跃内声部。",
+      "保持共同音是转换与真正换和弦的分界。",
+    ],
+    concepts: ["voice-leading", "harmonic-rhythm"],
+    dimensions: ["direction", "rhythm"],
+  },
+  "sposobin-06": {
+    summary:
+      "为低音配和声训练“低音决定功能”的直觉：同一低音级进线上可配转位、经过和弦与换功能，多种方案靠声部顺畅度与终止目标裁决。",
+    keyPoints: [
+      "低音级进优先考虑转位与经过和声。",
+      "方案好坏看外声部对位与终止方向。",
+    ],
+    concepts: ["bass-line", "roman-numerals"],
+    dimensions: ["direction", "function"],
+  },
+  "sposobin-07": {
+    summary:
+      "三音跳进指内声部在两个和弦的三音之间跳进；用得当时活跃声部，用错时破坏声部平衡，需要跳进后的反向回收。",
+    keyPoints: [
+      "三音跳进多用于同功能和弦之间。",
+      "跳进后反向级进是保持平衡的常规。",
+    ],
+    concepts: ["voice-leading"],
+    dimensions: ["direction"],
+  },
+  "sposobin-10": {
+    summary:
+      "六和弦（第一转位）让低音离开根音：低音获得级进与旋律性，和声重心变轻；重复音与声部距离的规则随之调整。",
+    keyPoints: [
+      "第一转位常用于低音级进线与延迟根音。",
+      "六和弦不是“轻一点的主和弦”，而是低音功能的转移。",
+    ],
+    concepts: ["voice-leading", "bass-line"],
+    dimensions: ["direction", "function"],
+  },
+  "sposobin-11": {
+    summary:
+      "三和弦与六和弦连接时的跳进（含声部互换）为内声部提供路线；跳进要避开平行五八度，随后通常反向回收。",
+    keyPoints: [
+      "声部互换是跳进连接的合法形式。",
+      "跳进检查的第一项仍是平行五八度。",
+    ],
+    concepts: ["voice-leading"],
+    dimensions: ["direction"],
+  },
+  "sposobin-12": {
+    summary:
+      "两个六和弦的连接把低音写成三度或四度关系，共同音保持或互换声部；它扩展了转位之间的平滑语汇。",
+    keyPoints: [
+      "六—六连接靠共同音与互换保持线条。",
+      "低音形成三度/四度框架是它的标志。",
+    ],
+    concepts: ["voice-leading", "bass-line"],
+    dimensions: ["direction"],
+  },
+  "sposobin-13": {
+    summary:
+      "经过四六与辅助四六让低音级进或环绕：经过四六夹在两个功能之间，辅助四六围绕同一低音上下；两者都是低音驱动的装饰性和声。",
+    keyPoints: [
+      "经过四六：低音级进穿过，节拍弱位。",
+      "辅助四六：低音往返，常延留到强拍再解决。",
+    ],
+    concepts: ["cadential-six-four", "non-chord-tones", "bass-line"],
+    dimensions: ["direction", "function"],
+  },
+  "sposobin-15": {
+    summary:
+      "属七和弦的三个转位各自把不同的弦内音放进低音：三音低音强化导音，五音低音多作经过，七音低音要求下行解决；转位选择由低音线决定。",
+    keyPoints: [
+      "转位不改属功能，只改低音叙事。",
+      "七音在低音时必须下行级进解决。",
+    ],
+    concepts: ["seventh-chords", "voice-leading"],
+    dimensions: ["function", "direction"],
+  },
+  "sposobin-16": {
+    summary:
+      "属七解决到主时的跳进（五音上行等）给出比级进更外向的收束姿态；跳进不得造成平行五八度，方向要与声部倾向一致。",
+    keyPoints: [
+      "完全终止里导音仍以上行为常规。",
+      "跳进解决用于强化终止的外声部张力。",
+    ],
+    concepts: ["cadences", "voice-leading", "seventh-chords"],
+    dimensions: ["function", "direction"],
+  },
+  "sposobin-23": {
+    summary:
+      "属九和弦在属七上再叠九音：大调用大九、小调用降九；九音常置于高声部并下行解决，张力强于属七。",
+    keyPoints: [
+      "九音与根音至少相隔一个八度放置。",
+      "属九是终止前张力的常用升级手段。",
+    ],
+    concepts: ["extensions-alterations", "seventh-chords"],
+    dimensions: ["color", "function"],
+  },
+  "sposobin-24": {
+    summary:
+      "属功能组里较少使用的和弦——加六度音的属、属七加五音等——为属和声提供厚度与色彩变体；使用时保持三全音的解决方向不变。",
+    keyPoints: [
+      "加六度属和弦常与省五音的属七互通。",
+      "变体属和弦不改变对主的解决义务。",
+    ],
+    concepts: ["harmonic-color", "secondary-dominants"],
+    dimensions: ["color", "function"],
+  },
+  "sposobin-25": {
+    summary:
+      "弗里吉亚进行指小调中下属到属的进行；低音 ♭6–5 的下行是它的标志，带有古老、暗色的终止色彩。",
+    keyPoints: [
+      "弗里吉亚进行的识别点在低音 ♭6 到 5。",
+      "它常作为乐句内部终止的暗色替代。",
+    ],
+    concepts: ["cadences", "minor-scales"],
+    dimensions: ["brightness", "direction"],
+  },
+  "sposobin-27": {
+    summary:
+      "俄罗斯音乐大量使用自然调式（多利亚、弗里吉亚等）：特征音级直接进入和声，形成调式化进行与民族色彩；分析时先确认调式再谈功能。",
+    keyPoints: [
+      "自然调式和声绕过大小调的属—主强制。",
+      "特征音级出现在和弦结构里才确立调式。",
+    ],
+    concepts: ["modal-characteristics", "modal-harmony"],
+    dimensions: ["brightness", "color"],
+  },
+  "sposobin-29": {
+    summary:
+      "结构内的重属和弦把属和弦的属引入乐句中部而不只是终止前；它提高了离调的灵活度，后接属和弦或直接回主时声部要保持清晰。",
+    keyPoints: [
+      "重属不只属于终止，可出现在句中。",
+      "结构内重属靠上行四度/半音倾向确认。",
+    ],
+    concepts: ["secondary-dominants"],
+    dimensions: ["function", "direction"],
+  },
+  "sposobin-30": {
+    summary:
+      "重属和弦的变音（升五、降五等）把重属推向更远的紧张；变化音的解决方向必须事先设计，避免声部混乱。",
+    keyPoints: [
+      "重属变音沿半音线解决到属和弦音。",
+      "变音重属常与增六结构互通。",
+    ],
+    concepts: ["secondary-dominants", "neapolitan-aug6"],
+    dimensions: ["color", "function"],
+  },
+  "sposobin-33": {
+    summary:
+      "半音模进把模进模型移到半音位置并常伴随离调；它比自然模进更紧张，是推向远关系调与高潮的常规手段。",
+    keyPoints: [
+      "半音模进的模型保持、调性却步步漂移。",
+      "模进次数与终止位置要预先设计。",
+    ],
+    concepts: ["harmonic-sequence", "modulation"],
+    dimensions: ["direction", "relationship"],
+  },
+  "sposobin-36": {
+    summary:
+      "有准备的延留音先作为前和弦的和弦音出现，延留到强拍与和弦冲突，再下行级进解决；准备—延留—解决三段式是它的完整句法。",
+    keyPoints: [
+      "延留音必须来自前一和弦的同声部。",
+      "解决几乎总在下一拍下行级进完成。",
+    ],
+    concepts: ["non-chord-tones"],
+    dimensions: ["rhythm", "direction"],
+  },
+  "sposobin-37": {
+    summary:
+      "两个或三个声部同时延留形成复合不协和与复合解决；声部各自保持三段式，解决可错开制造链式落地。",
+    keyPoints: [
+      "多声部延留的冲突更强，解决更暖。",
+      "错开解决即不同度数的延留分先后落地。",
+    ],
+    concepts: ["non-chord-tones", "cadential-six-four"],
+    dimensions: ["rhythm", "color"],
+  },
+  "sposobin-38": {
+    summary:
+      "自然经过音在弱拍以级进连接两个不同和弦音，填补声部空隙；它与和弦共同发声时不改变和弦判断。",
+    keyPoints: [
+      "经过音必为级进且占弱位。",
+      "删掉经过音不影响和声骨架。",
+    ],
+    concepts: ["non-chord-tones", "melody-motives"],
+    dimensions: ["direction", "rhythm"],
+  },
+  "sposobin-39": {
+    summary:
+      "所有声部同时使用经过音形成平行流动的织体：多个声部级进滑过，和弦在瞬间被“稀释”，色彩朦胧而流动。",
+    keyPoints: [
+      "全声部经过要保留至少一个稳定声部。",
+      "它是线和声与平行写作的起点。",
+    ],
+    concepts: ["non-chord-tones", "constant-structure"],
+    dimensions: ["color", "direction"],
+  },
+  "sposobin-40": {
+    summary:
+      "自然的与半音的辅助音围绕同一和弦音上下装饰；半音辅助音带来更紧的色彩倾向，回到出发音的方向明确。",
+    keyPoints: [
+      "辅助音必回到出发音。",
+      "半音辅助音自带倾向，不需额外准备。",
+    ],
+    concepts: ["non-chord-tones"],
+    dimensions: ["color", "direction"],
+  },
+  "sposobin-41": {
+    summary:
+      "半音经过音用半音级进连接和弦音，制造更顺滑的声部与更强的离调瞬间；它常暗示临时属—主关系。",
+    keyPoints: [
+      "半音经过音是离调的最小单位。",
+      "方向性比自然经过音更强。",
+    ],
+    concepts: ["non-chord-tones", "secondary-dominants"],
+    dimensions: ["direction", "color"],
+  },
+  "sposobin-42": {
+    summary:
+      "先现音把下一和弦的音提前在弱位出现，和声按“预支”运行；与延留音相反，它把时间感往前推。",
+    keyPoints: [
+      "先现音常短促、占弱位。",
+      "爵士把先现发展为重音移位的常态手段。",
+    ],
+    concepts: ["non-chord-tones", "meter-syncopation"],
+    dimensions: ["rhythm"],
+  },
+  "sposobin-43": {
+    summary:
+      "跳进的辅助音（无准备的倚音）没有准备与解决：从跳进进入、常再跳进离开；它是外音中最具装饰性也最需要节制的一种。",
+    keyPoints: [
+      "无准备无解决的自由装饰。",
+      "多用于华彩性段落而非严格四声部。",
+    ],
+    concepts: ["non-chord-tones", "melody-motives"],
+    dimensions: ["color", "direction"],
+  },
+  "sposobin-44": {
+    summary:
+      "延留音的各种形式——不同度数的延留以及延留后先绕行的装饰解决——把三段式句法扩展成一族装饰语法。",
+    keyPoints: [
+      "解决前先绕行（装饰解决）是常见变体。",
+      "不同度数的延留张力不同，二度最柔和。",
+    ],
+    concepts: ["non-chord-tones"],
+    dimensions: ["color", "rhythm"],
+  },
+  "sposobin-45": {
+    summary:
+      "和弦外音的延迟解决让冲突音保持、积累后再落地；链条越长张力越大，终止的解决也越有分量。",
+    keyPoints: [
+      "延迟解决制造期待，不解决制造悬念。",
+      "链式外音要保证最终解决清晰。",
+    ],
+    concepts: ["non-chord-tones", "phrase-structure"],
+    dimensions: ["direction", "rhythm"],
+  },
+  "sposobin-48": {
+    summary:
+      "持续音让低音（主音或属音）保持不动，上方和声自由变化；它把功能和声拉回单一中心，是调式化与结构性扩展的工具。",
+    keyPoints: [
+      "主持续音上的任何和声都不离开主中心。",
+      "持续音段常用于作品开头与结尾的定位。",
+    ],
+    concepts: ["bass-line", "modal-harmony"],
+    dimensions: ["function", "relationship"],
+  },
+  "sposobin-51": {
+    summary:
+      "相差两个调号的转调（二级关系）共享和弦更少，需要更长的过渡或更明确的重属准备；调性等级随调号差距上升而疏远。",
+    keyPoints: [
+      "二级关系调靠中介和弦对或直接并置。",
+      "确认新调需要属—主与终止的完整证据。",
+    ],
+    concepts: ["tonal-distance", "modulation"],
+    dimensions: ["relationship"],
+  },
+  "sposobin-52": {
+    summary:
+      "相差三至六个调号的远关系转调依赖等音、增六、减七等强中介，或用直接并置制造色彩断裂；距离越远，新调确认越要充分。",
+    keyPoints: [
+      "远关系转调的中介和弦多为等音结构。",
+      "并置转调靠重复与终止坐实新调。",
+    ],
+    concepts: ["tonal-distance", "modulation", "diminished-seventh"],
+    dimensions: ["relationship", "color"],
+  },
+  "sposobin-54": {
+    summary:
+      "经过同主音主和弦的转调把两个调的主和弦当作同一个：大调与小调互为通道，明暗切换即转调本身。",
+    keyPoints: [
+      "同主音主和弦是双向门：大→小、小→大。",
+      "它把调式交替升级为结构级转调。",
+    ],
+    concepts: ["modulation", "modal-mixture-color"],
+    dimensions: ["brightness", "relationship"],
+  },
+  "sposobin-55": {
+    summary:
+      "转调模进把同一模型在不同调性上重复，直到落在目标调终止；模型内部自带离调，模进负责搬运，终止负责落锚。",
+    keyPoints: [
+      "模型通常含属—主微型离调。",
+      "最后一次重复决定目标调的确认。",
+    ],
+    concepts: ["harmonic-sequence", "modulation", "constant-structure"],
+    dimensions: ["direction", "relationship"],
+  },
+  "sposobin-58": {
+    summary:
+      "经过属七和弦的等音转调利用属七与增六结构的等音互换：一个音响两种拼法、两个方向，各指向不同的调性出口。",
+    keyPoints: [
+      "属七（如 C7）重拼为增六结构即换向。",
+      "出口方向的终止式决定听者感知的新调。",
+    ],
+    concepts: ["neapolitan-aug6", "modulation", "tonal-distance"],
+    dimensions: ["relationship", "function"],
+  },
 };
 
 export const SPOSOBIN_OUTLINE = buildOutline("sposobin", CHAPTERS, NOTES);

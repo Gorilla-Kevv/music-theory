@@ -16,12 +16,14 @@ const SOURCE_FIELD: Record<SourceId, string> = {
   levine: "bg-cadmium text-ink",
   laitz: "bg-cobalt text-paper",
   sposobin: "bg-acid text-ink",
+  soundquest: "bg-ink text-acid",
 };
 
 const SOURCE_NOTE: Record<SourceId, string> = {
   levine: "爵士语言",
   laitz: "调性理论",
   sposobin: "功能和声",
+  soundquest: "站点扩展",
 };
 
 interface LocatorUsage {

@@ -17,7 +17,7 @@ export type VisualizationKind =
   | "tension-spectrum"
   | "dominant-path";
 
-export type SourceId = "levine" | "laitz" | "sposobin";
+export type SourceId = "levine" | "laitz" | "sposobin" | "soundquest";
 
 export interface BibliographyEntry {
   id: SourceId;

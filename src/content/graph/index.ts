@@ -126,6 +126,7 @@ const SOURCE_HUBS: Record<SourceId, string[]> = {
   levine: ["hub-color", "hub-relationship", "hub-jazz"],
   laitz: ["hub-foundations", "hub-functional", "hub-color", "hub-brightness", "hub-relationship"],
   sposobin: ["hub-functional", "hub-brightness", "hub-relationship"],
+  soundquest: [],
 };
 
 const PREREQUISITES: Array<[string, string]> = [
@@ -174,6 +175,15 @@ const PREREQUISITES: Array<[string, string]> = [
   ["chord-scale", "symmetric-scales"],
   ["major-scale", "pentatonic-scales"],
   ["pentatonic-scales", "pentatonic-outside"],
+  ["intervals", "harmonic-series"],
+  ["roman-numerals", "connection-system"],
+  ["harmonic-sequence", "connection-system"],
+  ["non-functional-dominants", "axis-system"],
+  ["tritone-substitution", "axis-system"],
+  ["harmonic-sequence", "neo-riemannian"],
+  ["modal-mixture-color", "neo-riemannian"],
+  ["modal-characteristics", "lydian-chromatic-concept"],
+  ["chord-scale", "lydian-chromatic-concept"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {

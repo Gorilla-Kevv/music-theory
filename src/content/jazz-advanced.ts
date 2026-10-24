@@ -482,4 +482,78 @@ export const JAZZ_ADVANCED: Concept[] = [
       hint: "等分 = 失重；色彩要有落点。",
     },
   },
+  {
+    id: "lydian-chromatic-concept",
+    slug: "lydian-chromatic-concept",
+    number: "J-15",
+    title: "Lydian Chromatic Concept",
+    titleEn: "THE LYDIAN CHROMATIC CONCEPT",
+    category: "jazz",
+    level: "高级",
+    aliases: ["LCC", "Lydian Chromatic Concept", "George Russell", "Lydian 音阶统一论", "音调顺序"],
+    tags: ["Lydian", "音阶体系", "即兴"],
+    dimensions: ["brightness", "color", "relationship"],
+    summary:
+      "Russell 1953 年的体系：以完全五度串联为据，把 Lydian（而非大调）当作最“统一”的母音阶；七条主要音阶按“音调顺序”派生，一切选音以 Lydian Tonic 为轴——它早于并启发了和弦—音阶理论。",
+    sections: [
+      {
+        id: "tonal-order",
+        heading: "五度串联与音调顺序",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "从 C 沿 V–I 反向串联（C–G–D–A–E–B–F♯），F♯ 先于 F 出现——所以含 ♯4 的 Lydian 被视为与中心音连接最紧的音阶。大调被贬为“水平的”（Fa 带着朝主音的目标压力），Lydian 则有“垂直的重力”。把七音延伸到十二音即 Lydian Chromatic Scale，其内部顺序 I–V–II–VI–III…… 表示各音与中心的亲疏，即“音调顺序”。",
+            cites: [cite("soundquest", "和弦篇 C65「Lydian-Chromatic-Concept」")],
+          },
+          {
+            type: "p",
+            text:
+              "七条主要音阶按加入音符的顺序生成：Lydian → Lydian Augmented → Lydian Diminished → Lydian ♭7 → 辅助增（全音）→ 辅助减（减音阶）→ 辅助减布鲁斯。CST 里的“特殊音阶”在 LCC 里是系统的一等公民。",
+            cites: [cite("soundquest", "和弦篇 C65「Lydian-Chromatic-Concept」")],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "用法与批评",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "实践核心是“以 Lydian Tonic 为轴做调式交换”：给任何和弦配音阶时不看调性也不看根音，而看一个独立的 Lydian 中心（如 G7 用 F Lydian）。这能产生 CST 想不到的声音，并与 Coltrane changes 结合，让频繁转调保持色彩统一。",
+            cites: [cite("soundquest", "和弦篇 C65「Lydian-Chromatic-Concept」")],
+          },
+          {
+            type: "callout",
+            title: "边界提醒",
+            text: "Lydian 优越性的“证明”很薄弱，应把它当一套精心设计的公理/创作方法，而非声学真理——就像大调中心论本身也只是未被证实的传统。价值在于打开非常规声音，不在逻辑必然。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-lcc-parent",
+        title: "F Lydian 作为 G7 的母音阶",
+        caption: "G7sus4 → G7(♯11) → Cmaj7：♯11（C）来自 F Lydian；Lydian Tonic 中心的色彩贯穿属到主。",
+        kind: "progression",
+        key: "C",
+        tempo: 72,
+        beats: 12,
+        events: [
+          chord(0, 4, ["G3", "C4", "D4", "F4"], { label: "G7sus4" }),
+          chord(4, 4, ["G3", "B3", "D4", "C5"], { label: "G7♯11" }),
+          chord(8, 4, ["C3", "E3", "G3", "B3"], { label: "Cmaj7" }),
+        ],
+      }),
+    ],
+    related: ["modal-characteristics", "chord-scale", "melodic-minor-modes", "symmetric-scales"],
+    review: {
+      question: "LCC 为什么选 Lydian 而不是大调当母音阶？",
+      answer:
+        "按完全五度串联，中心音先遇到 ♯4 再遇到 ♯4 的对立面 4；含 ♯4 的 Lydian 与中心连接最紧。大调的 Fa 带目标压力，被归为“水平”，Lydian 是“垂直统一”。该论证是公设而非证明。",
+      hint: "五度串联，♯4 先出现。",
+    },
+  },
 ];

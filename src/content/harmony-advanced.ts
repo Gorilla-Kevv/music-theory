@@ -1471,4 +1471,249 @@ export const HARMONY_ADVANCED: Concept[] = [
       hint: "三音缺席，性质悬置。",
     },
   },
+  {
+    id: "connection-system",
+    slug: "connection-system",
+    number: "H-26",
+    title: "连接系统论：根音运动的六种系统",
+    titleEn: "THE CONNECTION SYSTEM (ROOT MOTION)",
+    category: "harmony",
+    level: "高级",
+    aliases: ["连接系统论", "根音运动", "连接系统", "connection system", "root motion", "2 度/3 度/5 度进行"],
+    tags: ["根音运动", "进行", "流派色彩"],
+    dimensions: ["direction", "function", "relationship"],
+    summary:
+      "连接系统论抛开 TDS 功能标签，只看根音怎么动：上行/下行 × 2/3/5 度共六个系统。共同音数量决定推动力（5 度最强、3 度最平），上下行偏好区分流派的新旧感。",
+    sections: [
+      {
+        id: "systems",
+        heading: "六个系统与共同音",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "忽略八度等价后，任意两个三和弦的根音关系只剩 2、3、5 三种距离（三个最小质数），各分上下行：2▲/2▼、3▲/3▼、5▲/5▼。它们与功能和声互补——功能说“为什么去”，连接系统说“怎么去”。",
+            cites: [cite("soundquest", "和弦篇 C15「控制因素」与 C16「系统分类」")],
+          },
+          {
+            type: "list",
+            items: [
+              "2 度连接：0 个共同音——成员全部更换，根音近但音色变化大，听感温和平稳。",
+              "5 度连接：1 个共同音——换两个音、根音跳最远，推动力最强；5▼ 是古典与爵士的主流，5▲ 带反叛色彩（摇滚、EDM 的 6-4-1-5）。",
+              "3 度连接：2 个共同音——保留最多、听感平坦，总是伴随大小性质反转；3▲ 的“漂浮感”在现代流行/电子里复兴。",
+            ],
+            cites: [cite("soundquest", "和弦篇 C16「系统分类」与 C23「王道进行与文化差异」")],
+          },
+        ],
+      },
+      {
+        id: "style",
+        heading: "上下行偏好与流派新旧",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "口诀是“下降更自然，上升需要力量”：古典与爵士大量使用 5▼（五度瀑布），流行音乐则借 5▲ 与 3▲ 制造新颖。控制根音运动的偏好，就是在控制音乐的“新/旧”感——这是连接系统论最实用的产出。",
+            cites: [cite("soundquest", "和弦篇 C16「系统分类」")],
+          },
+          {
+            type: "callout",
+            title: "编曲抓手",
+            text: "想“土”一点：多走 5▼ 和 3▼；想“飘”一点：3▲ 与 2▼；想“燃”：5▲。同一组级数换个方向，流派气质就变了。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-root-motion-systems",
+        title: "三个系统的对比",
+        caption: "同一起点 C：5▼ 到 F（古典主流）→ 5▲ 到 G（反叛/燃）→ 3▲ 到 Ab（漂浮）；三个方向三种气质。",
+        kind: "progression",
+        key: "C",
+        tempo: 84,
+        beats: 9,
+        events: [
+          chord(0, 3, ["C3", "E3", "G3"], { label: "I" }),
+          chord(3, 3, ["F2", "A2", "C3"], { label: "5▼" }),
+          chord(6, 3, ["G2", "B2", "D3"], { label: "5▲" }),
+        ],
+      }),
+      example({
+        id: "ex-root-motion-third",
+        title: "3▲ 的漂浮感",
+        caption: "C–E–G#–C：连续大三度上行，共同音最多、性质反转，悬浮不落地——现代流行的漂浮进行。",
+        kind: "progression",
+        key: "C",
+        tempo: 80,
+        beats: 8,
+        events: [
+          chord(0, 2, ["C3", "E3", "G3"], { label: "C" }),
+          chord(2, 2, ["E3", "G#3", "B3"], { label: "3▲ E" }),
+          chord(4, 2, ["G#3", "C4", "E4"], { label: "3▲ G#" }),
+          chord(6, 2, ["C3", "E3", "G3"], { label: "回 C" }),
+        ],
+      }),
+    ],
+    related: ["roman-numerals", "harmonic-sequence", "circle-of-fifths", "non-functional-dominants"],
+    review: {
+      question: "为什么只有 5 度系统能明确推动和声前进？",
+      answer:
+        "5 度连接只保留 1 个共同音、根音移动最远，和弦成员换两个——变化最大所以推动力最强；2 度全部换但根音近，3 度保留两个共同音，都偏向平稳或漂浮。",
+      hint: "数共同音。",
+    },
+  },
+  {
+    id: "axis-system",
+    slug: "axis-system",
+    number: "H-27",
+    title: "轴心体系：功能的三全音十字",
+    titleEn: "THE AXIS SYSTEM (LENDVAI)",
+    category: "harmony",
+    level: "高级",
+    aliases: ["轴心体系", "轴心系统", "axis system", "Lendvai", "极性调性", "巴托克伪终止"],
+    tags: ["三全音", "功能扩展", "巴托克"],
+    dimensions: ["function", "relationship"],
+    summary:
+      "Lendvai 的轴心体系把 TDS 功能扩展到十二个音：每个功能的四个根音在五度圈上排成十字（互为三全音）；极点与对极点可互换而不改变功能——用于不定调与多调性写作的自由进行。",
+    sections: [
+      {
+        id: "axes",
+        heading: "三条功能轴",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "以 C 为中心：主功能轴是 C–A–E♭–F♯（含同主小调的 E♭ 与平行大调的 F♯m）；属功能轴是 G–E–D♭–B♭（含三全音代理）；下属功能轴是 F–D–A♭–B。每组的四个根音在五度圈上呈十字形，两端互为三全音（极点/对极点）。功能由根音判断，不论和弦性质——C、Cm、C7 都算主功能。",
+            cites: [cite("soundquest", "和弦篇 C64「轴心体系」")],
+          },
+          {
+            type: "p",
+            text:
+              "轴关系的依据之一是三全音的对称解决：G7 的 si/fa 正常向外解决到 do/mi；巴托克伪终止把 fa 当导音、si 当下属，三全音向内闭合解决到 F♯——轴两端可以互相替代而不改变功能角色。",
+            cites: [cite("soundquest", "和弦篇 C64「轴心体系」")],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "用法与批评",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "实用口诀：从主功能出发，“浮起来”用 ♭III、“沉下去”用 VI、“翻转”用 ♯IV。每个功能四个根音、性质自由，天然适合不定调与多调性段落；但正因太自由，必须自设主题性规则（统一小七、固定冠音、根音三度下行），否则与乱选无异。",
+            cites: [cite("soundquest", "和弦篇 C64「轴心体系」")],
+          },
+          {
+            type: "callout",
+            title: "边界提醒",
+            text: "从 C≈Am、Am≈F♯m 推出 C≈F♯ 是逻辑飞跃；Kárpáti 等学者主张这些关系更应解释为“远关系”而非“功能等同”。把它当创作工具，别当声学真理。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-axis-cross",
+        title: "主功能轴的四个根音",
+        caption: "C–A–E♭–F♯ 轮流作为主和弦：同属主功能轴（五度圈十字），性质自由、中心不倒。",
+        kind: "progression",
+        key: "C",
+        tempo: 76,
+        beats: 12,
+        events: [
+          chord(0, 3, ["C3", "E3", "G3"], { label: "C · 极点" }),
+          chord(3, 3, ["A2", "C3", "E3"], { label: "A" }),
+          chord(6, 3, ["Eb3", "G3", "Bb3"], { label: "E♭" }),
+          chord(9, 3, ["F#3", "A3", "C#4"], { label: "F♯ · 对极点" }),
+        ],
+      }),
+    ],
+    related: ["non-functional-dominants", "tritone-substitution", "constant-structure", "neo-riemannian"],
+    review: {
+      question: "轴心体系里每个功能有几个可选根音？依据是什么？",
+      answer:
+        "四个：调内两个同功能和弦加上同主/平行调的对应和弦，恰好落在五度圈十字上、两端互为三全音；依据是三全音的对称可替代性（含巴托克伪终止）。它是创作假设，学界有争议。",
+      hint: "十字 + 三全音。",
+    },
+  },
+  {
+    id: "neo-riemannian",
+    slug: "neo-riemannian",
+    number: "H-28",
+    title: "新里曼理论：PLR 变换网络",
+    titleEn: "NEO-RIEMANNIAN THEORY (PLR)",
+    category: "harmony",
+    level: "高级",
+    aliases: ["新里曼理论", "PLR", "Neo-Riemannian", "变换网络", "Tonnetz", "半音中音关系"],
+    tags: ["三度进行", "浪漫派", "变换"],
+    dimensions: ["relationship", "direction", "color"],
+    summary:
+      "新里曼理论不给和弦贴功能标签，而是给“变换”命名：P（同主大小）、R（关系大小）、L（导音交换）每次只动一个音；PLR 链条专门分析浪漫派与电影音乐里脱离五度—终止逻辑的三度进行。",
+    sections: [
+      {
+        id: "plr",
+        heading: "三种基本变换",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "P（Parallel）：C ⇄ Cm，同主大小调切换，只动三音半音。",
+              "R（Relative）：C ⇄ Am，关系大小调切换，半音+全音各动一次。",
+              "L（Leittonwechsel，导音交换）：C ⇄ Em，长三度关系，最低音下行半音。",
+            ],
+            cites: [cite("soundquest", "和弦篇「新里曼理论①：PLR」")],
+          },
+          {
+            type: "p",
+            text:
+              "每次变换只动一个声部（声部节俭），且伴随大小性质反转；两个操作即回到原和弦（对合）。五度进行要用组合表示（大和弦上行五度 = LR），二度进行至少三步——PLR 的母语是三度关系，不是五度。",
+            cites: [cite("soundquest", "和弦篇「新里曼理论①：PLR」")],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "变换网络与分析对象",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "把进行写成变换串能暴露功能/级数分析看不到的规律：布拉姆斯双协奏曲的三度链是规整的 PLPLPLP，贝多芬第九第二乐章的三度下行是 RLRLRL 的重复。适用对象：19 世纪浪漫派、电影音乐的半音中音关系（chromatic mediants）、摇滚中的非调性三度进行（Radiohead 等被专门研究）。",
+            cites: [cite("soundquest", "和弦篇「新里曼理论①：PLR」")],
+          },
+          {
+            type: "callout",
+            title: "定位提醒",
+            text: "PLR 是补充性理论：对特定段落最优，当全局工具太受限——与轴心体系一样，是工具箱里的一件，不是唯一语法。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-plr-chain",
+        title: "P–R–L 变换链",
+        caption: "C –P→ Cm –R→ E♭ –P→ E♭m：每步只动一个音、大小性质反转，和声平滑地漂移而不经功能解决。",
+        kind: "progression",
+        key: "C",
+        tempo: 72,
+        beats: 8,
+        events: [
+          chord(0, 2, ["C3", "E3", "G3"], { label: "C" }),
+          chord(2, 2, ["C3", "Eb3", "G3"], { label: "P → Cm" }),
+          chord(4, 2, ["Eb3", "G3", "Bb3"], { label: "R → E♭" }),
+          chord(6, 2, ["Eb3", "Gb3", "Bb3"], { label: "P → E♭m" }),
+        ],
+      }),
+    ],
+    related: ["axis-system", "harmonic-sequence", "modal-mixture-color", "constant-structure"],
+    review: {
+      question: "P、R、L 变换各自移动哪个音？",
+      answer:
+        "P 只动三音半音（C⇄Cm）；R 做关系大小调切换；L 做导音交换（长三度关系）。三者都只动一个声部且伴随大小性质反转，五度进行需用组合（如 LR）表示。",
+      hint: "一次一音，大小反转。",
+    },
+  },
 ];
