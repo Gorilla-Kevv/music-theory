@@ -262,11 +262,12 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["phrase-structure", "rhythm-changes", "blues"],
     dimensions: ["rhythm", "function"],
     deepSummary:
-      "曲式是宏观句法。Levine 把曲目按 AABA、ABAC、12-bar blues 等模板归类，是为了让即兴者知道“现在处于哪一句、下一句往哪里走”。分析和声时先看段落边界，才能理解为什么某些和弦在此处出现。",
+      "第 17 章把曲式当作“可预知性与突然性之间的平衡”：听过无数遍 Stella By Starlight 仍爱听，因为旋律与进行给了可预知性；断句微调与重配给了突然性。字母曲式的操作定义很直接：八小节为一段，旋律相同的段用同一个字母（I Hear A Rhapsody = AABA）；B 段不等于桥段（ABAC 里的 B 不是 bridge）。曲式的实用价值是背谱——“记 A 和 B 两个八小节，而不是 32 个小节”。Rhythm Changes 的来历也在章里：Gershwin 原曲是 34 小节 AABA（8–8–8–10），两小节尾巴早被丢弃，Oleo/Anthropology 等曲头定型为 8–8–8–8。章末的作曲建议：“大部分伟大的爵士乐手同时也是伟大的作曲家”，曲式建议只是入口。",
     analysis: [
-      "用 A/B 标记段落，标出每段终止类型。",
-      "比较各段开头的低音与和弦；找出 turnaround。",
-      "把旋律动机与曲式边界对齐，判断句法是否呼应。",
+      "拿到一首新曲先扫旋律与进行，按八小节分段并标 A/B/C。",
+      "比较各段终止与段首低音，找出 turnaround 的位置与形式。",
+      "用曲式模板辅助背谱：只记不同的段落。",
+      "作/改编时先守可预知性（段落与终止），再在断句与重配上放突然性。",
     ],
     crossBook: ["Laitz 20/25/26/27：曲式"],
     visualHint: "体系图的“曲式/句法”分支",
@@ -500,22 +501,25 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
   },
   "levine-14": {
     deepSummary:
-      "高级重配把 voicing、持续音、调式交替与替代叠在一起，但每一层都必须有 voice leading 支撑。色彩是结果，不是起点；先决定低音与目标音，再决定延伸音。",
+      "第 14 章开宗明义：“使用这些技术你等于是把一首标准曲目重新作曲。”工具箱按结构逻辑排列：反向进行（contrary motion，旋律与低音反向展开，“反向进行不仅好听，还迎合了我们对结构的期待”——Yesterdays 每个旋律音配一个和弦）；平行进行（parallelism，同类和弦同向移动，“功能并不重要，平行进行的同类和弦不需要彼此解决”——Tyner 的 Peresina、四度堆叠、减音阶上小三度平行）；斜线和弦重配（F♯/G 连接 G 大三和弦、Blue Bossa 的多个斜线和弦，低音可加七和弦）；伪终止（deceptive resolution：F7→GΔ、C7alt→A♭-7、B7→D♭——V 没有向下五度解决就是伪终止，Joe Henderson 甚至把 B7 换个方向解到 AΔ）；用 V 引出任何和弦、减和弦重配、改变旋律本身、 Pedal 低音。",
     analysis: [
-      "先弹 shell（根/三/七），再加一个色彩音。",
-      "检查低音与旋律是否争抢同一音区。",
+      "反向进行造结构：先写旋律方向，低音反着走，每个旋律音配一个和弦。",
+      "平行进行认逻辑不认功能：同一类和弦（如全 m7 或全斜线）沿旋律/低音平移，最后一个落回功能。",
+      "伪终止三步：V 不下五度解决 → 看它实际去了哪 → 用新方向串起后面的进行。",
+      "综合：低音 pedal + 上方变化 + 斜线和弦，可以叠用，但结构感优先。",
     ],
     crossBook: ["Laitz 21：调式交替", "Laitz 23/24：那不勒斯/增六"],
-    visualHint: "张力光谱",
+    visualHint: "张力光谱 + 低音线",
   },
   "levine-15": {
     deepSummary:
-      "Coltrane Changes 把八度分成三个大三级调性中心，用属和弦连接；它听起来复杂，但骨架是“目标调 + guide tones + 对称根音运动”。分析时先标三个目标调，再看属和弦如何指向它们。",
+      "第 15 章把 Giant Steps 拆到只剩骨架：26 个和弦“只不过是 B、G、E♭ 三个调上的 V–I 与 ii–V–I”——每个调性中心与下一个相隔大三度，把八度三等分。历史一课给出既有调性中心运动的全部样式（五度循环、全音下行、半音下行），并点名大三度进行的先例：Night And Day（1932）、Have You Met Miss Jones（1937）等。Countdown 是方法论展示：Tune Up 的 D 调 ii–V–I 被重配成 D→B♭→G♭→D 三个大三度下行的调性中心，每个新 I 前都放它的 V，而第一个和弦 E-7 保持不变。练习法：Countdown 前四小节在全部 12 个调上慢练，“速度来自准确”。",
     analysis: [
-      "先只弹 Cmaj7–Abmaj7–Emaj7 三个目标和弦。",
-      "再加入 Eb7/B7/G7，听属和弦如何把根音推向下一个目标。",
+      "先只弹三个调性中心的全音符（B–G–E♭），再插回各自的 V 或 ii–V。",
+      "把 Tune Up 的 ii–V–I 逐拍换成大三度下行的调中心，自己做一遍 Countdown。",
+      "guide tones 走半音/级进：三全音交替让跨调连接平滑。",
     ],
-    crossBook: ["Laitz 29：对称与八度等分"],
+    crossBook: ["Laitz 29：旋律与和声对称结合", "Laitz 19：临时主化与转调"],
     visualHint: "五度圈/关系网络",
   },
   "levine-05": {
