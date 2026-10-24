@@ -443,3 +443,19 @@
 - 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；10 条笔记 tsx 校验 10/10 OK；全库 deepSummary 覆盖 57/117（= 两本电子书全量）。
 - 下一批入口：无（两本书已读完）。剩余：Sposobin 电子版到位后按同一流水线深化 60 章；SoundQuest 元音乐理论（C63 建设中）待读。
 - 本次文档更新时间：10.24 18:45
+
+## 阶段 28 知识库扩充：SoundQuest 目录第二批（5 个概念）[计划时间：10.24 19:00 BY solo-agent][完成时间：10.24 19:30 BY solo-agent]
+
+- 分支：dev
+- 任务定位：用户指令「继续知识库扩充，来源 SoundQuest 目录」。WebFetch 拉全站目录后盘点：已入库 5 条站点概念（泛音列/连接系统论/轴心体系/新里曼/LCC）；本轮从旋律篇/和弦篇/节奏篇挑 5 个未入库主题抓正文入库；元音乐理论（C63）与多义论（C74）页面建设中（404），记入待读。
+- 已完成：
+  - 28.1 F-13 `tonal-gravity` 调性引力论（M5/M9）：稳定音/中倾向/强倾向三级分级、fa/si 半音倾向、下行首选与导音例外、延迟解决与悬置表达；Laitz 5 倾向音作 Tier 1 支撑。
+  - 28.2 F-14 `shuffle-beat` Shuffle/Swing 与细分法（R7）：拍内细分概念、2:1 三分 vs 均分、Shuffle≠三拍子、Swing 的浮动比例、half-time shuffle 与三连音装饰；Laitz 1B 支撑。
+  - 28.3 H-29 `royal-road` 王道进行与流派语法（C23）：J-Pop 4536/卡农/6-4-5-1、爵士 2-5-1/1-6-2-5、欧美 1564 及重排、EDM 反转、IV→I 文化差异；Levine 2「其他常见和弦进行」作 Tier 1 支撑。
+  - 28.4 H-30 `pop-modulation` 流行转调五技（C52–55）：半音（±5/V 强解决）、全音（±2/枢纽和弦/VI 重定义）、小三度上下（±3/R+P 复合/T 转调/性质转换）、旋律先行漏音、成对回归；Laitz 19/Sposobin 31 支撑。
+  - 28.5 J-16 `clave` Clave 与非洲-古巴节奏（R5+Levine 22）：3-2/2-3、rumba/bossa 变体、tresillo/dembow/Jersey club、「用 3 分割 4 的倍数」；Levine 22 为 Tier 1 主支撑（全队吻合 clave、看不见的小节线）。谱例为真实 son clave 五击节奏型（可点击试听）。
+  - 28.6 五条白话拆解（deep dive 60/60）；图谱新增 11 条前置链。
+- 统计更新：60 概念（基础 14 / 和声 30 / 爵士 16）/ 70 谱例 / 202 引用 / 60 白话拆解；图谱 166 关联 / 64 前置。站点来源概念累计 10 条。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（60/70/202）/ `npm run build` 通过；`/theory/clave` 1280 渲染正确（节奏谱例五击可听）；`/theory/royal-road` 375 无横向溢出。
+- 下一阶段入口：站点待读补录（C63 元音乐理论、C74/75 多义论、外质 M17-20、K·S 分析等尚未入库的站点主题）；或回到图谱学习路径/Sposobin 电子版深化。
+- 本次文档更新时间：10.24 19:30

@@ -1370,4 +1370,123 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
       },
     ],
   },
+  "tonal-gravity": {
+    title: "白话解释：每个音都有回家的路",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "把音阶想成一片有坡度的地：do/mi/sol 是平地（可以站住），fa 和 si 站在半步之外的坎上（被拉力最强），re 和 la 站在缓坡（想动但不急）。调性引力论做的事就是给每个音标“站在哪、往哪滑”。fa 最近的家是 mi，si 最近的家是 do；re、la 没有半步邻居，所以下行走是首选——像重力，往下走省力。",
+        cites: [cite("soundquest", "旋律篇 M9「调性引力论❶倾向性的解决」")],
+      },
+      {
+        type: "p",
+        text:
+          "表达力来自“什么时候回家”：立刻解决流畅平静；绕道再解决（fa→re→mi）积累渴望；一直不解决就是悬浮与不安。流行歌里连打 re 制造期待、拉长 si 制造诡异，都是在玩“不回家”。古典的倾向音规则（导音必须上行）是这套引力的功能化特例。",
+        cites: [
+          cite("soundquest", "旋律篇 M9「调性引力论❶倾向性的解决」"),
+          cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "稳定音能住，半音邻居最想回家，其余往下走省力。练习：给自己的旋律每个音标稳定/中/强三级，再决定它落不落。",
+      },
+    ],
+  },
+  "shuffle-beat": {
+    title: "白话解释：拍子没变，拍的里面变了",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "Shuffle 最容易误解成“三拍子”——不是。拍还是四拍，变的是每拍内部的切法：普通节奏把一拍等分两半（咚哒），shuffle 把一拍分三份、前两份给长音（咚—哒）。就这一个改动，走路变成跳跃。",
+        cites: [cite("soundquest", "节奏篇 R7「Shuffle-Beat」")],
+      },
+      {
+        type: "p",
+        text:
+          "爵士说的 swing 是它的自由版：比例不锁死在 2:1，重音偏下拍、音符微微拖拽，每个乐手的 swing 都不一样——这也是为什么谱面上常只写八分音符加一句 swing。快速曲子嫌三分太忙就有 half-time shuffle（军鼓减半）。",
+        cites: [cite("soundquest", "节奏篇 R7「Shuffle-Beat」")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "straight 是均分，shuffle 是 2:1 三分，swing 是浮动的 shuffle。练习：同一条布鲁斯低音分别用 straight 和 shuffle 念法弹，录下来对比。",
+      },
+    ],
+  },
+  "royal-road": {
+    title: "白话解释：每个流派都有自己的“万能进行”",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "“王道进行”不是一个和弦序列，而是每个文化圈最顺手的那个：日本人张口 4-5-3-6（起承转合），爵士乐手条件反射 2-5-1，欧美写歌常绕 1-5-6-4 这个圈。和弦池是同一套功能和声，差别只在“惯用路径”。",
+        cites: [cite("soundquest", "和弦篇 C23「王道进行与文化差异」")],
+      },
+      {
+        type: "p",
+        text:
+          "最有趣的反转：EDM 故意避开 V→I 这类“最自然”的进行——因为太自然反而显得老套，要让和弦退后、给音效和节奏让路。这提醒我们：理论总结现实，不规定“正确”。",
+        cites: [cite("soundquest", "和弦篇 C23「王道进行与文化差异」")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "选进行先选文化语气。练习：拿同一段旋律分别配 4536、1564、2-5-1 三版，听气质变化。",
+      },
+    ],
+  },
+  "pop-modulation": {
+    title: "白话解释：转调选档 like 换挡",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "流行转调像换挡：半音挡（调号差 5）最猛，最后副歌前升半音就是它；全音挡（差 2）温和，两调有共同和弦可以走“枢纽”慢慢换；小三度挡（差 3）最隐形——它其实是“换成平行大小调再挪小三度”，耳朵早就习惯这套关系，很多听众根本察觉不到转了调。",
+        cites: [
+          cite("soundquest", "和弦篇 C52「流行转调技巧❷半音的转调」"),
+          cite("soundquest", "和弦篇 C54「流行转调技巧❹小三度下转调」"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "两条工程纪律：一是“去的路和回的路成对设计”，否则第二遍主歌跑调——通常用间奏把新调模糊掉再落回原调 V；二是“旋律先行漏音”，新调的变化音先在旋律里出现，和弦切换就不突兀。",
+        cites: [cite("soundquest", "和弦篇 C55「流行转调技巧❺小三度上转调」")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "爆发用半音、平滑用全音、隐形用小三度；每次转调写好回家的路。练习：把一首 C 调歌分别按三档转上去再转回来。",
+      },
+    ],
+  },
+  "clave": {
+    title: "白话解释：两小节一条格，全队对格子",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "Clave 就是两小节里的五次敲击（3-2 或颠倒成 2-3）。萨尔萨乐队七八件乐器各打各的，靠的不是数拍子，而是所有人心里同一条 clave 格——“看不见的小节线”。错格（cross the clave）是拉丁演奏的大忌。",
+        cites: [cite("levine", "Chapter 22 Salsa and Latin Jazz")],
+      },
+      {
+        type: "p",
+        text:
+          "它的数学魅力：用 3 去切 4 的倍数（8 或 16 拍），错位产生天然的切分轻快感。家族成员：rumba/bossa 是变体；只取前半就是 tresillo，倍速 tresillo 铺满 J-Pop 副歌，加上底鼓军鼓分解就是 dembow。",
+        cites: [
+          cite("soundquest", "节奏篇 R5「Clave」"),
+          cite("levine", "Chapter 22 Salsa and Latin Jazz"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "先定 3-2 还是 2-3，全队对格。练习：拍手打 clave 唱一首 4/4 歌，检查断句落不落格。",
+      },
+    ],
+  },
 };

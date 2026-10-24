@@ -2,10 +2,10 @@
   "meta": {
     "name": "TONIC · 主音",
     "version": "0.3.0",
-    "builtAt": "2026-10-24T10:42:49.034Z",
-    "conceptCount": 55,
-    "exampleCount": 65,
-    "citationCount": 186,
+    "builtAt": "2026-10-24T11:06:55.331Z",
+    "conceptCount": 60,
+    "exampleCount": 70,
+    "citationCount": 202,
     "bookCount": 3,
     "chapterCount": 117,
     "sourceNoteCount": 117,
@@ -11910,6 +11910,420 @@
       }
     },
     {
+      "id": "tonal-gravity",
+      "slug": "tonal-gravity",
+      "number": "F-13",
+      "title": "调性引力论：倾向音的解决",
+      "titleEn": "TONAL GRAVITY & TENDENCY RESOLUTION",
+      "category": "foundations",
+      "level": "进阶",
+      "aliases": [
+        "调性引力",
+        "倾向性",
+        "半音倾向",
+        "tonal gravity",
+        "tendency tone",
+        "不稳定音",
+        "解决"
+      ],
+      "tags": [
+        "旋律",
+        "倾向音",
+        "解决"
+      ],
+      "dimensions": [
+        "direction",
+        "color"
+      ],
+      "summary": "调内七音按稳定性分级：do/mi/sol 稳定，fa/si 有半音倾向最强，re/la 中等；旋律的方向感来自这些音被“引力”拉向落点的过程——解决、延迟解决或悬而不决都是表达工具。",
+      "sections": [
+        {
+          "id": "stability",
+          "heading": "稳定音与倾向音的分级",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "稳定音：do、mi、sol——主三和弦成员，可以停留。",
+                "最强倾向音：fa（→mi）、si（→do）——与相邻稳定音成半音，被拉力最大。",
+                "中等倾向音：re、la——不稳定但没有可依靠的半音；re、la 下行解决是首选，上行是次选。",
+                "例外一：导音 si 是唯一上行解决最自然的音；例外二：旋律同向连续推进时（惯性），逆倾向进行也自然。"
+              ],
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "旋律篇 M5「半音进行和倾向性」"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "旋律篇 M9「调性引力论❶倾向性的解决」"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "古典理论里的倾向音（tendency tone）是同一现象的功能化描述：属和弦的导音必须上行、七音必须下行。调性引力论把它推广到整条音阶并给出分级——这样旋律写作可以从“每个音离落点多远、往哪边落”出发设计。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "expression",
+          "heading": "解决、延迟与悬置的表达",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "延迟解决（绕道后再落）会积累解决的欲望；悬而不决则制造悬浮与不安。流行音乐的实例：长时间延续 sol 平静无紧张；连打 re 制造悬浮感（中倾向不解决也可接受）；延伸导音 si 制造诡异不安；延长 fa 则奇异到需要和弦技巧配合。",
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "旋律篇 M9「调性引力论❶倾向性的解决」"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "写作抓手",
+              "text": "先给旋律里每个音标“稳定/中倾向/强倾向”，再决定它落不落、往哪落、什么时候落——“无法割舍”用 si 延伸，“流畅的平静”避开 fa–sol 相邻悬置。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-tonal-gravity",
+          "title": "倾向音的解决路径",
+          "caption": "re→fa→mi：中倾向搭桥后强倾向 fa 落到 mi；随后 si→do 上行解决——两条最基本的引力路径。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 76,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "re"
+            },
+            {
+              "beat": 1,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "fa"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "→mi"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "si"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "→do"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "intervals",
+        "voice-leading",
+        "non-chord-tones",
+        "melody-motives"
+      ],
+      "review": {
+        "question": "为什么 fa 和 si 的倾向性最强？re 和 la 属于哪一级？",
+        "answer": "fa、si 与相邻稳定音（mi、do）构成半音，被拉力最大；re、la 不稳定但没有可依靠的半音，属中等倾向，下行解决为首选、上行为次选。",
+        "hint": "先看有没有半音邻居，再定强弱。"
+      },
+      "deepDive": {
+        "title": "白话解释：每个音都有回家的路",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "把音阶想成一片有坡度的地：do/mi/sol 是平地（可以站住），fa 和 si 站在半步之外的坎上（被拉力最强），re 和 la 站在缓坡（想动但不急）。调性引力论做的事就是给每个音标“站在哪、往哪滑”。fa 最近的家是 mi，si 最近的家是 do；re、la 没有半步邻居，所以下行走是首选——像重力，往下走省力。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "旋律篇 M9「调性引力论❶倾向性的解决」"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "表达力来自“什么时候回家”：立刻解决流畅平静；绕道再解决（fa→re→mi）积累渴望；一直不解决就是悬浮与不安。流行歌里连打 re 制造期待、拉长 si 制造诡异，都是在玩“不回家”。古典的倾向音规则（导音必须上行）是这套引力的功能化特例。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "旋律篇 M9「调性引力论❶倾向性的解决」"
+              },
+              {
+                "source": "laitz",
+                "locator": "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "稳定音能住，半音邻居最想回家，其余往下走省力。练习：给自己的旋律每个音标稳定/中/强三级，再决定它落不落。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shuffle-beat",
+      "slug": "shuffle-beat",
+      "number": "F-14",
+      "title": "Shuffle 与 Swing：拍内细分法",
+      "titleEn": "SHUFFLE BEAT & SUBDIVISION",
+      "category": "foundations",
+      "level": "基础",
+      "aliases": [
+        "Shuffle",
+        "Swing",
+        "摇摆",
+        "跳跃节奏",
+        "细分法",
+        "三连音",
+        "half-time shuffle",
+        "subdivision"
+      ],
+      "tags": [
+        "节奏",
+        "律动",
+        "布鲁斯"
+      ],
+      "dimensions": [
+        "rhythm"
+      ],
+      "summary": "Shuffle 不改变拍数，只改变拍内分割：把每拍分成三份并按 2:1 偏分（“咚——哒”），产生跳跃律动；Swing 是它在爵士语境下更自由、弹性介于 2:1 与 1:1 的版本。",
+      "sections": [
+        {
+          "id": "subdivision",
+          "heading": "拍内细分：均分与三分",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "节拍有两个层面：拍的组织（拍号）与拍内的细分（subdivision）。普通节奏把每拍 1:1 等分；Shuffle 把每拍分三份、前长后短（约 2:1），听感从“平走”变成“跳跃”。这与复合拍（如 6/8 每组三等分）是同一细分原理的不同应用。",
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "节奏篇 R7「Shuffle-Beat」"
+                },
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 1B Musical Time: Pulse, Rhythm, and Meter"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "术语分工：Shuffle 基本指明确的 2:1 三分；爵士用 Swing 一词且含义带个人差异——重音在下拍、音符略延迟拖拽、比例在 2:1 与 1:1 之间浮动。均分节奏则称 straight/even；均分乐曲里局部插入 1:1:1 三连音可作重音装饰。",
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "节奏篇 R7「Shuffle-Beat」"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "variants",
+          "heading": "速度、变体与家族",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "三分比二分细密，快 tempo 下会显得“忙”，因此派生 half-time shuffle（计数与军鼓频率减半、以 16 拍为基底，Jeff Porcaro 确立）。大量变体存在于偶分与三分之间、或只有部分乐器 shuffle——这种暧昧正是 shuffle 的魅力。Motown 节奏本质是 shuffle，摇滚高频用它提速制造激烈感。",
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "节奏篇 R7「Shuffle-Beat」"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "听觉抓手",
+              "text": "数拍子只数“1 2 3 4”，嘴里念“咚—哒 咚—哒”就是 shuffle；念“咚哒 咚哒”是 straight。同一首歌两种念法弹一遍，律动立变。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-shuffle-line",
+          "title": "布鲁斯 shuffle 低音线（以 swing 感弹）",
+          "caption": "C–G–C–A 的根音线：谱面均分，实际演奏把每拍唱成 2:1 的“咚—哒”，即得 shuffle 律动。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 104,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 1.5,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                }
+              ]
+            },
+            {
+              "beat": 1.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ]
+            },
+            {
+              "beat": 2,
+              "duration": 1.5,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                }
+              ]
+            },
+            {
+              "beat": 3.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 1.5,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                }
+              ]
+            },
+            {
+              "beat": 5.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ]
+            },
+            {
+              "beat": 6,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 45,
+                  "spelling": "A2"
+                }
+              ]
+            },
+            {
+              "beat": 7,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 47,
+                  "spelling": "B2"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "related": [
+        "meter-syncopation",
+        "blues",
+        "harmonic-rhythm",
+        "clave"
+      ],
+      "review": {
+        "question": "Shuffle 与三拍子的区别是什么？与 Swing 的关系呢？",
+        "answer": "三拍子改变“拍”的层面（每小节三拍）；shuffle 改变“拍内”分割（每拍 2:1 三分），拍数不变。Swing 是爵士语境下更自由的比例浮动版，shuffle 是明确的 2:1。",
+        "hint": "一个在拍的层面，一个在拍的内部。"
+      },
+      "deepDive": {
+        "title": "白话解释：拍子没变，拍的里面变了",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Shuffle 最容易误解成“三拍子”——不是。拍还是四拍，变的是每拍内部的切法：普通节奏把一拍等分两半（咚哒），shuffle 把一拍分三份、前两份给长音（咚—哒）。就这一个改动，走路变成跳跃。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "节奏篇 R7「Shuffle-Beat」"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "爵士说的 swing 是它的自由版：比例不锁死在 2:1，重音偏下拍、音符微微拖拽，每个乐手的 swing 都不一样——这也是为什么谱面上常只写八分音符加一句 swing。快速曲子嫌三分太忙就有 half-time shuffle（军鼓减半）。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "节奏篇 R7「Shuffle-Beat」"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "straight 是均分，shuffle 是 2:1 三分，swing 是浮动的 shuffle。练习：同一条布鲁斯低音分别用 straight 和 shuffle 念法弹，录下来对比。"
+          }
+        ]
+      }
+    },
+    {
       "id": "roman-numerals",
       "slug": "roman-numerals",
       "number": "H-01",
@@ -18973,6 +19387,538 @@
       }
     },
     {
+      "id": "royal-road",
+      "slug": "royal-road",
+      "number": "H-29",
+      "title": "王道进行与流派语法",
+      "titleEn": "ROYAL-ROAD PROGRESSIONS BY GENRE",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "王道进行",
+        "4536",
+        "卡农进行",
+        "1645",
+        "1564",
+        "royal road progression",
+        "Pachelbel progression",
+        "流派进行"
+      ],
+      "tags": [
+        "进行",
+        "流行",
+        "文化差异"
+      ],
+      "dimensions": [
+        "direction",
+        "relationship",
+        "color"
+      ],
+      "summary": "“王道进行”依流派而异：J-Pop 的 4-5-3-6（IV–V–iii–vi）与卡农进行、爵士的 2-5-1 与 1-6-2-5、欧美的 1-5-6-4 及其重排——同一批功能和弦，不同文化圈偏爱不同的根音运动路径。",
+      "sections": [
+        {
+          "id": "by-genre",
+          "heading": "各流派的王道",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "J-Pop：4-5-3-6（起承转合的“王道中的王道”，常配斜线和弦）；卡农进行（2▲/5▲ 循环改造、下行低音线）；6-4-5-1（阴暗叙事曲向，6-2-5-1 的变体）。",
+                "爵士：2-5-1（连续两个下行五度，推动力最强）与 1-6-2-5（变化多、大量下行五度）。",
+                "欧美：1-5-6-4（Let it be 前奏式）及其重排 6-4-1-5、1-4-6-5——同一循环换起点，靠重排而不是换和弦产生变体。",
+                "EDM 反转：现代舞曲偏爱“弱进行”（上行三度、V→IIm、VIm→I），因为传统强进行“过于自然而不自然”，要让和弦退后给音效与节奏。"
+              ],
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C23「王道进行与文化差异」"
+                },
+                {
+                  "source": "levine",
+                  "locator": "Chapter 2 Major Scale and Progressions（其他常见和弦进行）"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "culture",
+          "heading": "文化差异从哪来",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "两个观察：① 欧美音乐中 IV→I 明显更常见（可能与圣诗以 IV–I 收束的传统有关），日本则倾向 IV 后接 V；② 用连接系统看，欧美 6-4-1-5 / 1-5-6-4 / 4-1-5-6 其实是同一循环换起点，欧美偏爱软连接（上行三度）造“广阔开放”，J-Pop 的 4-5-3-6 更接近爵士式温和推动。",
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C23「王道进行与文化差异」"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C16「系统分类」"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "写作抓手",
+              "text": "写歌先选语法：要“日系起承转合”用 4536，要“清爽开阔”用 1564 及重排，要“最强推进”用 2-5-1，要“和弦让位给音效”就反着用弱进行。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-royal-road-compare",
+          "title": "J-Pop 4536 vs 欧美 1564",
+          "caption": "前四小节 F–G–Em–Am（4-5-3-6，日系王道）；后四小节 C–G–Am–F（1-5-6-4，欧美循环）——同调同和弦池，路径不同气质不同。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 84,
+          "beats": 16,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "IV"
+            },
+            {
+              "beat": 2,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "V"
+            },
+            {
+              "beat": 4,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "iii"
+            },
+            {
+              "beat": 6,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "vi"
+            },
+            {
+              "beat": 8,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "I"
+            },
+            {
+              "beat": 10,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "V"
+            },
+            {
+              "beat": 12,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "vi"
+            },
+            {
+              "beat": 14,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "IV"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "connection-system",
+        "roman-numerals",
+        "ii-v-i",
+        "harmonic-sequence"
+      ],
+      "review": {
+        "question": "J-Pop、爵士、欧美各自的“王道进行”是什么？为什么 EDM 反而避开强进行？",
+        "answer": "J-Pop＝4-5-3-6/卡农/6-4-5-1；爵士＝2-5-1 与 1-6-2-5；欧美＝1-5-6-4 及重排。EDM 偏爱弱进行是因为传统强进行“过于自然而不自然”，要让和弦退后给音效与节奏。",
+        "hint": "同一批功能和弦，不同文化圈走不同路径。"
+      },
+      "deepDive": {
+        "title": "白话解释：每个流派都有自己的“万能进行”",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "“王道进行”不是一个和弦序列，而是每个文化圈最顺手的那个：日本人张口 4-5-3-6（起承转合），爵士乐手条件反射 2-5-1，欧美写歌常绕 1-5-6-4 这个圈。和弦池是同一套功能和声，差别只在“惯用路径”。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "和弦篇 C23「王道进行与文化差异」"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "最有趣的反转：EDM 故意避开 V→I 这类“最自然”的进行——因为太自然反而显得老套，要让和弦退后、给音效和节奏让路。这提醒我们：理论总结现实，不规定“正确”。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "和弦篇 C23「王道进行与文化差异」"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "选进行先选文化语气。练习：拿同一段旋律分别配 4536、1564、2-5-1 三版，听气质变化。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pop-modulation",
+      "slug": "pop-modulation",
+      "number": "H-30",
+      "title": "流行转调技法：半音、全音、小三度",
+      "titleEn": "POP MODULATION TECHNIQUES",
+      "category": "harmony",
+      "level": "高级",
+      "aliases": [
+        "流行转调",
+        "半音转调",
+        "全音转调",
+        "小三度转调",
+        "升调",
+        "truck driver's modulation",
+        "pop modulation"
+      ],
+      "tags": [
+        "转调",
+        "流行",
+        "桥和弦"
+      ],
+      "dimensions": [
+        "relationship",
+        "brightness",
+        "direction"
+      ],
+      "summary": "流行转调按调号距离分三档：半音（±5，最戏剧）、全音（±2，可走枢纽和弦的平滑档）、小三度（±3，“平行转换+小三度移”的复合，最自然）——每档都有转入与回归的成对技巧。",
+      "sections": [
+        {
+          "id": "three-distances",
+          "heading": "三档距离，三种性格",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "半音（调号 ±5）：音阶成员几乎全换，新鲜感最强；J-Pop 常在最后一个副歌前升半音推高潮；转入靠新调 V（或 Vsus4–V / ii–V）强解决落地。",
+                "全音（调号 ±2）：两调保留共同和弦，可用枢纽和弦平滑过渡；典型做法是把原调 VI（常先做性质转换）重定义为新调 V。",
+                "小三度（调号 ±3）：本质是“小三度移（R）+平行转换（P）”的复合——把原调 VIm 改性质成 VI 即新调 I（下行），或直接把 ♭III 当新主（上行）；听感最自然，一般听众可能意识不到转了调。"
+              ],
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C52「流行转调技巧❷半音的转调」"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C53「流行转调技巧❸全音的转调」"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C54「流行转调技巧❹小三度下转调」"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C55「流行转调技巧❺小三度上转调」"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "小三度上下转调属于同主系统（T 转调）：C 与 Am 是核心，靠性质转换与同主和弦替换即可自由往来，回归可以无预备直接 I→I。这与古典近关系调（调号差一）是不同的距离刻度——流行按调号差分档，古典按共同和弦分级。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 19 Tonicization and Modulation（Closely Related Keys）"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第三十一章 调性关系的类型"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "craft",
+          "heading": "工程细节：回归与旋律先行",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "两条铁律：① 转入要与回归成对设计，否则第二遍主歌会跑调——通常在间奏插回原调的 V（或模糊两调归属的和弦）让还原分步发生；② 旋律先行提示——新调的变化音先在旋律里出现（甚至借用旋律小调式铺垫），转调就不突兀；只看和弦符号会漏掉二度、六度音引发的隐藏转调。半音下转调还常用作人声音域控制：最高音不变而功能从 mi 变 fa，在有限声域里换音的本质。",
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C52「流行转调技巧❷半音的转调」"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "和弦篇 C55「流行转调技巧❺小三度上转调」"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "写作抓手",
+              "text": "选档：要爆发用半音上、要成熟稳重用小三度下、要平滑用全音走枢纽；每次转调都写好“回家的路”，并用旋律提前漏新调的音。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-pop-modulation",
+          "title": "C → D：半音上转调",
+          "caption": "C 陈述 → G（原调 V）→ D/A7（新调 V–I）：属和弦强解决让半音切换被听成“紧张—释放”。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 88,
+          "beats": 16,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                }
+              ],
+              "label": "C: I"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "V"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 54,
+                  "spelling": "F#3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 61,
+                  "spelling": "C#4"
+                }
+              ],
+              "label": "D: V7"
+            },
+            {
+              "beat": 12,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 50,
+                  "spelling": "D3"
+                },
+                {
+                  "midi": 54,
+                  "spelling": "F#3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "D: I"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "modulation",
+        "tonal-distance",
+        "modal-mixture-color",
+        "secondary-dominants"
+      ],
+      "review": {
+        "question": "半音、全音、小三度三档转调各自的听感与典型手法是什么？",
+        "answer": "半音（±5）最戏剧，靠新调 V 强解决落地；全音（±2）平滑，VI 重定义为新调 V 走枢纽；小三度（±3）最自然，属同主系统，性质转换（VIm→VI=新 I）即可往返。",
+        "hint": "调号差越大越戏剧；小三度是“换平行”的自然档。"
+      },
+      "deepDive": {
+        "title": "白话解释：转调选档 like 换挡",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "流行转调像换挡：半音挡（调号差 5）最猛，最后副歌前升半音就是它；全音挡（差 2）温和，两调有共同和弦可以走“枢纽”慢慢换；小三度挡（差 3）最隐形——它其实是“换成平行大小调再挪小三度”，耳朵早就习惯这套关系，很多听众根本察觉不到转了调。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "和弦篇 C52「流行转调技巧❷半音的转调」"
+              },
+              {
+                "source": "soundquest",
+                "locator": "和弦篇 C54「流行转调技巧❹小三度下转调」"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "两条工程纪律：一是“去的路和回的路成对设计”，否则第二遍主歌跑调——通常用间奏把新调模糊掉再落回原调 V；二是“旋律先行漏音”，新调的变化音先在旋律里出现，和弦切换就不突兀。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "和弦篇 C55「流行转调技巧❺小三度上转调」"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "爆发用半音、平滑用全音、隐形用小三度；每次转调写好回家的路。练习：把一首 C 调歌分别按三档转上去再转回来。"
+          }
+        ]
+      }
+    },
+    {
       "id": "ii-v-i",
       "slug": "ii-v-i",
       "number": "J-01",
@@ -22336,6 +23282,209 @@
           }
         ]
       }
+    },
+    {
+      "id": "clave",
+      "slug": "clave",
+      "number": "J-16",
+      "title": "Clave：非洲-古巴节奏的骨架",
+      "titleEn": "CLAVE & AFRO-CUBAN RHYTHM",
+      "category": "jazz",
+      "level": "进阶",
+      "aliases": [
+        "clave",
+        "son clave",
+        "rumba clave",
+        "3-2",
+        "2-3",
+        "tresillo",
+        "dembow",
+        "非洲-古巴节奏"
+      ],
+      "tags": [
+        "节奏",
+        "拉丁",
+        "律动"
+      ],
+      "dimensions": [
+        "rhythm"
+      ],
+      "summary": "Clave 是两小节的节奏骨架（3-2 或 2-3）：萨尔萨乐队里钢琴、贝斯与全部打击乐各自织网，把它们粘在一起的就是这条线——核心魅力是“用 3 分割 4 的倍数”产生切分轻快感。",
+      "sections": [
+        {
+          "id": "basics",
+          "heading": "3-2、2-3 与变体家族",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Son clave（3-2 前进式）：第一小节三次重音、第二小节两次；倍速形式常见于流行编曲。",
+                "Reverse clave（2-3）：前后颠倒，开头留白，听感更成熟时尚。",
+                "Rumba clave：3 那小节最后一个音延迟半拍；Bossa clave 把重音移到下拍、切分更多。",
+                "Tresillo：只取 son clave 前半“哒·哒·哒”循环；倍速版在 J-Pop 副歌极常见；配底鼓/军鼓分解即 Dembow（雷鬼经典，EDM 亦常用）。Jersey club 节奏可视为改造 reverse clave。"
+              ],
+              "cites": [
+                {
+                  "source": "soundquest",
+                  "locator": "节奏篇 R5「Clave」"
+                },
+                {
+                  "source": "levine",
+                  "locator": "Chapter 22 Salsa and Latin Jazz"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Levine 的规矩：在萨尔萨乐队里，每一件节奏乐器——钢琴、贝斯、timbales、conga、bongo、guiro、牛铃——各奏一种节奏，像拼图一样交织，把它们结合在一起的就是 clave；鼓点、钢琴 montuno、贝斯线、旋律断句、管乐线全部必须与 clave 吻合。“看不见的小节线”就是乐手心里的这条两小节格。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 22 Salsa and Latin Jazz"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "usage",
+          "heading": "用在爵士与流行里",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "爵士乐手借“非洲-古巴”节奏进爵士曲，最少要知道 clave 方向（3-2 还是 2-3）并让 comping 与断句落在格内；流行编曲则常用 tresillo/倍速 tresillo 做副歌律动框架。现代流行节奏深受非裔流派影响——它是无数源流汇成的大海，认得这些基本节奏型就能整理信息：特定曲风倾向特定节奏型。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 22 Salsa and Latin Jazz"
+                },
+                {
+                  "source": "soundquest",
+                  "locator": "节奏篇 R5「Clave」"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "练习抓手",
+              "text": "拍手念 clave（3-2：哒·哒·哒 | 哒·哒）并用它给一首 4/4 歌曲打底层，再检查旋律断句是否落格；换 2-3 再来一遍。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-son-clave",
+          "title": "Son clave 3-2 节奏型",
+          "caption": "两小节五次敲击（拍 1、2.5、3.5 | 5、7）——这就是粘住整个萨尔萨节奏组的骨架线。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 100,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "✕"
+            },
+            {
+              "beat": 1.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "✕"
+            },
+            {
+              "beat": 2.5,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "✕"
+            },
+            {
+              "beat": 4,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "✕"
+            },
+            {
+              "beat": 6,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "✕"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "blues",
+        "meter-syncopation",
+        "shuffle-beat",
+        "harmonic-rhythm"
+      ],
+      "review": {
+        "question": "3-2 与 2-3 clave 的区别是什么？为什么整个乐队都要吻合 clave？",
+        "answer": "3-2 第一小节三击、第二小节两击；2-3 前后颠倒。clave 是节奏组的粘合剂——各件乐器节奏不同，但都锚在同一条两小节格上，错格会让整个律动散架。",
+        "hint": "先定方向，再对格。"
+      },
+      "deepDive": {
+        "title": "白话解释：两小节一条格，全队对格子",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Clave 就是两小节里的五次敲击（3-2 或颠倒成 2-3）。萨尔萨乐队七八件乐器各打各的，靠的不是数拍子，而是所有人心里同一条 clave 格——“看不见的小节线”。错格（cross the clave）是拉丁演奏的大忌。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 22 Salsa and Latin Jazz"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "它的数学魅力：用 3 去切 4 的倍数（8 或 16 拍），错位产生天然的切分轻快感。家族成员：rumba/bossa 是变体；只取前半就是 tresillo，倍速 tresillo 铺满 J-Pop 副歌，加上底鼓军鼓分解就是 dembow。",
+            "cites": [
+              {
+                "source": "soundquest",
+                "locator": "节奏篇 R5「Clave」"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 22 Salsa and Latin Jazz"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "先定 3-2 还是 2-3，全队对格。练习：拍手打 clave 唱一首 4/4 歌，检查断句落不落格。"
+          }
+        ]
+      }
     }
   ],
   "examples": [
@@ -23794,6 +24943,169 @@
       ],
       "conceptSlug": "harmonic-series",
       "conceptTitle": "泛音列：音程协和的物理底座",
+      "category": "foundations"
+    },
+    {
+      "id": "ex-tonal-gravity",
+      "title": "倾向音的解决路径",
+      "caption": "re→fa→mi：中倾向搭桥后强倾向 fa 落到 mi；随后 si→do 上行解决——两条最基本的引力路径。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 76,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "re"
+        },
+        {
+          "beat": 1,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "fa"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "→mi"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "si"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "→do"
+        }
+      ],
+      "conceptSlug": "tonal-gravity",
+      "conceptTitle": "调性引力论：倾向音的解决",
+      "category": "foundations"
+    },
+    {
+      "id": "ex-shuffle-line",
+      "title": "布鲁斯 shuffle 低音线（以 swing 感弹）",
+      "caption": "C–G–C–A 的根音线：谱面均分，实际演奏把每拍唱成 2:1 的“咚—哒”，即得 shuffle 律动。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 104,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 1.5,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            }
+          ]
+        },
+        {
+          "beat": 1.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ]
+        },
+        {
+          "beat": 2,
+          "duration": 1.5,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            }
+          ]
+        },
+        {
+          "beat": 3.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 1.5,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            }
+          ]
+        },
+        {
+          "beat": 5.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ]
+        },
+        {
+          "beat": 6,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 45,
+              "spelling": "A2"
+            }
+          ]
+        },
+        {
+          "beat": 7,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 47,
+              "spelling": "B2"
+            }
+          ]
+        }
+      ],
+      "conceptSlug": "shuffle-beat",
+      "conceptTitle": "Shuffle 与 Swing：拍内细分法",
       "category": "foundations"
     },
     {
@@ -27267,6 +28579,270 @@
       "category": "harmony"
     },
     {
+      "id": "ex-royal-road-compare",
+      "title": "J-Pop 4536 vs 欧美 1564",
+      "caption": "前四小节 F–G–Em–Am（4-5-3-6，日系王道）；后四小节 C–G–Am–F（1-5-6-4，欧美循环）——同调同和弦池，路径不同气质不同。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 84,
+      "beats": 16,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "IV"
+        },
+        {
+          "beat": 2,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "V"
+        },
+        {
+          "beat": 4,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "iii"
+        },
+        {
+          "beat": 6,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "vi"
+        },
+        {
+          "beat": 8,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "I"
+        },
+        {
+          "beat": 10,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "V"
+        },
+        {
+          "beat": 12,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "vi"
+        },
+        {
+          "beat": 14,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "IV"
+        }
+      ],
+      "conceptSlug": "royal-road",
+      "conceptTitle": "王道进行与流派语法",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-pop-modulation",
+      "title": "C → D：半音上转调",
+      "caption": "C 陈述 → G（原调 V）→ D/A7（新调 V–I）：属和弦强解决让半音切换被听成“紧张—释放”。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 88,
+      "beats": 16,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            }
+          ],
+          "label": "C: I"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "V"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 54,
+              "spelling": "F#3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 61,
+              "spelling": "C#4"
+            }
+          ],
+          "label": "D: V7"
+        },
+        {
+          "beat": 12,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 50,
+              "spelling": "D3"
+            },
+            {
+              "midi": 54,
+              "spelling": "F#3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "D: I"
+        }
+      ],
+      "conceptSlug": "pop-modulation",
+      "conceptTitle": "流行转调技法：半音、全音、小三度",
+      "category": "harmony"
+    },
+    {
       "id": "ex-ii-v-i-extended",
       "title": "Dm9–G13–Cmaj9",
       "caption": "延伸音加厚色彩，但骨架仍是 D–G–C 的低音与 F/C→B/F→E/B 的声部。",
@@ -28847,6 +30423,75 @@
       ],
       "conceptSlug": "lydian-chromatic-concept",
       "conceptTitle": "Lydian Chromatic Concept",
+      "category": "jazz"
+    },
+    {
+      "id": "ex-son-clave",
+      "title": "Son clave 3-2 节奏型",
+      "caption": "两小节五次敲击（拍 1、2.5、3.5 | 5、7）——这就是粘住整个萨尔萨节奏组的骨架线。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 100,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "✕"
+        },
+        {
+          "beat": 1.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "✕"
+        },
+        {
+          "beat": 2.5,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "✕"
+        },
+        {
+          "beat": 4,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "✕"
+        },
+        {
+          "beat": 6,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "✕"
+        }
+      ],
+      "conceptSlug": "clave",
+      "conceptTitle": "Clave：非洲-古巴节奏的骨架",
       "category": "jazz"
     }
   ],

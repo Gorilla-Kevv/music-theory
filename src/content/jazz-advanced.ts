@@ -1,5 +1,5 @@
 import { cite } from "./bibliography";
-import { chord, example, line } from "./helpers";
+import { chord, example, line, melody } from "./helpers";
 import type { Concept } from "./types";
 
 export const JAZZ_ADVANCED: Concept[] = [
@@ -554,6 +554,92 @@ export const JAZZ_ADVANCED: Concept[] = [
       answer:
         "按完全五度串联，中心音先遇到 ♯4 再遇到 ♯4 的对立面 4；含 ♯4 的 Lydian 与中心连接最紧。大调的 Fa 带目标压力，被归为“水平”，Lydian 是“垂直统一”。该论证是公设而非证明。",
       hint: "五度串联，♯4 先出现。",
+    },
+  },
+  {
+    id: "clave",
+    slug: "clave",
+    number: "J-16",
+    title: "Clave：非洲-古巴节奏的骨架",
+    titleEn: "CLAVE & AFRO-CUBAN RHYTHM",
+    category: "jazz",
+    level: "进阶",
+    aliases: ["clave", "son clave", "rumba clave", "3-2", "2-3", "tresillo", "dembow", "非洲-古巴节奏"],
+    tags: ["节奏", "拉丁", "律动"],
+    dimensions: ["rhythm"],
+    summary:
+      "Clave 是两小节的节奏骨架（3-2 或 2-3）：萨尔萨乐队里钢琴、贝斯与全部打击乐各自织网，把它们粘在一起的就是这条线——核心魅力是“用 3 分割 4 的倍数”产生切分轻快感。",
+    sections: [
+      {
+        id: "basics",
+        heading: "3-2、2-3 与变体家族",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Son clave（3-2 前进式）：第一小节三次重音、第二小节两次；倍速形式常见于流行编曲。",
+              "Reverse clave（2-3）：前后颠倒，开头留白，听感更成熟时尚。",
+              "Rumba clave：3 那小节最后一个音延迟半拍；Bossa clave 把重音移到下拍、切分更多。",
+              "Tresillo：只取 son clave 前半“哒·哒·哒”循环；倍速版在 J-Pop 副歌极常见；配底鼓/军鼓分解即 Dembow（雷鬼经典，EDM 亦常用）。Jersey club 节奏可视为改造 reverse clave。",
+            ],
+            cites: [
+              cite("soundquest", "节奏篇 R5「Clave」"),
+              cite("levine", "Chapter 22 Salsa and Latin Jazz"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "Levine 的规矩：在萨尔萨乐队里，每一件节奏乐器——钢琴、贝斯、timbales、conga、bongo、guiro、牛铃——各奏一种节奏，像拼图一样交织，把它们结合在一起的就是 clave；鼓点、钢琴 montuno、贝斯线、旋律断句、管乐线全部必须与 clave 吻合。“看不见的小节线”就是乐手心里的这条两小节格。",
+            cites: [cite("levine", "Chapter 22 Salsa and Latin Jazz")],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "用在爵士与流行里",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "爵士乐手借“非洲-古巴”节奏进爵士曲，最少要知道 clave 方向（3-2 还是 2-3）并让 comping 与断句落在格内；流行编曲则常用 tresillo/倍速 tresillo 做副歌律动框架。现代流行节奏深受非裔流派影响——它是无数源流汇成的大海，认得这些基本节奏型就能整理信息：特定曲风倾向特定节奏型。",
+            cites: [
+              cite("levine", "Chapter 22 Salsa and Latin Jazz"),
+              cite("soundquest", "节奏篇 R5「Clave」"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "练习抓手",
+            text: "拍手念 clave（3-2：哒·哒·哒 | 哒·哒）并用它给一首 4/4 歌曲打底层，再检查旋律断句是否落格；换 2-3 再来一遍。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-son-clave",
+        title: "Son clave 3-2 节奏型",
+        caption: "两小节五次敲击（拍 1、2.5、3.5 | 5、7）——这就是粘住整个萨尔萨节奏组的骨架线。",
+        kind: "melody",
+        key: "C",
+        tempo: 100,
+        beats: 8,
+        events: [
+          melody(0, 0.5, "C4", { label: "✕" }),
+          melody(1.5, 0.5, "C4", { label: "✕" }),
+          melody(2.5, 0.5, "C4", { label: "✕" }),
+          melody(4, 0.5, "C4", { label: "✕" }),
+          melody(6, 0.5, "C4", { label: "✕" }),
+        ],
+      }),
+    ],
+    related: ["blues", "meter-syncopation", "shuffle-beat", "harmonic-rhythm"],
+    review: {
+      question: "3-2 与 2-3 clave 的区别是什么？为什么整个乐队都要吻合 clave？",
+      answer:
+        "3-2 第一小节三击、第二小节两击；2-3 前后颠倒。clave 是节奏组的粘合剂——各件乐器节奏不同，但都锚在同一条两小节格上，错格会让整个律动散架。",
+      hint: "先定方向，再对格。",
     },
   },
 ];

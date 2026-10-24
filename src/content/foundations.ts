@@ -1007,4 +1007,165 @@ export const FOUNDATIONS: Concept[] = [
       hint: "看分音出现的先后。",
     },
   },
+  {
+    id: "tonal-gravity",
+    slug: "tonal-gravity",
+    number: "F-13",
+    title: "调性引力论：倾向音的解决",
+    titleEn: "TONAL GRAVITY & TENDENCY RESOLUTION",
+    category: "foundations",
+    level: "进阶",
+    aliases: ["调性引力", "倾向性", "半音倾向", "tonal gravity", "tendency tone", "不稳定音", "解决"],
+    tags: ["旋律", "倾向音", "解决"],
+    dimensions: ["direction", "color"],
+    summary:
+      "调内七音按稳定性分级：do/mi/sol 稳定，fa/si 有半音倾向最强，re/la 中等；旋律的方向感来自这些音被“引力”拉向落点的过程——解决、延迟解决或悬而不决都是表达工具。",
+    sections: [
+      {
+        id: "stability",
+        heading: "稳定音与倾向音的分级",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "稳定音：do、mi、sol——主三和弦成员，可以停留。",
+              "最强倾向音：fa（→mi）、si（→do）——与相邻稳定音成半音，被拉力最大。",
+              "中等倾向音：re、la——不稳定但没有可依靠的半音；re、la 下行解决是首选，上行是次选。",
+              "例外一：导音 si 是唯一上行解决最自然的音；例外二：旋律同向连续推进时（惯性），逆倾向进行也自然。",
+            ],
+            cites: [
+              cite("soundquest", "旋律篇 M5「半音进行和倾向性」"),
+              cite("soundquest", "旋律篇 M9「调性引力论❶倾向性的解决」"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "古典理论里的倾向音（tendency tone）是同一现象的功能化描述：属和弦的导音必须上行、七音必须下行。调性引力论把它推广到整条音阶并给出分级——这样旋律写作可以从“每个音离落点多远、往哪边落”出发设计。",
+            cites: [cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading")],
+          },
+        ],
+      },
+      {
+        id: "expression",
+        heading: "解决、延迟与悬置的表达",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "延迟解决（绕道后再落）会积累解决的欲望；悬而不决则制造悬浮与不安。流行音乐的实例：长时间延续 sol 平静无紧张；连打 re 制造悬浮感（中倾向不解决也可接受）；延伸导音 si 制造诡异不安；延长 fa 则奇异到需要和弦技巧配合。",
+            cites: [cite("soundquest", "旋律篇 M9「调性引力论❶倾向性的解决」")],
+          },
+          {
+            type: "callout",
+            title: "写作抓手",
+            text: "先给旋律里每个音标“稳定/中倾向/强倾向”，再决定它落不落、往哪落、什么时候落——“无法割舍”用 si 延伸，“流畅的平静”避开 fa–sol 相邻悬置。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-tonal-gravity",
+        title: "倾向音的解决路径",
+        caption: "re→fa→mi：中倾向搭桥后强倾向 fa 落到 mi；随后 si→do 上行解决——两条最基本的引力路径。",
+        kind: "melody",
+        key: "C",
+        tempo: 76,
+        beats: 8,
+        events: [
+          melody(0, 1, "D4", { label: "re" }),
+          melody(1, 1, "F4", { label: "fa" }),
+          melody(2, 2, "E4", { label: "→mi" }),
+          melody(4, 2, "B3", { label: "si" }),
+          melody(6, 2, "C4", { label: "→do" }),
+        ],
+      }),
+    ],
+    related: ["intervals", "voice-leading", "non-chord-tones", "melody-motives"],
+    review: {
+      question: "为什么 fa 和 si 的倾向性最强？re 和 la 属于哪一级？",
+      answer:
+        "fa、si 与相邻稳定音（mi、do）构成半音，被拉力最大；re、la 不稳定但没有可依靠的半音，属中等倾向，下行解决为首选、上行为次选。",
+      hint: "先看有没有半音邻居，再定强弱。",
+    },
+  },
+  {
+    id: "shuffle-beat",
+    slug: "shuffle-beat",
+    number: "F-14",
+    title: "Shuffle 与 Swing：拍内细分法",
+    titleEn: "SHUFFLE BEAT & SUBDIVISION",
+    category: "foundations",
+    level: "基础",
+    aliases: ["Shuffle", "Swing", "摇摆", "跳跃节奏", "细分法", "三连音", "half-time shuffle", "subdivision"],
+    tags: ["节奏", "律动", "布鲁斯"],
+    dimensions: ["rhythm"],
+    summary:
+      "Shuffle 不改变拍数，只改变拍内分割：把每拍分成三份并按 2:1 偏分（“咚——哒”），产生跳跃律动；Swing 是它在爵士语境下更自由、弹性介于 2:1 与 1:1 的版本。",
+    sections: [
+      {
+        id: "subdivision",
+        heading: "拍内细分：均分与三分",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "节拍有两个层面：拍的组织（拍号）与拍内的细分（subdivision）。普通节奏把每拍 1:1 等分；Shuffle 把每拍分三份、前长后短（约 2:1），听感从“平走”变成“跳跃”。这与复合拍（如 6/8 每组三等分）是同一细分原理的不同应用。",
+            cites: [
+              cite("soundquest", "节奏篇 R7「Shuffle-Beat」"),
+              cite("laitz", "Chapter 1B Musical Time: Pulse, Rhythm, and Meter"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "术语分工：Shuffle 基本指明确的 2:1 三分；爵士用 Swing 一词且含义带个人差异——重音在下拍、音符略延迟拖拽、比例在 2:1 与 1:1 之间浮动。均分节奏则称 straight/even；均分乐曲里局部插入 1:1:1 三连音可作重音装饰。",
+            cites: [cite("soundquest", "节奏篇 R7「Shuffle-Beat」")],
+          },
+        ],
+      },
+      {
+        id: "variants",
+        heading: "速度、变体与家族",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "三分比二分细密，快 tempo 下会显得“忙”，因此派生 half-time shuffle（计数与军鼓频率减半、以 16 拍为基底，Jeff Porcaro 确立）。大量变体存在于偶分与三分之间、或只有部分乐器 shuffle——这种暧昧正是 shuffle 的魅力。Motown 节奏本质是 shuffle，摇滚高频用它提速制造激烈感。",
+            cites: [cite("soundquest", "节奏篇 R7「Shuffle-Beat」")],
+          },
+          {
+            type: "callout",
+            title: "听觉抓手",
+            text: "数拍子只数“1 2 3 4”，嘴里念“咚—哒 咚—哒”就是 shuffle；念“咚哒 咚哒”是 straight。同一首歌两种念法弹一遍，律动立变。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-shuffle-line",
+        title: "布鲁斯 shuffle 低音线（以 swing 感弹）",
+        caption: "C–G–C–A 的根音线：谱面均分，实际演奏把每拍唱成 2:1 的“咚—哒”，即得 shuffle 律动。",
+        kind: "melody",
+        key: "C",
+        tempo: 104,
+        beats: 8,
+        events: [
+          melody(0, 1.5, "C3"), melody(1.5, 0.5, "G3"),
+          melody(2, 1.5, "C3"), melody(3.5, 0.5, "G3"),
+          melody(4, 1.5, "C3"), melody(5.5, 0.5, "G3"),
+          melody(6, 1, "A2"), melody(7, 1, "B2"),
+        ],
+      }),
+    ],
+    related: ["meter-syncopation", "blues", "harmonic-rhythm", "clave"],
+    review: {
+      question: "Shuffle 与三拍子的区别是什么？与 Swing 的关系呢？",
+      answer:
+        "三拍子改变“拍”的层面（每小节三拍）；shuffle 改变“拍内”分割（每拍 2:1 三分），拍数不变。Swing 是爵士语境下更自由的比例浮动版，shuffle 是明确的 2:1。",
+      hint: "一个在拍的层面，一个在拍的内部。",
+    },
+  },
 ];

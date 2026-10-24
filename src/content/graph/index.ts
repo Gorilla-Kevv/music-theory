@@ -187,6 +187,16 @@ const PREREQUISITES: Array<[string, string]> = [
   ["modal-mixture-color", "neo-riemannian"],
   ["modal-characteristics", "lydian-chromatic-concept"],
   ["chord-scale", "lydian-chromatic-concept"],
+  ["intervals", "tonal-gravity"],
+  ["non-chord-tones", "tonal-gravity"],
+  ["meter-syncopation", "shuffle-beat"],
+  ["blues", "shuffle-beat"],
+  ["connection-system", "royal-road"],
+  ["roman-numerals", "royal-road"],
+  ["modulation", "pop-modulation"],
+  ["tonal-distance", "pop-modulation"],
+  ["meter-syncopation", "clave"],
+  ["blues", "clave"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {

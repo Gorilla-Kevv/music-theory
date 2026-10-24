@@ -1716,4 +1716,176 @@ export const HARMONY_ADVANCED: Concept[] = [
       hint: "一次一音，大小反转。",
     },
   },
+  {
+    id: "royal-road",
+    slug: "royal-road",
+    number: "H-29",
+    title: "王道进行与流派语法",
+    titleEn: "ROYAL-ROAD PROGRESSIONS BY GENRE",
+    category: "harmony",
+    level: "进阶",
+    aliases: ["王道进行", "4536", "卡农进行", "1645", "1564", "royal road progression", "Pachelbel progression", "流派进行"],
+    tags: ["进行", "流行", "文化差异"],
+    dimensions: ["direction", "relationship", "color"],
+    summary:
+      "“王道进行”依流派而异：J-Pop 的 4-5-3-6（IV–V–iii–vi）与卡农进行、爵士的 2-5-1 与 1-6-2-5、欧美的 1-5-6-4 及其重排——同一批功能和弦，不同文化圈偏爱不同的根音运动路径。",
+    sections: [
+      {
+        id: "by-genre",
+        heading: "各流派的王道",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "J-Pop：4-5-3-6（起承转合的“王道中的王道”，常配斜线和弦）；卡农进行（2▲/5▲ 循环改造、下行低音线）；6-4-5-1（阴暗叙事曲向，6-2-5-1 的变体）。",
+              "爵士：2-5-1（连续两个下行五度，推动力最强）与 1-6-2-5（变化多、大量下行五度）。",
+              "欧美：1-5-6-4（Let it be 前奏式）及其重排 6-4-1-5、1-4-6-5——同一循环换起点，靠重排而不是换和弦产生变体。",
+              "EDM 反转：现代舞曲偏爱“弱进行”（上行三度、V→IIm、VIm→I），因为传统强进行“过于自然而不自然”，要让和弦退后给音效与节奏。",
+            ],
+            cites: [
+              cite("soundquest", "和弦篇 C23「王道进行与文化差异」"),
+              cite("levine", "Chapter 2 Major Scale and Progressions（其他常见和弦进行）"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "culture",
+        heading: "文化差异从哪来",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "两个观察：① 欧美音乐中 IV→I 明显更常见（可能与圣诗以 IV–I 收束的传统有关），日本则倾向 IV 后接 V；② 用连接系统看，欧美 6-4-1-5 / 1-5-6-4 / 4-1-5-6 其实是同一循环换起点，欧美偏爱软连接（上行三度）造“广阔开放”，J-Pop 的 4-5-3-6 更接近爵士式温和推动。",
+            cites: [
+              cite("soundquest", "和弦篇 C23「王道进行与文化差异」"),
+              cite("soundquest", "和弦篇 C16「系统分类」"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "写作抓手",
+            text: "写歌先选语法：要“日系起承转合”用 4536，要“清爽开阔”用 1564 及重排，要“最强推进”用 2-5-1，要“和弦让位给音效”就反着用弱进行。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-royal-road-compare",
+        title: "J-Pop 4536 vs 欧美 1564",
+        caption: "前四小节 F–G–Em–Am（4-5-3-6，日系王道）；后四小节 C–G–Am–F（1-5-6-4，欧美循环）——同调同和弦池，路径不同气质不同。",
+        kind: "progression",
+        key: "C",
+        tempo: 84,
+        beats: 16,
+        events: [
+          chord(0, 2, ["F3", "A3", "C4"], { label: "IV" }),
+          chord(2, 2, ["G3", "B3", "D4"], { label: "V" }),
+          chord(4, 2, ["E3", "G3", "B3"], { label: "iii" }),
+          chord(6, 2, ["A3", "C4", "E4"], { label: "vi" }),
+          chord(8, 2, ["C3", "E3", "G3"], { label: "I" }),
+          chord(10, 2, ["G3", "B3", "D4"], { label: "V" }),
+          chord(12, 2, ["A3", "C4", "E4"], { label: "vi" }),
+          chord(14, 2, ["F3", "A3", "C4"], { label: "IV" }),
+        ],
+      }),
+    ],
+    related: ["connection-system", "roman-numerals", "ii-v-i", "harmonic-sequence"],
+    review: {
+      question: "J-Pop、爵士、欧美各自的“王道进行”是什么？为什么 EDM 反而避开强进行？",
+      answer:
+        "J-Pop＝4-5-3-6/卡农/6-4-5-1；爵士＝2-5-1 与 1-6-2-5；欧美＝1-5-6-4 及重排。EDM 偏爱弱进行是因为传统强进行“过于自然而不自然”，要让和弦退后给音效与节奏。",
+      hint: "同一批功能和弦，不同文化圈走不同路径。",
+    },
+  },
+  {
+    id: "pop-modulation",
+    slug: "pop-modulation",
+    number: "H-30",
+    title: "流行转调技法：半音、全音、小三度",
+    titleEn: "POP MODULATION TECHNIQUES",
+    category: "harmony",
+    level: "高级",
+    aliases: ["流行转调", "半音转调", "全音转调", "小三度转调", "升调", "truck driver's modulation", "pop modulation"],
+    tags: ["转调", "流行", "桥和弦"],
+    dimensions: ["relationship", "brightness", "direction"],
+    summary:
+      "流行转调按调号距离分三档：半音（±5，最戏剧）、全音（±2，可走枢纽和弦的平滑档）、小三度（±3，“平行转换+小三度移”的复合，最自然）——每档都有转入与回归的成对技巧。",
+    sections: [
+      {
+        id: "three-distances",
+        heading: "三档距离，三种性格",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "半音（调号 ±5）：音阶成员几乎全换，新鲜感最强；J-Pop 常在最后一个副歌前升半音推高潮；转入靠新调 V（或 Vsus4–V / ii–V）强解决落地。",
+              "全音（调号 ±2）：两调保留共同和弦，可用枢纽和弦平滑过渡；典型做法是把原调 VI（常先做性质转换）重定义为新调 V。",
+              "小三度（调号 ±3）：本质是“小三度移（R）+平行转换（P）”的复合——把原调 VIm 改性质成 VI 即新调 I（下行），或直接把 ♭III 当新主（上行）；听感最自然，一般听众可能意识不到转了调。",
+            ],
+            cites: [
+              cite("soundquest", "和弦篇 C52「流行转调技巧❷半音的转调」"),
+              cite("soundquest", "和弦篇 C53「流行转调技巧❸全音的转调」"),
+              cite("soundquest", "和弦篇 C54「流行转调技巧❹小三度下转调」"),
+              cite("soundquest", "和弦篇 C55「流行转调技巧❺小三度上转调」"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "小三度上下转调属于同主系统（T 转调）：C 与 Am 是核心，靠性质转换与同主和弦替换即可自由往来，回归可以无预备直接 I→I。这与古典近关系调（调号差一）是不同的距离刻度——流行按调号差分档，古典按共同和弦分级。",
+            cites: [
+              cite("laitz", "Chapter 19 Tonicization and Modulation（Closely Related Keys）"),
+              cite("sposobin", "第三十一章 调性关系的类型"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "craft",
+        heading: "工程细节：回归与旋律先行",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "两条铁律：① 转入要与回归成对设计，否则第二遍主歌会跑调——通常在间奏插回原调的 V（或模糊两调归属的和弦）让还原分步发生；② 旋律先行提示——新调的变化音先在旋律里出现（甚至借用旋律小调式铺垫），转调就不突兀；只看和弦符号会漏掉二度、六度音引发的隐藏转调。半音下转调还常用作人声音域控制：最高音不变而功能从 mi 变 fa，在有限声域里换音的本质。",
+            cites: [
+              cite("soundquest", "和弦篇 C52「流行转调技巧❷半音的转调」"),
+              cite("soundquest", "和弦篇 C55「流行转调技巧❺小三度上转调」"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "写作抓手",
+            text: "选档：要爆发用半音上、要成熟稳重用小三度下、要平滑用全音走枢纽；每次转调都写好“回家的路”，并用旋律提前漏新调的音。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-pop-modulation",
+        title: "C → D：半音上转调",
+        caption: "C 陈述 → G（原调 V）→ D/A7（新调 V–I）：属和弦强解决让半音切换被听成“紧张—释放”。",
+        kind: "progression",
+        key: "C",
+        tempo: 88,
+        beats: 16,
+        events: [
+          chord(0, 4, ["C3", "E3", "G3"], { label: "C: I" }),
+          chord(4, 4, ["G3", "B3", "D4"], { label: "V" }),
+          chord(8, 4, ["D3", "F#3", "A3", "C#4"], { label: "D: V7" }),
+          chord(12, 4, ["D3", "F#3", "A3", "D4"], { label: "D: I" }),
+        ],
+      }),
+    ],
+    related: ["modulation", "tonal-distance", "modal-mixture-color", "secondary-dominants"],
+    review: {
+      question: "半音、全音、小三度三档转调各自的听感与典型手法是什么？",
+      answer:
+        "半音（±5）最戏剧，靠新调 V 强解决落地；全音（±2）平滑，VI 重定义为新调 V 走枢纽；小三度（±3）最自然，属同主系统，性质转换（VIm→VI=新 I）即可往返。",
+      hint: "调号差越大越戏剧；小三度是“换平行”的自然档。",
+    },
+  },
 ];
