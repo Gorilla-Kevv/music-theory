@@ -7,15 +7,15 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Concept } from "../content/types";
+import type { ReviewCard } from "../lib/cards";
 import {
-  addConceptCard,
+  addCard,
   gradeCard,
   getDueRecords,
-  getNewConcepts,
+  getNewCards,
   getStats,
-  isValidReviewState,
   loadReviewState,
+  normalizeReviewState,
   saveReviewState,
   type Grade,
   type ReviewState,
@@ -26,12 +26,12 @@ import { downloadJson } from "../lib/storage";
 interface ReviewContextValue {
   state: ReviewState;
   due: ReturnType<typeof getDueRecords>;
-  fresh: Concept[];
+  fresh: ReviewCard[];
   stats: ReturnType<typeof getStats>;
   earStats: EarStats;
-  isAdded: (concept: Concept) => boolean;
-  addConcept: (concept: Concept) => void;
-  grade: (concept: Concept, grade: Grade) => void;
+  isAdded: (cardId: string) => boolean;
+  addCard: (cardId: string) => void;
+  grade: (cardId: string, value: Grade) => void;
   recordEar: (mode: EarMode, correct: boolean) => void;
   exportState: () => void;
   importState: (raw: unknown) => boolean;
@@ -51,12 +51,12 @@ export function ReviewProvider({ children }: { children: ReactNode }) {
     saveEarStats(earStats);
   }, [earStats]);
 
-  const addConcept = useCallback((concept: Concept) => {
-    setState((current) => addConceptCard(current, concept));
+  const add = useCallback((cardId: string) => {
+    setState((current) => addCard(current, cardId));
   }, []);
 
-  const grade = useCallback((concept: Concept, gradeValue: Grade) => {
-    setState((current) => gradeCard(current, concept, gradeValue));
+  const grade = useCallback((cardId: string, gradeValue: Grade) => {
+    setState((current) => gradeCard(current, cardId, gradeValue));
   }, []);
 
   const recordEar = useCallback((mode: EarMode, correct: boolean) => {
@@ -75,8 +75,9 @@ export function ReviewProvider({ children }: { children: ReactNode }) {
   const importState = useCallback((raw: unknown) => {
     if (!raw || typeof raw !== "object") return false;
     const candidate = (raw as { review?: unknown }).review ?? raw;
-    if (!isValidReviewState(candidate)) return false;
-    setState(candidate);
+    const normalized = normalizeReviewState(candidate);
+    if (!normalized) return false;
+    setState(normalized);
     const ear = (raw as { ear?: EarStats }).ear;
     if (ear && typeof ear.attempts === "number") setEarStats(ear);
     return true;
@@ -86,17 +87,17 @@ export function ReviewProvider({ children }: { children: ReactNode }) {
     () => ({
       state,
       due: getDueRecords(state),
-      fresh: getNewConcepts(state),
+      fresh: getNewCards(state),
       stats: getStats(state),
       earStats,
-      isAdded: (concept) => Boolean(state.cards[concept.slug]),
-      addConcept,
+      isAdded: (cardId) => Boolean(state.cards[cardId]),
+      addCard: add,
       grade,
       recordEar,
       exportState,
       importState,
     }),
-    [state, earStats, addConcept, grade, recordEar, exportState, importState],
+    [state, earStats, add, grade, recordEar, exportState, importState],
   );
 
   return <ReviewContext.Provider value={value}>{children}</ReviewContext.Provider>;

@@ -23,7 +23,14 @@ import {
   searchSourceNotes,
 } from "../content";
 import type { CategoryId, Concept, Example, HarmonyDimension, Level, SourceId } from "../content/types";
-import { getDueRecords, getNewConcepts, getStats, loadReviewState, type ReviewState } from "./review";
+import {
+  getDueRecords,
+  getNewCards,
+  getStats,
+  loadReviewState,
+  normalizeReviewState,
+} from "./review";
+import { CHAPTER_CARD_COUNT, REVIEW_CARD_BY_ID, REVIEW_CARDS, type ReviewCard } from "./cards";
 import { searchConcepts } from "./search";
 
 export interface ToolSchema {
@@ -79,7 +86,7 @@ export const TOOL_SCHEMAS: ToolSchema[] = [
   },
   {
     name: "get_review_queue",
-    description: "读取到期复习卡与新卡；可传入从网页导出的学习状态 JSON。",
+    description: "读取到期复习卡与新卡（概念卡 + 书库章节笔记卡）；可传入从网页导出的学习状态 JSON。",
     inputSchema: {
       type: "object",
       properties: {
@@ -164,6 +171,8 @@ export interface KnowledgePack {
     sourceNoteCount: number;
     videoCount: number;
     videoReadCount: number;
+    reviewCardCount: number;
+    bookCardCount: number;
     language: string;
     licenseNote: string;
   };
@@ -179,6 +188,7 @@ export interface KnowledgePack {
   };
   concepts: Concept[];
   examples: Array<Example & { conceptSlug: string; conceptTitle: string; category: string }>;
+  reviewCards: ReviewCard[];
   toolSchemas: ToolSchema[];
 }
 
@@ -196,6 +206,8 @@ export function buildKnowledgePack(): KnowledgePack {
       sourceNoteCount: SOURCE_NOTES.length,
       videoCount: BILIBILI_VIDEO_COUNT,
       videoReadCount: BILIBILI_READ_COUNT,
+      reviewCardCount: REVIEW_CARDS.length,
+      bookCardCount: CHAPTER_CARD_COUNT,
       language: "zh-CN + en",
       licenseNote:
         "知识条目为原创改写，引用仅作章节级学术定位；本库不复制教材正文，不得把本库内容当作三本著作的替代版本。",
@@ -225,6 +237,20 @@ export function buildKnowledgePack(): KnowledgePack {
       conceptSlug: example.conceptSlug,
       conceptTitle: example.conceptTitle,
       category: example.category,
+    })),
+    reviewCards: REVIEW_CARDS.map((card) => ({
+      id: card.id,
+      kind: card.kind,
+      title: card.title,
+      question: card.question,
+      answer: card.answer,
+      ...(card.hint ? { hint: card.hint } : {}),
+      link: card.link,
+      ...(card.category ? { category: card.category } : {}),
+      ...(card.conceptSlug ? { conceptSlug: card.conceptSlug } : {}),
+      ...(card.chapterId ? { chapterId: card.chapterId } : {}),
+      ...(card.sourceId ? { sourceId: card.sourceId } : {}),
+      ...(card.chapterNumber ? { chapterNumber: card.chapterNumber } : {}),
     })),
     toolSchemas: TOOL_SCHEMAS,
   };
@@ -331,23 +357,37 @@ export function listVideoResearch(
   });
 }
 
-export function getReviewQueue(state?: ReviewState) {
-  const current = state ?? loadReviewState();
+export function getReviewQueue(state?: unknown) {
+  const current = normalizeReviewState(state) ?? loadReviewState();
   return {
-    due: getDueRecords(current).map((record) => {
-      const concept = CONCEPT_BY_SLUG[record.conceptSlug];
-      return {
-        ...record,
-        title: concept?.title ?? record.conceptSlug,
-        question: concept?.review.question ?? "",
-        answer: concept?.review.answer ?? "",
-      };
+    due: getDueRecords(current).flatMap((record) => {
+      const card = REVIEW_CARD_BY_ID[record.cardId];
+      if (!card) return [];
+      return [
+        {
+          cardId: record.cardId,
+          kind: card.kind,
+          title: card.title,
+          question: card.question,
+          answer: card.answer,
+          link: card.link,
+          ...(card.sourceId ? { sourceId: card.sourceId } : {}),
+          ...(card.chapterNumber ? { chapterNumber: card.chapterNumber } : {}),
+          due: record.due,
+          interval: record.interval,
+          ease: record.ease,
+          reps: record.reps,
+          lapses: record.lapses,
+        },
+      ];
     }),
-    newConcepts: getNewConcepts(current).map((concept) => ({
-      slug: concept.slug,
-      title: concept.title,
-      category: concept.category,
-      level: concept.level,
+    newCards: getNewCards(current).map((card) => ({
+      id: card.id,
+      kind: card.kind,
+      title: card.title,
+      ...(card.category ? { category: card.category } : {}),
+      ...(card.sourceId ? { sourceId: card.sourceId } : {}),
+      ...(card.chapterNumber ? { chapterNumber: card.chapterNumber } : {}),
     })),
     stats: getStats(current),
   };

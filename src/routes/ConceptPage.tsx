@@ -173,9 +173,9 @@ function DeepDiveSection({
 }
 
 function ReviewAction({ concept, onDark = false }: { concept: Concept; onDark?: boolean }) {
-  const { isAdded, addConcept, due } = useReview();
-  const added = isAdded(concept);
-  const dueRecord = due.find((record) => record.conceptSlug === concept.slug);
+  const { isAdded, addCard, due } = useReview();
+  const added = isAdded(concept.slug);
+  const dueRecord = due.find((record) => record.cardId === concept.slug);
   const actionClass = onDark
     ? "border-paper/80 text-paper hover:border-acid hover:text-acid"
     : "border-ink/80 text-ink hover:border-cobalt hover:text-cobalt-ink";
@@ -194,7 +194,7 @@ function ReviewAction({ concept, onDark = false }: { concept: Concept; onDark?: 
   return (
     <button
       type="button"
-      onClick={() => addConcept(concept)}
+      onClick={() => addCard(concept.slug)}
       className={`inline-flex items-center gap-2 border px-3 py-2 text-sm ${actionClass}`}
     >
       <Plus size={15} aria-hidden />
@@ -251,8 +251,8 @@ export function ConceptPage() {
   const next = index >= 0 && index < CONCEPTS.length - 1 ? CONCEPTS[index + 1] : null;
   const primaryExample = concept.examples[0];
   const playingPrimary = primaryExample ? isExamplePlaying(primaryExample.id) : false;
-  const added = isAdded(concept);
-  const dueRecord = due.find((record) => record.conceptSlug === concept.slug);
+  const added = isAdded(concept.slug);
+  const dueRecord = due.find((record) => record.cardId === concept.slug);
 
   const uniqueSources = [...new Set(numbered.map(({ ref }) => ref.source))];
   const sourceChapters = getChaptersForConcept(concept.slug);

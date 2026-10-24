@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Check, Headphones, RefreshCw, Volume2, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { CONCEPT_BY_SLUG } from "../content";
-import type { Concept } from "../content/types";
 import { useReview } from "../context/ReviewContext";
 import { useTransport } from "../context/TransportContext";
 import { generateEarQuestion, type EarMode, type EarQuestion } from "../lib/ear";
+import { REVIEW_CARD_BY_ID, SOURCE_FIELD, SOURCE_LABEL, type ReviewCard } from "../lib/cards";
 import type { Grade } from "../lib/review";
 import { formatPercent } from "../lib/format";
 import { CategoryTag, EmptyState, ProgressBar } from "../components/ui";
 import { CATEGORY_STYLES } from "../components/category";
 
 type Tab = "review" | "ear";
+type CardSource = "all" | "concept" | "chapter";
 
 const GRADES: Array<{ grade: Grade; label: string; hint: string; className: string }> = [
   { grade: "again", label: "重来", hint: "1", className: "border-cadmium-ink text-cadmium-ink hover:bg-cadmium hover:text-ink" },
@@ -24,18 +24,33 @@ function ReviewStage() {
   const { due, fresh, grade, stats, isAdded } = useReview();
   const { play } = useTransport();
   const [revealed, setRevealed] = useState(false);
+  const [source, setSource] = useState<CardSource>("all");
 
-  const current: Concept | undefined = useMemo(() => {
-    const dueSlug = due[0]?.conceptSlug;
-    if (dueSlug) return CONCEPT_BY_SLUG[dueSlug];
-    return fresh[0];
-  }, [due, fresh]);
+  const filteredDue = useMemo(
+    () =>
+      due.filter((record) => {
+        const card = REVIEW_CARD_BY_ID[record.cardId];
+        return card && (source === "all" || card.kind === source);
+      }),
+    [due, source],
+  );
 
-  const isNew = current ? !isAdded(current) : false;
+  const filteredFresh = useMemo(
+    () => fresh.filter((card) => source === "all" || card.kind === source),
+    [fresh, source],
+  );
+
+  const current: ReviewCard | undefined = useMemo(() => {
+    const record = filteredDue[0];
+    if (record) return REVIEW_CARD_BY_ID[record.cardId];
+    return filteredFresh[0];
+  }, [filteredDue, filteredFresh]);
+
+  const isNew = current ? !isAdded(current.id) : false;
 
   useEffect(() => {
     setRevealed(false);
-  }, [current?.slug]);
+  }, [current?.id]);
 
   useEffect(() => {
     if (!revealed || !current) return;
@@ -46,7 +61,7 @@ function ReviewStage() {
       const value = map[event.key];
       if (value) {
         event.preventDefault();
-        grade(current, value);
+        grade(current.id, value);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -54,55 +69,95 @@ function ReviewStage() {
   }, [revealed, current, grade]);
 
   if (!current) {
+    const copy =
+      source === "chapter"
+        ? { title: "书库卡已清空", body: "没有待复习的书库笔记卡。可以打开书库查看章节笔记，或切回“全部”。" }
+        : source === "concept"
+          ? { title: "概念卡已清空", body: "没有待复习的概念卡。可以去知识库把更多概念加入队列，或切回“全部”。" }
+          : { title: "到期卡已清空", body: "没有待复习的卡片。可以去知识库或书库浏览，或继续做听辨训练。" };
     return (
       <EmptyState
-        title="到期卡已清空"
-        body="没有待复习的卡片。可以去知识库把更多概念加入队列，或继续做听辨训练。"
+        title={copy.title}
+        body={copy.body}
         action={
           <Link
-            to="/library"
+            to={source === "chapter" ? "/books" : "/library"}
             className="mono-label inline-flex items-center gap-1.5 border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
           >
-            打开知识库 <ArrowRight size={13} aria-hidden />
+            {source === "chapter" ? "打开书库" : "打开知识库"} <ArrowRight size={13} aria-hidden />
           </Link>
         }
       />
     );
   }
 
-  const categoryStyle = CATEGORY_STYLES[current.category];
-  const answerExample = current.examples[0];
+  const conceptStyle = current.category ? CATEGORY_STYLES[current.category] : null;
+  const fieldClass =
+    conceptStyle?.field ?? (current.sourceId ? SOURCE_FIELD[current.sourceId] : "bg-ink text-paper");
+  const answerExample = current.example;
 
   const handleGrade = (value: Grade) => {
-    grade(current, value);
+    grade(current.id, value);
     setRevealed(false);
   };
 
   return (
     <div>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className="mono-label mr-1 text-muted">SOURCE</span>
+        {[
+          { id: "all" as const, label: "全部", count: stats.total },
+          { id: "concept" as const, label: "概念", count: stats.conceptTotal },
+          { id: "chapter" as const, label: "书库", count: stats.chapterTotal },
+        ].map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => setSource(item.id)}
+            className={`mono-label border px-2.5 py-1.5 ${
+              source === item.id
+                ? "border-ink bg-ink text-paper"
+                : "border-ink/45 text-muted hover:border-ink/70 hover:text-ink"
+            }`}
+          >
+            {item.label} · {item.count}
+          </button>
+        ))}
+      </div>
+
       <div className="flex flex-wrap items-center justify-between gap-3 border border-line bg-paper-2 px-4 py-3">
         <div className="flex flex-wrap items-center gap-2">
-          <CategoryTag category={current.category} />
-          <span className="mono-label text-muted">{current.number}</span>
+          {current.kind === "concept" && current.category ? (
+            <>
+              <CategoryTag category={current.category} />
+              <span className="mono-label text-muted">{current.title}</span>
+            </>
+          ) : (
+            <>
+              <span className={`mono-label px-2 py-1 ${fieldClass}`}>
+                {current.sourceId ? SOURCE_LABEL[current.sourceId] : "BOOK"} · CH.{current.chapterNumber}
+              </span>
+              <span className="mono-label text-muted">{current.title}</span>
+            </>
+          )}
           <span className="mono-label text-muted">
-            {isNew ? "NEW CARD" : due.length > 0 ? "DUE CARD" : "AHEAD"}
+            {isNew ? "NEW CARD" : filteredDue.length > 0 ? "DUE CARD" : "AHEAD"}
           </span>
         </div>
         <span className="mono-label text-muted">
-          QUEUE {due.length.toString().padStart(2, "0")} / NEW {stats.fresh.toString().padStart(2, "0")}
+          QUEUE {filteredDue.length.toString().padStart(2, "0")} / NEW{" "}
+          {filteredFresh.length.toString().padStart(2, "0")}
         </span>
       </div>
 
       <div className="mt-4 border border-line bg-paper">
-        <div className={`h-2 ${categoryStyle.field}`} aria-hidden />
+        <div className={`h-2 ${fieldClass}`} aria-hidden />
         <div className="px-5 py-6 sm:px-7 sm:py-8">
           <p className="mono-label text-muted">QUESTION / 主动回忆</p>
-          <h2 className="mt-3 max-w-[34ch] text-xl font-semibold leading-snug sm:text-2xl">
-            {current.review.question}
+          <h2 className="mt-3 max-w-[40ch] text-xl font-semibold leading-snug sm:text-2xl">
+            {current.question}
           </h2>
-          {current.review.hint ? (
-            <p className="mt-3 text-xs text-muted">提示：{current.review.hint}</p>
-          ) : null}
+          {current.hint ? <p className="mt-3 text-xs text-muted">提示：{current.hint}</p> : null}
 
           {!revealed ? (
             <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -113,18 +168,15 @@ function ReviewStage() {
               >
                 显示答案 <ArrowRight size={15} aria-hidden />
               </button>
-              <Link
-                to={`/theory/${current.slug}`}
-                className="mono-label text-cobalt-ink hover:text-ink"
-              >
-                打开条目 →
+              <Link to={current.link} className="mono-label text-cobalt-ink hover:text-ink">
+                {current.kind === "chapter" ? "打开章节笔记 →" : "打开条目 →"}
               </Link>
             </div>
           ) : (
             <div className="mt-6 border-t border-line pt-5">
               <p className="mono-label text-muted">ANSWER / 答案</p>
-              <p className="reading-column mt-2 text-base leading-relaxed sm:text-lg">
-                {current.review.answer}
+              <p className="reading-column mt-2 whitespace-pre-line text-base leading-relaxed sm:text-lg">
+                {current.answer}
               </p>
 
               {answerExample ? (
@@ -132,7 +184,7 @@ function ReviewStage() {
                   type="button"
                   onClick={() =>
                     play(answerExample, {
-                      conceptSlug: current.slug,
+                      conceptSlug: current.conceptSlug,
                       conceptTitle: current.title,
                     })
                   }
@@ -164,10 +216,11 @@ function ReviewStage() {
         </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-4">
         {[
           { label: "DUE / 到期", value: stats.due },
           { label: "NEW / 未学", value: stats.fresh },
+          { label: "BOOK / 书库卡", value: `${stats.chapterLearned}/${stats.chapterTotal}` },
           { label: "ACCURACY / 准确率", value: formatPercent(stats.accuracy) },
         ].map((item) => (
           <div key={item.label} className="border border-line px-3 py-2.5">
@@ -344,7 +397,7 @@ export function Drill() {
           <div>
             <h1 className="zh-display text-4xl sm:text-5xl">复习与听辨</h1>
             <p className="reading-column mt-3 max-w-[58ch] text-sm leading-relaxed text-muted">
-              用主动回忆检查概念，用听辨训练把音程、和弦与调式听成可辨认的形状。复习状态保存在本地，可导出给 Agent。
+              用主动回忆检查概念与书库笔记，用听辨训练把音程、和弦与调式听成可辨认的形状。复习状态保存在本地，可导出给 Agent。
             </p>
           </div>
           <div className="flex gap-4">
@@ -354,7 +407,7 @@ export function Drill() {
             </div>
             <div>
               <p className="mono-label text-muted">LEARNED</p>
-              <p className="text-xl font-semibold">{stats.learned}</p>
+              <p className="text-xl font-semibold">{stats.learned}/{stats.total}</p>
             </div>
             <div>
               <p className="mono-label text-muted">EAR</p>
@@ -425,9 +478,12 @@ export function Drill() {
         <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto] sm:items-center">
           <ProgressBar value={stats.learned} max={stats.total} />
           <span className="mono-label text-muted">
-            {stats.learned}/{stats.total} CONCEPTS IN QUEUE
+            {stats.learned}/{stats.total} CARDS IN QUEUE
           </span>
         </div>
+        <p className="mono-label mt-2 text-muted">
+          概念 {stats.conceptLearned}/{stats.conceptTotal} · 书库 {stats.chapterLearned}/{stats.chapterTotal}
+        </p>
       </div>
     </div>
   );

@@ -102,12 +102,23 @@ function HeroSleeve() {
 function ReviewStrip() {
   const { stats } = useReview();
   const items = [
-    { label: "DUE / 待复习", value: stats.due, tone: "text-cobalt-ink" },
-    { label: "NEW / 新卡", value: stats.fresh, tone: "text-cadmium-ink" },
+    {
+      label: "DUE / 待复习",
+      value: stats.due,
+      tone: "text-cobalt-ink",
+      sub: "概念卡 + 书库笔记卡",
+    },
+    {
+      label: "NEW / 新卡",
+      value: stats.fresh,
+      tone: "text-cadmium-ink",
+      sub: `${stats.conceptTotal} 概念 + ${stats.chapterTotal} 书库`,
+    },
     {
       label: "ACCURACY / 准确率",
       value: stats.reviews === 0 ? "—" : `${Math.round(stats.accuracy * 100)}%`,
       tone: "text-ink",
+      sub: `已复习 ${stats.learned}/${stats.total}`,
     },
   ];
   return (
@@ -119,6 +130,7 @@ function ReviewStrip() {
         >
           <p className="mono-label text-muted">{item.label}</p>
           <p className={`mt-1 text-2xl font-semibold ${item.tone}`}>{item.value}</p>
+          <p className="mono-label mt-1 text-muted">{item.sub}</p>
         </div>
       ))}
     </div>
@@ -198,7 +210,7 @@ export function Home() {
               <h1 className="display text-[clamp(4.5rem,13vw,10.5rem)] text-paper">Tonic</h1>
               <p className="zh-display mt-1 text-3xl text-acid sm:text-4xl">主音</p>
               <p className="reading-column mt-5 max-w-[42ch] text-base leading-relaxed text-paper sm:text-lg">
-                把乐理变成可听、可查、可复习的个人知识库。每个概念都有谱例、章节级引用与间隔复习卡。
+                把乐理变成可听、可查、可复习的个人知识库。概念卡与书库章节笔记卡共用一套间隔复习，每个概念都有谱例与章节级引用。
               </p>
 
               <button

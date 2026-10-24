@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowUpRight, BookOpen, Search, X } from "lucide-react";
+import { ArrowUpRight, BookOpen, Check, Plus, Search, X } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   BIBLIOGRAPHY_BY_ID,
@@ -10,8 +10,10 @@ import {
   HARMONY_DIMENSIONS,
   searchSourceNotes,
 } from "../content";
+import type { BookChapter } from "../content/books/types";
 import type { HarmonyDimension, SourceId } from "../content/types";
 import { useSearch } from "../components/SearchDialog";
+import { useReview } from "../context/ReviewContext";
 
 const BOOK_TABS: SourceId[] = ["levine", "laitz", "sposobin"];
 
@@ -28,6 +30,29 @@ const BOOK_SHORT: Record<SourceId, string> = {
   sposobin: "Harmony",
   soundquest: "SoundQuest",
 };
+
+function ChapterReviewAction({ chapter }: { chapter: BookChapter }) {
+  const { isAdded, addCard, due } = useReview();
+  const cardId = `chapter:${chapter.id}`;
+  const added = isAdded(cardId);
+  const dueRecord = due.find((record) => record.cardId === cardId);
+  const actionClass = "mono-label inline-flex items-center gap-2 border border-ink/80 px-3 py-2 text-sm text-ink hover:border-cobalt hover:text-cobalt-ink";
+
+  if (added) {
+    return (
+      <Link to="/drill" className={actionClass}>
+        <Check size={15} aria-hidden />
+        {dueRecord ? "今天到期 · 去复习" : "已在复习队列"}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" onClick={() => addCard(cardId)} className={actionClass}>
+      <Plus size={15} aria-hidden />
+      加入复习
+    </button>
+  );
+}
 
 export function Books() {
   const [params, setParams] = useSearchParams();
@@ -265,29 +290,32 @@ export function Books() {
                     );
                   })}
                 </div>
-                {__EMBEDDED_BOOKS__ ? (() => {
-                  const book = BOOK_BY_ID[selected.book];
-                  if (!book?.sourceBook) return null;
-                  const href = selected.sourceFile
-                    ? `/books/${selected.sourceFile}`
-                    : book.sourceBook.kind === "pdf" && selected.pdfPage
-                      ? `/books/${book.sourceBook.file}#page=${selected.pdfPage}`
-                      : null;
-                  if (!href) return null;
-                  const label = selected.sourceFile
-                    ? "打开原书本章（内嵌 EPUB）"
-                    : `打开原书 PDF 第 ${selected.pdfPage} 页`;
-                  return (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mono-label mt-3 inline-flex items-center gap-1.5 border border-current/70 px-2 py-1 text-cobalt-ink hover:bg-cobalt hover:text-paper"
-                    >
-                      {label} ↗
-                    </a>
-                  );
-                })() : null}
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  {__EMBEDDED_BOOKS__ ? (() => {
+                    const book = BOOK_BY_ID[selected.book];
+                    if (!book?.sourceBook) return null;
+                    const href = selected.sourceFile
+                      ? `/books/${selected.sourceFile}`
+                      : book.sourceBook.kind === "pdf" && selected.pdfPage
+                        ? `/books/${book.sourceBook.file}#page=${selected.pdfPage}`
+                        : null;
+                    if (!href) return null;
+                    const label = selected.sourceFile
+                      ? "打开原书本章（内嵌 EPUB）"
+                      : `打开原书 PDF 第 ${selected.pdfPage} 页`;
+                    return (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mono-label inline-flex items-center gap-1.5 border border-current/70 px-2 py-1 text-cobalt-ink hover:bg-cobalt hover:text-paper"
+                      >
+                        {label} ↗
+                      </a>
+                    );
+                  })() : null}
+                  <ChapterReviewAction chapter={selected} />
+                </div>
               </div>
 
               {selected.expanded ? (

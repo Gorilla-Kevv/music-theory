@@ -2,9 +2,9 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 32 已完成（上线 GitHub Pages）
-- 下一阶段任务：书库笔记接入复习卡；FL Studio 侧适配；图谱第三阶段（路径布局/跨书章节对照）
-- 可提前进行的任务：Agent 侧路径查询、线上内容维护
+- 当前正在开发任务：阶段 33 已完成（书库笔记接入复习卡）
+- 下一阶段任务：FL Studio 侧适配；图谱第三阶段（路径布局/跨书章节对照）；线上内容维护
+- 可提前进行的任务：Agent 侧路径查询、跨书章节对照
 - 未完成的任务：全量教材正文（版权边界，不做）；stdio MCP server；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）
 
 ## 已完成阶段简表（1–28，详见 git log 与各阶段提交）
@@ -97,3 +97,17 @@
 - 统计不变：66 概念 / 76 谱例 / 240 引用；图谱 188 关联 / 79 前置。
 - 下一阶段入口：书库笔记接入复习卡；FL Studio 适配；或图谱第三阶段（路径布局/跨书章节对照）。
 - 本次文档更新时间：10.24 22:53
+
+## 阶段 33 书库笔记接入复习卡 [计划时间：10.24 23:00 BY solo-agent][完成时间：10.24 23:28 BY solo-agent]
+
+- 分支：dev；push 后由 Actions 自动重新部署线上
+- 已完成：
+  - 33.1 卡片目录 `src/lib/cards.ts`：概念卡 66 + 书库章节 keyPoints 卡 117 + 章节常见误解卡 26 = 209；id 规则（概念＝slug、章节＝`chapter:<id>`、误解＝`chapter:<id>:q<n>`）与书源徽标。
+  - 33.2 状态 v2：`ReviewRecord.cardId`、存储键 `tonic.review.v2`；`normalizeReviewState` 自动迁移 v1 的 `conceptSlug`；导出/导入与 CLI `queue --state` 兼容 v1/v2。
+  - 33.3 Drill：来源筛选（全部 209 / 概念 66 / 书库 143）、书库卡书源徽标与多行答案、章节笔记链接、四格统计（DUE/NEW/BOOK/ACCURACY）、进度分解（概念 x/66 · 书库 y/143）。
+  - 33.4 书库章节页新增“加入复习 / 已在复习队列 / 今天到期”动作；概念页改用同一 card id API；Home 统计条与文案同步。
+  - 33.5 `knowledge.json` 增加 `reviewCards` 209 条与 `meta.reviewCardCount/bookCardCount`；`get_review_queue` tool schema 描述更新。
+- 测试：typecheck / build 通过；Drill 书库筛选、显示多行答案、评分写入 `tonic.review.v2`；Books/Concept“加入复习”写入成功；v1 state 经 CLI 迁移可用；Pages 构建（`/music-theory/` 下 209 卡）实测；375/1280 无横向溢出。
+- 统计：66 概念 / 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库 143）；图谱 188 关联 / 79 前置不变。
+- 下一阶段入口：FL Studio 适配；图谱第三阶段（路径布局/跨书章节对照）；线上内容维护。
+- 本次文档更新时间：10.24 23:28

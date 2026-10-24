@@ -17,7 +17,6 @@ import {
   getSourceNote,
 } from "../src/content";
 import { getReviewQueue } from "../src/lib/theory-api";
-import type { ReviewState } from "../src/lib/review";
 
 const args = process.argv.slice(2);
 const jsonFlag = args.includes("--json");
@@ -248,12 +247,11 @@ if (command === "queue") {
   const statePath = option("state");
   if (!statePath) fail("Usage: queue --state <review-state.json>");
   const raw = readFileSync(resolve(process.cwd(), statePath), "utf8");
-  const state = JSON.parse(raw) as ReviewState;
-  if (state.version !== 1) fail("Unsupported review state version");
+  const state = JSON.parse(raw) as unknown;
   const queue = getReviewQueue(state);
   if (jsonFlag) printJson(queue);
   else {
-    console.log(`Due: ${queue.due.length}; New: ${queue.newConcepts.length}`);
+    console.log(`Due: ${queue.due.length}; New: ${queue.newCards.length}`);
     queue.due.forEach((item) => console.log(`- ${item.title}: ${item.question}`));
   }
   process.exit(0);

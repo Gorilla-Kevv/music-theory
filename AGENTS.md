@@ -85,6 +85,14 @@ src/content/
 - 当前覆盖 66/66：基础 16 + 和声 34 + 爵士 16 全部有白话拆解。
 - 新增 deep dive 时优先写“为什么容易误解”“判断顺序”“一句话/练习”，避免重复 summary。
 
+## 复习卡（Review Cards）
+
+- 数据：`src/lib/cards.ts`（卡片目录）+ `src/lib/review.ts`（SM-2 状态 + 迁移）。
+- 卡片来源：概念卡 66（`concept.review`）+ 书库章节笔记卡 143（117 张章节 keyPoints 卡 + 26 张章节 `confusions` 误解卡），共 209 张。id 规则：概念＝slug；章节＝`chapter:<chapterId>`；误解＝`chapter:<chapterId>:q<n>`。
+- 状态存储 `tonic.review.v2`（`ReviewRecord.cardId`）；旧 `tonic.review.v1`（`conceptSlug` 字段）在加载/导入时自动迁移。Agent 导出/导入、CLI `queue --state` 都接受 v1/v2。
+- 页面：`/drill` 支持来源筛选（全部 / 概念 / 书库）；概念页与书库章节页都有“加入复习”；`knowledge.json` 含 `reviewCards` 与 `meta.reviewCardCount/bookCardCount`。
+- 新增书库卡时：只用 `keyPoints` 或 `confusions` 这类可主动回忆的短条目，不要把 `deepSummary` 整段当答案（粒度太粗、违背卡片目的）。
+
 ## B 站课程台账（Video Research）
 
 - 数据：`src/content/bilibili.ts`；页面：`/references` 的 `VIDEO RESEARCH` 区域。
@@ -136,6 +144,7 @@ src/content/
 - 240 条引用（三本书章节级 + SoundQuest 篇章级）
 - 3 本书 · 117 个章目（真实原书结构）· 117 条原创章节笔记（Levine 24/24、Laitz 33/33〔4e：1A/1B + 2–32〕、Sposobin 60/60）
 - 66 条白话拆解（全部概念）
+- 209 张复习卡（概念 66 + 书库章节笔记 143）
 - B 站调研台账：5 个合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目（以 `read` 为准）
 - 体系图谱：6 枢纽 / 66 概念 / 188 关联 / 79 前置
 - 线上：`https://gorilla-kevv.github.io/music-theory/`（GitHub Pages，Actions 部署；电子书不发布）
