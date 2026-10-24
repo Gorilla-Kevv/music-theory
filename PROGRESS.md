@@ -404,3 +404,16 @@
 - 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过。
 - 下一批入口：Laitz Ch18 已读（批次1）→ 余 Ch20/22/23/24/25–32（曲式与半音化）→ Levine Ch05/06/08/13 已读 → 余 Ch01/04/16/18 → Sposobin 等电子版。
 - 本次文档更新时间：10.24 15:30
+
+## 阶段 25 书库深化批次 4：Laitz 曲式与半音化 4 章 + Levine 4 章 [计划时间：10.24 16:00 BY solo-agent][完成时间：10.24 16:40 BY solo-agent]
+
+- 分支：dev
+- 任务定位：书库深化流水线第四批（队列来自阶段 24）；中途修复一次编辑造成的 levine.ts 结构破损（重复键合并）。
+- 已完成：
+  - 25.1 Laitz 4e 四章全文提取精读：Ch20 二部曲式与变奏（5623 词）、Ch22 半音转调与德奥艺术歌曲（4929）、Ch23 那不勒斯和弦（2289）、Ch24 增六和弦（4947）。
+  - 25.2 四条 DEEPEN 按原文重写：Ch20 的二部曲式 2×2 完整分类（simple/rounded × sectional/continuous）、digression–interruption 模型、balanced 附加特征、变奏 ostinato 三型（ground bass/chaconne/passacaglia）与 dovetailing；Ch22 的半音转调核心规则（枢轴必须是原调交替和弦）、主音交替失锚原理、无准备/共同音转调；Ch23 的那不勒斯=ii°6 半音变体定位、写作五要点、♭2→7 的 1 经过音填充；Ch24 的弗里吉亚半终止推导、三成分三形态、Ger65→Cad64 避平行五度、瑞士增六等音记谱。
+  - 25.3 Levine 四章（中译 EPUB）：Ch01（用曲库学音程：Blue Monk/Giant Steps 配对、九度转位公式）、Ch04（“调式链”练习法——上行爱奥尼亚下行多利亚、12 调全练、难调曲目举证）、Ch16（三版 Spring Is Here 实战：Coltrane 四招、Barron 持续低音教科书、Δ♯5 重配经验）、Ch18（调号只管旋律、八步 lead sheet 演化年表、“原始进行无从考据”）——DEEPEN 四条重写。
+- 本批读透标记：laitz 20/22/23/24 + levine 01/04/16/18（累计 34/117 章：Laitz 21/33、Levine 13/24）。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；8 条笔记 deepSummary/analysis 数据完整性已用 tsx 校验。
+- 下一批入口：Laitz Ch25/26/27（大曲式：三部/回旋/奏鸣）→ Levine Ch11/12/19/20 → 之后 Laitz 28–32 + Levine 21/22/23 + Sposobin 等电子版。
+- 本次文档更新时间：10.24 16:40
