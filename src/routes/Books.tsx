@@ -265,7 +265,7 @@ export function Books() {
                     );
                   })}
                 </div>
-                {(() => {
+                {__EMBEDDED_BOOKS__ ? (() => {
                   const book = BOOK_BY_ID[selected.book];
                   if (!book?.sourceBook) return null;
                   const href = selected.sourceFile
@@ -287,7 +287,7 @@ export function Books() {
                       {label} ↗
                     </a>
                   );
-                })()}
+                })() : null}
               </div>
 
               {selected.expanded ? (

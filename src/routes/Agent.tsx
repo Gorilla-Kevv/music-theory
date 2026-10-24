@@ -104,7 +104,7 @@ export function Agent() {
                 <h2 className="text-lg font-semibold">1 · 本地知识包</h2>
               </div>
               <a
-                href="/knowledge.json"
+                href={`${import.meta.env.BASE_URL}knowledge.json`}
                 target="_blank"
                 rel="noreferrer"
                 className="mono-label inline-flex items-center gap-1 text-cobalt-ink hover:text-ink"

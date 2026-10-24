@@ -13,9 +13,14 @@ import { Library } from "./routes/Library";
 import { NotFound } from "./routes/NotFound";
 import { References } from "./routes/References";
 
+const BASENAME =
+  import.meta.env.BASE_URL === "/"
+    ? undefined
+    : import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function App() {
   return (
-    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <BrowserRouter basename={BASENAME} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ReviewProvider>
         <TransportProvider>
           <SearchProvider>
