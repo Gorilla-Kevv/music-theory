@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Concept } from "../content/types";
+import { chord, example } from "../content/helpers";
 import { useTransport } from "../context/TransportContext";
 
 const CX = 260;
@@ -46,18 +47,29 @@ const CIRCLE_KEYS = [
   { major: "F", minor: "Dm", sig: "1♭", midi: 53 },
 ];
 
+const ROOT_NAMES = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"];
+const spellingOf = (midi: number) =>
+  `${ROOT_NAMES[((midi % 12) + 12) % 12]}${Math.floor(midi / 12) - 1}`;
+
 function CircleOfFifths() {
-  const { previewChord } = useTransport();
+  const { previewChord, play } = useTransport();
   const [selected, setSelected] = useState(0);
   const [quality, setQuality] = useState<"major" | "minor">("major");
   const item = CIRCLE_KEYS[selected];
-  const root = quality === "major" ? item.midi : item.midi - 3;
+  const isMajor = quality === "major";
+  const root = isMajor ? item.midi : item.midi - 3;
 
-  const play = () => {
-    previewChord(
-      quality === "major" ? [root, root + 4, root + 7] : [root, root + 3, root + 7],
-    );
-  };
+  // 近关系调：大调 = V（顺时针邻位）/ IV（逆时针邻位）；小调 = v / VI（对应大调楔位）。
+  const related = isMajor
+    ? [
+        { label: "V", idx: (selected + 1) % 12 },
+        { label: "IV", idx: (selected + 11) % 12 },
+      ]
+    : [
+        { label: "v", idx: (selected + 1) % 12 },
+        { label: "VI", idx: (selected + 11) % 12 },
+      ];
+  const relatedIdx = related.map((r) => r.idx);
 
   const select = (index: number) => {
     setSelected(index);
@@ -70,12 +82,61 @@ function CircleOfFifths() {
     );
   };
 
+  // 进行播放：真实 I–IV–V–I / V7–I / ii7–V7–I，接入全局试听坞。
+  const playProgression = (kind: "full" | "v-i" | "two-five") => {
+    const t = isMajor ? item.midi : item.midi - 3;
+    const T = isMajor ? [t, t + 4, t + 7] : [t, t + 3, t + 7];
+    const PD = isMajor ? [t + 5, t + 9, t + 12] : [t + 5, t + 8, t + 12];
+    const V7 = [t + 7, t + 11, t + 14, t + 17];
+    const ii7 = isMajor ? [t + 2, t + 5, t + 9, t + 12] : [t + 2, t + 5, t + 8, t + 12];
+    const funcLabels = isMajor
+      ? { t: "I", pd: "IV", d: "V7", ii: "ii7" }
+      : { t: "i", pd: "iv", d: "V7", ii: "iiø7" };
+    const seq =
+      kind === "full"
+        ? [
+            { midis: T, label: funcLabels.t },
+            { midis: PD, label: funcLabels.pd },
+            { midis: V7, label: funcLabels.d },
+            { midis: T, label: funcLabels.t },
+          ]
+        : kind === "v-i"
+          ? [
+              { midis: V7, label: funcLabels.d },
+              { midis: T, label: funcLabels.t },
+            ]
+          : [
+              { midis: ii7, label: funcLabels.ii },
+              { midis: V7, label: funcLabels.d },
+              { midis: T, label: funcLabels.t },
+            ];
+    play(
+      example({
+        id: `cof-${quality}-${selected}-${kind}`,
+        title: `${item.major} ${isMajor ? "大调" : "关系小调"} · ${seq.map((s) => s.label).join("–")}`,
+        caption: `五度圈进行试听：${seq.map((s) => s.label).join("–")}（${item.major} ${quality}）`,
+        kind: "progression",
+        key: item.major,
+        tempo: 84,
+        beats: seq.length * 2,
+        events: seq.map((s, i) =>
+          chord(i * 2, 2, s.midis.map(spellingOf), { label: s.label }),
+        ),
+      }),
+      { conceptSlug: "circle-of-fifths", conceptTitle: "五度圈" },
+    );
+  };
+
+  const wedgeCenter = (index: number) => polar(CX, CX, 190, index * 30 + 15);
+
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <p className="mono-label text-muted">CIRCLE OF FIFTHS / 五度圈</p>
-          <p className="mt-1 text-sm text-muted">点击任意调性试听主三和弦；切换大调/关系小调。</p>
+          <p className="mt-1 text-sm text-muted">
+            点击调性试听主三和弦；{isMajor ? "V / IV" : "v / VI"} 近关系调高亮并可听进行。
+          </p>
         </div>
         <div className="flex gap-1">
           {(["major", "minor"] as const).map((value) => (
@@ -86,7 +147,7 @@ function CircleOfFifths() {
               className={`mono-label border px-2 py-1 ${
                 quality === value
                   ? "border-ink bg-ink text-paper"
-                  : "border-ink/40 text-muted hover:border-ink hover:text-ink"
+                  : "border-ink/40 text-muted hover:bg-ink hover:text-paper"
               }`}
             >
               {value === "major" ? "MAJOR" : "MINOR"}
@@ -107,6 +168,25 @@ function CircleOfFifths() {
             strokeDasharray="2 8"
             className="visual-spin"
           />
+
+          {related.map((r) => {
+            const from = wedgeCenter(selected);
+            const to = wedgeCenter(r.idx);
+            return (
+              <line
+                key={`rel-line-${r.label}`}
+                x1={from.x}
+                y1={from.y}
+                x2={to.x}
+                y2={to.y}
+                stroke="var(--color-cobalt)"
+                strokeOpacity={0.55}
+                strokeWidth={2}
+                strokeDasharray="5 4"
+              />
+            );
+          })}
+
           {CIRCLE_KEYS.map((key, index) => {
             const start = index * 30 + 1.2;
             const end = start + 27.6;
@@ -114,6 +194,8 @@ function CircleOfFifths() {
             const label = polar(CX, CX, 190, mid);
             const minorLabel = polar(CX, CX, 118, mid);
             const active = index === selected;
+            const relatedTag = related.find((r) => r.idx === index);
+            const relatedActive = Boolean(relatedTag) && !active;
             return (
               <g
                 key={key.major}
@@ -131,10 +213,18 @@ function CircleOfFifths() {
               >
                 <title>
                   {key.major} 大调 / {key.minor}
+                  {relatedTag ? `（${selected ? "" : ""}${relatedTag.label} 近关系调）` : ""}
                 </title>
                 <path
                   d={wedgePath(CX, CX, 145, 235, start, end)}
-                  fill={active ? "var(--color-cobalt)" : "var(--color-paper-2)"}
+                  fill={
+                    active
+                      ? "var(--color-cobalt)"
+                      : relatedActive
+                        ? "var(--color-cobalt)"
+                        : "var(--color-paper-2)"
+                  }
+                  fillOpacity={active ? 1 : relatedActive ? 0.16 : 1}
                   stroke="var(--color-ink)"
                   strokeWidth={1}
                   className="transition-colors duration-200"
@@ -150,44 +240,85 @@ function CircleOfFifths() {
                 >
                   {key.major}
                 </text>
+                {relatedTag ? (
+                  <text
+                    x={polar(CX, CX, 222, mid).x}
+                    y={polar(CX, CX, 222, mid).y}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="var(--color-cobalt-ink)"
+                    fontSize="11"
+                    fontWeight="700"
+                  >
+                    {relatedTag.label}
+                  </text>
+                ) : null}
+                {active ? (
+                  <circle cx={minorLabel.x} cy={minorLabel.y} r={13} fill="var(--color-ink)" />
+                ) : null}
                 <text
                   x={minorLabel.x}
                   y={minorLabel.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill={active ? "var(--color-acid)" : "var(--color-muted)"}
+                  fill={active ? "var(--color-paper)" : "var(--color-muted)"}
                   fontSize="11"
+                  fontWeight={active ? 700 : 400}
                 >
                   {key.minor}
                 </text>
               </g>
             );
           })}
+
           <circle cx={CX} cy={CX} r={92} fill="var(--color-paper)" stroke="var(--color-ink)" />
           <text x={CX} y={CX - 24} textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
             SELECTED
           </text>
           <text x={CX} y={CX + 2} textAnchor="middle" fill="var(--color-ink)" fontSize="28" fontWeight="700">
-            {quality === "major" ? item.major : item.minor}
+            {isMajor ? item.major : item.minor}
           </text>
           <text x={CX} y={CX + 24} textAnchor="middle" fill="var(--color-muted)" fontSize="11">
-            {item.sig} · {quality === "major" ? "major" : "relative minor"}
+            {item.sig} · {isMajor ? "major" : "minor"}
           </text>
         </svg>
       </div>
 
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs text-muted">
-          {item.major} 大调 / {item.minor} · 调号 {item.sig}
-        </p>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <span className="mono-label text-muted">进行试听：</span>
+        {(isMajor
+          ? [
+              { kind: "full" as const, label: "I–IV–V7–I" },
+              { kind: "v-i" as const, label: "V7–I" },
+              { kind: "two-five" as const, label: "ii7–V7–I" },
+            ]
+          : [
+              { kind: "full" as const, label: "i–iv–V7–i" },
+              { kind: "v-i" as const, label: "V7–i" },
+              { kind: "two-five" as const, label: "iiø7–V7–i" },
+            ]
+        ).map((btn) => (
+          <button
+            key={btn.kind}
+            type="button"
+            onClick={() => playProgression(btn.kind)}
+            className="mono-label border border-ink/40 px-2.5 py-1.5 text-muted transition-colors hover:bg-ink hover:text-paper"
+          >
+            {btn.label}
+          </button>
+        ))}
         <button
           type="button"
-          onClick={play}
-          className="mono-label border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
+          onClick={() => previewChord(isMajor ? [root, root + 4, root + 7] : [root, root + 3, root + 7])}
+          className="mono-label ml-auto border border-ink px-3 py-2 hover:bg-ink hover:text-paper"
         >
-          播放 {quality === "major" ? item.major : item.minor}
+          播放 {isMajor ? item.major : item.minor}
         </button>
       </div>
+      <p className="mt-2 text-xs text-muted">
+        近关系调：{item.major} 大调的 V = {CIRCLE_KEYS[(selected + 1) % 12].major}、IV ={" "}
+        {CIRCLE_KEYS[(selected + 11) % 12].major}、关系小调 = {item.minor}；蓝色连线即五度/四度关系，楔上 V/IV 标签可定位。
+      </p>
     </div>
   );
 }
