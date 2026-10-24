@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_modules` 与构建产物加载，运行时零外网请求。VexFlow 4 渲染五线谱，MiniSearch 做中英文模糊检索，React Router 负责路由，Web Audio API + 本地 Salamander 钢琴采样（C3–C5，合成器回退）播放音频。构建输出静态 `dist/`，通过本地 `vite preview` 或任意静态服务器访问；所有知识内容以 TypeScript 数据模块为唯一事实源，并导出 `public/knowledge.json` 供 Agent 读取。
+Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_modules` 与构建产物加载，运行时零外网请求（钢琴采样与知识包均随站点发布）。VexFlow 4 渲染五线谱，MiniSearch 做中英文模糊检索，React Router 负责路由，Web Audio API + 本地 Salamander 钢琴采样（C3–C5，合成器回退）播放音频。构建输出静态 `dist/`，通过本地 `vite preview` 或任意静态服务器访问；线上部署在 GitHub Pages（`https://gorilla-kevv.github.io/music-theory/`，Actions 构建，电子书与教材文件不发布）。所有知识内容以 TypeScript 数据模块为唯一事实源，并导出 `public/knowledge.json` 供 Agent 读取。
 
 ## Users
 
@@ -24,7 +24,7 @@ Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_module
 
 ## Operating Context
 
-- 主要入口是浏览器中的本地站点；构建后离线可用。
+- 主要入口是浏览器中的本地站点；构建后离线可用。线上镜像：`https://gorilla-kevv.github.io/music-theory/`（只含原创知识内容与授权采样，不含电子书）。
 - 与 FL Studio、本地脚本和未来的 MCP 客户端共享 `knowledge.json` 与导出的学习状态。
 - 理论来源两层（2026-10-24 修订）：Tier 1 三本主教材——Mark Levine《The Jazz Theory Book》（中译 EPUB 已内嵌）、Steven G. Laitz & Michael R. Callahan《The Complete Musician》（**第 4 版**英文原版 PDF 已内嵌）、斯波索宾等《和声学教程》（第 3 版，陈敏译）；Tier 2 SoundQuest 站点（soundquest.jp / 中译 music-theory.aizcutei.com，篇章级定位）——承载三本书未覆盖的站点理论框架。**书库为源知识数据（原书真实章目 + 章节深链），知识库为总结精炼、白话解释的个人笔记与拓展知识。**电子书文件仅存本地（gitignore），所有条目为原创改写，不复制任何来源正文。
 - 三本书在本地整理为「完整章目 + 原创章节笔记 + 深度归纳 + 概念映射」的书库，不复制教材正文；和声概念按功能、走向、色彩、明暗、关系、和声节奏六个维度组织。

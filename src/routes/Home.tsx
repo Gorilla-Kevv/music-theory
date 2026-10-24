@@ -299,8 +299,8 @@ export function Home() {
 
         <footer className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
           <p className="reading-column text-xs leading-relaxed text-muted">
-            理论依据：Levine《The Jazz Theory Book》、Laitz &amp; Callahan《The Complete Musician》第 5 版、
-            斯波索宾等《和声学教程》第 3 版。引用为章节级定位，不虚构页码。
+            理论依据：Levine《The Jazz Theory Book》、Laitz &amp; Callahan《The Complete Musician》第 4 版、
+            斯波索宾等《和声学教程》第 3 版。引用均为章节级定位，不虚构页码。
           </p>
           <Link to="/references" className="mono-label text-cobalt-ink hover:text-ink">
             REFERENCES →

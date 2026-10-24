@@ -121,6 +121,7 @@ src/content/
 - 单一事实源：页面、搜索、音频、复习、书库、Agent 都从 `src/content` 读取；不要另建一套 JSON 真相。
 - 概念与谱例必须可通过 `npm run typecheck`；新增 slug 后检查所有 `related` 与书籍 `concepts` 映射。
 - 构建前刷新知识包：`npm run build` 会执行 `prebuild` → `npm run knowledge`。
+- 线上部署：push `dev` 触发 `.github/workflows/deploy.yml` → GitHub Pages `https://gorilla-kevv.github.io/music-theory/`；`GITHUB_PAGES=true` 时 Vite `base` 为 `/music-theory/`、`dist/index.html` 复制为 `404.html` 作 SPA 回退、`__EMBEDDED_BOOKS__=false` 隐藏电子书深链。CI 会删除 `public/books`/`books` 并断言 `dist/books` 不存在；**本地 `dist/` 含电子书，绝不手动上传**。
 - 快速启动：双击项目根 `start.bat`；首次自动安装依赖，已运行时直接打开，`TONIC_NO_OPEN=1` 可只启动服务不打开浏览器。脚本为 ASCII + CRLF，修改后不要保存成 UTF-8/LF，否则 cmd 会吃字符。
 - 音频：谱例与琴键由本地 Salamander 钢琴采样（C3–C5，CC BY 3.0，Alexander Holm）驱动，附带合成器回退；见 `public/audio/salamander/LICENSE.txt`。不得替换为需要运行时外网请求的 CDN 音源。
 - 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。按住（长按）通过 `holdStart/holdEnd` 持续发声，松手淡出，高亮跟随按住时间；键盘激活（Enter/Space 的 click `detail===0`）保持一次性试听。
@@ -137,6 +138,7 @@ src/content/
 - 66 条白话拆解（全部概念）
 - B 站调研台账：5 个合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目（以 `read` 为准）
 - 体系图谱：6 枢纽 / 66 概念 / 188 关联 / 79 前置
+- 线上：`https://gorilla-kevv.github.io/music-theory/`（GitHub Pages，Actions 部署；电子书不发布）
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图、学习路径视图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
 - 站点待读：已清空（C63 元音乐理论、C74/75 多义论已于阶段 30 补录；C47–49 延伸音细节并入 J-04，C39–40 转位/持续音/混合和弦由既有条目覆盖）

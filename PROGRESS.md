@@ -2,9 +2,9 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 31 已完成（图谱学习路径 + 章节级来源）
-- 下一阶段任务：书库笔记接入复习卡；FL Studio 侧适配；图谱路径布局细化（Sposobin 深化已按用户指示搁置）
-- 可提前进行的任务：跨书章节对照、Agent 侧路径查询
+- 当前正在开发任务：阶段 32 已完成（上线 GitHub Pages）
+- 下一阶段任务：书库笔记接入复习卡；FL Studio 侧适配；图谱第三阶段（路径布局/跨书章节对照）
+- 可提前进行的任务：Agent 侧路径查询、线上内容维护
 - 未完成的任务：全量教材正文（版权边界，不做）；stdio MCP server；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）
 
 ## 已完成阶段简表（1–28，详见 git log 与各阶段提交）
@@ -83,3 +83,17 @@
 - 统计不变：66 概念 / 76 谱例 / 240 引用；图谱 188 关联 / 79 前置。
 - 下一阶段入口：书库笔记接入复习卡；FL Studio 适配；或图谱第三阶段（路径布局/跨书章节对照）。
 - 本次文档更新时间：10.24 22:20
+
+## 阶段 32 上线 GitHub Pages [计划时间：10.24 22:30 BY solo-agent][完成时间：10.24 22:53 BY solo-agent]
+
+- 分支：dev；仓库 `Gorilla-Kevv/music-theory`（公开）；线上地址 `https://gorilla-kevv.github.io/music-theory/`
+- 已完成：
+  - 32.1 Pages 子路径：Vite `base` 由 `GITHUB_PAGES=true` 切换为 `/music-theory/`；`BrowserRouter basename` 读 `import.meta.env.BASE_URL`；Agent 知识包链接走 `BASE_URL`。
+  - 32.2 SPA 回退：CI 复制 `dist/index.html` → `dist/404.html`；线上深链 `/music-theory/theory/ii-v-i` 实测通过。
+  - 32.3 电子书隔离：`__EMBEDDED_BOOKS__` 在 Pages 构建为 false（本地 dev 仍显示“打开原书本章”）；workflow `rm -rf public/books books` 并断言 `dist/books` 不存在；线上 `/books/*` 全部 404。
+  - 32.4 Actions 部署：`.github/workflows/deploy.yml`（push dev 触发：npm ci → build → 404 → artifact → deploy-pages）；Pages 以 `build_type=workflow` 启用，默认分支设为 dev。
+  - 32.5 修正首页页脚 Laitz 版次（第 5 版 → 第 4 版）。
+- 验证：typecheck / build 通过；本地 Pages 模拟（`GITHUB_PAGES=true` build + preview）与线上 1280/375 渲染、深链、`/atlas?mode=path&focus=ii-v-i`、`audio/salamander/C4.mp3` 与 `knowledge.json` 200、电子书路径 404 均实测。
+- 统计不变：66 概念 / 76 谱例 / 240 引用；图谱 188 关联 / 79 前置。
+- 下一阶段入口：书库笔记接入复习卡；FL Studio 适配；或图谱第三阶段（路径布局/跨书章节对照）。
+- 本次文档更新时间：10.24 22:53
