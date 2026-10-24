@@ -430,3 +430,16 @@
 - 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；7 条笔记 deepSummary/analysis tsx 校验 7/7 OK（中途修复一处 deepSummary 内未转义引号导致的语法错误）。
 - 下一批入口（收尾批）：Laitz Ch28/29/30/31/32（19–21 世纪和声）+ Levine Ch06/08/21/22/23 → 之后仅剩 Sposobin 等电子版。
 - 本次文档更新时间：10.24 17:35
+
+## 阶段 27 书库深化收尾批：Laitz 5 章 + Levine 5 章——两本书全部读透 [计划时间：10.24 18:00 BY solo-agent][完成时间：10.24 18:45 BY solo-agent]
+
+- 分支：dev
+- 任务定位：书库深化流水线收尾批。**里程碑：Laitz 33/33 与 Levine 24/24 全部章节完成「以原文为准」的深化笔记（57/57），两本书 100% 读透**；Sposobin 60 章仍为章名级初稿（无电子版）。
+- 已完成：
+  - 27.1 Laitz 4e 五章提取精读：Ch28 新的和声倾向（7329 词）、Ch29 半音模进（7473）、Ch30 共同实践余晖与新声音世界（24424）、Ch31 无中心音乐与集合分析（13526）、Ch32 节拍新可能与十二音（19491）。Ch30 提取受谱例字体污染，改按散文段定位阅读（centricity/PC collections/hexatonic/octatonic 小节）。
+  - 27.2 五条 DEEPEN 按原文重写：Ch28 的 reciprocal process/plagal relation、半音声部进行（莫扎特「不协和」）、off-tonic/double tonality、减七时钟与等音转调、「平衡建立于不对称」悖论；Ch29 的半音模进判据（主和弦含变化音级+复制严格）、三大家族（全音 D2/纯五 D2/上行 A2）、六三-减七-增六半音流、omnibus、八度等分总表；Ch30 的 centric vs atonal 与金句、PC/collection/pitch center 术语、hexatonic（4 移位、24 三和弦、parsimonious、poles）与 octatonic（Messiaen）；Ch31 的 Webern 七步观察（静默升格为终止、1-4-1/1-5-1 回文）、四种等价类、prime form 四步法、ic vector；Ch32 的不对称拍号/added values/nonretrogradable/metric modulation/polyrhythm vs polymeter、TTO 四算子 48 形、global approach、[014]×4 aggregate、combinatoriality 与 invariance。
+  - 27.3 Levine 五章（中译 EPUB）：Ch06（音阶=字母表非诗歌、内化为可选音符集）、Ch08（离调的主观性、双调性 Woody Shaw 案例、「听着对就是对」、自信即技术）、Ch21（965 首曲目观、每周一首、双调曲目清单、作曲学习推荐）、Ch22（拉丁音乐概念纠偏、clave 3-2/2-3 与 rumba 变体、全乐队吻合 clave）、Ch23（四个谜团逐条破解、变化属上三七音失效、教条是语法非法律）——五条 DEEPEN 重写。
+- 本批读透标记：laitz 28/29/30/31/32 + levine 06/08/21/22/23（累计 57/117 章：**Laitz 33/33、Levine 24/24 全读透**；Sposobin 0/60 深化）。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；10 条笔记 tsx 校验 10/10 OK；全库 deepSummary 覆盖 57/117（= 两本电子书全量）。
+- 下一批入口：无（两本书已读完）。剩余：Sposobin 电子版到位后按同一流水线深化 60 章；SoundQuest 元音乐理论（C63 建设中）待读。
+- 本次文档更新时间：10.24 18:45

@@ -187,11 +187,11 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["chord-scale", "harmonic-sequence", "phrase-structure"],
     dimensions: ["direction", "color"],
     deepSummary:
-      "这一章把“音阶材料”转成“语法”：一个动机经过重复、移位、节奏变化，最后用目标和弦音收束。Levine 反复强调听唱片、模仿语气与留白，因为音乐性来自句法，不来自音阶数量。",
+      "第 6 章的开篇比喻定调：音阶是音乐的**字母表**，不是诗歌——你要先学字母、语法、词汇，才能组词造句最终写诗。目标是把音阶内化成「可选的一组音符」，想取哪个就取哪个。本章工具箱：模进、连续性音阶练习（延续第 4 章的调式链接法）、三和弦即兴、七和弦模进、共同音（跨和弦保持的音给线条锚点）、延伸和弦进行。",
     analysis: [
-      "先设计 2–4 个音的动机，再决定它在哪些和弦上移位。",
-      "每个乐句至少有一个明确的目标音与一个呼吸点。",
-      "用录音检查：线条是否有开头、发展、收束，而不是平均的十六分音符。",
+      "选 2–4 音动机，在多个和弦上移位重复，句末落到目标和弦音。",
+      "练三和弦/七和弦模进：把琶音按模进抛出去，再用共同音收线。",
+      "录音自查：有没有开头—发展—收束与呼吸，还是均匀的十六分音符流。",
     ],
     crossBook: ["Laitz 2：旋律与对位", "Laitz 16：乐句与句法"],
     visualHint: "体系图中的“乐句/关系”分支",
@@ -366,11 +366,11 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["rhythm-changes", "blues", "ii-v-i", "phrase-structure"],
     dimensions: ["relationship", "rhythm"],
     deepSummary:
-      "Levine 的曲目观强调“可迁移”：学一首 Rhythm Changes，等于学一类曲目；学一首 blues，等于学和声语言与蓝调词汇。曲目库应组织成语法家族，而不是无限扩张的清单。",
+      "第 21 章是 965 首的曲目清单加 Levine 的曲目观。开篇名言：「你不必全部记住 965 首——但学会的越多越好；爵士是耳朵的音乐不是眼睛的音乐」，并给出可执行的节奏：每周一首（或两周一首），几个月就有可观积累。●号标记「不掌握大部分就别急着去纽约」。实用规则：很多曲子要会两个调（Green Dolphin E♭/C、Just Friends B♭/G、Night And Day E♭/C、Equinox 的 C# 小调原调）；多名字曲按最常用名排字母序、括注别名；右侧给 fake book 缩写与 Aebersold 册号、每曲附推荐录音。作曲学习推荐：Crescent/Wise One/Lonnie's Lament（旋律）、Tell Me A Bedtime Story（超长曲式）、Goodbye Pork Pie Hat（12 小节装大量信息）、Stardust（迟早要弹）。",
     analysis: [
-      "把曲目按 blues / rhythm changes / AABA / ABAC / Latin 分类。",
-      "每类记 2–3 首代表曲，比较 turnarounds 与常用替代。",
-      "用同一套 guide tones/音阶策略迁移到同类曲目。",
+      "定周计划：每周一首 ● 曲，先曲式后 guide tones 再旋律。",
+      "双调曲目两个调都过（清单里点名的那批）；同名多版本对照听（Monk vs Miles 的 Round About Midnight）。",
+      "按语法家族归类（blues / Rhythm 家族 / AABA / ballad / Latin），同类共享 turnaround 与替代策略。",
     ],
     crossBook: ["Laitz 20/25/26/27：曲式"],
     visualHint: "体系图的曲式森林",
@@ -391,11 +391,11 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["rhythm-changes", "harmonic-rhythm", "blues"],
     dimensions: ["rhythm", "color"],
     deepSummary:
-      "拉丁语境中的和声不是独立层：钢琴的 montuno、贝斯的 tumbao 与打击乐的 clave 共同决定何时换和弦、如何留白。把爵士 voicing 直接搬进来，常会与节奏层冲突。",
+      "第 22 章先纠正概念：美国人说的「拉丁音乐」是个随意的统称——从格兰德河到火地岛的音乐受非洲/西班牙/葡萄牙乃至中东印度与无数原生文化影响，Altiplano 与 mariachi 的联系不比莫扎特与 B.B. King 强多少。对爵士影响最大的是巴西乐（超出本书范围）与「非洲-古巴」乐（本章主题）。核心是 **clave**：两小节节奏型，前进式 3-2 与颠倒式 2-3 两种（伦巴/非洲 clave 把 3 那小节最后一个音延迟半拍为变体）；salsa 乐队里钢琴、贝斯、timbales、conga、bongo、guiro、牛铃各奏各的节奏像拼图交织，把它们粘在一起的就是 clave——鼓点、钢琴 montuno、贝斯线、旋律断句、管乐线**全部必须吻合 clave**。「看不见的小节线」即乐手心里的这条两小节格。",
     analysis: [
-      "先锁定 clave 方向与 2-3 / 3-2 感觉。",
-      "让 montuno 的和弦变化与 clave 重音对齐。",
-      "检查贝斯 tumbao 是否与钢琴 voicing 争抢低频。",
+      "先分清 3-2 还是 2-3（听 conga/牛铃第一小节的重音数）。",
+      "练 clave 拍手 + 唱旋律，检查断句是否落在格内。",
+      "钢琴 montuno 与贝斯 tumbao 的变化点对齐 clave 重音，不和它打架。",
     ],
     crossBook: ["Laitz 1B：节拍与节奏"],
     visualHint: "节奏层与和声节奏对照",
@@ -416,11 +416,12 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["phrase-structure", "harmonic-color", "rhythm-changes"],
     dimensions: ["rhythm", "function"],
     deepSummary:
-      "这些看似零散的主题，实际上都在回答“如何在现场保持结构”。Levine 把引子、尾声、节奏与沟通放在同一层，是因为演出中的和声选择必须服务时间与乐队互动，而不是纸面和弦。",
+      "第 23 章「简单的结尾」其实是 Levine 的破除迷信之章。四个谜团逐条拆解：① 钢琴和贝斯一起别弹原位——Bud Powell/Monk 99% 时间在弹原位，Tyner/Barron/Walton/Miller 都常弹（谣传源于 Red Garland/Evans 1950s 推广无根配置被误传成禁令）；② 属七必须同时有三音七音——变化属（b9/#9/#11/b13）一旦出现，三音七音就失去大部分重要性（Powell 1940s 的无三音配置、Hancock 1960s 一个左手 voicing 同时服务 G7#11 与 C#7alt）；③ sus 和弦四音取代三音——亦是教条；④ 和弦里有些音天然更好听——不存在。其余小节：和声小调/和声大调音阶、四声音阶、「传统理论的局限」、「错误的音」（呼应第 8 章）、对教师的批评与书评。",
     analysis: [
-      "准备 2–3 个通用引子/尾声模板。",
-      "在曲目结尾标记 turnaround 或 final cadence。",
-      "现场先保曲式与目标音，再考虑替代与延伸。",
+      "四条谜团逐条自测：你在哪条上被教条卡住？分别找反例录音（Powell/Monk/Hancock）。",
+      "变化属上大胆省略三音/七音，用变化音本身定义色彩。",
+      "sus 不必想成替代——三音与四音可以共存。",
+      "记住总纲：听着对的音就是对的（第 8 章），教条是语法不是法律。",
     ],
     crossBook: ["Laitz 15：乐段", "Laitz 20：曲式"],
     visualHint: "曲式森林 + 试听坞",
@@ -550,11 +551,12 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
   },
   "levine-08": {
     deepSummary:
-      "Outside playing 的核心不是“用外面的音”，而是“制造张力并回来”。有效的外部音响通常有清晰的入口、重复的动机与明确的解决点；没有回归的外部音只是错误。",
+      "第 8 章先立主观性：什么是「离调」因人因时代而异——1940 年代 Parker 被许多人当作离调，60 年代 Coltrane 亦然，Cecil Taylor 录了 40 年唱片在很多乐手听来仍然离调。核心洞见：最好的离调演奏多半是**双调性**（钢琴/吉他用一个调伴奏、即兴者在另一个调上清晰勾勒线条）——Woody Shaw 在 G-7 上吹 A 大调即是一例；而成功的唯一条件是**自信**：「让错误的音听起来正确——你能在任何和弦上演奏任何音符，听着对就对，听着错就错」。方法清单：模进、相距半音/三全音移位演奏、整条音阶离调、半音阶；结尾的口号是「勇敢些，大胆向前走」。",
     analysis: [
-      "先决定在哪一拍出去、在哪一拍回来。",
-      "用节奏重复让外部音响听起来像设计，而不是手滑。",
-      "回到目标和弦的三音、七音或 guide tone，确认解决。",
+      "入口与出口先设计好：哪一拍出去、哪一拍回到 guide tones。",
+      "双调性练习：左手 G-7 voicing，右手在 A 大调上弹清晰乐句，听冲突如何成立。",
+      "离调靠模进与重复建立「设计感」，一次都不重复的外部音就是错音。",
+      "录下来自检：犹豫半拍就听得出来——自信本身是技术。",
     ],
     crossBook: ["Laitz 22：半音转调", "Levine 13：重配和声"],
     visualHint: "张力光谱",

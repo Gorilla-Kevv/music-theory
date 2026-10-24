@@ -529,11 +529,12 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["harmonic-color", "tonal-distance"],
     dimensions: ["color", "relationship"],
     deepSummary:
-      "当和弦不再按三度叠置，传统功能标签会失效；但音乐仍可以通过持续音、动机回归或音高中心建立“家”。分析要从“中心如何被建立”而不是“这是几级和弦”出发。",
+      "第 4 版第 30 章开篇用 36 个月内写成的八首作品展示新声音世界的多样性，然后立起本章坐标：post-tonal 分 **centric**（有引力音/音响）与 **atonal** 两类，金句是「所有调性音乐都是 centric，但并非所有 centric 音乐都是调性」。术语全面切换：pitch class / collection（作曲家取材的音库）取代「和弦」，pitch center 取代 tonic。集合清单：七音（教会调式复兴——按三音分组大小类，附辨式步骤：先找中心音、再排音阶读模式）；五声；六音两条线——全音集合（与四度世界相交的 Schoenberg 例子）与 **hexatonic**（两个半音相隔的增三交错，1–3–1–3–1–3，仅 4 个移位；内含大三度根关系的 6 个大小三和弦共 24 个=全部协和三和弦；**parsimonious voice leading** 每次只动一音绕行六和弦；**hexatonic poles** 异性级大三度配对且三声部全半音移动）；八音 octatonic（Messiaen「有限移位模式」的宠儿，1–2 或 2–1 循环；与 hexatonic 的大三度根关系相对，octatonic 的三和弦按小三度/三全音排布）。另有四度五度叠置（quartal/quintal）、split-third ninths（同根大小三并存）与「形式即过程」（process-based form）。",
     analysis: [
-      "找出持续音、重复音型或音高中心。",
-      "标出非三度叠置的和弦结构。",
-      "判断功能是来自传统和声还是细胞/集合关系。",
+      "辨式四步：找中心音（时值/拍位/出发点）→ 排音阶 → 读 1–3–1–3 型循环定 hexatonic / 1–2 型定 octatonic / 全音定全音集合。",
+      "hexatonic 内用 parsimonious 连接走六个三和弦；找 poles 配对（大三度异性级、三声部半音）。",
+      "octatonic 例先列 PC 清单再看 2–1 循环；三和弦根音呈小三度/三全音排布即它的指纹。",
+      "分析从「中心如何建立」出发（重复/持续/细胞），不问「这是几级」。",
     ],
     crossBook: ["Levine 08：Outside", "Levine 15：对称和声"],
     visualHint: "音高集合/关系网络",
@@ -554,11 +555,12 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["intervals", "harmonic-color"],
     dimensions: ["color"],
     deepSummary:
-      "集合分析不是替代功能和声，而是处理功能失效后的结构。它把音高组织成集合，比较移位/倒影关系，并用音程向量描述色彩；对爵士的对称音阶/和弦也有解释力。",
+      "第 4 版第 31 章是集合分析的方法论章。开篇的 Webern op.5 七步观察是全章灵魂：先做朴素观察（织体分层、模仿、静默），发现「休止与织体改变如今可以承担终止的职能」；两个音响的音程读数 1–4–1 与 1–5–1 是回文——对称是 Webern 的指纹。方法论阶梯：pitch space（无限）→ pitch-class space（12 个，八度等价）；四种等价类（octave/order/temporal/enharmonic）把海量音响压缩成少量等价组；整数记法（C=0…B=11）与 mod-12 时钟；有序/无序、pitch/PC 两轴共四类音程，interval class（ic 1–6）与 mod-12 逆数；三音以上 P set / PC set 的系统分析四步——① segmentation 分段取 PC 集 → ② normal order 最紧凑排布 → ③ best normal order（左轮比右轮）→ ④ prime form 与 set class 命名；index number 做倒影轴运算；symmetrical sets 与 invariance（移位/倒影下保持不变的音）；ic vector 六位数描述集合的音程含量（张力与对称的量化）。",
     analysis: [
-      "把音高转成整数音级，找标准型。",
-      "比较集合之间的移位/倒影关系。",
-      "用音程向量解释张力与对称性。",
+      "先做 Webern 式观察再上工具：织体、重复（原样/变形）、静默与断句是否升格为结构事件。",
+      "求 prime form 四步走：分段 → normal order → BNO（左轮<右轮）→ PF；用时钟图辅助。",
+      "倒影用 index number：两个音的 index 和恒等于轴的 2 倍。",
+      "ic vector 读法：六位从 ic1 到 ic6；对称集合的 vector 两侧常对称，Z 关系集合同 vector 不同 PF。",
     ],
     crossBook: ["Levine 15：Coltrane 对称", "Laitz 28：新的和声倾向"],
     visualHint: "音高集合圆环",
@@ -579,11 +581,12 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["harmonic-rhythm", "intervals"],
     dimensions: ["rhythm"],
     deepSummary:
-      "当和声不再承担主要结构功能，节拍与序列成为组织手段。分析要追踪材料如何移位、倒影、逆行与节奏变形，以及这些过程如何替代传统终止。",
+      "第 4 版第 32 章两大块。节奏块：asymmetrical meters（5/8=2+3 或 3+2、7/8 的三种分组——Bartók 保加利亚节奏是入门），「削弱小节线暴政」的摇曳感；Messiaen added rhythmic values（给音符加附点/双附点打破均分）；nonretrogradable rhythm（正反读相同的回文节奏）；changing meters（Bartók《换拍子》19 次换拍但四小节一循环=高层不对称拍号）；metric modulation（用比例关系换算新旧速度）；polyrhythm（2:3、3:4，Scriabin 同拍混 2:3 与 3:4）与 polymeter（overt 明写两个拍号 / embedded 各声部各走各的拍号，N 小节后才对齐）。十二音块：row=含全部 12 音的有序序列，首次陈述为 prime；**TTO 四算子** T/I/R/RI 共 48 个基本形；标记用 fixed-do（P7=从 G 开始）；分析用 global approach——找单旋律线、和声标记（反复出现的音响）、给每个 PC 标序号；Webern op.24 的音列 = 四个 [014] 三和弦拼成 aggregate，六和弦互补；十二音矩阵（48 格速查）；**combinatoriality**——两个六和弦互补可同时陈述，Schoenberg 的招牌是 inversional combinatoriality（P 与某 I 的前六音互补），Berg《抒情组曲》、小提琴协奏曲的 P9/I2 涌现；variance vs invariance（不变性来自对称）。",
     analysis: [
-      "标出序列原型与变形（移位/倒影/逆行）。",
-      "观察节拍重音与分组如何组织段落。",
-      "判断结构边界由什么替代传统终止。",
+      "不对称拍号先拆 2+3/3+2 分组再指挥；changing meters 找高层循环单位。",
+      "十二音分析三招：纯旋律段定序号 → 和声标记（反复三和弦/六和弦）→ 配平 48 形矩阵。",
+      "Webern 型音列认 [014]×n 拼 aggregate；六和弦互补核对 ic vector 相同。",
+      "找 combinatorial 配对：P 的前六音与哪个 I 的前六音互补；不变音来自对称结构。",
     ],
     crossBook: ["Levine 15：对称/序列思维"],
     visualHint: "序列矩阵/节拍网格",
@@ -801,22 +804,24 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
   },
   "laitz-28": {
     deepSummary:
-      "对称和声（减七、增三、全音阶）削弱传统调性中心，因为同一个音响可以被多种方式解释。减七的等音多解、增三的对称循环与全音阶的均匀间距，让“家”被延迟或多重化。",
+      "第 4 版第 28 章的叙事线：交替深化 → 调性模糊 → 对称登场。要点：① plagal relation 与 reciprocal process——iv/iiø65 直接到主的变格收束让属功能弱化，但属反而因「指示主音位置」更重要；reciprocal process 即三个功能（T/PD/D）的归属被故意混淆（Schumann《城堡中》把 E 大调听成 a 小调的 V，还用动机暗线连向下一首）。② semitonal voice leading——两个以上声部半音移动 + 一声部共同音，连接远关系和弦；莫扎特「不协和」四重奏开头是教科书。③ off-tonic beginning（Sweet Georgia Brown 副歌从三个副属后才到主）与 double tonality（通常仍按结束调分析）。④ 对称和声：减七把八度四等分、增三四等分（只有 3/4 个移位），转位不产生新音程故等音多解——时钟模型；增三转位听觉不可辨。⑤ 变化属七（♯5/b5/b9/#9）；共同音减七与共同音增六。⑥ 全章点题悖论：「平衡的」调性体系其实建立在不对称之上——正是不对称给出引力；对称结构（全音阶等）恰好取消引力。",
     analysis: [
-      "把减七写成四种等音拼法，分别指向四个调。",
-      "检查增三循环如何把八度分成三等分。",
-      "区分“调性模糊”与“无调性”：中心是否仍被暗示。",
+      "判 reciprocal：结尾和弦能否双向解释（I 还是 V/iv）？听后调还是前调？",
+      "减七等音转调四步：写出原调 vii°7 → 把四个音轮流当导音 → 各指四调 → 标枢轴（注意作曲家记谱可能按旧调或新调拼）。",
+      "半音声部进行：找共同音声部 + 半音移动的声部对（Mozart K.465 开头式）。",
+      "对称即失重：用时钟模型检查一个和弦/音阶等分八度的方式与移位数。",
     ],
     crossBook: ["Levine 03：变化属七", "Sposobin 22/57：导七与等音"],
     visualHint: "对称轮 + 张力光谱",
   },
   "laitz-29": {
     deepSummary:
-      "对称拉伸调性把八度等分：大三级循环、半音模进与增三循环让和声在多个调性中心之间快速移动。Coltrane Changes 是典型例子；分析时先标目标调，再看属和弦如何指向它们。",
+      "第 4 版第 29 章的核心区分：半音模进的主和弦（定标签的那些）落在**变化音级**上，且复制品严格保持和弦质量与音程距离（自然模进按调内调整、大小三混用）——标签里写出具体音程如 D2(−P4/+m3)。三大家族：① D2(−P4/+m3)——D3「帕赫贝尔」的半音化，纯大三和弦按全音下行，把八度六等分、跳过属音，几乎无调性（要回收调性须提前断开导向 PD）；Liszt 在小调里保持全音路径的写法是名例。② D2(−P5/+P4)——纯五度圈版，12 步才回原点（解法：只作部分陈述、或用三和弦模型减少复制次数）；其下行小二度版 D2(−P5/+A4) 用三全音上行压缩回路（Chopin 玛祖卡）。③ A2(−M3/+P4)——5–6 对位的半音化上行（「棒球场上也听得到」的原位副属版）。单和弦半音下行流：六三和弦（配 7–6 延留，不协和配半音、协和配自然音的对位排列）、减七流（转位听觉不可辨）、增六流（Ger 与 V7 的歧义彼此转换）。反向半音运动把 V7 扩展成 **omnibus**（1800 年维也纳理论家命名，低音小三度爬升整八度、每个大三度点上换声部重新开始）；最后总表把八度等分归纳为 1/2/3/4/6 个半音与大小三度，并引向 intervallic cell。",
     analysis: [
-      "先标出三个大三级目标调，再填每组的 ii–V。",
-      "检查半音模进是把调性拉远，还是仍围绕原中心。",
-      "用 guide tones 追踪每个目标调，而不是只背和弦。",
+      "判半音模进：主和弦含变化音级？复制严格保持质量与距离？→ 标签写具体音程。",
+      "全音版 D2(−P4/+m3) 记得提前断开导向 PD，否则无家可归；纯五版用三和弦模型省次数。",
+      "增六流/减七流先认歧义（Ger↔V7、转位不可辨），再看真实的深层进行（往往只是 T→D）。",
+      "omnibus 练习：低音小三度上行，每个属七点上换一对声部做反向十度。",
     ],
     crossBook: ["Levine 15：Coltrane Changes", "Sposobin 55：转调模进"],
     visualHint: "五度圈/对称轮",
