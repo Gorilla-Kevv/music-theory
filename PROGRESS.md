@@ -363,3 +363,18 @@
 - 风险：电子书文件只存在本地（gitignore），换机器需重新放置 `/books/` 并重跑解包/复制；Levine 第 24 章深链缺EPUB 正文。
 - 下一阶段入口：书库深化流水线（逐章读原书升级笔记）→ Sposobin 电子版 → 图谱学习路径。
 - 本次文档更新时间：10.24 13:00
+
+## 阶段 22 书库深化批次 1：Laitz 7 章 + Levine 3 章逐章对原文 [计划时间：10.24 13:10 BY solo-agent][完成时间：10.24 13:50 BY solo-agent]
+
+- 分支：dev
+- 任务定位：启动 HANDOFF“书库深化流水线”第一批——逐章读内嵌原书，把笔记的 deepSummary/analysis 从“结构重构”升级为“以原文为准”。
+- 已完成：
+  - 22.1 Laitz 4e 七章全文提取精读（pypdf 逐页）：Ch4 当和声旋律节奏交汇（866 行）、Ch5 调性支柱与声部进行（667）、Ch9 下属功能与乐句模型（544）、Ch10 强拍与半音装饰音（847）、Ch18 副属和弦（945）、Ch19 临时主化与转调（628）、Ch21 调式交替（648）。
+  - 22.2 七条 DEEPEN 笔记全部按原文重写，实读要点入笔记：Ch4 的“embellishing tones 弃用 nonharmonic tone”术语选择、《菩提树》旋律-only 分析判错示范、格式塔三原则；Ch5 的终止式完整分类（PAC/IAC/对位终止/HC/皮卡迪）与 4 规则+10 指南；Ch9 的 ii 优于 IV 三论证、弗里吉亚半终止、IV–ii 复合体、乐句模型四图式；Ch10 的 APT/CPT/AN/CN/APP/S/PED 分类网、延留音 P–S–R 与写作四规则、六种变体；Ch18 的造副属两条路、cross relation、副属模进三式；Ch19 的括号分析法、临时主化 vs 转调判据、近关系调两定义、枢轴和弦规则；Ch21 的旋律性/和声性交替二分、♭6 四理由、写作三戒、“交替 vs 副属”章末判据。
+  - 22.3 概念映射补正：laitz-04 → non-chord-tones/melody-motives（原只挂 harmonic-rhythm）；laitz-10 → non-chord-tones。
+  - 22.4 Levine 三章（中译 EPUB 文本）：Ch2（调式→七和弦、七音“重力”下行、五度圈=练习路径+曲库现实）、Ch3（避免音原话“handle with care note”、#11 术语史、四套音阶和声）、Ch13（重配=作曲、四种形式、V→ii–V、三全音替代半音低音）——DEEPEN 三条重写。
+  - 22.5 修正 Levine-01 crossBook 残留的“Laitz 1C：音程”→“Laitz 1A（音程）”。
+- 本批读透标记：laitz 04/05/09/10/18/19/21 + levine 02/03/13（共 10/117 章，均以原文核对后重写，仍为原创改写）。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；`/books?book=laitz` 渲染深化后的笔记。
+- 下一批入口：Laitz Ch6/7/8/11/13（和声化与对位扩展族）→ Levine Ch14 → Ch15/17。
+- 本次文档更新时间：10.24 13:50
