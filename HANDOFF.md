@@ -69,6 +69,7 @@
 - 体系图布局是“4 列网格 + 6 个系统枢纽”的 MLP 式分层：概念坐标由 `conceptPosition` 生成，改行距/列距时要同步检查 SVG 底部图例（`ATLAS_HEIGHT` 1000，图例在 y=968）与标签截断（`truncate` 默认 8 字）。
 - 图谱边语义固定：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置；`SOURCE_HUBS` 只连接实际相关的来源与枢纽，不要恢复成“每本书连所有枢纽”的噪声图。`/atlas?focus=<slug>` 是概念页“在体系图中查看”的深链。
 - 长按发声：`AudioEngine.holdStart/holdEnd` 独立于 `bus`（走 `holdBus` → dry/reverb），所以示例播放/停止不会切断长按；引擎强制最短发声 0.35s、松手 ~0.3s 淡出，合成回退有 8s 硬上限防无限延音。命中区/琴键用 pointer 事件（按下/抬起/移出/取消），键盘激活靠 click `detail===0` 区分；`useHeldPreview` hook 以 key 管理多个 hold，release 对未按住的 key 是 no-op。CDP 测试用 `.impeccable/hold-check.mjs`（注意先 `scrollIntoView`，否则坐标在视口外）。
+- 🔴 可视化预览的音频：张力光谱/五度圈等点击走 `audioEngine.previewChord`；CDP 实测点击后 AudioContext `running`、4 个采样源启动，代码路径有声。组件挂载即 `preloadSamples()` 预热（避免首次点击等 9 个 mp3 下载造成“没声音”的错觉）；若排查外放问题先看系统输出设备与标签页静音，再看 AudioContext 状态。
 - 🔴 图谱画布交互：地图是固定高度画布（`react` 状态 `view{scale,x,y}` 作用于 `<g transform>`，`preserveAspectRatio="xMidYMin slice"`），滚轮缩放以指针为中心、左键拖拽平移（位移除以 `viewportInViewBox.factor`）；**不要在 pointerdown 就 `setPointerCapture`**——那会把 click 重定向到容器、点选节点失效；只在拖动超过 4px 后捕获，并在 pointerup 后短暂置 `suppressClickRef` 抑制拖拽收尾的 click。`/atlas` 空试听时隐藏 TransportDock。
 - 🔴 复习卡 v2：卡片 id 概念＝slug、章节＝`chapter:<chapterId>`、误解＝`chapter:<chapterId>:q<n>`；状态键 `tonic.review.v2`，加载/导入时自动迁移 v1 的 `conceptSlug` 字段；`getReviewQueue` 接受 unknown state（v1/v2），CLI `queue --state` 同步放宽。新增卡片只从 `keyPoints`/`confusions` 生成，不用整段 `deepSummary`。
 - 🔴 GitHub Pages 部署：`dev` push 触发 Actions；Vite `base` 由 `GITHUB_PAGES=true` 切到 `/music-theory/`，`BrowserRouter basename` 读 `import.meta.env.BASE_URL`；SPA 深链靠 `dist/404.html`；电子书只在本地（`__EMBEDDED_BOOKS__` 控制深链，CI 删目录并断言 `dist/books` 不存在）。本地 `npm run build` 仍按根路径并包含电子书，别把本地 dist 当线上产物。
@@ -109,6 +110,7 @@
   - `/library` 检索“五度圈”返回精确结果；清空恢复 50 条。
   - `/references` 台账显示 4 个合集卡片（爵士和声理论 / 学院派爵士理论 / 风格化创作 / 合集外公开课）与 20 条已读（含 VIA subtitle/asr/frames 标记）。
   - `/theory/metatheory`、`/theory/harmonic-polysemy`、`/theory/passing-chords` 显示引用上标、页末注释、可点击谱面、白话拆解与相关概念；`/theory/extensions-alterations` 含「半音禁忌与延伸音的选择」小节。
+  - `/theory/harmonic-color` 的张力光谱：点击六个和弦色块即发声并高亮下方琴键；色块下方渲染所选和弦的五线谱与钢琴（可点/可按），PLAY 走全局试听坞。
   - `/theory/melodic-minor-modes` 渲染 J-13 概念页（七调式代表和弦、C 旋律小调谱例、白话拆解、图谱前置）。
   - `/agent` 可导出学习状态；`window.TONIC` 与 CLI 可查询同一知识包与书库。
 - 下一步：
@@ -119,4 +121,4 @@
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
   6. 站点待读已清空（C63/C74/75 已补录）；图谱学习路径已完成（阶段 31）；Sposobin 深化已搁置（电子版无法获取）。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.25 00:10 BY solo-agent
+- 本次文档更新时间：10.25 00:35 BY solo-agent

@@ -1,7 +1,12 @@
-import { useMemo, useState } from "react";
-import type { Concept } from "../content/types";
+import { useEffect, useMemo, useState } from "react";
+import type { Concept, ExampleEvent } from "../content/types";
 import { chord, example } from "../content/helpers";
 import { useTransport } from "../context/TransportContext";
+import { useHeldPreview } from "../hooks/useHeldPreview";
+import { audioEngine } from "../lib/audio";
+import { PianoKeyboard } from "./PianoKeyboard";
+import { StaffNotation } from "./StaffNotation";
+import { PlayControl } from "./ui";
 
 const CX = 260;
 
@@ -537,50 +542,119 @@ function IntervalRuler() {
   );
 }
 
-const TENSION_CHORDS = [
-  { label: "Cmaj7", notes: [60, 64, 67, 71], tension: 1, style: "bg-acid text-ink" },
-  { label: "Fmaj7", notes: [65, 69, 72, 76], tension: 2, style: "bg-paper-2 text-ink" },
-  { label: "Dm7", notes: [62, 65, 69, 72], tension: 2, style: "bg-cobalt text-paper" },
-  { label: "G7", notes: [67, 71, 74, 77], tension: 4, style: "bg-cadmium text-ink" },
-  { label: "G7alt", notes: [67, 71, 74, 77, 80], tension: 5, style: "bg-ink text-paper" },
-  { label: "Bdim7", notes: [59, 62, 65, 68], tension: 5, style: "bg-ink-3 text-paper" },
+const TENSION_CHORDS: Array<{
+  label: string;
+  notes: number[];
+  spellings: string[];
+  tension: number;
+  style: string;
+}> = [
+  { label: "Cmaj7", notes: [60, 64, 67, 71], spellings: ["C4", "E4", "G4", "B4"], tension: 1, style: "bg-acid text-ink" },
+  { label: "Fmaj7", notes: [65, 69, 72, 76], spellings: ["F4", "A4", "C5", "E5"], tension: 2, style: "bg-paper-2 text-ink" },
+  { label: "Dm7", notes: [62, 65, 69, 72], spellings: ["D4", "F4", "A4", "C5"], tension: 2, style: "bg-cobalt text-paper" },
+  { label: "G7", notes: [67, 71, 74, 77], spellings: ["G4", "B4", "D5", "F5"], tension: 4, style: "bg-cadmium text-ink" },
+  { label: "G7alt", notes: [67, 71, 74, 77, 80], spellings: ["G4", "B4", "D5", "F5", "Ab5"], tension: 5, style: "bg-ink text-paper" },
+  { label: "Bdim7", notes: [59, 62, 65, 68], spellings: ["B3", "D4", "F4", "Ab4"], tension: 5, style: "bg-ink-3 text-paper" },
 ];
 
-function TensionSpectrum() {
-  const { previewChord } = useTransport();
+function TensionSpectrum({ concept }: { concept: Concept }) {
+  const { play, stop, previewChord, previewNote, state, isExamplePlaying } = useTransport();
+  const { previewNotes, flash, press, release } = useHeldPreview();
   const [selected, setSelected] = useState(0);
+  const selectedChord = TENSION_CHORDS[selected];
+
+  // 先取回采样，避免第一次点击还要等 9 个 mp3 下载。
+  useEffect(() => {
+    void audioEngine.preloadSamples();
+  }, []);
+
+  const selectedExample = useMemo(
+    () =>
+      example({
+        id: `tension-${selectedChord.label}`,
+        title: `${selectedChord.label} · 张力试听`,
+        caption: `张力等级 ${selectedChord.tension}：点击色块或下方琴键试听；PLAY 走全局试听坞。`,
+        kind: "chord",
+        tempo: 72,
+        beats: 4,
+        events: [chord(0, 4, selectedChord.spellings, { label: selectedChord.label })],
+      }),
+    [selectedChord],
+  );
+
+  const playing = isExamplePlaying(selectedExample.id);
+  const activeNotes = playing
+    ? [...new Set([...state.activeNotes, ...previewNotes])]
+    : previewNotes;
 
   const select = (index: number) => {
     setSelected(index);
-    previewChord(TENSION_CHORDS[index].notes);
+    const next = TENSION_CHORDS[index];
+    previewChord(next.notes);
+    flash(next.notes);
+  };
+
+  const toggle = () => {
+    if (playing) stop();
+    else play(selectedExample, { conceptSlug: concept.slug, conceptTitle: concept.title });
+  };
+
+  const handleStaffPlay = (event: ExampleEvent) => {
+    const midis = event.notes.map((note) => note.midi);
+    if (midis.length === 1) previewNote(midis[0]);
+    else previewChord(midis);
+    flash(midis);
+  };
+  const handleStaffPress = (event: ExampleEvent, pressed: boolean) => {
+    const key = `tension-s${event.beat}-${event.notes.map((note) => note.midi).join(",")}`;
+    const midis = event.notes.map((note) => note.midi);
+    if (pressed) press(key, midis);
+    else release(key);
+  };
+  const handlePianoNote = (midi: number) => {
+    previewNote(midi);
+    flash([midi]);
+  };
+  const handlePianoPress = (midi: number, pressed: boolean) => {
+    if (pressed) press(`tension-p${midi}`, [midi]);
+    else release(`tension-p${midi}`);
   };
 
   return (
     <div>
-      <div>
-        <p className="mono-label text-muted">TENSION SPECTRUM / 张力光谱</p>
-        <p className="mt-1 text-sm text-muted">
-          相对听觉刻度，不是物理测量；点击和弦试听。功能位置与语境仍会改变实际张力。
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="mono-label text-muted">TENSION SPECTRUM / 张力光谱</p>
+          <p className="mt-1 text-sm text-muted">
+            相对听觉刻度，不是物理测量；点击和弦试听，下方五线谱与琴键同步。功能位置与语境仍会改变实际张力。
+          </p>
+        </div>
+        <PlayControl
+          playing={playing}
+          onClick={toggle}
+          label={playing ? `停止 ${selectedChord.label}` : `播放 ${selectedChord.label}`}
+          tone="cadmium"
+          size="md"
+        />
       </div>
 
       <div className="mt-4 flex items-end gap-1.5 sm:gap-2.5">
-        {TENSION_CHORDS.map((chord, index) => {
+        {TENSION_CHORDS.map((item, index) => {
           const active = index === selected;
           return (
             <button
-              key={chord.label}
+              key={item.label}
               type="button"
               onClick={() => select(index)}
               aria-pressed={active}
-              className={`flex flex-1 flex-col items-center justify-end border px-1 pb-2 pt-2 transition-all ${chord.style} ${
+              className={`flex flex-1 flex-col items-center justify-end border px-1 pb-2 pt-2 transition-all ${item.style} ${
                 active ? "border-ink" : "border-ink/20 hover:border-ink/60"
               }`}
-              style={{ height: `${48 + chord.tension * 22}px` }}
+              style={{ height: `${48 + item.tension * 22}px` }}
             >
-              <span className="mono-label text-[0.55rem]">LEVEL {chord.tension}</span>
+              <span className="mono-label text-[0.55rem]">LEVEL {item.tension}</span>
               <span className="mt-1 text-[0.68rem] font-semibold leading-none sm:text-xs">
-                {chord.label}
+                {item.label}
               </span>
             </button>
           );
@@ -589,10 +663,31 @@ function TensionSpectrum() {
 
       <div className="mt-2 flex items-center justify-between border-t border-line pt-2">
         <span className="mono-label text-muted">稳定 / STABLE</span>
-        <span className="text-xs text-muted">
-          当前：{TENSION_CHORDS[selected].label}
-        </span>
+        <span className="text-xs text-muted">当前：{selectedChord.label}</span>
         <span className="mono-label text-muted">紧张 / TENSE</span>
+      </div>
+
+      <div className="mt-4 border-t border-line pt-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="mono-label text-muted">STAFF + KEYS / 点击试听 · 按住持续发声</p>
+          <span className="mono-label text-muted">
+            {selectedChord.label} · LEVEL {selectedChord.tension}
+          </span>
+        </div>
+        <div className="mt-3">
+          <StaffNotation
+            example={selectedExample}
+            onEventPlay={handleStaffPlay}
+            onEventPress={handleStaffPress}
+          />
+        </div>
+        <PianoKeyboard
+          activeNotes={activeNotes}
+          onNote={handlePianoNote}
+          onNotePress={handlePianoPress}
+          compact
+          className="mt-3"
+        />
       </div>
     </div>
   );
@@ -835,13 +930,13 @@ export function VisualizationCard({ concept }: { concept: Concept }) {
       case "interval-ruler":
         return <IntervalRuler />;
       case "tension-spectrum":
-        return <TensionSpectrum />;
+        return <TensionSpectrum concept={concept} />;
       case "dominant-path":
         return <DominantPath concept={concept} />;
       default:
         return null;
     }
-  }, [concept.visual]);
+  }, [concept]);
 
   return (
     <section id="visual" className="scroll-mt-24 border-t border-line pt-6">
