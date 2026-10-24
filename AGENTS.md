@@ -123,6 +123,7 @@ src/content/
 - 音频：谱例与琴键由本地 Salamander 钢琴采样（C3–C5，CC BY 3.0，Alexander Holm）驱动，附带合成器回退；见 `public/audio/salamander/LICENSE.txt`。不得替换为需要运行时外网请求的 CDN 音源。
 - 五线谱音符/和弦必须可点击；点击使用 `previewNote/previewChord`，并联动钢琴高亮。按住（长按）通过 `holdStart/holdEnd` 持续发声，松手淡出，高亮跟随按住时间；键盘激活（Enter/Space 的 click `detail===0`）保持一次性试听。
 - 视觉方向：Blue Note 现代主义；平面色块、方形控件、纸面阅读区、墨色外壳；不引入渐变/玻璃拟态/SaaS 圆角卡片。
+- 🔴 **标签与控件必须可区分**（2026-10-24 定规）：**静态标签**（别名/主题/维度/VIA/跨书对应等）一律**无边框**——用浅底 chip `bg-ink/5 text-muted`（深色区 `bg-paper/15 text-paper`），永不加 hover；**可点击 chip 链接**（概念号跳转等）用边框 `border-ink/40` 起 + `transition-colors hover:bg-ink hover:text-paper` 反色；**按钮**用实底或粗边框 + hover 反色。边框和 hover 是"可点击"的信号，静态元素不得携带。
 - 响应式：375 / 768 / 1280 三视口，无横向溢出；概念页大纲：移动端用 `<details>`，桌面用右栏深色 ON THIS PAGE 卡片；左侧栏为站点导航 + 当前分类的可折叠概念目录（折叠状态存 localStorage `tonic.rail.catalog.v1`）。
 
 ## 当前范围

@@ -2,7 +2,7 @@ import { Pause, Play, Square } from "lucide-react";
 import type { ReactNode } from "react";
 import type { CategoryId } from "../content/types";
 import { getCategory } from "../content";
-import { CATEGORY_STYLES, LEVEL_STYLES } from "./category";
+import { CATEGORY_STYLES } from "./category";
 
 export function CategoryTag({
   category,
@@ -37,7 +37,7 @@ export function CategoryTag({
 export function LevelTag({ level, className = "" }: { level: string; className?: string }) {
   return (
     <span
-      className={`mono-label inline-flex border px-2 py-1 ${LEVEL_STYLES[level] ?? "border-ink/25 text-ink/70"} ${className}`}
+      className={`mono-label inline-flex bg-ink/5 px-2 py-1 text-ink/70 ${className}`}
     >
       {level}
     </span>

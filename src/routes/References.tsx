@@ -107,7 +107,7 @@ export function References() {
                       ) : null}
                       <p className="mt-2 text-sm">{entry.authors}</p>
                     </div>
-                    <span className="mono-label border border-ink/20 px-2 py-1 text-muted">
+                    <span className="mono-label bg-ink/5 px-2 py-1 text-muted">
                       {usage.length} LOCATORS USED
                     </span>
                   </div>
@@ -159,7 +159,7 @@ export function References() {
                           <Link
                             key={concept.slug}
                             to={`/theory/${concept.slug}`}
-                            className="mono-label border border-ink/15 px-1.5 py-0.5 text-muted hover:border-cobalt hover:text-cobalt-ink"
+                            className="mono-label border border-ink/40 px-1.5 py-0.5 text-muted transition-colors hover:bg-ink hover:text-paper"
                           >
                             {concept.number} {concept.title}
                           </Link>
@@ -239,7 +239,7 @@ export function References() {
                 ) : null}
                 <div className="mt-2 flex flex-wrap items-center gap-1.5">
                   {collection ? (
-                    <span className="mono-label border border-ink/30 px-1.5 py-0.5 text-muted">
+                    <span className="mono-label bg-ink/5 px-1.5 py-0.5 text-muted">
                       {collection.section} / {collection.id}
                     </span>
                   ) : null}
@@ -247,12 +247,12 @@ export function References() {
                     <span className="mono-label bg-cobalt px-1.5 py-0.5 text-paper">专栏 ARTICLE</span>
                   ) : null}
                   {video.via ? (
-                    <span className="mono-label border border-ink/15 px-1.5 py-0.5 text-muted">
+                    <span className="mono-label bg-ink/5 px-1.5 py-0.5 text-muted">
                       VIA {video.via.toUpperCase()}
                     </span>
                   ) : null}
                   {video.themes.map((theme) => (
-                    <span key={theme} className="border border-ink/15 px-1.5 py-0.5 text-[0.68rem] text-muted">
+                    <span key={theme} className="bg-ink/5 px-1.5 py-0.5 text-[0.68rem] text-muted">
                       {theme}
                     </span>
                   ))}

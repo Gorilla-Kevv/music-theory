@@ -121,7 +121,7 @@ export function Library() {
         <button
           type="button"
           onClick={openSearch}
-          className="mono-label inline-flex items-center gap-2 border border-ink/20 px-3 py-2 text-muted hover:border-cobalt hover:text-cobalt-ink"
+          className="mono-label inline-flex items-center gap-2 border border-ink/40 px-3 py-2 text-muted transition-colors hover:bg-ink hover:text-paper"
         >
           <Search size={13} aria-hidden />
           全局检索 ⌘K

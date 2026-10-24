@@ -136,7 +136,7 @@ function ReviewStage() {
                       conceptTitle: current.title,
                     })
                   }
-                  className="mono-label mt-4 inline-flex items-center gap-1.5 border border-ink/45 px-2.5 py-1.5 text-muted hover:border-cobalt hover:text-cobalt-ink"
+                  className="mono-label mt-4 inline-flex items-center gap-1.5 border border-ink/45 px-2.5 py-1.5 text-muted transition-colors hover:bg-ink hover:text-paper"
                 >
                   <Volume2 size={12} aria-hidden />
                   听相关谱例
@@ -252,7 +252,7 @@ function EarStage() {
             <button
               type="button"
               onClick={replay}
-              className="mono-label inline-flex items-center gap-1.5 border border-ink/25 px-2.5 py-2 hover:border-cobalt hover:text-cobalt-ink"
+              className="mono-label inline-flex items-center gap-1.5 border border-ink/40 px-2.5 py-2 transition-colors hover:bg-ink hover:text-paper"
             >
               <Volume2 size={13} aria-hidden />
               再听一次

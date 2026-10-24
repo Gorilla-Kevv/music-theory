@@ -196,7 +196,7 @@ function SearchDialog() {
                     key={suggestion}
                     type="button"
                     onClick={() => setQuery(suggestion)}
-                    className="border border-ink/45 px-2 py-1 text-xs hover:border-cobalt hover:text-cobalt-ink"
+                    className="border border-ink/45 px-2 py-1 text-xs transition-colors hover:bg-ink hover:text-paper"
                   >
                     {suggestion}
                   </button>
@@ -266,7 +266,7 @@ function SearchDialog() {
                     key={suggestion}
                     type="button"
                     onClick={() => setQuery(suggestion)}
-                    className="border border-ink/45 px-2 py-1 text-xs hover:border-cobalt hover:text-cobalt-ink"
+                    className="border border-ink/45 px-2 py-1 text-xs transition-colors hover:bg-ink hover:text-paper"
                   >
                     {suggestion}
                   </button>

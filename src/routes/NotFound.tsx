@@ -18,7 +18,7 @@ export function NotFound() {
         </Link>
         <Link
           to="/library"
-          className="mono-label border border-ink/25 px-3 py-2 text-muted hover:border-ink hover:text-ink"
+          className="mono-label border border-ink/40 px-3 py-2 text-muted transition-colors hover:bg-ink hover:text-paper"
         >
           打开知识库
         </Link>

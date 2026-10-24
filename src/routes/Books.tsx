@@ -140,7 +140,7 @@ export function Books() {
         <button
           type="button"
           onClick={openSearch}
-          className="mono-label border border-ink/35 px-2.5 py-2 text-muted hover:border-cobalt hover:text-cobalt-ink"
+          className="mono-label border border-ink/40 px-2.5 py-2 text-muted transition-colors hover:bg-ink hover:text-paper"
         >
           全局检索 ⌘K
         </button>
@@ -259,7 +259,7 @@ export function Books() {
                   {selected.dimensions?.map((dim) => {
                     const meta = HARMONY_DIMENSIONS.find((item) => item.id === dim);
                     return (
-                      <span key={dim} className="mono-label border border-current/70 px-2 py-1">
+                      <span key={dim} className="mono-label text-current opacity-75">
                         {meta?.labelEn ?? dim}
                       </span>
                     );
@@ -329,7 +329,7 @@ export function Books() {
                       <p className="mono-label text-muted">CROSS-BOOK / 跨书对应</p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {selected.crossBook.map((item) => (
-                          <span key={item} className="border border-ink/20 px-2 py-1 text-xs text-muted">
+                          <span key={item} className="bg-ink/5 px-2 py-1 text-xs text-muted">
                             {item}
                           </span>
                         ))}
@@ -369,7 +369,7 @@ export function Books() {
                             <Link
                               key={slug}
                               to={`/theory/${slug}`}
-                              className="border border-ink/20 px-2 py-1 text-xs hover:border-cobalt hover:text-cobalt-ink"
+                              className="border border-ink/40 px-2 py-1 text-xs transition-colors hover:bg-ink hover:text-paper"
                             >
                               {concept.number} {concept.title}
                             </Link>
@@ -414,7 +414,7 @@ export function Books() {
                     </button>
                     <Link
                       to={`/references#${book}`}
-                      className="mono-label border border-ink/30 px-3 py-2 text-muted hover:border-ink hover:text-ink"
+                      className="mono-label border border-ink/40 px-3 py-2 transition-colors hover:bg-ink hover:text-paper"
                     >
                       查看书目
                     </Link>

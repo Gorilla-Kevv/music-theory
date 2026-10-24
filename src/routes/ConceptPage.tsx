@@ -277,10 +277,10 @@ export function ConceptPage() {
           <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className={`mono-label border px-2 py-1 ${onDark ? "border-paper/80" : "border-ink/60"}`}>
+                <span className={`mono-label px-2 py-1 ${onDark ? "bg-paper/15 text-paper" : "bg-ink/5 text-ink/75"}`}>
                   {categoryMeta?.nameEn ?? concept.category}
                 </span>
-                <span className={`mono-label border px-2 py-1 ${onDark ? "border-paper/80" : "border-ink/60"}`}>
+                <span className={`mono-label px-2 py-1 ${onDark ? "bg-paper/15 text-paper" : "bg-ink/5 text-ink/75"}`}>
                   {concept.level}
                 </span>
                 {concept.dimensions?.map((dimension) => {
@@ -288,7 +288,7 @@ export function ConceptPage() {
                   return (
                     <span
                       key={dimension}
-                      className={`mono-label border px-2 py-1 ${onDark ? "border-paper/80" : "border-ink/60"}`}
+                      className={`mono-label px-2 py-1 ${onDark ? "bg-paper/15 text-paper" : "bg-ink/5 text-ink/75"}`}
                     >
                       {meta?.label ?? dimension}
                     </span>
@@ -570,7 +570,7 @@ export function ConceptPage() {
               <p className="mono-label text-muted">ALIASES / 别名</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {[...new Set([...concept.aliases, ...concept.tags])].map((alias) => (
-                  <span key={alias} className="border border-ink/15 px-2 py-1 text-[0.7rem] text-ink/70">
+                  <span key={alias} className="bg-ink/5 px-2 py-1 text-[0.7rem] text-muted">
                     {alias}
                   </span>
                 ))}
@@ -612,7 +612,7 @@ export function ConceptPage() {
                 <p className="mono-label text-muted">前置 / PREREQUISITES</p>
                 <div className="mt-1 flex flex-wrap gap-1.5">
                   {prerequisites.length ? prerequisites.map((item) => (
-                    <Link key={item.slug} to={`/theory/${item.slug}`} className="border border-ink/20 px-1.5 py-0.5 text-[0.68rem] hover:border-cobalt hover:text-cobalt-ink">
+                    <Link key={item.slug} to={`/theory/${item.slug}`} className="mono-label border border-ink/40 px-1.5 py-0.5 text-[0.68rem] transition-colors hover:bg-ink hover:text-paper">
                       {item.number}
                     </Link>
                   )) : <span className="text-xs text-muted">无</span>}
@@ -622,7 +622,7 @@ export function ConceptPage() {
                 <p className="mono-label text-muted">后续 / NEXT</p>
                 <div className="mt-1 flex flex-wrap gap-1.5">
                   {nextConcepts.length ? nextConcepts.map((item) => (
-                    <Link key={item.slug} to={`/theory/${item.slug}`} className="border border-ink/20 px-1.5 py-0.5 text-[0.68rem] hover:border-cobalt hover:text-cobalt-ink">
+                    <Link key={item.slug} to={`/theory/${item.slug}`} className="mono-label border border-ink/40 px-1.5 py-0.5 text-[0.68rem] transition-colors hover:bg-ink hover:text-paper">
                       {item.number}
                     </Link>
                   )) : <span className="text-xs text-muted">无</span>}

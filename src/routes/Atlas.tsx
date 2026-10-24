@@ -352,7 +352,7 @@ export function Atlas() {
                     {selectedConcept.dimensions?.map((item) => {
                       const meta = HARMONY_DIMENSIONS.find((dimensionItem) => dimensionItem.id === item);
                       return (
-                        <span key={item} className="mono-label border border-ink/25 px-2 py-1">
+                        <span key={item} className="mono-label bg-ink/5 px-2 py-1">
                           {meta?.label ?? item}
                         </span>
                       );
@@ -380,7 +380,7 @@ export function Atlas() {
                     <p className="mono-label text-muted">PREREQUISITES / 前置</p>
                     <div className="mt-1 flex flex-wrap gap-1.5">
                       {prerequisites.length ? prerequisites.map((concept) => (
-                        <Link key={concept.slug} to={`/theory/${concept.slug}`} className="border border-ink/20 px-2 py-1 text-xs hover:border-cobalt hover:text-cobalt-ink">
+                        <Link key={concept.slug} to={`/theory/${concept.slug}`} className="border border-ink/40 px-2 py-1 text-xs transition-colors hover:bg-ink hover:text-paper">
                           {concept.number} {concept.title}
                         </Link>
                       )) : <span className="text-xs text-muted">无</span>}
@@ -390,7 +390,7 @@ export function Atlas() {
                     <p className="mono-label text-muted">NEXT / 后续</p>
                     <div className="mt-1 flex flex-wrap gap-1.5">
                       {nextConcepts.length ? nextConcepts.map((concept) => (
-                        <Link key={concept.slug} to={`/theory/${concept.slug}`} className="border border-ink/20 px-2 py-1 text-xs hover:border-cobalt hover:text-cobalt-ink">
+                        <Link key={concept.slug} to={`/theory/${concept.slug}`} className="border border-ink/40 px-2 py-1 text-xs transition-colors hover:bg-ink hover:text-paper">
                           {concept.number} {concept.title}
                         </Link>
                       )) : <span className="text-xs text-muted">无</span>}
@@ -407,7 +407,7 @@ export function Atlas() {
                       <Link
                         key={node.id}
                         to={node.slug ? `/theory/${node.slug}` : "/atlas"}
-                        className="border border-ink/20 px-2 py-1 text-xs hover:border-cobalt hover:text-cobalt-ink"
+                        className="border border-ink/40 px-2 py-1 text-xs transition-colors hover:bg-ink hover:text-paper"
                       >
                         {node.subtitle} {node.label}
                       </Link>
