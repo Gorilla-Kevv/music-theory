@@ -1,29 +1,30 @@
 import { buildOutline, type ChapterSeed, type NoteSeed } from "./types";
 
 const CHAPTERS: ChapterSeed[] = [
-  { number: "01", title: "Basic Theory", titleZh: "基本理论", part: "Part I · Theory: Chords and Scales" },
-  { number: "02", title: "Major Scale and Progressions", titleZh: "大调音阶与和弦进行", part: "Part I · Theory: Chords and Scales" },
-  { number: "03", title: "Chord/Scale Theory", titleZh: "和弦—音阶理论", part: "Part I · Theory: Chords and Scales" },
-  { number: "04", title: "How to Practice Scales", titleZh: "如何练习音阶", part: "Part I · Theory: Chords and Scales" },
-  { number: "05", title: "Slash Chords", titleZh: "斜线和弦", part: "Part I · Theory: Chords and Scales" },
-  { number: "06", title: "From Scales to Music", titleZh: "从音阶到音乐", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "07", title: "Bebop Scales", titleZh: "比波普音阶", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "08", title: "Playing Outside", titleZh: "演奏“外部”", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "09", title: "Pentatonic Scales", titleZh: "五声音阶", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "10", title: "Blues", titleZh: "布鲁斯", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "11", title: "Rhythm Changes", titleZh: "Rhythm Changes", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "12", title: "Practice, Practice, Practice", titleZh: "练习、练习、再练习", part: "Part II · Improvisation: Playing the Changes" },
-  { number: "13", title: "Basic Reharmonization", titleZh: "基础重配和声", part: "Part III · Reharmonization" },
-  { number: "14", title: "Advanced Reharmonization", titleZh: "高级重配和声", part: "Part III · Reharmonization" },
-  { number: "15", title: "Coltrane Changes", titleZh: "Coltrane Changes", part: "Part III · Reharmonization" },
-  { number: "16", title: "Three Reharmonizations", titleZh: "三种重配和声", part: "Part III · Reharmonization" },
-  { number: "17", title: "Song Forms and Composition", titleZh: "曲式与作曲", part: "Part IV · The Tune" },
-  { number: "18", title: "Reading a Lead Sheet", titleZh: "读 Lead Sheet", part: "Part IV · The Tune" },
-  { number: "19", title: "Memorizing a Tune", titleZh: "记曲", part: "Part IV · The Tune" },
-  { number: "20", title: "Heads", titleZh: "Head 旋律", part: "Part IV · The Tune" },
-  { number: "21", title: "The Repertoire", titleZh: "曲目库", part: "Part IV · The Tune" },
-  { number: "22", title: "Salsa and Latin Jazz", titleZh: "Salsa 与拉丁爵士", part: "Part V · The Rest of It" },
-  { number: "23", title: "Loose Ends", titleZh: "杂项", part: "Part V · The Rest of It" },
+  { number: "01", title: "Basic Theory", titleZh: "基本理论", part: "Part I · Theory: Chords and Scales", sourceFile: "jazz-baodian/OEBPS/Text/chapter5.html" },
+  { number: "02", title: "Major Scale and Progressions", titleZh: "大调音阶与和弦进行", part: "Part I · Theory: Chords and Scales", sourceFile: "jazz-baodian/OEBPS/Text/chapter9.html" },
+  { number: "03", title: "Chord/Scale Theory", titleZh: "和弦—音阶理论", part: "Part I · Theory: Chords and Scales", sourceFile: "jazz-baodian/OEBPS/Text/chapter25.html" },
+  { number: "04", title: "How to Practice Scales", titleZh: "如何练习音阶", part: "Part I · Theory: Chords and Scales", sourceFile: "jazz-baodian/OEBPS/Text/chapter56.html" },
+  { number: "05", title: "Slash Chords", titleZh: "斜线和弦", part: "Part I · Theory: Chords and Scales", sourceFile: "jazz-baodian/OEBPS/Text/chapter57.html" },
+  { number: "06", title: "From Scales to Music", titleZh: "从音阶到音乐", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter60.html" },
+  { number: "07", title: "Bebop Scales", titleZh: "比波普音阶", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter76.html" },
+  { number: "08", title: "Playing Outside", titleZh: "演奏“外部”", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter84.html" },
+  { number: "09", title: "Pentatonic Scales", titleZh: "五声音阶", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter92.html" },
+  { number: "10", title: "Blues", titleZh: "布鲁斯", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter105.html" },
+  { number: "11", title: "Rhythm Changes", titleZh: "Rhythm Changes", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter111.html" },
+  { number: "12", title: "Practice, Practice, Practice", titleZh: "练习、练习、再练习", part: "Part II · Improvisation: Playing the Changes", sourceFile: "jazz-baodian/OEBPS/Text/chapter112.html" },
+  { number: "13", title: "Basic Reharmonization", titleZh: "基础重配和声", part: "Part III · Reharmonization", sourceFile: "jazz-baodian/OEBPS/Text/chapter128.html" },
+  { number: "14", title: "Advanced Reharmonization", titleZh: "高级重配和声", part: "Part III · Reharmonization", sourceFile: "jazz-baodian/OEBPS/Text/chapter150.html" },
+  { number: "15", title: "Coltrane Changes", titleZh: "Coltrane 进行", part: "Part III · Reharmonization", sourceFile: "jazz-baodian/OEBPS/Text/chapter167.html" },
+  { number: "16", title: "Three Reharmonizations", titleZh: "三种重配和声", part: "Part III · Reharmonization", sourceFile: "jazz-baodian/OEBPS/Text/chapter175.html" },
+  { number: "17", title: "Song Forms and Composition", titleZh: "曲式与作曲", part: "Part IV · The Tune", sourceFile: "jazz-baodian/OEBPS/Text/chapter180.html" },
+  { number: "18", title: "Reading a Lead Sheet", titleZh: "读 Lead Sheet", part: "Part IV · The Tune", sourceFile: "jazz-baodian/OEBPS/Text/chapter198.html" },
+  { number: "19", title: "Memorizing a Tune", titleZh: "记曲", part: "Part IV · The Tune", sourceFile: "jazz-baodian/OEBPS/Text/chapter204.html" },
+  { number: "20", title: "Heads", titleZh: "Head 旋律", part: "Part IV · The Tune", sourceFile: "jazz-baodian/OEBPS/Text/chapter208.html" },
+  { number: "21", title: "The Repertoire", titleZh: "曲目库", part: "Part IV · The Tune", sourceFile: "jazz-baodian/OEBPS/Text/chapter209.html" },
+  { number: "22", title: "Salsa and Latin Jazz", titleZh: "Salsa 与拉丁爵士", part: "Part V · The Rest of It", sourceFile: "jazz-baodian/OEBPS/Text/chapter211.html" },
+  { number: "23", title: "Loose Ends", titleZh: "杂项", part: "Part V · The Rest of It", sourceFile: "jazz-baodian/OEBPS/Text/chapter216.html" },
+  // 第二十四章「聆听」：手头 EPUB 未收录该章正文（索引提及但无对应文件），留空待补。
   { number: "24", title: "Listening", titleZh: "聆听", part: "Part V · The Rest of It" },
 ];
 
@@ -442,7 +443,7 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
       "扒出 guide tones 与 turnaround。",
       "比较两个版本，写下一个色彩/节奏差异。",
     ],
-    crossBook: ["Laitz 2：旋律", "Laitz 18：转调"],
+    crossBook: ["Laitz 2：旋律", "Laitz 19：临时主化与转调"],
     visualHint: "试听坞",
     confusions: [
       {
@@ -491,7 +492,7 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
       "先写原进行的低音与 guide tones，再做替代。",
       "替代后检查每个目标音是否仍能落到原和弦三音/七音。",
     ],
-    crossBook: ["Laitz 17：副属和弦", "Laitz 18：转调"],
+    crossBook: ["Laitz 17：副属和弦", "Laitz 19：临时主化与转调"],
     visualHint: "张力光谱 + 体系图“关系”分支",
   },
   "levine-14": {
@@ -589,4 +590,8 @@ const ALL_NOTES = Object.fromEntries(
 export const LEVINE_OUTLINE = buildOutline("levine", CHAPTERS, {
   ...ALL_NOTES,
   ...EXTRA_NOTES,
+}, {
+  file: "jazz-baodian/OEBPS/Text/TOC.xhtml",
+  kind: "epub",
+  label: "《爵士乐宝典》中译本（赵贝露译）EPUB，已解包内嵌于 /books/jazz-baodian/；第二十四章 EPUB 未收录",
 });

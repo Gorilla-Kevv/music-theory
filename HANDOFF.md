@@ -28,7 +28,7 @@
   - `src/content/`：知识事实源（55 概念、65 谱例、188 引用、55 条白话拆解）。
   - `src/content/graph/`：体系图谱数据（6 枢纽 / 55 概念 / 147 关联 / 54 前置；ATLAS_HEIGHT 1320 容纳 14 行节点）。
   - `src/content/bilibili.ts`：B 站课程调研台账（5 合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目）。
-  - `src/content/books/`：三本书的 118 个章目与 85 条原创章节笔记（Levine 24 / Laitz 34 / Sposobin 27），其中 Levine 24/24、Laitz 34/34 带深度归纳。
+  - `src/content/books/`：三本书 117 章（真实原书结构）+ 117 条笔记；Levine 24 章（中译 EPUB 深链）、Laitz 33 章（4e，PDF 页码深链）、Sposobin 60 章（无电子版）。
   - `src/lib/`：音频（采样 + 合成回退）、搜索、SRS、听辨、音符/谱面工具、Agent API。
   - `src/components/`：外壳、检索面板、五线谱（可点击命中区）、钢琴、谱例、可视化、试听坞。
   - `src/routes/`：`/`、`/library`、`/books`、`/atlas`、`/theory/:slug`、`/drill`、`/references`、`/agent`。
@@ -50,8 +50,9 @@
 ## 决策与坑
 
 - 引用采用**章节级定位**，不写页码：三本书有多个版次/译本，页码会漂移。书目与章目已通过 OUP 官方目录、图书馆书目记录核对；不要为了“看起来更学术”而补造页码。
-- 书库是**完整章目 + 原创笔记**，不是教材电子版：不得 OCR、扫描或整段复制正文。新增 `books/*.ts` 笔记时只写原创摘要、关键点、概念映射与维度。
-- 🔴 书库深化的诚实边界（2026-10-24 用户审查后明确）：当前 118 条笔记是从**章目结构 + 音乐理论专业知识**写的原创笔记，**没有经书的正文逐章核对**——这是“看起来和原版没关系”的原因。Sposobin 后补的 33 条（阶段 20）只基于章名，深度低于前 27 条。深化路径：用户把合法持有的电子版放入本地私有目录（gitignore，绝不进仓库/不分发），Agent 逐章阅读后把笔记升级为“读透”版（仍然原创改写，不复制原文）；没有正文的深化都是无米之炊。
+- 书库是**源知识数据**（2026-10-24 新逻辑，用户确立）：书库=原书真实章目+章节定位+内嵌电子书深链；知识库（概念）=总结精炼、白话解释的个人笔记+拓展知识。不得 OCR、扫描或整段复制正文。
+- 🔴 **内嵌电子书（2026-10-24）**：用户持有 Laitz《The Complete Musician》**第 4 版**英文 PDF（957 页，OUP © 2016，文件在 `/books/`，已复制到 `/public/books/complete-musician-4e.pdf`）与 Levine《爵士乐宝典》中译 EPUB（赵贝露译，解包到 `/public/books/jazz-baodian/`）。`/books/` 与 `/public/books/` 均 gitignore——**永不提交、不分发**。章节深链：Laitz 用 `#page=N`（pdfPage 来自 PDF 书签逐章核对），Levine 用解包 HTML（sourceFile）。⚠️ Laitz 第 4 版章名与第 5 版完全不同（无 1C，Ch17=模进、Ch18=副属、Ch19=转调），全库 117 处 laitz 引用已按 4e 重写；后续新增引用必须用 4e 章名。Levine EPUB 缺第二十四章「聆听」正文（索引提及、文件缺失），该章无深链。
+- **书库深化流水线**（电子版已到位，可执行）：逐章读内嵌原书 → 升级该章笔记（deepSummary/analysis/confusions 以原文为准，仍原创改写）→ 在 PROGRESS 记录批次。优先级：Laitz 4e 新结构下被引用最多的章（4/5/9/10/18/19/21）→ Levine 高频章（2/3/13）→ Sposobin 等电子版。
 - 谱面点击命中区来自 VexFlow `StaveNote.getBoundingBox()`，按行叠加 `rowIndex * 150`；如果改 `ROW_HEIGHT` 或给 SVG 加缩放，需要同步修正命中区坐标。命中区按钮是透明绝对定位按钮，可用 Tab 与 Enter。
 - 钢琴采样：Salamander Grand Piano V3（Alexander Holm，CC BY 3.0）本地子集；文件名 `C3, Ds3, Fs3, A3, C4, Ds4, Fs4, A4, C5`。首次用户手势预取，`ensureSamples` 解码后使用；失败自动回退合成器。替换/新增采样必须保留许可文件。
 - 概念页 `ON THIS PAGE` 在右栏深色卡片（`max-h-[46vh]` 内部滚动），用 `useActiveSection` 的 45% 视口阈值；当前项用 `scrollIntoView({block:'nearest'})` 在卡片内部滚动，避免页面跳动。左侧栏 CATALOG 当前分类下嵌概念目录，**当前分类整栏是折叠切换按钮**（点任意位置切换，状态存 localStorage `tonic.rail.catalog.v1`）；非当前分类仍是跳转 `/library?category=` 的链接；导航+目录区在 `dark-scroll` 容器内滚动。分类高亮同时服务于概念页与 `/library?category=`；目录项只在当前概念页高亮（`isCurrent`）。
@@ -86,13 +87,13 @@
 
 ## 状态
 
-- 当前状态：v0.4 进行中；55 概念（含站点来源 5 条：泛音列/连接系统论/轴心体系/新里曼/LCC）/ 65 谱例 / 188 引用 / 55 条白话拆解；书库 118/118 章节笔记（Sposobin 60/60，后 33 条为章名级初稿，深化路径见“决策与坑”）；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.4 进行中；55 概念（含站点来源 5 条：泛音列/连接系统论/轴心体系/新里曼/LCC）/ 65 谱例 / 186 引用 / 55 条白话拆解；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
   - `/theory/ii-v-i` 含引用上标、页末注释、可点击谱面、相关概念；右栏有深色 ON THIS PAGE 卡片且随滚动高亮；左栏 CATALOG 当前分类展开概念目录，可点击收起/展开（状态持久化）。
   - `/theory/circle-of-fifths` 的五度圈可点击扇区、试听、切大调/关系小调；左轨分类高亮“基础”。
-  - `/books` 可切换三本书、按维度筛选、浏览 118 个章目与 85 条笔记；Levine/Laitz 章节显示深入归纳、跨书对应与常见误解。
+  - `/books` 可切换三本书、按维度筛选、浏览 117 个章目与 117 条笔记；Levine/Laitz 章节显示深入归纳、跨书对应、常见误解与“打开原书本章”内嵌电子书深链。
   - `/theory/modal-characteristics` 显示五条调式谱例（D Dorian / E Phrygian / F Lydian / G Mixolydian / A Aeolian，共用 C 大调集合）。
   - `/theory/non-functional-dominants` 的相邻属和弦路径可视化可点击节点试听、播放整条进行；橙线为相邻上行，钴蓝线为下行五度。
   - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点。
@@ -108,4 +109,4 @@
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 12:00 BY solo-agent
+- 本次文档更新时间：10.24 13:00 BY solo-agent

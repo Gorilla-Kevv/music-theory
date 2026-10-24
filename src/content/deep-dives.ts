@@ -12,7 +12,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "先把低音弹出来：G。此时你听到的低音已经站在属的位置上，上方的 C 和 E 只是暂时压在它上面。它们不是稳定的主和弦，而是两个要被“拉下来”的音：E 向下滑到 D，C 向下滑到 B。等 G7 出现时，这两个音落下，属功能才真正站稳。",
         cites: [
-          cite("laitz", "Chapter 11 Six-Four Chords and Plagal Motions"),
+          cite("laitz", "Chapter 11 Six-Four Chords, Revisiting the Subdominant, and Summary of Contrapuntal Expansions"),
           cite("sposobin", "第九章 终止四六和弦"),
         ],
       },
@@ -37,7 +37,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "模进不是随便重复，而是把一个“楼梯模型”搬到新的高度。自然模进留在调内，楼梯的每一级会根据音阶自动变宽或变窄；真实模进保持原来的形状，哪怕因此离开原调。",
         cites: [
-          cite("laitz", "Chapter 19 Harmonic Sequences"),
+          cite("laitz", "Chapter 17 Harmonic Sequences"),
           cite("sposobin", "第二十六章 自然（调内）模进和副七和弦（模进和弦）"),
         ],
       },
@@ -63,7 +63,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "减七和弦像四个等距的房间：B–D–F–Ab。你把其中任意一个音当作根音，房间的形状不变，只是门牌换了。正因为形状对称，它可以用四种等音写法指向四个不同的调。",
         cites: [
           cite("sposobin", "第二十二章 导七和弦（DⅦ7）"),
-          cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+          cite("laitz", "Chapter 28 New Harmonic Tendencies"),
         ],
       },
       {
@@ -87,7 +87,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "把每小节想成一次呼吸：一小节换一个和弦，呼吸长；一小节换四个和弦，呼吸短。呼吸突然变短，听者会本能地期待“要发生什么了”，所以和声节奏常被用来把音乐推向终止。",
         cites: [
-          cite("laitz", "Chapter 15 Periods"),
+          cite("laitz", "Chapter 15 The Period"),
           cite("sposobin", "第六十章 和声分析的某些问题"),
         ],
       },
@@ -113,7 +113,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "说一个和弦“暖、暗、亮、紧张”很容易变成玄学。更可靠的做法是问：它比三和弦多了哪个音？这个音和和弦三音/根音形成什么音程？它要求解决，还是可以停留？",
         cites: [
           cite("levine", "Chapter 3 Chord/Scale Theory（“避免”音与变化属七）"),
-          cite("laitz", "Chapter 1C Musical Distance: Intervals（Consonant and Dissonant Intervals）"),
+          cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）"),
         ],
       },
       {
@@ -173,7 +173,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "调号差距只是地图上的直线距离；真正的“远”还取决于共同和弦、主音关系与终止确认。关系大小调调号相同，但主音不同；同主音大小调主音相同，却差三个调号。",
-        cites: [cite("laitz", "Chapter 18 Modulation")],
+        cites: [cite("laitz", "Chapter 19 Tonicization and Modulation")],
       },
       {
         type: "callout",
@@ -190,7 +190,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "把低音想成地铁线：级进下行是一条慢线，每站都能停；五度循环是一条快线，方向最明确；持续音是环线，原地转；半音线是支线，常通往转调或色彩站。",
         cites: [
-          cite("laitz", "Chapter 13 The Submediant and the Step-Descent Bass"),
+          cite("laitz", "Chapter 13 The Submediant: A New Diatonic Harmony, and Further Extensions of the Phrase Model"),
           cite("sposobin", "第四十八章 持续音"),
         ],
       },
@@ -215,7 +215,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "前句提出一个问题，后句给出回答。前句常停在半终止（未完），后句用完全终止（完成）。所以乐段的关键不是“四小节”，而是“问句和答句的终止关系”。",
         cites: [
-          cite("laitz", "Chapter 15 Periods"),
+          cite("laitz", "Chapter 15 The Period"),
           cite("sposobin", "第八章 终止、乐段、乐句"),
         ],
       },
@@ -223,7 +223,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "句法分析先找终止，再划分前后句；不要从第一小节开始数四小节。终止是标点，动机是词语，低音与和声节奏是语气。",
-        cites: [cite("laitz", "Chapter 16 Sentences, Double Periods, and Asymmetric Periods")],
+        cites: [cite("laitz", "Chapter 16 Other Small Musical Structures: Sentences, Double Periods, and Modified Periods")],
       },
       {
         type: "callout",
@@ -240,7 +240,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "四部和声不是把四个音堆在一起，而是让四个声部各走一条线。共同音尽量保持，其余声部就近级进；外声部多用反向进行，内声部填补空隙。听感是否平滑，取决于每一对相邻声部的距离与方向，而不是和弦符号是否漂亮。",
         cites: [
-          cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+          cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
           cite("sposobin", "第三章 原位三和弦的连接"),
         ],
       },
@@ -249,7 +249,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "平行五度、平行八度之所以被限制，是因为两个声部完全同向同距时，听觉上会短暂“合并成一个声部”，独立线条消失。隐伏五八在终止等重要位置也要避免，因为外声部的目标会被提前听见。",
         cites: [
-          cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+          cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
           cite("sposobin", "第一章 大三和弦与小三和弦、四部和声"),
         ],
       },
@@ -276,7 +276,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "判断终止不要只看最后一个和弦。先听低音是否完成 V–I，再听旋律是否落在主音或三音；同样结束在 I，旋律落主音是完全终止，落三音则是不完全终止。半终止后如果继续发展，它只是分句，不是全曲的结束。",
-        cites: [cite("laitz", "Chapter 15 Periods")],
+        cites: [cite("laitz", "Chapter 15 The Period")],
       },
       {
         type: "callout",
@@ -321,7 +321,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "在 C 大调里，A7 出现在 Dm 前面，那个 C# 并不是转调到 D 小调，而是把 Dm 临时当成主音，给它配了一个自己的属。副属和弦的音往往带临时升降号，但它的任务只是把目标和弦“扶正”一小节。",
         cites: [
-          cite("laitz", "Chapter 17 Applied Chords"),
+          cite("laitz", "Chapter 18 Applied Chords"),
           cite("sposobin", "第二十八章 终止中的重属和弦"),
         ],
       },
@@ -349,7 +349,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "从 C 大调去 G 大调，Am7 可以当枢轴：在 C 里它是 vi7，在 G 里它是 ii7。同一个和弦有两套身份，音乐借它完成视角切换，随后 D7–G 的终止确认新家。枢轴本身不是转调，它只是两套功能解释的交汇点。",
         cites: [
-          cite("laitz", "Chapter 18 Modulation"),
+          cite("laitz", "Chapter 19 Tonicization and Modulation"),
           cite("sposobin", "第三十四章 转调"),
         ],
       },
@@ -387,7 +387,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "借用和弦常出现在下属位置：bVI 可以走向 V，iv 可以形成变暗的变格终止，bVII 在流行与摇滚里常作为“后门”回到 I。判断借用还是转调，要问低音是否仍围绕原主音，以及后面有没有新调的终止。",
         cites: [
           cite("sposobin", "第五十章 交替大小调的降Ⅵ级三和弦（tsⅥ）"),
-          cite("laitz", "Chapter 22 Chromatic Modulation and Text-Music Relations"),
+          cite("laitz", "Chapter 22 Expansion of Modal Mixture Harmonies: Chromatic Modulation and the German Lied"),
         ],
       },
       {
@@ -456,7 +456,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "三音决定和弦是大是小，七音决定它是大七、属七还是小七。ii–V–I 里，Dm7 的 F 与 C 分别走到 G7 的 F 与 B，再走到 Cmaj7 的 E 与 B；两条线几乎都是半音或保持，所以听感自然。",
         cites: [
           cite("levine", "Chapter 2 Major Scale and Progressions（声部进行）"),
-          cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+          cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
         ],
       },
       {
@@ -506,7 +506,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "九、十一、十三是在七和弦之上继续叠三度，它们改变颜色，不改变功能。Cmaj9 比 Cmaj7 多一个 D，Cmaj7#11 多一个 F#；根音与三音仍然是“这是 C 大和弦”的证据。延伸音越多，越需要声部之间留出空间。",
         cites: [
           cite("levine", "Chapter 3 Chord/Scale Theory（大调音阶和声）"),
-          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
         ],
       },
       {
@@ -712,7 +712,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "五线谱先给音高一个纵向坐标：线与间的位置决定音名，谱号决定这套坐标从哪个音开始读。加线不是装饰，而是坐标向上下延伸；同一个音换谱号后位置会变，但音高不变。",
         cites: [
-          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+          cite("laitz", "Chapter 1A Musical Space"),
           cite("sposobin", "第一章 大三和弦与小三和弦、四部和声"),
         ],
       },
@@ -720,7 +720,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "读谱时不要逐线数。先记三个锚点：高音谱号第二线是 G，低音谱号第四线是 F，中央 C 在高音谱号下加一线、低音谱号上加一线。其余音按线与间的顺序推算，速度会快很多。",
-        cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+        cites: [cite("laitz", "Chapter 1A Musical Space")],
       },
       {
         type: "callout",
@@ -737,7 +737,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "度数只数字母：C 到 E 是三度，C 到 F 是四度。半音数决定性质：大三度四个半音，小三度三个半音。只数半音会把增二度与小三度混为一谈，只数度数又分不出大小，所以两者必须一起看。",
         cites: [
-          cite("laitz", "Chapter 1C Musical Distance: Intervals"),
+          cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）"),
           cite("levine", "Chapter 1 Basic Theory"),
         ],
       },
@@ -745,7 +745,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "协和与不协和不是固定标签。三全音在属七里是张力核心，在布鲁斯里却可以当色彩；同一个音程放在不同和弦、不同声部位置，听感会变。判断音程时要同时问：它在什么语境里、下一步往哪里解决。",
-        cites: [cite("laitz", "Chapter 1C Musical Distance: Intervals")],
+        cites: [cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）")],
       },
       {
         type: "callout",
@@ -762,7 +762,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "大调音阶的全半音排列是“全全半全全全半”。这个结构固定后，你从任何一个音出发都能搭出同一条楼梯；调号只是把这条楼梯固定到某个主音上，避免每次写升降号。",
         cites: [
-          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+          cite("laitz", "Chapter 1A Musical Space"),
           cite("levine", "Chapter 2 Major Scale and Progressions"),
         ],
       },
@@ -770,7 +770,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "主音不是“第一个音”这么简单，它是听感的重力中心。大调的导音（第七级）向上强烈倾向主音，属和弦又围绕这个倾向工作；所以音阶结构与功能和声是同一件事的两面。",
-        cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+        cites: [cite("laitz", "Chapter 1A Musical Space")],
       },
       {
         type: "callout",
@@ -787,7 +787,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "自然小调的结构是“全半全全半全全”，它没有上方导音，所以属和弦不够有拉力。和声小调把第七级升高，制造导音；旋律小调再在上行时升高第六级，避免增二度，下行时又常回到自然小调。",
         cites: [
-          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+          cite("laitz", "Chapter 1A Musical Space"),
           cite("sposobin", "第十七章 大调与和声小调的完全功能体系、自然音体系"),
         ],
       },
@@ -813,7 +813,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "把 C 大调的七个音分别当作主音，就得到七条调式。音高集合相同，但主音不同，因而半音位置与稳定音不同：Dorian 的第六级明亮，Lydian 的第四级升高，Mixolydian 的第七级降低。",
         cites: [
           cite("levine", "Chapter 2 Major Scale and Progressions（调式）"),
-          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+          cite("laitz", "Chapter 1A Musical Space"),
         ],
       },
       {
@@ -838,7 +838,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "五度圈把十二个调按纯五度排列：顺时针每次加一个升号，逆时针每次加一个降号。相邻调只差一个调号，共同和弦多，最容易转调；隔得越远，共同和弦越少。",
         cites: [
           cite("levine", "Chapter 2 Major Scale and Progressions（五度圈）"),
-          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+          cite("laitz", "Chapter 1A Musical Space"),
         ],
       },
       {
@@ -862,7 +862,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "三和弦由根音、三音、五音叠成。三音决定大小性质，五音决定稳定与张力；根音给身份，低音给位置。转位只改变低音，不改变根音，所以 C/E 仍然是 C 和弦，只是站的位置不同。",
         cites: [
-          cite("laitz", "Chapter 3 Triads, Seventh Chords, and Texture"),
+          cite("laitz", "Chapter 3 Musical Density: Triads, Seventh Chords, and Texture"),
           cite("sposobin", "第一章 大三和弦与小三和弦、四部和声"),
         ],
       },
@@ -890,7 +890,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "在 triad 上再叠一个七度就得到七和弦。七音不只是加厚：它引入新的不协和与解决方向。属七的三音与七音构成三全音，直接指向主和弦；大七与小七则更多是色彩与稳定性的区别。",
         cites: [
-          cite("laitz", "Chapter 3 Triads, Seventh Chords, and Texture"),
+          cite("laitz", "Chapter 3 Musical Density: Triads, Seventh Chords, and Texture"),
           cite("sposobin", "第十四章 原位属七和弦（D7）"),
         ],
       },
@@ -915,7 +915,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "罗马数字表示和弦根音在调内的级数，大小写表示质量：I 是大三，ii 是小三，vi 是小三，vii° 是减三。它把具体音名翻译成功能位置，所以同一进行可以在十二个调里复用。",
         cites: [
-          cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+          cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
           cite("sposobin", "第二章 正三和弦的功能体系"),
         ],
       },
@@ -923,7 +923,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "转位用数字标记：6 表示第一转位，6/4 表示第二转位，7 与 6/5、4/3、4/2 表示七和弦及其转位。级数分析还要说明调性；离开调性谈 V–I 没有意义。",
-        cites: [cite("laitz", "Chapter 3 Triads, Seventh Chords, and Texture")],
+        cites: [cite("laitz", "Chapter 3 Musical Density: Triads, Seventh Chords, and Texture")],
       },
       {
         type: "callout",
@@ -941,7 +941,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "把 C 大调从 D 开始弹，确实能得到 D Dorian 的音高集合，但听者听到的仍可能是 C 大调。真正让 Dorian 成立的，是低音与和声围绕 D 建立中心，并且不断出现它的大六 B。没有特征音，调式就只剩下音阶指法。",
         cites: [
           cite("levine", "Chapter 2 Major Scale and Progressions（调式）"),
-          cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+          cite("laitz", "Chapter 1A Musical Space"),
         ],
       },
       {
@@ -949,7 +949,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "判断调式按五步走：主音是谁、三音是大是小、特征音是哪一个、哪个和弦包含特征音、最后是否靠 V–I 收束。Dorian 的 IV 大、Phrygian 的 bII 大、Lydian 的 II 大，都是“含特征音的终止和弦”，它们不靠导音，而靠颜色回到主音。",
         cites: [
-          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
           cite("sposobin", "第二十七章 俄罗斯音乐中的自然调式"),
         ],
       },
@@ -978,7 +978,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "借用是否成立，看后面有没有回到原主音。C–Ab–Bb–C 里，Ab 与 Bb 都没有建立自己的属—主，最后又回到 C，所以是互换；如果 Ab 后面出现 Eb7–Ab 的终止，中心就搬走了，才是转调。",
         cites: [
           cite("sposobin", "第四十九章 交替大小调体系"),
-          cite("laitz", "Chapter 22 Chromatic Modulation and Text-Music Relations"),
+          cite("laitz", "Chapter 22 Expansion of Modal Mixture Harmonies: Chromatic Modulation and the German Lied"),
         ],
       },
       {
@@ -996,7 +996,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "三度叠置会告诉你“这是大和弦还是小和弦”，四度叠置通常没有三音，所以它不告诉你大小，只给你一片音程颜色。D–G–C–F–A 既像 Dm11，也可以被听成 G 上的挂留，或 C 上的延伸；意义由低音与调式决定。",
         cites: [
-          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
           cite("levine", "Chapter 13 Basic Reharmonization"),
         ],
       },
@@ -1022,7 +1022,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
           "看到 C/E，先问低音 E 是不是 C 和弦的三音；是，它只是转位。看到 G/C，低音 C 不是 G 三和弦的音，上方又没有 E，它就不是普通转位，而是混合和弦。看到两个完整三和弦叠在一起，才是复合和弦。",
         cites: [
           cite("levine", "Chapter 5 Slash Chords"),
-          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
         ],
       },
       {
@@ -1055,7 +1055,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "相邻属和弦是连续上行的属七：C7–D7–Eb7。它们彼此平等，不要求解决；可以配模进旋律、掩盖功能，最后突然让 Ab7 下行五度到 Db，形成渐进转调。判断时先看根音方向，再看三全音是否解决。",
         cites: [
-          cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+          cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences"),
           cite("sposobin", "第五十五章 转调模进"),
         ],
       },
@@ -1074,7 +1074,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "固定结构像把同一个和弦块沿键盘平移：Cmaj7–Dmaj7–Emaj7 的质量完全相同，只是根音在动。每个声部都按同一方向走，导音与七音不再各自解决，所以功能感被削弱，听感更像一条平行色彩带。",
         cites: [
-          cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+          cite("laitz", "Chapter 28 New Harmonic Tendencies"),
           cite("levine", "Chapter 14 Advanced Reharmonization"),
         ],
       },
@@ -1083,7 +1083,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "它不必然无功能。平行段最后接上 G7–C，整段就被功能收束；如果一直平移、没有目标，才接近无功能和声。判断时看终点，不要只看中间是否平行。",
         cites: [
-          cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+          cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences"),
           cite("sposobin", "第五十五章 转调模进"),
         ],
       },
@@ -1123,13 +1123,13 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "先把拍子想成一条均分的网格：4/4 里每小节四格，强弱按“强—弱—次强—弱”循环。你听到的一切音符其实都在回答一个问题——“它落在网格的哪个位置”。同一个音组放在拍点上稳，放在反拍上就开始推。",
-        cites: [cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm")],
+        cites: [cite("laitz", "Chapter 1B Musical Time: Pulse, Rhythm, and Meter")],
       },
       {
         type: "p",
         text:
           "切分不是乱来，而是“推迟落点”：要么从弱位起、要么把音拉过强拍、要么直接在反拍加重音。听者一直在等那个强拍上的重音，你偏偏晚半拍给——这一推一补就是律动。所有让人想动的音乐，几乎都在玩这条错位。",
-        cites: [cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm")],
+        cites: [cite("laitz", "Chapter 1B Musical Time: Pulse, Rhythm, and Meter")],
       },
       {
         type: "callout",
@@ -1145,13 +1145,13 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "先立一个动机：三五个音加一种节奏，小到你一眼能记住。然后别再想新句子——把动机重复、挪高挪低、变长变短，听者一边认一边听，旋律就“长”出来了。旋律难写，通常不是素材不够，而是素材之间没有血缘。",
-        cites: [cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint")],
+        cites: [cite("laitz", "Chapter 2 Harnessing Space and Time: Introduction to Melody and Two-Voice Counterpoint")],
       },
       {
         type: "p",
         text:
           "轮廓上记住三件事：级进为主，跳进是表情；跳进之后向反方向级进，把线收回来；全曲只留一个最高点，把它和和声高点对上。高点太多等于没有高点。",
-        cites: [cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape")],
+        cites: [cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge")],
       },
       {
         type: "callout",
@@ -1168,7 +1168,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "拿走大调里的 4 和 7，剩下五个音就是大调五声。这两个音恰好是半音戏最多的位置——4 想去 3，7 想回家到 1；把它们删掉，音阶里没有任何音“急着去哪”，于是怎么弹都不刺耳。",
         cites: [
-          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
           cite("levine", "Chapter 09 Pentatonic Scales"),
         ],
       },
@@ -1193,7 +1193,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         text:
           "和弦音是骨架，外音是让骨架变成旋律的血肉。弱位的三种最好认：经过音填缝（C–D–E）、辅助音来回（C–D–C）、先现音抢跑。它们不占强拍，随时可以删掉而不伤和弦。",
         cites: [
-          cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+          cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge"),
           cite("sposobin", "第三十八章 一个声部中的自然经过音"),
         ],
       },
@@ -1220,7 +1220,7 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "和弦的性质靠三音说话：三音是大三是大和弦，是小三是小和弦。sus4 把三音赶走、让四音站在它的位置——现在既不是大也不是小，像一个悬而未决的表情。传统用法是四音回落到三音，也就是 4–3 延留音的和声化。",
-        cites: [cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape")],
+        cites: [cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge")],
       },
       {
         type: "p",
@@ -1242,14 +1242,14 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
         type: "p",
         text:
           "常规音阶不均等（全全半全全全半），所以有家、有引力。对称音阶全由等距音程生成：全音阶六格全一样大，八音阶半全交替，增音阶小三加大二——转一圈回到自己，转几格也像起点。没有不均等，就没有“想回家”的音。",
-        cites: [cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies")],
+        cites: [cite("laitz", "Chapter 28 New Harmonic Tendencies")],
       },
       {
         type: "p",
         text:
           "所以它们是“调味料”不是“主菜”：在 C7♯5 上跑全音、C7♭9 上跑八音，颜色立刻失重、悬空；但要让听者不迷路，就得回到一个有引力的目标和弦上收束。等音重解释也来自对称——减七和弦四个音轮流当根音，四种拼写同一个声音。",
         cites: [
-          cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+          cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences"),
           cite("levine", "Chapter 3 Chord/Scale Theory（全音与减音阶）"),
         ],
       },

@@ -6,3 +6,7 @@ dist
 *.local
 review-state.json
 .DS_Store
+
+# 用户持有的电子书原件与解包内容（版权文件，永不入库/不分发）
+/books/
+/public/books/

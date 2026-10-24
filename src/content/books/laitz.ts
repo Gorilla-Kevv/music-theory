@@ -1,62 +1,56 @@
 import { buildOutline, type ChapterSeed, type NoteSeed } from "./types";
 
+// 章节严格对应 The Complete Musician, 4th ed. (OUP, © 2016)，PDF 共 957 页。
+// pdfPage 为 PDF 第几页（1 起始，供 /books/complete-musician-4e.pdf#page=N 深链）。
 const CHAPTERS: ChapterSeed[] = [
-  { number: "1A", title: "Musical Space: Pitches, Scales, and Keys", titleZh: "音乐空间：音高、音阶与调", part: "Part 1 · Foundations" },
-  { number: "1B", title: "Musical Time: Meter and Rhythm", titleZh: "音乐时间：拍号与节奏", part: "Part 1 · Foundations" },
-  { number: "1C", title: "Musical Distance: Intervals", titleZh: "音乐距离：音程", part: "Part 1 · Foundations" },
-  { number: "02", title: "Pitch and Meter Combine: Melody and Counterpoint", titleZh: "音高与节拍：旋律与对位", part: "Part 1 · Foundations" },
-  { number: "03", title: "Triads, Seventh Chords, and Texture", titleZh: "三和弦、七和弦与织体", part: "Part 1 · Foundations" },
-  { number: "04", title: "The Role of Context: Embellishing Tones and Melodic Shape", titleZh: "语境中的和弦外音与旋律轮廓", part: "Part 2 · Fusing Melody, Harmony, and Counterpoint" },
-  { number: "05", title: "Tonic, Dominant, and Voice Leading", titleZh: "主音、属音与声部进行", part: "Part 2 · Fusing Melody, Harmony, and Counterpoint" },
-  { number: "06", title: "V7 and Two-Level Analysis", titleZh: "属七与两层分析", part: "Part 2 · Fusing Melody, Harmony, and Counterpoint" },
-  { number: "07", title: "Expanding Tonic and Dominant with First-Inversion Triads", titleZh: "用第一转位扩展主与属", part: "Part 2 · Fusing Melody, Harmony, and Counterpoint" },
-  { number: "08", title: "Inversions of V7 and Leading-Tone Sevenths", titleZh: "属七转位与导七和弦", part: "Part 2 · Fusing Melody, Harmony, and Counterpoint" },
-  { number: "09", title: "The Pre-Dominant Function and the Phrase Model", titleZh: "下属功能与乐句模型", part: "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model" },
-  { number: "10", title: "Accented and Chromatic Embellishing Tones", titleZh: "强拍与半音和弦外音", part: "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model" },
-  { number: "11", title: "Six-Four Chords and Plagal Motions", titleZh: "四六和弦与变格进行", part: "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model" },
-  { number: "12", title: "Pre-Dominant Seventh Chords and Embedded Phrase Models", titleZh: "下属七和弦与内嵌乐句模型", part: "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model" },
-  { number: "13", title: "The Submediant and the Step-Descent Bass", titleZh: "下中音与级进下行低音", part: "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model" },
-  { number: "14", title: "The Mediant and the Back-Relating Dominant", titleZh: "中音与回指属和弦", part: "Part 3 · Establishing, Expanding, and Embellishing the Phrase Model" },
-  { number: "15", title: "Periods", titleZh: "乐段", part: "Part 4 · Small Forms" },
-  { number: "16", title: "Sentences, Double Periods, and Asymmetric Periods", titleZh: "乐句、双乐段与非对称乐段", part: "Part 4 · Small Forms" },
-  { number: "17", title: "Applied Chords", titleZh: "副属和弦", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "18", title: "Modulation", titleZh: "转调", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "19", title: "Harmonic Sequences", titleZh: "和声模进", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "20", title: "Binary Form and Variations", titleZh: "二部曲式与变奏", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "21", title: "Modal Mixture", titleZh: "调式交替", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "22", title: "Chromatic Modulation and Text-Music Relations", titleZh: "半音转调与音乐—文本关系", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "23", title: "Neapolitan Chords", titleZh: "那不勒斯和弦", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "24", title: "Augmented-Sixth Chords", titleZh: "增六和弦", part: "Part 5 · Expressive Color through Chromaticism" },
-  { number: "25", title: "Ternary Form", titleZh: "三部曲式", part: "Part 6 · Large Forms" },
-  { number: "26", title: "Rondo Form", titleZh: "回旋曲式", part: "Part 6 · Large Forms" },
-  { number: "27", title: "Sonata Form", titleZh: "奏鸣曲式", part: "Part 6 · Large Forms" },
-  { number: "28", title: "Tonal Ambiguity and Symmetrically Constructed Harmonies", titleZh: "调性模糊与对称和声", part: "Part 7 · Near, At, and Past the Edges of Tonality" },
-  { number: "29", title: "Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave", titleZh: "对称拉伸调性：半音模进与八等分", part: "Part 7 · Near, At, and Past the Edges of Tonality" },
-  { number: "30", title: "Centricity, Extended and Non-Tertian Sonorities, and Collections", titleZh: "中心性、非三度叠置与音高集合", part: "Part 7 · Near, At, and Past the Edges of Tonality" },
-  { number: "31", title: "Analysis with Sets", titleZh: "集合分析", part: "Part 7 · Near, At, and Past the Edges of Tonality" },
-  { number: "32", title: "Metrical and Serial Techniques", titleZh: "节拍与序列技术", part: "Part 7 · Near, At, and Past the Edges of Tonality" },
+  { number: "1A", title: "Musical Space", titleZh: "音乐空间", part: "Part 1 · The Foundations of Tonal Music", pdfPage: 40 },
+  { number: "1B", title: "Musical Time: Pulse, Rhythm, and Meter", titleZh: "音乐时间：拍、节奏与拍号", part: "Part 1 · The Foundations of Tonal Music", pdfPage: 81 },
+  { number: "02", title: "Harnessing Space and Time: Introduction to Melody and Two-Voice Counterpoint", titleZh: "驾驭空间与时间：旋律与二声部对位导论", part: "Part 1 · The Foundations of Tonal Music", pdfPage: 115 },
+  { number: "03", title: "Musical Density: Triads, Seventh Chords, and Texture", titleZh: "音乐密度：三和弦、七和弦与织体", part: "Part 1 · The Foundations of Tonal Music", pdfPage: 143 },
+  { number: "04", title: "When Harmony, Melody, and Rhythm Converge", titleZh: "当和声、旋律与节奏交汇", part: "Part 2 · Merging Melody and Harmony", pdfPage: 180 },
+  { number: "05", title: "Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading", titleZh: "调性支柱：主音与属音，声部进行导论", part: "Part 2 · Merging Melody and Harmony", pdfPage: 203 },
+  { number: "06", title: "The Impact of Melody, Rhythm, and Meter on Harmony; Introduction to V7; and Harmonizing Florid Melodies", titleZh: "旋律、节奏与拍号对和声的影响；V7 导论与花奏旋律配和声", part: "Part 2 · Merging Melody and Harmony", pdfPage: 223 },
+  { number: "07", title: "Contrapuntal Expansions of Tonic and Dominant: Six-Three Chords", titleZh: "主与属的对位性扩展：六三和弦", part: "Part 2 · Merging Melody and Harmony", pdfPage: 248 },
+  { number: "08", title: "More Contrapuntal Expansions: Inversions of V7, Introduction to Leading-Tone Seventh Chords, and Reduction and Elaboration", titleZh: "更多对位性扩展：V7 转位、导七和弦导论、简化与装饰", part: "Part 2 · Merging Melody and Harmony", pdfPage: 268 },
+  { number: "09", title: "The Pre-Dominant Function and the Phrase Model", titleZh: "下属功能与乐句模型", part: "Part 3 · A New Harmonic Function, the Phrase Model, and Additional Embellishments", pdfPage: 300 },
+  { number: "10", title: "Accented and Chromatic Embellishing Tones", titleZh: "强拍与半音装饰音", part: "Part 3 · A New Harmonic Function, the Phrase Model, and Additional Embellishments", pdfPage: 317 },
+  { number: "11", title: "Six-Four Chords, Revisiting the Subdominant, and Summary of Contrapuntal Expansions", titleZh: "四六和弦、再探下属与对位扩展总结", part: "Part 3 · A New Harmonic Function, the Phrase Model, and Additional Embellishments", pdfPage: 340 },
+  { number: "12", title: "The Pre-Dominant Refines the Phrase Model", titleZh: "下属功能精炼乐句模型", part: "Part 3 · A New Harmonic Function, the Phrase Model, and Additional Embellishments", pdfPage: 361 },
+  { number: "13", title: "The Submediant: A New Diatonic Harmony, and Further Extensions of the Phrase Model", titleZh: "下中音：新的自然音和声与乐句模型扩展", part: "Part 4 · New Chords and New Forms", pdfPage: 384 },
+  { number: "14", title: "The Mediant, the Back-Relating Dominant, and a Synthesis of Diatonic Harmonic Relationships", titleZh: "中音、回指属与自然音和声关系综合", part: "Part 4 · New Chords and New Forms", pdfPage: 403 },
+  { number: "15", title: "The Period", titleZh: "乐段", part: "Part 4 · New Chords and New Forms", pdfPage: 415 },
+  { number: "16", title: "Other Small Musical Structures: Sentences, Double Periods, and Modified Periods", titleZh: "其他小型结构：乐句、双乐段与变化乐段", part: "Part 4 · New Chords and New Forms", pdfPage: 430 },
+  { number: "17", title: "Harmonic Sequences", titleZh: "和声模进", part: "Part 4 · New Chords and New Forms", pdfPage: 446 },
+  { number: "18", title: "Applied Chords", titleZh: "副属和弦", part: "Part 5 · Functional Chromaticism", pdfPage: 472 },
+  { number: "19", title: "Tonicization and Modulation", titleZh: "临时主化与转调", part: "Part 5 · Functional Chromaticism", pdfPage: 498 },
+  { number: "20", title: "Binary Form and Variations", titleZh: "二部曲式与变奏", part: "Part 5 · Functional Chromaticism", pdfPage: 519 },
+  { number: "21", title: "Modal Mixture", titleZh: "调式交替", part: "Part 6 · Expressive Chromaticism", pdfPage: 546 },
+  { number: "22", title: "Expansion of Modal Mixture Harmonies: Chromatic Modulation and the German Lied", titleZh: "调式交替和声的扩展：半音转调与德奥艺术歌曲", part: "Part 6 · Expressive Chromaticism", pdfPage: 568 },
+  { number: "23", title: "The Neapolitan Chord (♭II)", titleZh: "那不勒斯和弦（♭II）", part: "Part 6 · Expressive Chromaticism", pdfPage: 591 },
+  { number: "24", title: "The Augmented Sixth Chord", titleZh: "增六和弦", part: "Part 6 · Expressive Chromaticism", pdfPage: 605 },
+  { number: "25", title: "Ternary Form", titleZh: "三部曲式", part: "Part 7 · Large Forms: Ternary, Rondo, Sonata", pdfPage: 632 },
+  { number: "26", title: "Rondo", titleZh: "回旋曲式", part: "Part 7 · Large Forms: Ternary, Rondo, Sonata", pdfPage: 653 },
+  { number: "27", title: "Sonata Form", titleZh: "奏鸣曲式", part: "Part 7 · Large Forms: Ternary, Rondo, Sonata", pdfPage: 667 },
+  { number: "28", title: "New Harmonic Tendencies", titleZh: "新的和声倾向", part: "Part 8 · Introduction to Nineteenth-Century Harmony", pdfPage: 700 },
+  { number: "29", title: "Melodic and Harmonic Symmetry Combine: Chromatic Sequences", titleZh: "旋律与和声对称结合：半音模进", part: "Part 8 · Introduction to Nineteenth-Century Harmony", pdfPage: 731 },
+  { number: "30", title: "Vestiges of Common Practice and the Rise of a New Sound World", titleZh: "共同实践的余晖与新声音世界的兴起", part: "Part 9 · Twentieth- and Twenty-First-Century Music", pdfPage: 766 },
+  { number: "31", title: "Noncentric Music: Atonal Concepts and Analytical Methodology", titleZh: "无中心音乐：无调性概念与分析方法", part: "Part 9 · Twentieth- and Twenty-First-Century Music", pdfPage: 827 },
+  { number: "32", title: "New Rhythmic and Metric Possibilities, Ordered PC Relations, and Twelve-Tone Techniques", titleZh: "新的节奏与拍号可能、有序音级关系与十二音技术", part: "Part 9 · Twentieth- and Twenty-First-Century Music", pdfPage: 865 },
 ];
 
+// 笔记键与第 4 版章节一一对应；旧版第 1C 章（音程）内容并入 1A（4e 中音程在 1A
+// "Specifics of the Pitch Realm" 讲授），旧 17/18/19 按第 4 版实际章号重排。
 const NOTES: Record<string, NoteSeed> = {
   "laitz-1a": {
     summary:
-      "调性空间由音高、音阶与调号共同定义；大调、小调与关系调不是三套孤立音阶，而是同一调号下的功能与主音选择。",
+      "调性空间由音高、音程、音阶与调号共同定义；大调、小调与关系调不是三套孤立音阶，而是同一调号下的功能与主音选择。音程作为“调性距离”的度量也在本章（Specifics of the Pitch Realm）展开。",
     keyPoints: [
       "音阶结构决定半音位置，调号把结构固定到十二个调。",
       "关系大小调共享调号，但主音、导音与功能和弦不同。",
+      "音程：度数与半音数共同定性质，转位后度数相加为九、大小与增减互换。",
     ],
-    concepts: ["major-scale", "minor-scales", "circle-of-fifths"],
+    concepts: ["major-scale", "minor-scales", "circle-of-fifths", "intervals"],
     dimensions: ["brightness", "relationship"],
-  },
-  "laitz-1c": {
-    summary:
-      "音程是调性距离的度量：度数与半音数共同决定性质，转位与协和/不协和判断依赖语境和解决方向。",
-    keyPoints: [
-      "转位后度数相加为九，大小与增减互换。",
-      "协和不是固定标签，三全音在不同语境可紧张也可作为色彩。",
-    ],
-    concepts: ["intervals", "harmonic-color"],
-    dimensions: ["color", "relationship"],
   },
   "laitz-03": {
     summary:
@@ -148,7 +142,7 @@ const NOTES: Record<string, NoteSeed> = {
     concepts: ["phrase-structure", "cadences", "harmonic-rhythm"],
     dimensions: ["rhythm", "direction", "function"],
   },
-  "laitz-17": {
+  "laitz-18": {
     summary:
       "副属和弦（applied chords）把目标和弦临时变成主音；V/x 与 V7/x 制造局部离调，但不一定构成转调。",
     keyPoints: [
@@ -158,7 +152,7 @@ const NOTES: Record<string, NoteSeed> = {
     concepts: ["secondary-dominants", "tonal-distance", "modulation"],
     dimensions: ["relationship", "direction", "function"],
   },
-  "laitz-18": {
+  "laitz-19": {
     summary:
       "转调通过共同和弦、半音中介或直接并置建立新调；新调必须获得自己的属—主与终止，才算真正转调。",
     keyPoints: [
@@ -168,7 +162,7 @@ const NOTES: Record<string, NoteSeed> = {
     concepts: ["modulation", "tonal-distance", "circle-of-fifths"],
     dimensions: ["relationship", "direction"],
   },
-  "laitz-19": {
+  "laitz-17": {
     summary:
       "和声模进把同一模型移到新音级；自然模进保持调内，真实模进保持音程结构，二者都制造方向与延长。",
     keyPoints: [
@@ -482,7 +476,7 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
       "比较插部的调性距离与材料。",
       "观察 A 回归是否变奏/缩短。",
     ],
-    crossBook: ["Levine 17：曲式", "Laitz 18：转调"],
+    crossBook: ["Levine 17：曲式", "Laitz 19：临时主化与转调"],
     visualHint: "曲式森林",
     confusions: [
       {
@@ -557,7 +551,7 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
       "比较集合之间的移位/倒影关系。",
       "用音程向量解释张力与对称性。",
     ],
-    crossBook: ["Levine 15：Coltrane 对称", "Laitz 28：对称和声"],
+    crossBook: ["Levine 15：Coltrane 对称", "Laitz 28：新的和声倾向"],
     visualHint: "音高集合圆环",
     confusions: [
       {
@@ -626,7 +620,7 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
     crossBook: ["Levine 02：ii–V–I", "Sposobin 2：功能体系"],
     visualHint: "功能链/体系图",
   },
-  "laitz-17": {
+  "laitz-18": {
     deepSummary:
       "副属和弦把目标和弦临时变成主音，制造局部离调。判断它是离调还是转调，要看解决后原调是否继续、新调是否建立终止。",
     analysis: [
@@ -637,7 +631,7 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
     crossBook: ["Levine 13：重配和声", "Sposobin 28/29/32"],
     visualHint: "调性距离网络",
   },
-  "laitz-18": {
+  "laitz-19": {
     deepSummary:
       "转调是调性中心的迁移，不只是出现变化音。枢轴和弦、半音中介与终止确认共同决定新调是否成立；距离越远，确认所需时间越长。",
     analysis: [
@@ -683,25 +677,15 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
   },
   "laitz-1a": {
     deepSummary:
-      "调性空间不是十二个孤立音阶，而是由音高、音阶结构与调号共同定义的坐标。大调与小调是同一坐标上的不同主音与功能选择；关系调共享调号，但导音、属和弦与主音位置不同。",
+      "第 4 版的 1A 从巴赫《E 大调小提琴帕蒂塔》前奏曲进入，先立“调性/共同实践”的框架，再进入音高世界：音高、音程、音阶与调号共同定义调性空间。音程是“度数 + 半音数 + 语境”的三重判断；大调与小调是同一坐标上的不同主音与功能选择，关系调共享调号但导音与属和弦不同。",
     analysis: [
       "写出音阶的七个音级，标出半音位置与导音。",
+      "先数度数、再数半音，最后判断音程性质；转位后度数相加为九。",
       "比较关系大小调：哪些和弦共享，哪些因导音改变而不同。",
       "把调号、主音与功能三件事分开记，避免只背调号。",
     ],
     crossBook: ["Levine 02：大调音阶与进行", "Levine 01：基本理论"],
-    visualHint: "五度圈 + 调式轮",
-  },
-  "laitz-1c": {
-    deepSummary:
-      "音程是“度数 + 半音数 + 语境”的三重判断：度数给名称，半音数给性质，语境决定协和/不协和与解决方向。转位不是换名字，而是改变低音与张力位置。",
-    analysis: [
-      "先数度数，再数半音，最后判断性质。",
-      "转位后检查度数相加为九、大小增减互换。",
-      "把同一个音程放进不同和弦，比较协和感是否改变。",
-    ],
-    crossBook: ["Levine 01：基本理论", "Sposobin 01：四部和声"],
-    visualHint: "半音尺 + 钢琴键盘",
+    visualHint: "五度圈 + 调式轮 + 半音尺",
   },
   "laitz-04": {
     deepSummary:
@@ -769,7 +753,7 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
     crossBook: ["Sposobin 8：终止、乐段、乐句", "Levine 17：曲式与作曲"],
     visualHint: "曲式地图",
   },
-  "laitz-19": {
+  "laitz-17": {
     deepSummary:
       "和声模进把同一模型移到新音级：自然模进留在调内，音程结构会随音阶调整；真实模进保持原结构，可能离开原调。模进的方向由低音线与目标终止决定，不是无限循环。",
     analysis: [
@@ -822,4 +806,8 @@ const ALL_NOTES = Object.fromEntries(
 export const LAITZ_OUTLINE = buildOutline("laitz", CHAPTERS, {
   ...ALL_NOTES,
   ...EXTRA_NOTES,
+}, {
+  file: "complete-musician-4e.pdf",
+  kind: "pdf",
+  label: "The Complete Musician, 4th ed.（英文原版 PDF，957 页，内嵌于 /books/）",
 });

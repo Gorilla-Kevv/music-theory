@@ -2,8 +2,8 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 20 来源政策放开 + 站点理论入库 + Sposobin 补全（完成）
-- 下一阶段任务：书库深度深化（需三本书电子版，见 HANDOFF“书库深化”）；SoundQuest 元音乐理论（C63 建设中）待读；图谱学习路径
+- 当前正在开发任务：阶段 21 电子书内嵌与书库严格 1:1 重构（完成）
+- 下一阶段任务：书库深化流水线（逐章读内嵌原书升级笔记）→ SoundQuest 元音乐理论（C63 建设中）待读 → 图谱学习路径
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
 
@@ -345,3 +345,21 @@
 - 风险与教训：任何在限高滚动容器内"跟随高亮"的实现都必须只滚容器本身；HANDOFF 已把该陷阱记入决策与坑。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 04:35
+
+## 阶段 21 电子书内嵌与书库严格 1:1 重构 [计划时间：10.24 12:20 BY solo-agent][完成时间：10.24 13:00 BY solo-agent]
+
+- 分支：dev
+- 用户指令：两本电子版原件到位（`/books/`）；书库章节严格一一对应原书；内容尽量完整并提供原书章节深链（相当于内嵌电子书）；确立新逻辑——书库=源知识数据，知识库=总结精炼/白话解释的个人笔记+拓展知识。
+- 盘点结论：`/books/complete-musician-4e.pdf` 为 **Laitz《The Complete Musician》第 4 版英文原版**（OUP © 2016，957 页，书签大纲完整）；`/books/` 的 EPUB 为 **Levine《爵士乐宝典》中译本**（赵贝露译，24 章，章序与英文原版一致）。此前 laitz.ts 按“第 5 版”写的章名与用户手里的书**完全对不上**（第 4 版无 1C 章；Ch17=模进、Ch18=副属、Ch19=转调）。
+- 已完成：
+  - 21.1 laitz.ts 整体重写：34→**33 章**（4e 真实结构 1A/1B + 2–32，九个 Part），每章带 `pdfPage`（PDF 书签逐章核对，1 起始）；笔记键按 4e 重排（17/18/19 互换、旧 1C 并入 1A），1A 笔记以实读内容加深（巴赫帕蒂塔开场、共同实践框架）。
+  - 21.2 全库引用更新：**117 处** laitz locator 改为第 4 版真实章名（foundations/harmony(-advanced)/jazz-advanced/deep-dives/levine crossBook）；引用数 188 → 186（1C 合并）。
+  - 21.3 levine.ts：24 章逐章加 `sourceFile`（EPUB 解包 HTML 路径）；第二十四章「聆听」EPUB 未收录（索引提及、文件缺失），如实留空待补。
+  - 21.4 电子书内嵌：EPUB 解包至 `public/books/jazz-baodian/`（116MB）、PDF 复制为 `public/books/complete-musician-4e.pdf`（49MB）；`/books/` 与 `/public/books/` 加入 .gitignore——**永不提交、不分发**。
+  - 21.5 Books 页深链：章节详情新增“打开原书本章（内嵌 EPUB）/ 打开原书 PDF 第 N 页”按钮；引用定位行附内嵌页码；书目页 laitz 改为第 4 版（© 2016）、levine 标注中译 EPUB 已核对。
+  - 21.6 新逻辑写入 AGENTS/PRODUCT：书库=源知识数据（真实章目+定位+深链），知识库=总结精炼/白话/拓展；书库深化流水线入 HANDOFF（优先 Laitz 4/5/9/10/18/19/21 → Levine 2/3/13 → Sposobin 等电子版）。
+- 统计更新：117 章目 / 117 笔记（Levine 24、Laitz 33、Sposobin 60）；55 概念 / 65 谱例 / 186 引用不变。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；`/books?book=laitz` 显示 33 章真实 4e 结构与 PDF 页码深链；`/books?book=levine` 显示 EPUB 深链按钮；内嵌文件可访问（EPUB HTML 200、PDF 206）；375 无横向溢出。
+- 风险：电子书文件只存在本地（gitignore），换机器需重新放置 `/books/` 并重跑解包/复制；Levine 第 24 章深链缺EPUB 正文。
+- 下一阶段入口：书库深化流水线（逐章读原书升级笔记）→ Sposobin 电子版 → 图谱学习路径。
+- 本次文档更新时间：10.24 13:00

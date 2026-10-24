@@ -26,7 +26,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "在 C 大调，C/G（G–C–E）被称为终止四六：低音 G 是属音，上方 C 与 E 是主和弦的四音与六音。它通常出现在强拍或终止前的重拍，紧接着解决到 G7 或 G。",
             cites: [
-              cite("laitz", "Chapter 11 Six-Four Chords and Plagal Motions"),
+              cite("laitz", "Chapter 11 Six-Four Chords, Revisiting the Subdominant, and Summary of Contrapuntal Expansions"),
               cite("sposobin", "第九章 终止四六和弦"),
             ],
           },
@@ -49,7 +49,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             type: "p",
             text:
               "四六和弦的功能取决于节拍位置与前后和弦。经过四六夹在两个和弦之间，辅助四六围绕同一低音；终止四六则在终止前占据重拍，承担属准备。三者的音响相同，句法角色不同。",
-            cites: [cite("laitz", "Chapter 11 Six-Four Chords and Plagal Motions")],
+            cites: [cite("laitz", "Chapter 11 Six-Four Chords, Revisiting the Subdominant, and Summary of Contrapuntal Expansions")],
           },
           {
             type: "callout",
@@ -106,7 +106,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "自然模进在新的音级上重复同一功能模型，但按调内音阶调整和弦质量；真实模进则保持原模型的确切音程结构，常带半音变化。前者留在调性里，后者更容易把调性推远。",
             cites: [
-              cite("laitz", "Chapter 19 Harmonic Sequences"),
+              cite("laitz", "Chapter 17 Harmonic Sequences"),
               cite("sposobin", "第二十六章 自然（调内）模进和副七和弦（模进和弦）"),
             ],
           },
@@ -116,7 +116,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "模进不是无限循环，而是“有目标的重复”：它需要终止、转调或节奏变化来收束。低音的五度循环、级进下行或半音模进，决定模进的方向感与紧张度。",
             cites: [
               cite("sposobin", "第三十三章 半音模进、离调"),
-              cite("laitz", "Chapter 19 Harmonic Sequences"),
+              cite("laitz", "Chapter 17 Harmonic Sequences"),
             ],
           },
         ],
@@ -188,7 +188,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "B–D–F–Ab 是 C 大调的导七和弦（Bdim7）。由于每个音之间都是小三度，把任一音当作根音都能得到同一个音响；四个等音拼写分别指向不同调性。",
             cites: [
               cite("sposobin", "第二十二章 导七和弦（DⅦ7）"),
-              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+              cite("laitz", "Chapter 28 New Harmonic Tendencies"),
             ],
           },
           {
@@ -266,7 +266,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "同样四个和弦，一小节一个和一小节两个，会形成完全不同的句法。和声节奏加快通常增加推动力；在终止前加速，会把听众的注意力集中到属—主的落点。",
             cites: [
-              cite("laitz", "Chapter 15 Periods"),
+              cite("laitz", "Chapter 15 The Period"),
               cite("sposobin", "第六十章 和声分析的某些问题"),
             ],
           },
@@ -346,14 +346,14 @@ export const HARMONY_ADVANCED: Concept[] = [
               "三和弦比七和弦稳定，七和弦比延伸音和弦稳定；同一个属七加上 b9、#9 或 alt 会进一步增加解决压力。色彩不是“好听/难听”，而是张力位置与解决方向。",
             cites: [
               cite("levine", "Chapter 3 Chord/Scale Theory（“避免”音与变化属七）"),
-              cite("laitz", "Chapter 1C Musical Distance: Intervals（Consonant and Dissonant Intervals）"),
+              cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）"),
             ],
           },
           {
             type: "p",
             text:
               "张力还取决于语境：大七度在终止后可能显得悬浮，在持续音上却可以是稳定的色彩；三全音在属七里要求解决，在调式化和声里可以停留。",
-            cites: [cite("laitz", "Chapter 1C Musical Distance: Intervals")],
+            cites: [cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）")],
           },
         ],
       },
@@ -515,7 +515,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             type: "p",
             text:
               "主音关系也重要：关系大小调共享调号，但主音不同；同主音大小调共享主音，却相差三个调号。两种“近”是不同维度的近。",
-            cites: [cite("laitz", "Chapter 18 Modulation")],
+            cites: [cite("laitz", "Chapter 19 Tonicization and Modulation")],
           },
         ],
       },
@@ -592,7 +592,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "半音线：低音半音移动，常用于转调、减七或色彩突变。",
             ],
             cites: [
-              cite("laitz", "Chapter 13 The Submediant and the Step-Descent Bass"),
+              cite("laitz", "Chapter 13 The Submediant: A New Diatonic Harmony, and Further Extensions of the Phrase Model"),
               cite("sposobin", "第四十八章 持续音"),
             ],
           },
@@ -612,7 +612,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             type: "p",
             text:
               "写作时先确定低音的走向，再选择和弦质量与转位；这样声部进行会更自然，也更容易避免为了和弦标签而写出不合理的低音跳进。",
-            cites: [cite("laitz", "Chapter 13 The Submediant and the Step-Descent Bass")],
+            cites: [cite("laitz", "Chapter 13 The Submediant: A New Diatonic Harmony, and Further Extensions of the Phrase Model")],
           },
           {
             type: "callout",
@@ -675,7 +675,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "最常见的前句停在不完全终止或半终止，后句用完全终止回应。前句提出方向，后句完成收束；两句的终止关系比小节数更能定义乐段。",
             cites: [
-              cite("laitz", "Chapter 15 Periods"),
+              cite("laitz", "Chapter 15 The Period"),
               cite("sposobin", "第八章 终止、乐段、乐句"),
             ],
           },
@@ -683,7 +683,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             type: "p",
             text:
               "乐句可以进一步分为乐节与动机；动机的重复、模进与变奏把和声推向终止。句法分析要同时看动机、低音与终止，而不是只看和弦序列。",
-            cites: [cite("laitz", "Chapter 16 Sentences, Double Periods, and Asymmetric Periods")],
+            cites: [cite("laitz", "Chapter 16 Other Small Musical Structures: Sentences, Double Periods, and Modified Periods")],
           },
         ],
       },
@@ -764,7 +764,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "Locrian：降二、降五、降七；主和弦为减三和弦，常避免单独使用。",
             ],
             cites: [
-              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+              cite("laitz", "Chapter 1A Musical Space"),
               cite("levine", "Chapter 2 Major Scale and Progressions（调式）"),
             ],
           },
@@ -772,7 +772,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             type: "p",
             text:
               "判断调式不能只把大调音阶从不同音开始弹。先以同一主音比较：三音是大三还是小三，决定大调类或小调类；再找与自然大调/自然小调不同的那个音，它就是特征音。没有出现特征音，听者往往仍会把它听回大调或小调。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
         ],
       },
@@ -786,7 +786,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "调式和声没有完整的 T–PD–D–T 功能链，一级是唯一稳定的主功能。包含特征音的大三和弦或小七和弦可以充当“调式终止”和弦：Dorian 的 IV 大、Phrygian 的 bII 大、Lydian 的 II 大或 vii 小、Mixolydian 的 bVII 大。它们靠特征音回到主和弦，而不是靠导音。",
             cites: [
               cite("levine", "Chapter 2 Major Scale and Progressions（调式爵士）"),
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
             ],
           },
           {
@@ -795,7 +795,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "减三和弦与半减七和弦通常要谨慎：它们含三全音，容易把耳朵拉回大小调的属—主解决。调式音乐更常用持续低音、四度排列与特征音和弦来建立中心，而不是连续 V–I。",
             cites: [
               cite("sposobin", "第二十七章 俄罗斯音乐中的自然调式"),
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
             ],
           },
           {
@@ -938,7 +938,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "借用不搬主音：听者仍知道家在 C，借用后通常回到 C 或 G7。转调则让新调获得自己的属—主与终止，并持续足够长。区分的关键不是变化音，而是“中心有没有搬”。",
             cites: [
-              cite("laitz", "Chapter 22 Chromatic Modulation and Text-Music Relations"),
+              cite("laitz", "Chapter 22 Expansion of Modal Mixture Harmonies: Chromatic Modulation and the German Lied"),
               cite("sposobin", "第三十四章 转调"),
             ],
           },
@@ -997,7 +997,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "四度叠置没有三音，听者很难判断它是大和弦还是小和弦；它听到的是一片音程颜色。调内四度既包含纯四度，也可能包含增四度，后者由音阶自然产生，不需要额外解释成变化音。",
             cites: [
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
               cite("levine", "Chapter 13 Basic Reharmonization"),
             ],
           },
@@ -1078,7 +1078,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             ],
             cites: [
               cite("levine", "Chapter 5 Slash Chords"),
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
             ],
           },
           {
@@ -1168,7 +1168,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "分析时不要看到属七就标 V/x。先看根音是否下行五度或小二度解决，再看三全音是否按属功能解决；两者都不成立时，按色彩和弦或相邻属和弦处理，而不是硬套副属。",
             cites: [
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
               cite("levine", "Chapter 14 Advanced Reharmonization"),
             ],
           },
@@ -1184,7 +1184,7 @@ export const HARMONY_ADVANCED: Concept[] = [
               "相邻属和弦是连续上行的属七：小二度、大二度或小三度。它们彼此平等，不要求解决，常用来配模进旋律、掩盖功能、延伸终止，或在最后突然解决形成渐进转调。音阶多用 Mixolydian 或 Lydian dominant，而不是解决压力很强的 alt。",
             cites: [
               cite("levine", "Chapter 13 Basic Reharmonization"),
-              cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+              cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences"),
               cite("sposobin", "第五十五章 转调模进"),
             ],
           },
@@ -1245,7 +1245,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "固定结构（constant structure）保持和弦质量不变，只改变根音：连续的大七、连续的小七、连续的属七都可以。每个和弦的内部音程相同，听者听到的是平行色彩带，而不是功能层级。",
             cites: [
-              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+              cite("laitz", "Chapter 28 New Harmonic Tendencies"),
               cite("levine", "Chapter 14 Advanced Reharmonization"),
             ],
           },
@@ -1253,7 +1253,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             type: "p",
             text:
               "平行进行会削弱倾向音的解决：每个声部都按同一方向移动，导音与七音不再各自履行功能。正因如此，固定结构常被用来制造悬浮、梦幻或调式化的段落；若要回到功能，必须在一个明确的目标和弦上停下来。",
-            cites: [cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave")],
+            cites: [cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences")],
           },
         ],
       },
@@ -1328,7 +1328,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "经过音用级进把两个和弦音连起来（C–D–E 中的 D）；辅助音从和弦音出发、级进后再返回（C–D–C 中的 D）；先现音把下一个和弦的音提前在本和弦的弱位出现。三者都在弱位进入、不占据重音，是让声部歌唱的最基础装饰。",
             cites: [
-              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+              cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge"),
               cite("sposobin", "第三十八章 一个声部中的自然经过音"),
             ],
           },
@@ -1414,7 +1414,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "sus4 的原型是 4–3 延留音：四音先作为前和弦的和弦音出现，延留到强拍、再下行解决到三音。当这个四音不再需要准备、直接和根音五音一起站成和弦（G–C–D），延留音就被和声化成了挂留和弦——三音缺席，大三或小三无法判断，声音悬在大小之间。",
             cites: [
-              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+              cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge"),
             ],
           },
           {
@@ -1422,7 +1422,7 @@ export const HARMONY_ADVANCED: Concept[] = [
             text:
               "sus2 是同一结构的镜像（G–A–D），音区不同但同样性质模糊。写终止时，sus4 → 三音的回落是古典与流行通用的“软化属和弦”手法；不回落，则进入爵士的 sus 世界。",
             cites: [
-              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+              cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge"),
             ],
           },
         ],

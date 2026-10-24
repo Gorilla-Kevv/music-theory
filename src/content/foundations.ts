@@ -24,13 +24,13 @@ export const FOUNDATIONS: Concept[] = [
             type: "p",
             text:
               "五线谱由五条线与四个间组成，线间距离对应音高的级进。单看位置并不能确定绝对音高：同样位于第二线的音，在高音谱号下是 G，在低音谱号下是 B。谱号先建立一套参照，线与间才获得音名含义。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
           {
             type: "p",
             text:
               "高音谱号（G 谱号）的螺旋围绕 G4，低音谱号（F 谱号）的两个点夹住 F3。越出五线的音用加线延伸；中央 C 位于高音谱号下方一条加线，也在低音谱号上方一条加线。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
           {
             type: "callout",
@@ -47,7 +47,7 @@ export const FOUNDATIONS: Concept[] = [
             type: "p",
             text:
               "十二平均律把八度分成十二个半音。八度之间频率成 2:1，音名相同而音区不同；科学音高记号用 C4 表示中央 C，往下一个八度是 C3。等音拼写（如 C# 与 Db）在十二平均律中发同一个音，但在五线谱与和声功能里承担不同角色。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
         ],
       },
@@ -101,7 +101,7 @@ export const FOUNDATIONS: Concept[] = [
               "度数按音名字母计数，并包含起止两端：C 到 E 是三度，不是二度。性质由半音数决定：大三度是四个半音，小三度是三个半音；纯五度是七个半音，减五度是六个半音。纯音程（一、四、五、八度）用“纯”描述，二、三、六、七度用“大/小”描述，再往上叠加“增/减”。",
             cites: [
               cite("levine", "Chapter 1 Basic Theory（音程）"),
-              cite("laitz", "Chapter 1C Musical Distance: Intervals"),
+              cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）"),
             ],
           },
           {
@@ -109,7 +109,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "三全音是六个半音，既可视作增四度，也可视作减五度。它的拼写取决于调性与声部进行：在 C 大调里 F–B 是增四度，B–F 是减五度，两者音响相同但功能不同。",
             cites: [
-              cite("laitz", "Chapter 1C Musical Distance: Intervals"),
+              cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）"),
               cite("levine", "Chapter 1 Basic Theory（音程转位）"),
             ],
           },
@@ -129,7 +129,7 @@ export const FOUNDATIONS: Concept[] = [
             type: "p",
             text:
               "协和与不协和不是固定的情绪标签，而是依赖语境与解决方向。纯五度、大三度在多数调性语境中稳定；大七度、小二度张力更强，但在爵士和声里可以作为色彩而无需立即解决。",
-            cites: [cite("laitz", "Chapter 1C Musical Distance: Intervals（Consonant and Dissonant Intervals）")],
+            cites: [cite("laitz", "Chapter 1A Musical Space（Specifics of the Pitch Realm）")],
           },
           {
             type: "callout",
@@ -199,13 +199,13 @@ export const FOUNDATIONS: Concept[] = [
             type: "p",
             text:
               "大调音阶的音程结构是 W–W–H–W–W–W–H（全—全—半—全—全—全—半）。第 7 级与主音相距一个半音，称为导音；第 4 级到第 3 级的下行半音关系，则是属音回到主音的声部引力之一。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
           {
             type: "p",
             text:
               "音级用数字标记：1 主音、2 上主音、3 中音、4 下属音、5 属音、6 下中音、7 导音。级数不只是编号，它决定和弦功能与旋律倾向。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
         ],
       },
@@ -218,7 +218,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "调号按五度圈增加升号或降号：C 大调无升降，G 大调一个升号，D 大调两个升号；反向则是 F 大调一个降号，Bb 大调两个降号。每个调号同时对应一个大调和它的关系小调，关系小调从第 6 级开始。",
             cites: [
-              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+              cite("laitz", "Chapter 1A Musical Space"),
               cite("levine", "Chapter 2 Major Scale and Progressions（五度圈）"),
             ],
           },
@@ -289,13 +289,13 @@ export const FOUNDATIONS: Concept[] = [
               "和声小调：b3、b6，第 7 级升高半音形成导音；b6 与 7 之间出现增二度。",
               "旋律小调：上行时 6、7 级都升高，下行时通常还原；古典写法强调方向性。",
             ],
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
           {
             type: "p",
             text:
               "和声小调的升 7 级让属功能和弦获得真正的导音，V7–i 的解决更有方向；代价是 b6 到 7 的增二度在旋律上较难处理。旋律小调升高 6、7 级，既保留导音又避免增二度，但下行时常回到自然小调。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
         ],
       },
@@ -387,7 +387,7 @@ export const FOUNDATIONS: Concept[] = [
             ],
             cites: [
               cite("levine", "Chapter 2 Major Scale and Progressions（大调音阶的调式）"),
-              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+              cite("laitz", "Chapter 1A Musical Space"),
             ],
           },
           {
@@ -467,13 +467,13 @@ export const FOUNDATIONS: Concept[] = [
             type: "p",
             text:
               "升号方向是 C–G–D–A–E–B–F#，降号方向反向。相邻调只差一个临时记号，因此五度圈也是判断调性远近与转调难度的刻度。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
           {
             type: "p",
             text:
               "关系小调与关系大调共享调号，在圈上位于同一位置。比如 A 小调与 C 大调都无升降；它们的差别在主音、导音与和弦功能上，而不在调号。",
-            cites: [cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys")],
+            cites: [cite("laitz", "Chapter 1A Musical Space")],
           },
         ],
       },
@@ -487,7 +487,7 @@ export const FOUNDATIONS: Concept[] = [
               "根音下行五度（或上行四度）是最强的和声引力之一：Dm7–G7–Cmaj7 的根音 D–G–C 连续下行五度，正好对应 ii–V–I。把 vi 接在前面，就得到常见的 vi–ii–V–I。",
             cites: [
               cite("levine", "Chapter 2 Major Scale and Progressions（五度圈）"),
-              cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+              cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
             ],
           },
           {
@@ -549,7 +549,7 @@ export const FOUNDATIONS: Concept[] = [
             ],
             cites: [
               cite("levine", "Chapter 1 Basic Theory（三和弦）"),
-              cite("laitz", "Chapter 3 Triads, Seventh Chords, and Texture"),
+              cite("laitz", "Chapter 3 Musical Density: Triads, Seventh Chords, and Texture"),
               cite("sposobin", "第一章 大三和弦与小三和弦、四部和声"),
             ],
           },
@@ -570,7 +570,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "原位低音是根音；第一转位低音是三音，数字低音写 6；第二转位低音是五音，写 6/4。转位改变低音的稳定性与声部连接，不改变和弦的根音身份。",
             cites: [
-              cite("laitz", "Chapter 3 Triads, Seventh Chords, and Texture"),
+              cite("laitz", "Chapter 3 Musical Density: Triads, Seventh Chords, and Texture"),
               cite("sposobin", "第十章 正三和弦的六和弦"),
               cite("sposobin", "第十三章 经过的与辅助的四六和弦"),
             ],
@@ -634,7 +634,7 @@ export const FOUNDATIONS: Concept[] = [
               "减七和弦（dim7）：减三和弦 + 减七度；C–Eb–Gb–Bbb（等音 A）。",
             ],
             cites: [
-              cite("laitz", "Chapter 3 Triads, Seventh Chords, and Texture"),
+              cite("laitz", "Chapter 3 Musical Density: Triads, Seventh Chords, and Texture"),
               cite("levine", "Chapter 2 Major Scale and Progressions（大七、小七、属七）"),
             ],
           },
@@ -643,7 +643,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "七和弦的稳定性低于三和弦，因为七度引入了不协和。属七的七音通常下行解决，三音上行解决；两个音构成三全音，是属功能张力的核心。",
             cites: [
-              cite("laitz", "Chapter 6 V7 and Two-Level Analysis"),
+              cite("laitz", "Chapter 6 The Impact of Melody, Rhythm, and Meter on Harmony; Introduction to V7"),
               cite("levine", "Chapter 2 Major Scale and Progressions（声部进行）"),
             ],
           },
@@ -713,7 +713,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "拍号由两个数字写成：上方的数告诉你一小节有几拍，下方的数告诉你以什么音符为一拍。2/4 是强—弱，3/4 是强—弱—弱，4/4 是强—弱—次强—弱；6/8 这类复拍子则以“一大拍含三小拍”计数，强弱落在每大拍上。强弱层级不是抽象规则，而是听者预期重音出现的位置。",
             cites: [
-              cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm"),
+              cite("laitz", "Chapter 1B Musical Time: Pulse, Rhythm, and Meter"),
             ],
           },
           {
@@ -721,7 +721,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "旋律与伴奏都活在“拍点—拍点之间”的细分里：把一拍再分成两个八分或三个三连，决定音乐是直是摇。音高与节拍同时运作——同一个音组放在不同的拍位上，听起来完全不同，所以分析旋律要同时说“什么音”和“在哪个拍位”。",
             cites: [
-              cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"),
+              cite("laitz", "Chapter 2 Harnessing Space and Time: Introduction to Melody and Two-Voice Counterpoint"),
             ],
           },
         ],
@@ -735,7 +735,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "切分是把重音移出拍点的总称：音从小节或拍点的弱位起、跨拍延音把强拍“吃掉”、或在反拍上加重音。听者预期强拍出现重音，切分先让位再补拍，制造“被推迟的落点”——这正是放克、爵士与拉丁律动的发动机。",
             cites: [
-              cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm"),
+              cite("laitz", "Chapter 1B Musical Time: Pulse, Rhythm, and Meter"),
             ],
           },
           {
@@ -798,7 +798,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "动机是一个可辨认的最小音型——几个音加一种节奏特征。旋律写作不是从头到尾各想各的，而是先立动机，再用重复、移位、模进、扩大或缩小、倒影等手段让它在新位置重现；听者靠“认出”动机来组织旋律。",
             cites: [
-              cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"),
+              cite("laitz", "Chapter 2 Harnessing Space and Time: Introduction to Melody and Two-Voice Counterpoint"),
             ],
           },
           {
@@ -806,7 +806,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "发展的节奏也要设计：动机陈述后紧接变化重复最容易辨认，间隔太远或每次都变会散掉。旋律与伴奏的时间关系同样重要——旋律长音落在伴奏切分上，是流行与爵士常见的呼吸设计。",
             cites: [
-              cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"),
+              cite("laitz", "Chapter 2 Harnessing Space and Time: Introduction to Melody and Two-Voice Counterpoint"),
             ],
           },
         ],
@@ -820,7 +820,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "旋律轮廓以级进为主，跳进负责表情；大跳之后习惯向反方向级进“回收”，否则线条会散。整段旋律通常只保留一个最高点，把它与和声高点、歌词或乐句顶点对齐，表达才有落点。",
             cites: [
-              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+              cite("laitz", "Chapter 4 When Harmony, Melody, and Rhythm Converge"),
             ],
           },
           {
@@ -883,7 +883,7 @@ export const FOUNDATIONS: Concept[] = [
             text:
               "C 大调五声是 C–D–E–G–A：去掉 4（F）与 7（B）这两个制造倾向的音，剩下大二度与小三度堆叠，音阶内部没有半音。同一组音从 A 开始排列就是 A 小调五声——大调五声与小调五声不是两条音阶，而是同一条集合的两个视角。",
             cites: [
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
               cite("levine", "Chapter 09 Pentatonic Scales"),
             ],
           },
@@ -899,7 +899,7 @@ export const FOUNDATIONS: Concept[] = [
               "没有半音就没有强倾向音，任何两个五声相邻音都不会打架，所以它既可以当旋律骨架，也可以整条压在慢变的和声上——同一条 C 大调五声可以覆盖 Cmaj7、Am7、Fmaj7 等一组相关和弦。把小调五声加一个 b5（蓝调音）就是布鲁斯音阶；爵士即兴再把它平移到“外部”和弦上制造离调色彩。",
             cites: [
               cite("levine", "Chapter 09 Pentatonic Scales"),
-              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("laitz", "Chapter 30 Vestiges of Common Practice and the Rise of a New Sound World"),
             ],
           },
           {

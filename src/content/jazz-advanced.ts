@@ -97,7 +97,7 @@ export const JAZZ_ADVANCED: Concept[] = [
               "C–Ab–E 是相隔大三度的三个调性中心；在每个中心前插入属和弦，就得到 Cmaj7–Eb7–Abmaj7–B7–Emaj7–G7–Cmaj7。根音运动在三个调之间快速切换，而不是沿五度圈平滑前进。",
             cites: [
               cite("levine", "Chapter 15 Coltrane Changes"),
-              cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+              cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences"),
             ],
           },
           {
@@ -338,7 +338,7 @@ export const JAZZ_ADVANCED: Concept[] = [
             ],
             cites: [
               cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）"),
-              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+              cite("laitz", "Chapter 1A Musical Space"),
             ],
           },
           {
@@ -359,7 +359,7 @@ export const JAZZ_ADVANCED: Concept[] = [
               "小大七替代小七有边界：它只在自身作主和弦、或为 m7 和声加花时成立；若 m7 是 ii–V 进行的二级，换成 mMaj7 会让属准备失去方向。半减七调式与 Phrygian 的区别在 2 音与 6 音：同一个 sus b9 和弦配 Phrygian 更暗，配旋律小调第二调式更亮。",
             cites: [
               cite("levine", "Chapter 3 Chord/Scale Theory（旋律小调和声）"),
-              cite("laitz", "Chapter 1A Musical Space: Pitches, Scales, and Keys"),
+              cite("laitz", "Chapter 1A Musical Space"),
             ],
           },
           {
@@ -422,7 +422,7 @@ export const JAZZ_ADVANCED: Concept[] = [
               "增音阶（小三度与小二度交替）：C–D♯–E–G–A♭，配 maj7♯5 与增三和弦，颜色最“失重”。",
             ],
             cites: [
-              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+              cite("laitz", "Chapter 28 New Harmonic Tendencies"),
               cite("levine", "Chapter 3 Chord/Scale Theory（全音与减音阶）"),
             ],
           },
@@ -431,7 +431,7 @@ export const JAZZ_ADVANCED: Concept[] = [
             text:
               "对称意味着旋转有限：全音音阶只有两种旋转，八音音阶只有三种（减七和弦只有四个拼写）。旋转越少，独立音阶越少；同一个音集可以被重解释到多个主音上——等音与对称让“这是哪条音阶”变成视角问题。",
             cites: [
-              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+              cite("laitz", "Chapter 28 New Harmonic Tendencies"),
             ],
           },
         ],
@@ -445,7 +445,7 @@ export const JAZZ_ADVANCED: Concept[] = [
             text:
               "等分八度消解了引力中心：任何音听起来都像“临时主音”，旋律在上面转圈不会有自然的回归感。所以对称音阶的服务对象是有明确目标的和弦——在 7♯5、7♭9 上短暂施加对称色彩，再用功能和声收束；整段全音转来转去而没有目标和弦，听感会失焦。",
             cites: [
-              cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+              cite("laitz", "Chapter 29 Melodic and Harmonic Symmetry Combine: Chromatic Sequences"),
               cite("levine", "Chapter 3 Chord/Scale Theory（全音与减音阶）"),
             ],
           },

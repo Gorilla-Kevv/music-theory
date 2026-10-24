@@ -53,6 +53,10 @@ export interface ChapterSeed {
   title: string;
   titleZh?: string;
   part?: string;
+  /** PDF 电子书中本章起始页（1 起始），用于 #page= 深链。 */
+  pdfPage?: number;
+  /** 内嵌电子书的章节文件路径（相对 /books/），EPUB 解包后使用。 */
+  sourceFile?: string;
 }
 
 export interface NoteSeed {
@@ -86,12 +90,20 @@ export interface BookOutline {
   id: SourceId;
   chapters: BookChapter[];
   noteCount: number;
+  /** 内嵌电子书入口（文件位于 /books/ 下，gitignore，不入仓库）。 */
+  sourceBook?: {
+    /** PDF 文件或 EPUB 目录入口 HTML。 */
+    file: string;
+    kind: "pdf" | "epub";
+    label: string;
+  };
 }
 
 export function buildOutline(
   book: SourceId,
   seeds: ChapterSeed[],
   notes: Record<string, NoteSeed>,
+  sourceBook?: BookOutline["sourceBook"],
 ): BookOutline {
   const chapters = seeds.map((seed) => {
     const id = `${book}-${seed.number.toLowerCase()}`;
@@ -108,5 +120,6 @@ export function buildOutline(
     id: book,
     chapters,
     noteCount: chapters.filter((chapter) => chapter.expanded).length,
+    ...(sourceBook ? { sourceBook } : {}),
   };
 }

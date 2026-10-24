@@ -265,6 +265,29 @@ export function Books() {
                     );
                   })}
                 </div>
+                {(() => {
+                  const book = BOOK_BY_ID[selected.book];
+                  if (!book?.sourceBook) return null;
+                  const href = selected.sourceFile
+                    ? `/books/${selected.sourceFile}`
+                    : book.sourceBook.kind === "pdf" && selected.pdfPage
+                      ? `/books/${book.sourceBook.file}#page=${selected.pdfPage}`
+                      : null;
+                  if (!href) return null;
+                  const label = selected.sourceFile
+                    ? "打开原书本章（内嵌 EPUB）"
+                    : `打开原书 PDF 第 ${selected.pdfPage} 页`;
+                  return (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mono-label mt-3 inline-flex items-center gap-1.5 border border-current/70 px-2 py-1 text-cobalt-ink hover:bg-cobalt hover:text-paper"
+                    >
+                      {label} ↗
+                    </a>
+                  );
+                })()}
               </div>
 
               {selected.expanded ? (
@@ -364,6 +387,7 @@ export function Books() {
                       {bibliography.authors}. <span className="italic">{bibliography.title}</span>.{" "}
                       {bibliography.publisher}, {bibliography.year}. {selected.part ? `${selected.part}, ` : ""}
                       {selected.number} {selected.title}.
+                      {selected.pdfPage ? `（内嵌 PDF 第 ${selected.pdfPage} 页）` : ""}
                     </p>
                     <Link
                       to={`/references#${book}`}
@@ -378,7 +402,7 @@ export function Books() {
                 <div className="p-4 sm:p-6">
                   <p className="mono-label text-muted">OUTLINE ONLY / 仅目录</p>
                   <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-                    本章已经收入完整章目，但当前书库只对和声核心章节展开原创笔记。你仍可用搜索定位概念，或到参考文献页查看书目。
+                    本章已收入完整章目与章节定位；笔记待逐章深化。你仍可用搜索定位概念、直接打开原书对应章节，或到参考文献页查看书目。
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     <button

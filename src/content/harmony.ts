@@ -25,7 +25,7 @@ export const HARMONY: Concept[] = [
             text:
               "大写罗马数字表示大三和弦（I、IV、V），小写表示小三和弦（ii、iii、vi）。减三和弦加 °，半减七和弦加 ø，增三和弦加 +。七和弦在数字右侧写 7，转位再用数字低音或斜线低音表示。",
             cites: [
-              cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+              cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
               cite("sposobin", "第二章 正三和弦的功能体系"),
             ],
           },
@@ -104,7 +104,7 @@ export const HARMONY: Concept[] = [
             text:
               "导音（7 级）通常上行到主音，和弦七音通常下行级进。属七到主和弦时，三音 B 上行到 C，七音 F 下行到 E；这两条线同时成立，属功能才有说服力。",
             cites: [
-              cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+              cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
               cite("sposobin", "第三章 原位三和弦的连接"),
             ],
           },
@@ -114,7 +114,7 @@ export const HARMONY: Concept[] = [
               "声部进行分同类、平行、相似、斜向与反向。反向进行能增强独立性；同类进行最平稳，但连续同类五度/八度会削弱声部独立，因此在传统四部和声中受限。",
             cites: [
               cite("sposobin", "第三章 原位三和弦的连接"),
-              cite("laitz", "Chapter 5 Tonic, Dominant, and Voice Leading"),
+              cite("laitz", "Chapter 5 Tonic and Dominant as Tonal Pillars and Introduction to Voice Leading"),
             ],
           },
         ],
@@ -195,7 +195,7 @@ export const HARMONY: Concept[] = [
             type: "p",
             text:
               "终止的强度不仅取决于和弦，也取决于节拍位置与最高声部。同样的 V–I，如果主和弦在弱拍或最高声部停在三级，就只是不完全终止。",
-            cites: [cite("laitz", "Chapter 15 Periods")],
+            cites: [cite("laitz", "Chapter 15 The Period")],
           },
         ],
       },
@@ -347,7 +347,7 @@ export const HARMONY: Concept[] = [
             text:
               "在 C 大调，D7 是 V/V，解决到 G；A7 是 V/ii，解决到 Dm；E7 是 V/vi，解决到 Am。副属和弦常带临时升降号，这些变音属于“临时主音”的属功能，而不是新调的调号。",
             cites: [
-              cite("laitz", "Chapter 17 Applied Chords"),
+              cite("laitz", "Chapter 18 Applied Chords"),
               cite("sposobin", "第二十八章 终止中的重属和弦"),
               cite("sposobin", "第二十九章 结构内的重属和弦"),
             ],
@@ -370,7 +370,7 @@ export const HARMONY: Concept[] = [
               "离调是局部的：副属和弦解决到目标和弦后，音乐仍回到原调。转调需要新调获得自己的主和弦、属和弦与终止，持续时间更长。一个 A7 到 Dm 不一定转调到 D 小调；若随后出现 G–C 的强终止，原调仍占主导。",
             cites: [
               cite("sposobin", "第三十二章 离调、半音体系"),
-              cite("laitz", "Chapter 18 Modulation"),
+              cite("laitz", "Chapter 19 Tonicization and Modulation"),
             ],
           },
           {
@@ -428,7 +428,7 @@ export const HARMONY: Concept[] = [
             text:
               "从 C 大调转到 G 大调，Am7 可以充当枢轴：在 C 是 vi7，在 G 是 ii7。随后 D7（G 的 V7）与 G 的终止确认新调。枢轴和弦本身不“转调”，它只是两套功能解释的交汇点。",
             cites: [
-              cite("laitz", "Chapter 18 Modulation"),
+              cite("laitz", "Chapter 19 Tonicization and Modulation"),
               cite("sposobin", "第三十四章 转调"),
             ],
           },
@@ -452,7 +452,7 @@ export const HARMONY: Concept[] = [
             type: "p",
             text:
               "新调的确认靠它自己的属—主与终止，而不是单个变化音。转调分析要指出：枢轴和弦、新调的属和弦、新调的终止，以及旧调是否还能解释后续和弦。",
-            cites: [cite("laitz", "Chapter 18 Modulation")],
+            cites: [cite("laitz", "Chapter 19 Tonicization and Modulation")],
           },
           {
             type: "callout",

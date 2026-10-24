@@ -8,13 +8,15 @@ TONIC 是一个本地优先的个人乐理强化工作台。核心不是“多�
 
 ## 来源政策（两层来源制，2026-10-24 用户拍板修订）
 
-理论来源分两层，**所有主题都可入库**（用户明确要求：站点理论框架不再排除）：
+**分层逻辑（用户 2026-10-24 确立）**：**书库 = 源知识数据**（原书真实章目 + 章节定位 + 内嵌电子书深链）；**知识库 = 总结精炼、白话解释的个人笔记 + 拓展知识**（不在书里的、自己收集的内容，如 SoundQuest 框架与 B 站调研启发）。书库回答"原书哪里说了什么"，知识库回答"我们怎么理解、怎么用"。
 
-1. **Tier 1 · 三本主教材**（优先，理论断言的首选依据）：
-   - Mark Levine, *The Jazz Theory Book*（Sher Music, 1995；中译本《爵士乐宝典》，上海音乐出版社，2017）。
-   - Steven G. Laitz & Michael R. Callahan, *The Complete Musician*, 5th ed.（Oxford University Press, 2023）。
-   - 伊·杜波夫斯基、斯·叶甫谢耶夫、伊·斯波索宾、符·索科洛夫《和声学教程》第 3 版（陈敏译，人民音乐出版社，2021）。
-   - 引用给到**章节级 locator**（章号 + 章名/小节名），不写页码。
+理论来源分两层，**所有主题都可入库**：
+
+1. **Tier 1 · 主教材**（优先，理论断言的首选依据）：
+   - Mark Levine, *The Jazz Theory Book*（Sher Music, 1995；中译本《爵士乐宝典》赵贝露译，上海音乐出版社 2017，**EPUB 已内嵌**，24 章章序与英文原版一致）。
+   - Steven G. Laitz & Michael R. Callahan, *The Complete Musician*, **4th ed.**（OUP, © 2016，**英文原版 PDF 已内嵌**，1A/1B + 32 章共九个 Part）。
+   - 伊·杜波夫斯基、斯·叶甫谢耶夫、伊·斯波索宾、符·索科洛夫《和声学教程》第 3 版（陈敏译，人民音乐出版社，2021）——**电子版未到手，笔记待深化**。
+   - 引用给到**章节级 locator**（章号 + 章名/小节名）。Laitz 一律按第 4 版章名（与第 5 版不同！）；持有电子版的书可附 PDF 页码（内嵌深链 `#page=N`）。
 2. **Tier 2 · SoundQuest 站点**（`source: "soundquest"`，补三本书覆盖不到的主题）：
    - 日文原站 soundquest.jp / 中译站 music-theory.aizcutei.com（《自由派音乐理论》）。
    - 用于站点自创理论框架（连接系统论、轴心体系、新里曼理论、Lydian Chromatic Concept 等）与三本书未覆盖的主题（泛音列等）。
@@ -22,10 +24,11 @@ TONIC 是一个本地优先的个人乐理强化工作台。核心不是“多�
 
 **不变的红线**：
 
+- **电子书文件永不入库**：原书 PDF/EPUB 及解包内容在 `/books/` 与 `/public/books/`（均已 gitignore），只存在于用户本地、通过本地站点私下阅读；不得提交、分发或把正文复制进任何仓库文件。
 - 不得复制、OCR、扫描或逐字搬运任何来源的正文——书籍与站点条目全部是原创改写/归纳，短引文仅在必要时使用并标注。
-- 不虚构页码/小节名；定位不到就不写具体小节，标到章/篇即可。
+- 不虚构页码/小节名；持有电子版的书（Laitz/Levine）页码从原书核对写入，未持有的（Sposobin）只标到章。
 - 区分“来源结论”与“编辑综合”：跨源综合要说明是编辑层比较；站点自创理论（轴心体系、LCC 等）正文明示它是“创作工具/公设”，并保留学界批评（如轴心体系的 Kárpáti 批评、LCC 的论证薄弱），不冒充定论。
-- Sposobin 书库笔记现状：60/60 全覆盖，其中 33 条（阶段 20 补全）为**基于章名的初稿笔记**，待持书深化；Levine/Laitz 笔记同样未经正文核对，深化路径见 HANDOFF“书库深化”。
+- 书库笔记现状（2026-10-24 电子版到位后）：Levine 24 章与 Laitz 34 章（4e 结构）已严格对应原书目录并带章节深链；**笔记正文仍是原创归纳，逐章“读透”升级按 HANDOFF“书库深化”流水线分批进行**；Sposobin 33 条为章名级初稿，等电子版。
 
 ## 和声知识模型
 
@@ -50,16 +53,16 @@ src/content/
   deep-dives.ts        55 条白话拆解（全部概念）
   bilibili.ts          B 站课程调研台账：5 个合集/板块，112 条视频与文章 / 20 条已读 / 92 条仅编目
   graph/index.ts       体系图谱：3 书源 + 站点 / 6 枢纽 / 55 概念 / 147 关联 / 54 前置
-  books/               三本书的完整章目 + 原创章节笔记（118 章目 / 118 条笔记，全初覆盖）
+  books/               三本书的完整章目 + 原创章节笔记（117 章目 / 117 条笔记；Levine/Laitz 与内嵌电子书逐一对应）
   bibliography.ts      书目（含 soundquest 站点条目）、版次、定位政策
 ```
 
 ## 书库结构
 
-- 每本书一个 `BookOutline`：完整章目（章号、英文名、中文名、Part/上册下册）。
+- 每本书一个 `BookOutline`：完整章目（章号、原书章名、中文对照、Part/上册下册、内嵌电子书定位）。
 - 已展开章节带 `summary`、`keyPoints`、`concepts`（知识库 slug）、`dimensions`；深度笔记再带 `deepSummary`、`analysis`、`crossBook`、`visualHint`、`confusions`。
-- 当前覆盖：Levine 24/24 章、Laitz 34/34 章、Sposobin 60/60 章均有笔记（118/118）。**注意**：笔记是从章目结构+专业知识写的原创笔记，未经书的正文逐章核对；Sposobin 33 条与 Levine/Laitz 深度字段仍待持书深化（书库深化路径见 HANDOFF）。
-- 未展开章节保留目录条目，不伪造摘要。（当前已无未展开章节）
+- 当前覆盖：Levine 24/24 章、Laitz 34 章（4e：1A/1B + 32 章）、Sposobin 60/60 章（118/118 条笔记）。Levine/Laitz 章节结构已与用户持有的电子版逐一核对（EPUB 目录 / PDF 书签），每章带 `sourceFile`（EPUB HTML）或 `pdfPage`（PDF 页码）深链。
+- **电子书内嵌**：`/books/`（用户原件）与 `/public/books/`（jazz-baodian EPUB 解包 + complete-musician-4e.pdf），均 gitignore；书籍页面提供"打开原书本章"深链。Sposobin 无电子版，无深链。
 - 书库页面：`/books`；Agent 接口：`get_book_outline`、`get_source_note`、`search_sources`、`window.TONIC.bookOutline/sourceNote/searchSources`。
 - 新增笔记：先确认章节 locator → 写 ≤200 字原创摘要 → 列 2–4 个关键点 → 写 `deepSummary`/`analysis`/`crossBook` → 映射到现有/新增概念 → 标维度。不要在 book 数据里放大段原文。
 - 深度字段也受来源约束：`deepSummary` 与 `analysis` 可以跨书综合，但必须能在三本书中找到章节级支撑；`crossBook` 只写真实存在的章号与章名。
@@ -127,7 +130,7 @@ src/content/
 - 55 个概念（基础 12 / 和声 28 / 爵士 15）
 - 65 个可听谱例
 - 188 条引用（三本书章节级 + SoundQuest 篇章级）
-- 3 本书 · 118 个章目 · 118 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 60/60；Sposobin 后 33 条为章名级初稿）
+- 3 本书 · 117 个章目（真实原书结构）· 117 条原创章节笔记（Levine 24/24、Laitz 33/33〔4e：1A/1B + 2–32〕、Sposobin 60/60）
 - 55 条白话拆解（全部概念）
 - B 站调研台账：5 个合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目（以 `read` 为准）
 - 体系图谱：6 枢纽 / 55 概念 / 147 关联 / 54 前置
