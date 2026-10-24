@@ -361,6 +361,64 @@ export function getNextConcepts(slug: string): Concept[] {
     .filter((concept): concept is Concept => Boolean(concept));
 }
 
+function directPrerequisiteSlugs(slug: string): string[] {
+  return ATLAS_GRAPH.edges
+    .filter((edge) => edge.type === "prerequisite" && edge.target === `concept-${slug}`)
+    .map((edge) => edge.source.replace("concept-", ""));
+}
+
+function directNextSlugs(slug: string): string[] {
+  return ATLAS_GRAPH.edges
+    .filter((edge) => edge.type === "prerequisite" && edge.source === `concept-${slug}`)
+    .map((edge) => edge.target.replace("concept-", ""));
+}
+
+function collectChainDepths(
+  start: string,
+  direction: "prerequisites" | "next",
+): Map<string, number> {
+  const depths = new Map<string, number>();
+  const walk = (slug: string, depth: number) => {
+    if (depth > CONCEPTS.length) return;
+    const nextSlugs =
+      direction === "prerequisites" ? directPrerequisiteSlugs(slug) : directNextSlugs(slug);
+    for (const nextSlug of nextSlugs) {
+      const nextDepth = depth + 1;
+      if ((depths.get(nextSlug) ?? -1) >= nextDepth) continue;
+      depths.set(nextSlug, nextDepth);
+      walk(nextSlug, nextDepth);
+    }
+  };
+  walk(start, 0);
+  return depths;
+}
+
+function chainFromDepths(
+  depths: Map<string, number>,
+  order: "far-first" | "near-first",
+): Concept[] {
+  return [...depths.entries()]
+    .sort(([aSlug, aDepth], [bSlug, bDepth]) => {
+      const depthDelta = order === "far-first" ? bDepth - aDepth : aDepth - bDepth;
+      if (depthDelta !== 0) return depthDelta;
+      const a = CONCEPT_BY_SLUG[aSlug];
+      const b = CONCEPT_BY_SLUG[bSlug];
+      return (a?.number ?? "").localeCompare(b?.number ?? "");
+    })
+    .map(([slug]) => CONCEPT_BY_SLUG[slug])
+    .filter((concept): concept is Concept => Boolean(concept));
+}
+
+export function getPrerequisiteChain(slug: string): Concept[] {
+  if (!CONCEPT_BY_SLUG[slug]) return [];
+  return chainFromDepths(collectChainDepths(slug, "prerequisites"), "far-first");
+}
+
+export function getNextChain(slug: string): Concept[] {
+  if (!CONCEPT_BY_SLUG[slug]) return [];
+  return chainFromDepths(collectChainDepths(slug, "next"), "near-first");
+}
+
 export const ATLAS_STATS = {
   concepts: CONCEPTS.length,
   hubs: ATLAS_HUBS.length,

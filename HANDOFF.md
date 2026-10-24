@@ -53,7 +53,7 @@
 - SoundQuest 中译站部分篇章对无浏览器 UA 的 curl 会返回伪 404（正文其实是“内容还没准备好”）；抓取时带 `Mozilla/5.0` UA。C63 元音乐理论、C74/75 多义论已于阶段 30 补录。
 - 书库是**源知识数据**（2026-10-24 新逻辑，用户确立）：书库=原书真实章目+章节定位+内嵌电子书深链；知识库（概念）=总结精炼、白话解释的个人笔记+拓展知识。不得 OCR、扫描或整段复制正文。
 - 🔴 **内嵌电子书（2026-10-24）**：用户持有 Laitz《The Complete Musician》**第 4 版**英文 PDF（957 页，OUP © 2016，文件在 `/books/`，已复制到 `/public/books/complete-musician-4e.pdf`）与 Levine《爵士乐宝典》中译 EPUB（赵贝露译，解包到 `/public/books/jazz-baodian/`）。`/books/` 与 `/public/books/` 均 gitignore——**永不提交、不分发**。章节深链：Laitz 用 `#page=N`（pdfPage 来自 PDF 书签逐章核对），Levine 用解包 HTML（sourceFile）。⚠️ Laitz 第 4 版章名与第 5 版完全不同（无 1C，Ch17=模进、Ch18=副属、Ch19=转调），全库 117 处 laitz 引用已按 4e 重写；后续新增引用必须用 4e 章名。Levine EPUB 缺第二十四章「聆听」正文（索引提及、文件缺失），该章无深链。
-- **书库深化流水线（已完成两本书）**：逐章读内嵌原书 → 升级该章笔记（deepSummary/analysis/confusions 以原文为准，仍原创改写）。批次 1（阶段 22）：Laitz 4/5/9/10/18/19/21 + Levine 2/3/13。批次 2（阶段 23）：Laitz 6/7/8/11/13 + Levine 14/15/17。批次 3（阶段 24）：Laitz 12/14/15/16/17 + Levine 7/9/10。批次 4（阶段 25）：Laitz 20/22/23/24 + Levine 1/4/16/18。批次 5（阶段 26）：Laitz 25/26/27 + Levine 11/12/19/20。收尾批（阶段 27）：Laitz 28–32 + Levine 6/8/21/22/23。**结果：Laitz 33/33、Levine 24/24 全部读透（57 章 deepSummary 以原文为准）；Sposobin 60 章等电子版到位后按同一流水线深化**。提取脚本模式：pypdf 按 pdfPage 范围导出文本 / EPUB 解包 HTML 去标签（存 $TEMP/tonic-deepen）；⚠️ Ch30 型谱例密集章 pypdf 输出会被 /g 字形污染，按散文关键词定位阅读。⚠️ 编辑 books/*.ts 的 DEEPEN 块时先看块边界避免重复键；deepSummary 字符串里不要用未转义的英文双引号。
+- **书库深化流水线（已完成两本书）**：逐章读内嵌原书 → 升级该章笔记（deepSummary/analysis/confusions 以原文为准，仍原创改写）。批次 1（阶段 22）：Laitz 4/5/9/10/18/19/21 + Levine 2/3/13。批次 2（阶段 23）：Laitz 6/7/8/11/13 + Levine 14/15/17。批次 3（阶段 24）：Laitz 12/14/15/16/17 + Levine 7/9/10。批次 4（阶段 25）：Laitz 20/22/23/24 + Levine 1/4/16/18。批次 5（阶段 26）：Laitz 25/26/27 + Levine 11/12/19/20。收尾批（阶段 27）：Laitz 28–32 + Levine 6/8/21/22/23。**结果：Laitz 33/33、Levine 24/24 全部读透（57 章 deepSummary 以原文为准）；Sposobin 电子版无法获取，60 章深化任务已搁置（2026-10-24 用户决定）**。提取脚本模式：pypdf 按 pdfPage 范围导出文本 / EPUB 解包 HTML 去标签（存 $TEMP/tonic-deepen）；⚠️ Ch30 型谱例密集章 pypdf 输出会被 /g 字形污染，按散文关键词定位阅读。⚠️ 编辑 books/*.ts 的 DEEPEN 块时先看块边界避免重复键；deepSummary 字符串里不要用未转义的英文双引号。
 - 谱面点击命中区来自 VexFlow `StaveNote.getBoundingBox()`，按行叠加 `rowIndex * 150`；如果改 `ROW_HEIGHT` 或给 SVG 加缩放，需要同步修正命中区坐标。命中区按钮是透明绝对定位按钮，可用 Tab 与 Enter。
 - 钢琴采样：Salamander Grand Piano V3（Alexander Holm，CC BY 3.0）本地子集；文件名 `C3, Ds3, Fs3, A3, C4, Ds4, Fs4, A4, C5`。首次用户手势预取，`ensureSamples` 解码后使用；失败自动回退合成器。替换/新增采样必须保留许可文件。
 - 概念页 `ON THIS PAGE` 在右栏深色卡片（`max-h-[46vh]` 内部滚动），用 `useActiveSection` 的 45% 视口阈值；当前项用 `scrollIntoView({block:'nearest'})` 在卡片内部滚动，避免页面跳动。左侧栏 CATALOG 当前分类下嵌概念目录，**当前分类整栏是折叠切换按钮**（点任意位置切换，状态存 localStorage `tonic.rail.catalog.v1`）；非当前分类仍是跳转 `/library?category=` 的链接；导航+目录区在 `dark-scroll` 容器内滚动。分类高亮同时服务于概念页与 `/library?category=`；目录项只在当前概念页高亮（`isCurrent`）。
@@ -69,6 +69,7 @@
 - 体系图布局是“4 列网格 + 6 个系统枢纽”的 MLP 式分层：概念坐标由 `conceptPosition` 生成，改行距/列距时要同步检查 SVG 底部图例（`ATLAS_HEIGHT` 1000，图例在 y=968）与标签截断（`truncate` 默认 8 字）。
 - 图谱边语义固定：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置；`SOURCE_HUBS` 只连接实际相关的来源与枢纽，不要恢复成“每本书连所有枢纽”的噪声图。`/atlas?focus=<slug>` 是概念页“在体系图中查看”的深链。
 - 长按发声：`AudioEngine.holdStart/holdEnd` 独立于 `bus`（走 `holdBus` → dry/reverb），所以示例播放/停止不会切断长按；引擎强制最短发声 0.35s、松手 ~0.3s 淡出，合成回退有 8s 硬上限防无限延音。命中区/琴键用 pointer 事件（按下/抬起/移出/取消），键盘激活靠 click `detail===0` 区分；`useHeldPreview` hook 以 key 管理多个 hold，release 对未按住的 key 是 no-op。CDP 测试用 `.impeccable/hold-check.mjs`（注意先 `scrollIntoView`，否则坐标在视口外）。
+- 🔴 图谱学习路径模式：URL 为 `/atlas?mode=path&focus=<slug>`；只保留 `prerequisite` 边并隐藏系统枢纽，图中只显示目标先修/后续闭包与有章节支撑的书源；先修/后续链由 DAG 深度计算（远→近/近→远），多条路径合并，不代表唯一线性顺序；清除选择保留 `mode=path`。章节来源用 `getChaptersForConcept` 全量列出，书源节点显示“支撑 N 章”。
 - 🔴 嵌套滚动陷阱：在 `overflow-y-auto` 限高容器（如右栏 ON THIS PAGE 卡片 `max-h-[46vh]`）里对裁剪区外的元素调用 `scrollIntoView({block:"nearest"})`，浏览器会连滚 window——把正在阅读的页面弹回卡片可见位置，表现为"内容页无法向下滚动"。正确做法是只调内部容器的 `scrollTop`（用 getBoundingClientRect 差值计算，见 ConceptPage 的 outline 跟随 effect）。诊断脚本：`.impeccable/scroll-trace.mjs`（给 scrollTo/scrollIntoView 打补丁记录调用方）、`scroll-check.mjs`、`outline-follow-check.mjs`。
 - 移动端菜单与检索面板都做了焦点陷阱与 Escape 关闭；新增模态层请沿用。
 
@@ -88,7 +89,7 @@
 
 ## 状态
 
-- 当前状态：v0.4 进行中；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.4 进行中；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、完整先修/后续闭包、章节级书源）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
@@ -97,7 +98,7 @@
   - `/books` 可切换三本书、按维度筛选、浏览 117 个章目与 117 条笔记；Levine/Laitz 章节显示深入归纳、跨书对应、常见误解与“打开原书本章”内嵌电子书深链。
   - `/theory/modal-characteristics` 显示五条调式谱例（D Dorian / E Phrygian / F Lydian / G Mixolydian / A Aeolian，共用 C 大调集合）。
   - `/theory/non-functional-dominants` 的相邻属和弦路径可视化可点击节点试听、播放整条进行；橙线为相邻上行，钴蓝线为下行五度。
-  - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点。
+  - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点；`/atlas?mode=path&focus=ii-v-i` 只保留前置边，路径摘要列出 13 条先修、0 条后续、5 个支撑章节，清除选择回到全局前置图；`/atlas?focus=tonal-distance` 正常模式列出 24 个章节深链。
   - `/drill` 可完成“显示答案 → 评分 → 下一卡”，并写入 localStorage。
   - `/library` 检索“五度圈”返回精确结果；清空恢复 50 条。
   - `/references` 台账显示 4 个合集卡片（爵士和声理论 / 学院派爵士理论 / 风格化创作 / 合集外公开课）与 20 条已读（含 VIA subtitle/asr/frames 标记）。
@@ -105,11 +106,11 @@
   - `/theory/melodic-minor-modes` 渲染 J-13 概念页（七调式代表和弦、C 旋律小调谱例、白话拆解、图谱前置）。
   - `/agent` 可导出学习状态；`window.TONIC` 与 CLI 可查询同一知识包与书库。
 - 下一步：
-  1. 继续深度内容：Sposobin 等电子版到位后补 60 章深度字段；Levine/Laitz 的 `confusions` 已在深化批次覆盖，新增概念时继续按章节级来源写。逐调式谱例已完成（阶段 11）。
-  2. 体系图第二阶段：增加“学习路径/前置链”筛选与章节级来源高亮；保持现有边语义，不把图变成装饰。
+  1. 继续深度内容：Sposobin 电子版无法获取，60 章深化任务已搁置（2026-10-24 用户决定）；Levine/Laitz 的 `confusions` 已在深化批次覆盖，新增概念时继续按章节级来源写。逐调式谱例已完成（阶段 11）。
+  2. 体系图第二阶段已完成（阶段 31：学习路径/前置链 + 章节级来源）；下一步可做图谱第三阶段（路径布局/跨书章节对照），或书库笔记接入复习卡。
   3. 需要时新增 stdio MCP server，直接复用 `TOOL_SCHEMAS` 与 `theoryApi`。
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
-  6. 站点待读已清空（C63/C74/75 已补录）；剩余可补的是 Sposobin 深度与图谱学习路径。
+  6. 站点待读已清空（C63/C74/75 已补录）；图谱学习路径已完成（阶段 31）；Sposobin 深化已搁置（电子版无法获取）。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 20:40 BY solo-agent
+- 本次文档更新时间：10.24 22:20 BY solo-agent
