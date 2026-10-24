@@ -36,7 +36,10 @@ export interface AtlasHub {
 }
 
 export const ATLAS_WIDTH = 1200;
-export const ATLAS_HEIGHT = 1320;
+// 高度随概念数自适应：4 列网格，每行 98px；首行 y=55，末行底部约 45px 标签，
+// 再留图例与底部内边距。
+export const ATLAS_ROWS = Math.ceil(CONCEPTS.length / 4);
+export const ATLAS_HEIGHT = 55 + (ATLAS_ROWS - 1) * 98 + 45 + 35 + 20;
 
 export const ATLAS_HUBS: AtlasHub[] = [
   {
