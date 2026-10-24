@@ -1,5 +1,5 @@
 import { cite } from "./bibliography";
-import { chord, example } from "./helpers";
+import { chord, example, melody } from "./helpers";
 import type { Concept } from "./types";
 
 export const HARMONY_ADVANCED: Concept[] = [
@@ -1303,6 +1303,172 @@ export const HARMONY_ADVANCED: Concept[] = [
       answer:
         "因为它保持和弦质量并平行移动，导音与七音不再按各自倾向解决；功能需要目标与解决方向，而平行色彩带只提供连续颜色。",
       hint: "平行移动 = 倾向音不再各自解决。",
+    },
+  },
+  {
+    id: "non-chord-tones",
+    slug: "non-chord-tones",
+    number: "H-24",
+    title: "和弦外音与装饰解决",
+    titleEn: "NON-CHORD TONES & EMBELLISHING RESOLUTIONS",
+    category: "harmony",
+    level: "进阶",
+    aliases: ["和弦外音", "外音", "经过音", "辅助音", "倚音", "延留音", "先现音", "non-chord tone", "passing tone", "suspension", "appoggiatura"],
+    tags: ["旋律", "声部进行", "装饰"],
+    dimensions: ["rhythm", "direction", "color"],
+    summary:
+      "和弦外音是水平方向的装饰：经过、辅助、先现弱位而入，倚音、延留音占据强拍；每种外音都按“来源—不协和—解决”的句法运行，让声部成为旋律。",
+    sections: [
+      {
+        id: "weak",
+        heading: "弱位外音：经过、辅助、先现",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "经过音用级进把两个和弦音连起来（C–D–E 中的 D）；辅助音从和弦音出发、级进后再返回（C–D–C 中的 D）；先现音把下一个和弦的音提前在本和弦的弱位出现。三者都在弱位进入、不占据重音，是让声部歌唱的最基础装饰。",
+            cites: [
+              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+              cite("sposobin", "第三十八章 一个声部中的自然经过音"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "accented",
+        heading: "强拍外音：倚音、延留音与延迟解决",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "倚音在强拍上直接跳进进入、通常下行级进解决，冲突感最强；延留音则要“准备”——先作为前和弦的和弦音出现，延留到强拍制造不协和，再下行解决，形成准备—延留—解决三段。外音还可以链式延迟解决，让不协和一层层落地。",
+            cites: [
+              cite("laitz", "Chapter 10 Accented and Chromatic Embellishing Tones"),
+              cite("sposobin", "第三十六章 在一个声部中的有准备的延留音"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "分析时先问三个问题：从哪来（跳进或级进）、在哪个拍位、解决到哪。终止四六本质是属音上的双倚音，同一个外音逻辑在更高层级重复出现——外音句法是从声部到乐句都通用的语法。",
+            cites: [
+              cite("laitz", "Chapter 10 Accented and Chromatic Embellishing Tones"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "判断顺序",
+            text: "拍位 → 来源（级进/跳进/重复前一音）→ 解决方向。三步定名，不要看到不协和音就猜。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-nct-melody",
+        title: "I–V7–I 上的外音旋律",
+        caption: "D、F 是经过音；A 从 G 延留到 V7 上再下行解决 G，最后经 D 回落 C——外音让三个和弦唱成一条旋律。",
+        kind: "melody",
+        key: "C",
+        tempo: 76,
+        beats: 8,
+        events: [
+          melody(0, 2, "C4", { label: "和弦音" }),
+          melody(2, 1, "D4", { label: "经过" }),
+          melody(3, 1, "E4"),
+          melody(4, 1, "F4", { label: "经过" }),
+          melody(5, 1, "G4", { label: "延留" }),
+          melody(6, 1, "F4", { label: "解决" }),
+          melody(7, 1, "E4"),
+        ],
+      }),
+    ],
+    related: ["voice-leading", "cadential-six-four", "melody-motives", "meter-syncopation"],
+    review: {
+      question: "倚音与延留音的核心区别是什么？",
+      answer:
+        "延留音要准备：先作为前和弦的和弦音出现，延留到强拍再解决；倚音没有准备，直接在强拍跳进进入、通常下行解决。冲突感更强的是倚音。",
+      hint: "看有没有“准备”环节。",
+    },
+  },
+  {
+    id: "suspended-chords",
+    slug: "suspended-chords",
+    number: "H-25",
+    title: "挂留和弦与 Sus 色彩",
+    titleEn: "SUSPENDED CHORDS",
+    category: "harmony",
+    level: "进阶",
+    aliases: ["挂留", "sus4", "sus2", "挂四", "Gsus", "suspended chord", "sus 和弦"],
+    tags: ["和弦", "色彩", "爵士"],
+    dimensions: ["color", "function", "rhythm"],
+    summary:
+      "挂留把三音换成二度或四度，和弦的大小性质随之消失，变成“悬而未决”的声音；它可以解决回三音，也可以作为无解决压力的属色彩独立停留。",
+    sections: [
+      {
+        id: "origin",
+        heading: "从延留音到和声化挂留",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "sus4 的原型是 4–3 延留音：四音先作为前和弦的和弦音出现，延留到强拍、再下行解决到三音。当这个四音不再需要准备、直接和根音五音一起站成和弦（G–C–D），延留音就被和声化成了挂留和弦——三音缺席，大三或小三无法判断，声音悬在大小之间。",
+            cites: [
+              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "sus2 是同一结构的镜像（G–A–D），音区不同但同样性质模糊。写终止时，sus4 → 三音的回落是古典与流行通用的“软化属和弦”手法；不回落，则进入爵士的 sus 世界。",
+            cites: [
+              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "jazz",
+        heading: "爵士里的 sus：无压力的属色彩",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "爵士把属七的三音换掉：Gsus4（或记 G7sus4、G9sus4）没有三全音的三音，解决压力被拆掉，整条 Mixolydian 音阶都可用；它常替代 ii–V 里的 V，或平铺整小节充当“停留的属”。sus 与四度和声亲缘极近——挂留结构本身就是四度叠置的局部。",
+            cites: [
+              cite("levine", "Chapter 3 Chord/Scale Theory（sus 与 Phrygian 和弦）"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "听觉抓手",
+            text: "sus4 的紧张不是“要解决到主”，而是“三音还没表态”。听到一个又不像大又不像小的属和弦，先猜 sus。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-sus-resolution",
+        title: "Gsus4 → G7 → Cmaj7",
+        caption: "四音 C 从延留位置回落到三音 B，属和弦才获得三全音与解决方向；sus4 是属功能的软启动。",
+        kind: "progression",
+        key: "C",
+        tempo: 76,
+        beats: 12,
+        events: [
+          chord(0, 4, ["G3", "C4", "D4"], { label: "Gsus4" }),
+          chord(4, 4, ["G3", "B3", "D4", "F4"], { label: "G7" }),
+          chord(8, 4, ["C3", "E3", "G3", "B3"], { label: "Cmaj7" }),
+        ],
+      }),
+    ],
+    related: ["non-chord-tones", "quartal-harmony", "modal-harmony", "extensions-alterations"],
+    review: {
+      question: "sus4 为什么大小性质不明？爵士怎么用它？",
+      answer:
+        "因为三音被四音替换，大三/小三无法判断；爵士把 sus4/7sus4 当成没有三全音的属色彩，配 Mixolydian、不做 4–3 回落，用来平铺属和声或软化 ii–V。",
+      hint: "三音缺席，性质悬置。",
     },
   },
 ];

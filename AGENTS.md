@@ -33,14 +33,14 @@ TONIC 是一个本地优先的个人乐理强化工作台。核心不是“多�
 
 ```text
 src/content/
-  foundations.ts       基础 8 条
+  foundations.ts       基础 11 条（含节拍与切分、旋律与动机、五声音阶）
   harmony.ts           和声基础 8 条
-  harmony-advanced.ts  和声深化 15 条（功能/走向/色彩/明暗/关系/节奏 + 中古调式、调式互换、四度、混合和弦、无功能属和弦、固定结构）
+  harmony-advanced.ts  和声深化 17 条（功能/走向/色彩/明暗/关系/节奏 + 中古调式、调式互换、四度、混合和弦、无功能属和弦、固定结构、和弦外音、挂留和弦）
   jazz.ts              爵士 8 条
-  jazz-advanced.ts     爵士深化 5 条（含旋律小调调式 melodic-minor-modes）
-  deep-dives.ts        44 条白话拆解（全部概念）
+  jazz-advanced.ts     爵士深化 6 条（含旋律小调调式、对称音阶）
+  deep-dives.ts        50 条白话拆解（全部概念）
   bilibili.ts          B 站课程调研台账：5 个合集/板块，112 条视频与文章 / 20 条已读 / 92 条仅编目
-  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置
+  graph/index.ts       体系图谱：3 来源 / 6 枢纽 / 50 概念 / 129 关联 / 45 前置
   books/               三本书的完整章目 + 原创章节笔记
   bibliography.ts      书目、版次、章节定位政策
 ```
@@ -58,7 +58,7 @@ src/content/
 ## 体系图谱（Atlas）
 
 - 页面：`/atlas`；数据：`src/content/graph/index.ts`。
-- 分层：教材来源（Levine / Laitz / Sposobin）→ 系统枢纽（基础语法、功能与句法、色彩与张力、明暗与调式、关系与转调、爵士语言）→ 概念节点（44）。
+- 分层：教材来源（Levine / Laitz / Sposobin）→ 系统枢纽（基础语法、功能与句法、色彩与张力、明暗与调式、关系与转调、爵士语言）→ 概念节点（50）。
 - 边类型：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置。
 - 交互：分类/维度筛选；悬停或点击节点高亮邻域；选中节点显示维度、前置、后续、书库笔记与概念入口；支持 `/atlas?focus=<slug>` 深链。
 - 新增概念时同步检查：`graph/index.ts` 的枢纽归属、`PREREQUISITES` 前置链、`related` 关联；图谱不得出现指向不存在 slug 的边。
@@ -68,7 +68,7 @@ src/content/
 - 数据：`src/content/deep-dives.ts`；由 `CONCEPTS` 自动合并到 `concept.deepDive`。
 - 目的：把术语密集的段落改写成可理解的判断顺序、听觉抓手与练习步骤；不是教材正文的译文或摘录。
 - 每个 block 至少一条 `cites`；引用沿用 `CitationRef` 章节级 locator；`collectCitations` 会把 deep dive 引用纳入页末注释。
-- 当前覆盖 44/44：基础 8 + 和声 23 + 爵士 13 全部有白话拆解。
+- 当前覆盖 50/50：基础 11 + 和声 25 + 爵士 14 全部有白话拆解。
 - 新增 deep dive 时优先写“为什么容易误解”“判断顺序”“一句话/练习”，避免重复 summary。
 
 ## B 站课程台账（Video Research）
@@ -115,13 +115,13 @@ src/content/
 
 ## 当前范围
 
-- 44 个概念（基础 8 / 和声 23 / 爵士 13）
-- 53 个可听谱例
-- 166 条章节级引用
+- 50 个概念（基础 11 / 和声 25 / 爵士 14）
+- 59 个可听谱例
+- 181 条章节级引用
 - 3 本书 · 118 个章目 · 85 条原创章节笔记（Levine 24/24、Laitz 34/34、Sposobin 27/60）
-- 44 条白话拆解（全部概念）
+- 50 条白话拆解（全部概念）
 - B 站调研台账：5 个合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目（以 `read` 为准）
-- 体系图谱：3 来源 / 6 枢纽 / 44 概念 / 108 关联 / 34 前置
+- 体系图谱：3 来源 / 6 枢纽 / 50 概念 / 129 关联 / 45 前置
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
-- 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）
+- 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）；站点目录中无法在三本书定位的主题（轴心体系、新里曼理论、Lydian Chromatic Concept 等）不入库

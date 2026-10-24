@@ -36,7 +36,7 @@ export interface AtlasHub {
 }
 
 export const ATLAS_WIDTH = 1200;
-export const ATLAS_HEIGHT = 1120;
+export const ATLAS_HEIGHT = 1320;
 
 export const ATLAS_HUBS: AtlasHub[] = [
   {
@@ -163,6 +163,17 @@ const PREREQUISITES: Array<[string, string]> = [
   ["quartal-harmony", "constant-structure"],
   ["minor-scales", "melodic-minor-modes"],
   ["chord-scale", "melodic-minor-modes"],
+  ["meter-syncopation", "harmonic-rhythm"],
+  ["meter-syncopation", "phrase-structure"],
+  ["melody-motives", "phrase-structure"],
+  ["non-chord-tones", "cadential-six-four"],
+  ["voice-leading", "non-chord-tones"],
+  ["triads", "suspended-chords"],
+  ["suspended-chords", "quartal-harmony"],
+  ["diminished-seventh", "symmetric-scales"],
+  ["chord-scale", "symmetric-scales"],
+  ["major-scale", "pentatonic-scales"],
+  ["pentatonic-scales", "pentatonic-outside"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {

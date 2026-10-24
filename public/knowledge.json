@@ -2,10 +2,10 @@
   "meta": {
     "name": "TONIC · 主音",
     "version": "0.3.0",
-    "builtAt": "2026-10-23T18:42:14.378Z",
-    "conceptCount": 44,
-    "exampleCount": 53,
-    "citationCount": 166,
+    "builtAt": "2026-10-24T02:32:42.523Z",
+    "conceptCount": 50,
+    "exampleCount": 59,
+    "citationCount": 181,
     "bookCount": 3,
     "chapterCount": 118,
     "sourceNoteCount": 85,
@@ -9777,6 +9777,647 @@
       }
     },
     {
+      "id": "meter-syncopation",
+      "slug": "meter-syncopation",
+      "number": "F-09",
+      "title": "节拍与切分",
+      "titleEn": "METER & SYNCOPATION",
+      "category": "foundations",
+      "level": "基础",
+      "aliases": [
+        "节拍",
+        "拍号",
+        "切分",
+        "重音",
+        "meter",
+        "syncopation",
+        "backbeat",
+        "律动"
+      ],
+      "tags": [
+        "节奏",
+        "律动",
+        "重音"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction"
+      ],
+      "summary": "拍号给出强弱循环的骨架，律动把它细分成可感的脉搏；切分把重音挪到弱位，制造推进与意外，是律动风格化最重要的手段。",
+      "sections": [
+        {
+          "id": "meter",
+          "heading": "拍号与强弱层级",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "拍号由两个数字写成：上方的数告诉你一小节有几拍，下方的数告诉你以什么音符为一拍。2/4 是强—弱，3/4 是强—弱—弱，4/4 是强—弱—次强—弱；6/8 这类复拍子则以“一大拍含三小拍”计数，强弱落在每大拍上。强弱层级不是抽象规则，而是听者预期重音出现的位置。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 1B Musical Time: Meter and Rhythm"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "旋律与伴奏都活在“拍点—拍点之间”的细分里：把一拍再分成两个八分或三个三连，决定音乐是直是摇。音高与节拍同时运作——同一个音组放在不同的拍位上，听起来完全不同，所以分析旋律要同时说“什么音”和“在哪个拍位”。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "syncopation",
+          "heading": "切分与推动力",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "切分是把重音移出拍点的总称：音从小节或拍点的弱位起、跨拍延音把强拍“吃掉”、或在反拍上加重音。听者预期强拍出现重音，切分先让位再补拍，制造“被推迟的落点”——这正是放克、爵士与拉丁律动的发动机。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 1B Musical Time: Meter and Rhythm"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "编曲提示",
+              "text": "先定单位拍与律动层级（哪个乐器管四分、哪个管八分、哪个管反拍），再决定哪个声部切分；所有声部同时切分会让律动失去参照。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-syncopation-compare",
+          "title": "正拍陈述 vs 切分变体",
+          "caption": "同一组音 C–D–E–G：上面一行落在拍点，下面一行从反拍起并跨拍延音，重音被推迟，律动立刻不同。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 96,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "正拍"
+            },
+            {
+              "beat": 1,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ]
+            },
+            {
+              "beat": 2,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 3,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 0.5,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "切分"
+            },
+            {
+              "beat": 4.5,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ]
+            },
+            {
+              "beat": 5.5,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 6.5,
+              "duration": 1.5,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "related": [
+        "harmonic-rhythm",
+        "phrase-structure",
+        "melody-motives"
+      ],
+      "review": {
+        "question": "切分为什么能制造推动力？",
+        "answer": "因为它把重音从拍点挪到弱位或用跨拍延音推迟落点，让听者的强拍预期落空再补齐；预期与现实的错位就是律动的推进感。",
+        "hint": "先说强拍预期，再说落点被推迟。"
+      },
+      "deepDive": {
+        "title": "白话解释：拍子是骨架，切分是性格",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "先把拍子想成一条均分的网格：4/4 里每小节四格，强弱按“强—弱—次强—弱”循环。你听到的一切音符其实都在回答一个问题——“它落在网格的哪个位置”。同一个音组放在拍点上稳，放在反拍上就开始推。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1B Musical Time: Meter and Rhythm"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "切分不是乱来，而是“推迟落点”：要么从弱位起、要么把音拉过强拍、要么直接在反拍加重音。听者一直在等那个强拍上的重音，你偏偏晚半拍给——这一推一补就是律动。所有让人想动的音乐，几乎都在玩这条错位。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 1B Musical Time: Meter and Rhythm"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "练习：用同一组音弹两遍，一遍全在拍点、一遍全从反拍起；什么都不改，只改位置，听“性格”怎么变的。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "melody-motives",
+      "slug": "melody-motives",
+      "number": "F-10",
+      "title": "旋律与动机发展",
+      "titleEn": "MELODY & MOTIVIC DEVELOPMENT",
+      "category": "foundations",
+      "level": "基础",
+      "aliases": [
+        "旋律",
+        "动机",
+        "模进",
+        "轮廓",
+        "melody",
+        "motive",
+        "motivic development",
+        "旋律轮廓"
+      ],
+      "tags": [
+        "旋律",
+        "动机",
+        "发展"
+      ],
+      "dimensions": [
+        "direction",
+        "rhythm",
+        "color"
+      ],
+      "summary": "旋律靠一个可识别的动机反复生长：重复、移位、模进、增减时值都是发展手段；级进保持连贯，跳进之后要反向回收，高点只留一个。",
+      "sections": [
+        {
+          "id": "motive",
+          "heading": "动机与它的展开",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "动机是一个可辨认的最小音型——几个音加一种节奏特征。旋律写作不是从头到尾各想各的，而是先立动机，再用重复、移位、模进、扩大或缩小、倒影等手段让它在新位置重现；听者靠“认出”动机来组织旋律。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "发展的节奏也要设计：动机陈述后紧接变化重复最容易辨认，间隔太远或每次都变会散掉。旋律与伴奏的时间关系同样重要——旋律长音落在伴奏切分上，是流行与爵士常见的呼吸设计。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "contour",
+          "heading": "级进、跳进与高点",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "旋律轮廓以级进为主，跳进负责表情；大跳之后习惯向反方向级进“回收”，否则线条会散。整段旋律通常只保留一个最高点，把它与和声高点、歌词或乐句顶点对齐，表达才有落点。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "写作自查",
+              "text": "唱一遍：动机认得出吗？跳进回收了吗？高点只有一个吗？三问都过，再谈装饰。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-motive-development",
+          "title": "动机 → 移位 → 回收",
+          "caption": "C–D–E–G 上行动机移高一级变成 D–E–F–A，随后级进下行收回 C；高点只有一个 A。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 84,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "动机"
+            },
+            {
+              "beat": 1,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ]
+            },
+            {
+              "beat": 2,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 3,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "移位"
+            },
+            {
+              "beat": 5,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 6,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ]
+            },
+            {
+              "beat": 7,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 69,
+                  "spelling": "A4"
+                }
+              ],
+              "label": "高点"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "phrase-structure",
+        "meter-syncopation",
+        "non-chord-tones",
+        "bass-line"
+      ],
+      "review": {
+        "question": "大跳之后为什么通常要反向级进？",
+        "answer": "跳进是表情与张力，级进是连贯与解决；跳进后反向级进把线条收回自然音域，也让听者重新定位音高中心。",
+        "hint": "跳进负责表情，级进负责回收。"
+      },
+      "deepDive": {
+        "title": "白话解释：好旋律是长出来的，不是拼出来的",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "先立一个动机：三五个音加一种节奏，小到你一眼能记住。然后别再想新句子——把动机重复、挪高挪低、变长变短，听者一边认一边听，旋律就“长”出来了。旋律难写，通常不是素材不够，而是素材之间没有血缘。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "轮廓上记住三件事：级进为主，跳进是表情；跳进之后向反方向级进，把线收回来；全曲只留一个最高点，把它和和声高点对上。高点太多等于没有高点。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "写完旋律先唱一遍：动机认得出、跳进收回了、高点只有一个——三问过关再装饰。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pentatonic-scales",
+      "slug": "pentatonic-scales",
+      "number": "F-11",
+      "title": "五声音阶",
+      "titleEn": "PENTATONIC SCALES",
+      "category": "foundations",
+      "level": "基础",
+      "aliases": [
+        "五声",
+        "五声音阶",
+        "大调五声",
+        "小调五声",
+        "pentatonic",
+        "五音音阶"
+      ],
+      "tags": [
+        "音阶",
+        "旋律",
+        "即兴"
+      ],
+      "dimensions": [
+        "color",
+        "direction"
+      ],
+      "summary": "五声音阶从大调里去掉两个半音倾向音（4 与 7），没有强导音，所以怎么放都稳；大调五声与小调五声互为旋转，是旋律写作与跨和弦即兴的公共语汇。",
+      "sections": [
+        {
+          "id": "structure",
+          "heading": "结构与旋转",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "C 大调五声是 C–D–E–G–A：去掉 4（F）与 7（B）这两个制造倾向的音，剩下大二度与小三度堆叠，音阶内部没有半音。同一组音从 A 开始排列就是 A 小调五声——大调五声与小调五声不是两条音阶，而是同一条集合的两个视角。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"
+                },
+                {
+                  "source": "levine",
+                  "locator": "Chapter 09 Pentatonic Scales"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "usage",
+          "heading": "为什么它不容易错",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "没有半音就没有强倾向音，任何两个五声相邻音都不会打架，所以它既可以当旋律骨架，也可以整条压在慢变的和声上——同一条 C 大调五声可以覆盖 Cmaj7、Am7、Fmaj7 等一组相关和弦。把小调五声加一个 b5（蓝调音）就是布鲁斯音阶；爵士即兴再把它平移到“外部”和弦上制造离调色彩。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 09 Pentatonic Scales"
+                },
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "听觉练习",
+              "text": "先只弹黑键五声（Gb 大调五声即黑键）听它的悬浮感，再回到 C 大调五声对比：少了哪两个音，倾向就消失了。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-pentatonic-line",
+          "title": "C 大调五声旋律线",
+          "caption": "只用 C–D–E–G–A 五个音构成的旋律线；没有半音倾向，落点都稳。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 88,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ]
+            },
+            {
+              "beat": 1,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ]
+            },
+            {
+              "beat": 2,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 3,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 69,
+                  "spelling": "A4"
+                }
+              ]
+            },
+            {
+              "beat": 5,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 72,
+                  "spelling": "C5"
+                }
+              ]
+            },
+            {
+              "beat": 6,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 69,
+                  "spelling": "A4"
+                }
+              ]
+            },
+            {
+              "beat": 7,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "related": [
+        "major-scale",
+        "blues",
+        "pentatonic-outside",
+        "symmetric-scales"
+      ],
+      "review": {
+        "question": "大调五声去掉了哪两个音？为什么它跨和弦更安全？",
+        "answer": "去掉 4 与 7（C 大调的 F 与 B），音阶内部没有半音与导音；没有强倾向音意味着音与和弦冲突的压力小，同一条五声可以覆盖一组相关和弦。",
+        "hint": "去倾向，留骨架。"
+      },
+      "deepDive": {
+        "title": "白话解释：删掉倾向，留下骨架",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "拿走大调里的 4 和 7，剩下五个音就是大调五声。这两个音恰好是半音戏最多的位置——4 想去 3，7 想回家到 1；把它们删掉，音阶里没有任何音“急着去哪”，于是怎么弹都不刺耳。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 09 Pentatonic Scales"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "从 A 开始排同一组音就是 A 小调五声——大小五声是同一条集合的两个视角，不是两条音阶。布鲁斯音阶就是小调五声加一个蓝调音 b5；编曲里一条五声线铺在一组和弦上，是最省力也最不容易错的旋律策略。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 09 Pentatonic Scales"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "只弹黑键（就是 Gb 大调五声），听那种没有方向的悬浮；再弹 C 大调五声对比——你会立刻知道被删掉的那两个音管的是什么。"
+          }
+        ]
+      }
+    },
+    {
       "id": "roman-numerals",
       "slug": "roman-numerals",
       "number": "H-01",
@@ -15720,6 +16361,430 @@
       }
     },
     {
+      "id": "non-chord-tones",
+      "slug": "non-chord-tones",
+      "number": "H-24",
+      "title": "和弦外音与装饰解决",
+      "titleEn": "NON-CHORD TONES & EMBELLISHING RESOLUTIONS",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "和弦外音",
+        "外音",
+        "经过音",
+        "辅助音",
+        "倚音",
+        "延留音",
+        "先现音",
+        "non-chord tone",
+        "passing tone",
+        "suspension",
+        "appoggiatura"
+      ],
+      "tags": [
+        "旋律",
+        "声部进行",
+        "装饰"
+      ],
+      "dimensions": [
+        "rhythm",
+        "direction",
+        "color"
+      ],
+      "summary": "和弦外音是水平方向的装饰：经过、辅助、先现弱位而入，倚音、延留音占据强拍；每种外音都按“来源—不协和—解决”的句法运行，让声部成为旋律。",
+      "sections": [
+        {
+          "id": "weak",
+          "heading": "弱位外音：经过、辅助、先现",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "经过音用级进把两个和弦音连起来（C–D–E 中的 D）；辅助音从和弦音出发、级进后再返回（C–D–C 中的 D）；先现音把下一个和弦的音提前在本和弦的弱位出现。三者都在弱位进入、不占据重音，是让声部歌唱的最基础装饰。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第三十八章 一个声部中的自然经过音"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "accented",
+          "heading": "强拍外音：倚音、延留音与延迟解决",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "倚音在强拍上直接跳进进入、通常下行级进解决，冲突感最强；延留音则要“准备”——先作为前和弦的和弦音出现，延留到强拍制造不协和，再下行解决，形成准备—延留—解决三段。外音还可以链式延迟解决，让不协和一层层落地。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 10 Accented and Chromatic Embellishing Tones"
+                },
+                {
+                  "source": "sposobin",
+                  "locator": "第三十六章 在一个声部中的有准备的延留音"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "分析时先问三个问题：从哪来（跳进或级进）、在哪个拍位、解决到哪。终止四六本质是属音上的双倚音，同一个外音逻辑在更高层级重复出现——外音句法是从声部到乐句都通用的语法。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 10 Accented and Chromatic Embellishing Tones"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "判断顺序",
+              "text": "拍位 → 来源（级进/跳进/重复前一音）→ 解决方向。三步定名，不要看到不协和音就猜。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-nct-melody",
+          "title": "I–V7–I 上的外音旋律",
+          "caption": "D、F 是经过音；A 从 G 延留到 V7 上再下行解决 G，最后经 D 回落 C——外音让三个和弦唱成一条旋律。",
+          "kind": "melody",
+          "key": "C",
+          "tempo": 76,
+          "beats": 8,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 2,
+              "notes": [
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                }
+              ],
+              "label": "和弦音"
+            },
+            {
+              "beat": 2,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "经过"
+            },
+            {
+              "beat": 3,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            },
+            {
+              "beat": 4,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "经过"
+            },
+            {
+              "beat": 5,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 67,
+                  "spelling": "G4"
+                }
+              ],
+              "label": "延留"
+            },
+            {
+              "beat": 6,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "解决"
+            },
+            {
+              "beat": 7,
+              "duration": 1,
+              "notes": [
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "related": [
+        "voice-leading",
+        "cadential-six-four",
+        "melody-motives",
+        "meter-syncopation"
+      ],
+      "review": {
+        "question": "倚音与延留音的核心区别是什么？",
+        "answer": "延留音要准备：先作为前和弦的和弦音出现，延留到强拍再解决；倚音没有准备，直接在强拍跳进进入、通常下行解决。冲突感更强的是倚音。",
+        "hint": "看有没有“准备”环节。"
+      },
+      "deepDive": {
+        "title": "白话解释：外音是声部的歌词",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "和弦音是骨架，外音是让骨架变成旋律的血肉。弱位的三种最好认：经过音填缝（C–D–E）、辅助音来回（C–D–C）、先现音抢跑。它们不占强拍，随时可以删掉而不伤和弦。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第三十八章 一个声部中的自然经过音"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "强位的两种才有戏剧：延留音三段式——先作为上一个和弦的自己人出现（准备），赖到强拍制造冲突（延留），再下行还债（解决）；倚音更横，不准备直接跳到强拍上闯祸。终止四六就是两个倚音叠在属音上的大招。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 10 Accented and Chromatic Embellishing Tones"
+              },
+              {
+                "source": "sposobin",
+                "locator": "第三十六章 在一个声部中的有准备的延留音"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "判断顺序",
+            "text": "拍位 → 来源 → 解决方向，三步定名。听到刺耳的音先别当错音，先问它欠谁的、什么时候还。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "suspended-chords",
+      "slug": "suspended-chords",
+      "number": "H-25",
+      "title": "挂留和弦与 Sus 色彩",
+      "titleEn": "SUSPENDED CHORDS",
+      "category": "harmony",
+      "level": "进阶",
+      "aliases": [
+        "挂留",
+        "sus4",
+        "sus2",
+        "挂四",
+        "Gsus",
+        "suspended chord",
+        "sus 和弦"
+      ],
+      "tags": [
+        "和弦",
+        "色彩",
+        "爵士"
+      ],
+      "dimensions": [
+        "color",
+        "function",
+        "rhythm"
+      ],
+      "summary": "挂留把三音换成二度或四度，和弦的大小性质随之消失，变成“悬而未决”的声音；它可以解决回三音，也可以作为无解决压力的属色彩独立停留。",
+      "sections": [
+        {
+          "id": "origin",
+          "heading": "从延留音到和声化挂留",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "sus4 的原型是 4–3 延留音：四音先作为前和弦的和弦音出现，延留到强拍、再下行解决到三音。当这个四音不再需要准备、直接和根音五音一起站成和弦（G–C–D），延留音就被和声化成了挂留和弦——三音缺席，大三或小三无法判断，声音悬在大小之间。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "sus2 是同一结构的镜像（G–A–D），音区不同但同样性质模糊。写终止时，sus4 → 三音的回落是古典与流行通用的“软化属和弦”手法；不回落，则进入爵士的 sus 世界。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jazz",
+          "heading": "爵士里的 sus：无压力的属色彩",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "爵士把属七的三音换掉：Gsus4（或记 G7sus4、G9sus4）没有三全音的三音，解决压力被拆掉，整条 Mixolydian 音阶都可用；它常替代 ii–V 里的 V，或平铺整小节充当“停留的属”。sus 与四度和声亲缘极近——挂留结构本身就是四度叠置的局部。",
+              "cites": [
+                {
+                  "source": "levine",
+                  "locator": "Chapter 3 Chord/Scale Theory（sus 与 Phrygian 和弦）"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "听觉抓手",
+              "text": "sus4 的紧张不是“要解决到主”，而是“三音还没表态”。听到一个又不像大又不像小的属和弦，先猜 sus。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-sus-resolution",
+          "title": "Gsus4 → G7 → Cmaj7",
+          "caption": "四音 C 从延留位置回落到三音 B，属和弦才获得三全音与解决方向；sus4 是属功能的软启动。",
+          "kind": "progression",
+          "key": "C",
+          "tempo": 76,
+          "beats": 12,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                }
+              ],
+              "label": "Gsus4"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                },
+                {
+                  "midi": 62,
+                  "spelling": "D4"
+                },
+                {
+                  "midi": 65,
+                  "spelling": "F4"
+                }
+              ],
+              "label": "G7"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 59,
+                  "spelling": "B3"
+                }
+              ],
+              "label": "Cmaj7"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "non-chord-tones",
+        "quartal-harmony",
+        "modal-harmony",
+        "extensions-alterations"
+      ],
+      "review": {
+        "question": "sus4 为什么大小性质不明？爵士怎么用它？",
+        "answer": "因为三音被四音替换，大三/小三无法判断；爵士把 sus4/7sus4 当成没有三全音的属色彩，配 Mixolydian、不做 4–3 回落，用来平铺属和声或软化 ii–V。",
+        "hint": "三音缺席，性质悬置。"
+      },
+      "deepDive": {
+        "title": "白话解释：三音还没表态",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "和弦的性质靠三音说话：三音是大三是大和弦，是小三是小和弦。sus4 把三音赶走、让四音站在它的位置——现在既不是大也不是小，像一个悬而未决的表情。传统用法是四音回落到三音，也就是 4–3 延留音的和声化。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "爵士的玩法是不回落：Gsus4/G9sus4 没有三音就没有三全音，属和弦的解决压力被拆掉，整条 Mixolydian 随便跑。它和四度和声是亲戚——G–C–D 本身就是两个四度叠起来的。",
+            "cites": [
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（sus 与 Phrygian 和弦）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "Gsus4 → G7 → Cmaj7 弹三遍：第一遍记住“悬”，第二遍听三音 B 落下时力量回来了，第三遍试着不让它回落——听听爵士的松。"
+          }
+        ]
+      }
+    },
+    {
       "id": "ii-v-i",
       "slug": "ii-v-i",
       "number": "J-01",
@@ -18643,6 +19708,247 @@
           }
         ]
       }
+    },
+    {
+      "id": "symmetric-scales",
+      "slug": "symmetric-scales",
+      "number": "J-14",
+      "title": "对称音阶：全音、八音与增",
+      "titleEn": "SYMMETRIC SCALES: WHOLE TONE, OCTATONIC & AUGMENTED",
+      "category": "jazz",
+      "level": "高级",
+      "aliases": [
+        "对称音阶",
+        "全音音阶",
+        "八音音阶",
+        "减音阶",
+        "增音阶",
+        "whole tone",
+        "octatonic",
+        "diminished scale",
+        "augmented scale"
+      ],
+      "tags": [
+        "音阶",
+        "对称",
+        "属和弦"
+      ],
+      "dimensions": [
+        "color",
+        "relationship"
+      ],
+      "summary": "全音、八音（减）、增三条音阶由等距音程生成，旋转对称、缺少单一引力中心；它们分别喂饱 7♯5、7♭9/dim7 与 maj7♯5，是对称色彩与属和弦变化的标准语汇。",
+      "sections": [
+        {
+          "id": "three-scales",
+          "heading": "三条音阶与各自的和弦",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "全音音阶（6 个全音）：C–D–E–F♯–G♯–A♯，配 7♯5（Lydian 属七的近亲），没有 4、没有 9 与 ♯9 之分。",
+                "八音音阶／减音阶（半全交替）：C–D♭–E♭–E–F♯–G–A–B♭，配 7♭9 与 dim7；半全与全半两种旋转各管一类和弦。",
+                "增音阶（小三度与小二度交替）：C–D♯–E–G–A♭，配 maj7♯5 与增三和弦，颜色最“失重”。"
+              ],
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"
+                },
+                {
+                  "source": "levine",
+                  "locator": "Chapter 3 Chord/Scale Theory（全音与减音阶）"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "对称意味着旋转有限：全音音阶只有两种旋转，八音音阶只有三种（减七和弦只有四个拼写）。旋转越少，独立音阶越少；同一个音集可以被重解释到多个主音上——等音与对称让“这是哪条音阶”变成视角问题。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "usage",
+          "heading": "对称没有方向，终点要自己给",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "等分八度消解了引力中心：任何音听起来都像“临时主音”，旋律在上面转圈不会有自然的回归感。所以对称音阶的服务对象是有明确目标的和弦——在 7♯5、7♭9 上短暂施加对称色彩，再用功能和声收束；整段全音转来转去而没有目标和弦，听感会失焦。",
+              "cites": [
+                {
+                  "source": "laitz",
+                  "locator": "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"
+                },
+                {
+                  "source": "levine",
+                  "locator": "Chapter 3 Chord/Scale Theory（全音与减音阶）"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "练习提示",
+              "text": "先弹 C7♯5 上跑全音、C7♭9 上跑半全八音，听两条音阶的不同“失重感”；再各解决回 F，体会对称色彩如何被功能落地。"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "id": "ex-symmetric-dominants",
+          "title": "C7♯5（全音）→ C7♭9（八音）→ C7 → F",
+          "caption": "同一条 C7 换两种对称色彩：全音给 ♯5，八音给 ♭9；最后落回功能和声收束。",
+          "kind": "progression",
+          "key": "F",
+          "tempo": 92,
+          "beats": 16,
+          "events": [
+            {
+              "beat": 0,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 58,
+                  "spelling": "Bb3"
+                },
+                {
+                  "midi": 66,
+                  "spelling": "F#4"
+                }
+              ],
+              "label": "C7♯5 · 全音"
+            },
+            {
+              "beat": 4,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 58,
+                  "spelling": "Bb3"
+                },
+                {
+                  "midi": 61,
+                  "spelling": "Db4"
+                }
+              ],
+              "label": "C7♭9 · 八音"
+            },
+            {
+              "beat": 8,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 48,
+                  "spelling": "C3"
+                },
+                {
+                  "midi": 52,
+                  "spelling": "E3"
+                },
+                {
+                  "midi": 55,
+                  "spelling": "G3"
+                },
+                {
+                  "midi": 58,
+                  "spelling": "Bb3"
+                }
+              ],
+              "label": "C7"
+            },
+            {
+              "beat": 12,
+              "duration": 4,
+              "notes": [
+                {
+                  "midi": 53,
+                  "spelling": "F3"
+                },
+                {
+                  "midi": 57,
+                  "spelling": "A3"
+                },
+                {
+                  "midi": 60,
+                  "spelling": "C4"
+                },
+                {
+                  "midi": 64,
+                  "spelling": "E4"
+                }
+              ],
+              "label": "Fmaj7"
+            }
+          ]
+        }
+      ],
+      "related": [
+        "diminished-seventh",
+        "chord-scale",
+        "constant-structure",
+        "melodic-minor-modes"
+      ],
+      "review": {
+        "question": "对称音阶为什么“没有引力中心”？使用时要注意什么？",
+        "answer": "因为音程结构等分、旋转对称，任何音都可能被听成临时主音；缺少倾向与回归感。所以它常作为 7♯5/7♭9/dim7 上的短暂色彩，需要目标和弦用功能和声收束。",
+        "hint": "等分 = 失重；色彩要有落点。"
+      },
+      "deepDive": {
+        "title": "白话解释：等分的世界没有家",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "常规音阶不均等（全全半全全全半），所以有家、有引力。对称音阶全由等距音程生成：全音阶六格全一样大，八音阶半全交替，增音阶小三加大二——转一圈回到自己，转几格也像起点。没有不均等，就没有“想回家”的音。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "text": "所以它们是“调味料”不是“主菜”：在 C7♯5 上跑全音、C7♭9 上跑八音，颜色立刻失重、悬空；但要让听者不迷路，就得回到一个有引力的目标和弦上收束。等音重解释也来自对称——减七和弦四个音轮流当根音，四种拼写同一个声音。",
+            "cites": [
+              {
+                "source": "laitz",
+                "locator": "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"
+              },
+              {
+                "source": "levine",
+                "locator": "Chapter 3 Chord/Scale Theory（全音与减音阶）"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "一句话与练习",
+            "text": "C7♯5 跑全音、C7♭9 跑半全，各解决回 Fmaj7——先听失重，再听落地。对称是颜色，功能是落点。"
+          }
+        ]
+      }
     }
   ],
   "examples": [
@@ -19726,6 +21032,293 @@
       ],
       "conceptSlug": "seventh-chords",
       "conceptTitle": "七和弦",
+      "category": "foundations"
+    },
+    {
+      "id": "ex-syncopation-compare",
+      "title": "正拍陈述 vs 切分变体",
+      "caption": "同一组音 C–D–E–G：上面一行落在拍点，下面一行从反拍起并跨拍延音，重音被推迟，律动立刻不同。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 96,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "正拍"
+        },
+        {
+          "beat": 1,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ]
+        },
+        {
+          "beat": 2,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 3,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 0.5,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "切分"
+        },
+        {
+          "beat": 4.5,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ]
+        },
+        {
+          "beat": 5.5,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 6.5,
+          "duration": 1.5,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        }
+      ],
+      "conceptSlug": "meter-syncopation",
+      "conceptTitle": "节拍与切分",
+      "category": "foundations"
+    },
+    {
+      "id": "ex-motive-development",
+      "title": "动机 → 移位 → 回收",
+      "caption": "C–D–E–G 上行动机移高一级变成 D–E–F–A，随后级进下行收回 C；高点只有一个 A。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 84,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "动机"
+        },
+        {
+          "beat": 1,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ]
+        },
+        {
+          "beat": 2,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 3,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "移位"
+        },
+        {
+          "beat": 5,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 6,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ]
+        },
+        {
+          "beat": 7,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 69,
+              "spelling": "A4"
+            }
+          ],
+          "label": "高点"
+        }
+      ],
+      "conceptSlug": "melody-motives",
+      "conceptTitle": "旋律与动机发展",
+      "category": "foundations"
+    },
+    {
+      "id": "ex-pentatonic-line",
+      "title": "C 大调五声旋律线",
+      "caption": "只用 C–D–E–G–A 五个音构成的旋律线；没有半音倾向，落点都稳。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 88,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ]
+        },
+        {
+          "beat": 1,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ]
+        },
+        {
+          "beat": 2,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 3,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 69,
+              "spelling": "A4"
+            }
+          ]
+        },
+        {
+          "beat": 5,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 72,
+              "spelling": "C5"
+            }
+          ]
+        },
+        {
+          "beat": 6,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 69,
+              "spelling": "A4"
+            }
+          ]
+        },
+        {
+          "beat": 7,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ]
+        }
+      ],
+      "conceptSlug": "pentatonic-scales",
+      "conceptTitle": "五声音阶",
       "category": "foundations"
     },
     {
@@ -22690,6 +24283,174 @@
       "category": "harmony"
     },
     {
+      "id": "ex-nct-melody",
+      "title": "I–V7–I 上的外音旋律",
+      "caption": "D、F 是经过音；A 从 G 延留到 V7 上再下行解决 G，最后经 D 回落 C——外音让三个和弦唱成一条旋律。",
+      "kind": "melody",
+      "key": "C",
+      "tempo": 76,
+      "beats": 8,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 2,
+          "notes": [
+            {
+              "midi": 60,
+              "spelling": "C4"
+            }
+          ],
+          "label": "和弦音"
+        },
+        {
+          "beat": 2,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "经过"
+        },
+        {
+          "beat": 3,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        },
+        {
+          "beat": 4,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "经过"
+        },
+        {
+          "beat": 5,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 67,
+              "spelling": "G4"
+            }
+          ],
+          "label": "延留"
+        },
+        {
+          "beat": 6,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "解决"
+        },
+        {
+          "beat": 7,
+          "duration": 1,
+          "notes": [
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ]
+        }
+      ],
+      "conceptSlug": "non-chord-tones",
+      "conceptTitle": "和弦外音与装饰解决",
+      "category": "harmony"
+    },
+    {
+      "id": "ex-sus-resolution",
+      "title": "Gsus4 → G7 → Cmaj7",
+      "caption": "四音 C 从延留位置回落到三音 B，属和弦才获得三全音与解决方向；sus4 是属功能的软启动。",
+      "kind": "progression",
+      "key": "C",
+      "tempo": 76,
+      "beats": 12,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            }
+          ],
+          "label": "Gsus4"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            },
+            {
+              "midi": 62,
+              "spelling": "D4"
+            },
+            {
+              "midi": 65,
+              "spelling": "F4"
+            }
+          ],
+          "label": "G7"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 59,
+              "spelling": "B3"
+            }
+          ],
+          "label": "Cmaj7"
+        }
+      ],
+      "conceptSlug": "suspended-chords",
+      "conceptTitle": "挂留和弦与 Sus 色彩",
+      "category": "harmony"
+    },
+    {
       "id": "ex-ii-v-i-extended",
       "title": "Dm9–G13–Cmaj9",
       "caption": "延伸音加厚色彩，但骨架仍是 D–G–C 的低音与 F/C→B/F→E/B 的声部。",
@@ -24081,6 +25842,112 @@
       ],
       "conceptSlug": "melodic-minor-modes",
       "conceptTitle": "旋律小调调式与调式和弦",
+      "category": "jazz"
+    },
+    {
+      "id": "ex-symmetric-dominants",
+      "title": "C7♯5（全音）→ C7♭9（八音）→ C7 → F",
+      "caption": "同一条 C7 换两种对称色彩：全音给 ♯5，八音给 ♭9；最后落回功能和声收束。",
+      "kind": "progression",
+      "key": "F",
+      "tempo": 92,
+      "beats": 16,
+      "events": [
+        {
+          "beat": 0,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 58,
+              "spelling": "Bb3"
+            },
+            {
+              "midi": 66,
+              "spelling": "F#4"
+            }
+          ],
+          "label": "C7♯5 · 全音"
+        },
+        {
+          "beat": 4,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 58,
+              "spelling": "Bb3"
+            },
+            {
+              "midi": 61,
+              "spelling": "Db4"
+            }
+          ],
+          "label": "C7♭9 · 八音"
+        },
+        {
+          "beat": 8,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 48,
+              "spelling": "C3"
+            },
+            {
+              "midi": 52,
+              "spelling": "E3"
+            },
+            {
+              "midi": 55,
+              "spelling": "G3"
+            },
+            {
+              "midi": 58,
+              "spelling": "Bb3"
+            }
+          ],
+          "label": "C7"
+        },
+        {
+          "beat": 12,
+          "duration": 4,
+          "notes": [
+            {
+              "midi": 53,
+              "spelling": "F3"
+            },
+            {
+              "midi": 57,
+              "spelling": "A3"
+            },
+            {
+              "midi": 60,
+              "spelling": "C4"
+            },
+            {
+              "midi": 64,
+              "spelling": "E4"
+            }
+          ],
+          "label": "Fmaj7"
+        }
+      ],
+      "conceptSlug": "symmetric-scales",
+      "conceptTitle": "对称音阶：全音、八音与增",
       "category": "jazz"
     }
   ],

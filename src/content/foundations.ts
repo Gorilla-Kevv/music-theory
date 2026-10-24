@@ -690,4 +690,244 @@ export const FOUNDATIONS: Concept[] = [
       hint: "三音相同，七音决定大七/属七。",
     },
   },
+  {
+    id: "meter-syncopation",
+    slug: "meter-syncopation",
+    number: "F-09",
+    title: "节拍与切分",
+    titleEn: "METER & SYNCOPATION",
+    category: "foundations",
+    level: "基础",
+    aliases: ["节拍", "拍号", "切分", "重音", "meter", "syncopation", "backbeat", "律动"],
+    tags: ["节奏", "律动", "重音"],
+    dimensions: ["rhythm", "direction"],
+    summary:
+      "拍号给出强弱循环的骨架，律动把它细分成可感的脉搏；切分把重音挪到弱位，制造推进与意外，是律动风格化最重要的手段。",
+    sections: [
+      {
+        id: "meter",
+        heading: "拍号与强弱层级",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "拍号由两个数字写成：上方的数告诉你一小节有几拍，下方的数告诉你以什么音符为一拍。2/4 是强—弱，3/4 是强—弱—弱，4/4 是强—弱—次强—弱；6/8 这类复拍子则以“一大拍含三小拍”计数，强弱落在每大拍上。强弱层级不是抽象规则，而是听者预期重音出现的位置。",
+            cites: [
+              cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "旋律与伴奏都活在“拍点—拍点之间”的细分里：把一拍再分成两个八分或三个三连，决定音乐是直是摇。音高与节拍同时运作——同一个音组放在不同的拍位上，听起来完全不同，所以分析旋律要同时说“什么音”和“在哪个拍位”。",
+            cites: [
+              cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "syncopation",
+        heading: "切分与推动力",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "切分是把重音移出拍点的总称：音从小节或拍点的弱位起、跨拍延音把强拍“吃掉”、或在反拍上加重音。听者预期强拍出现重音，切分先让位再补拍，制造“被推迟的落点”——这正是放克、爵士与拉丁律动的发动机。",
+            cites: [
+              cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "编曲提示",
+            text: "先定单位拍与律动层级（哪个乐器管四分、哪个管八分、哪个管反拍），再决定哪个声部切分；所有声部同时切分会让律动失去参照。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-syncopation-compare",
+        title: "正拍陈述 vs 切分变体",
+        caption: "同一组音 C–D–E–G：上面一行落在拍点，下面一行从反拍起并跨拍延音，重音被推迟，律动立刻不同。",
+        kind: "melody",
+        key: "C",
+        tempo: 96,
+        beats: 8,
+        events: [
+          melody(0, 1, "C4", { label: "正拍" }),
+          melody(1, 1, "D4"),
+          melody(2, 1, "E4"),
+          melody(3, 1, "G4"),
+          melody(4, 0.5, "C4", { label: "切分" }),
+          melody(4.5, 1, "D4"),
+          melody(5.5, 1, "E4"),
+          melody(6.5, 1.5, "G4"),
+        ],
+      }),
+    ],
+    related: ["harmonic-rhythm", "phrase-structure", "melody-motives"],
+    review: {
+      question: "切分为什么能制造推动力？",
+      answer:
+        "因为它把重音从拍点挪到弱位或用跨拍延音推迟落点，让听者的强拍预期落空再补齐；预期与现实的错位就是律动的推进感。",
+      hint: "先说强拍预期，再说落点被推迟。",
+    },
+  },
+  {
+    id: "melody-motives",
+    slug: "melody-motives",
+    number: "F-10",
+    title: "旋律与动机发展",
+    titleEn: "MELODY & MOTIVIC DEVELOPMENT",
+    category: "foundations",
+    level: "基础",
+    aliases: ["旋律", "动机", "模进", "轮廓", "melody", "motive", "motivic development", "旋律轮廓"],
+    tags: ["旋律", "动机", "发展"],
+    dimensions: ["direction", "rhythm", "color"],
+    summary:
+      "旋律靠一个可识别的动机反复生长：重复、移位、模进、增减时值都是发展手段；级进保持连贯，跳进之后要反向回收，高点只留一个。",
+    sections: [
+      {
+        id: "motive",
+        heading: "动机与它的展开",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "动机是一个可辨认的最小音型——几个音加一种节奏特征。旋律写作不是从头到尾各想各的，而是先立动机，再用重复、移位、模进、扩大或缩小、倒影等手段让它在新位置重现；听者靠“认出”动机来组织旋律。",
+            cites: [
+              cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "发展的节奏也要设计：动机陈述后紧接变化重复最容易辨认，间隔太远或每次都变会散掉。旋律与伴奏的时间关系同样重要——旋律长音落在伴奏切分上，是流行与爵士常见的呼吸设计。",
+            cites: [
+              cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "contour",
+        heading: "级进、跳进与高点",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "旋律轮廓以级进为主，跳进负责表情；大跳之后习惯向反方向级进“回收”，否则线条会散。整段旋律通常只保留一个最高点，把它与和声高点、歌词或乐句顶点对齐，表达才有落点。",
+            cites: [
+              cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "写作自查",
+            text: "唱一遍：动机认得出吗？跳进回收了吗？高点只有一个吗？三问都过，再谈装饰。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-motive-development",
+        title: "动机 → 移位 → 回收",
+        caption: "C–D–E–G 上行动机移高一级变成 D–E–F–A，随后级进下行收回 C；高点只有一个 A。",
+        kind: "melody",
+        key: "C",
+        tempo: 84,
+        beats: 8,
+        events: [
+          melody(0, 1, "C4", { label: "动机" }),
+          melody(1, 1, "D4"),
+          melody(2, 1, "E4"),
+          melody(3, 1, "G4"),
+          melody(4, 1, "D4", { label: "移位" }),
+          melody(5, 1, "E4"),
+          melody(6, 1, "F4"),
+          melody(7, 1, "A4", { label: "高点" }),
+        ],
+      }),
+    ],
+    related: ["phrase-structure", "meter-syncopation", "non-chord-tones", "bass-line"],
+    review: {
+      question: "大跳之后为什么通常要反向级进？",
+      answer:
+        "跳进是表情与张力，级进是连贯与解决；跳进后反向级进把线条收回自然音域，也让听者重新定位音高中心。",
+      hint: "跳进负责表情，级进负责回收。",
+    },
+  },
+  {
+    id: "pentatonic-scales",
+    slug: "pentatonic-scales",
+    number: "F-11",
+    title: "五声音阶",
+    titleEn: "PENTATONIC SCALES",
+    category: "foundations",
+    level: "基础",
+    aliases: ["五声", "五声音阶", "大调五声", "小调五声", "pentatonic", "五音音阶"],
+    tags: ["音阶", "旋律", "即兴"],
+    dimensions: ["color", "direction"],
+    summary:
+      "五声音阶从大调里去掉两个半音倾向音（4 与 7），没有强导音，所以怎么放都稳；大调五声与小调五声互为旋转，是旋律写作与跨和弦即兴的公共语汇。",
+    sections: [
+      {
+        id: "structure",
+        heading: "结构与旋转",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "C 大调五声是 C–D–E–G–A：去掉 4（F）与 7（B）这两个制造倾向的音，剩下大二度与小三度堆叠，音阶内部没有半音。同一组音从 A 开始排列就是 A 小调五声——大调五声与小调五声不是两条音阶，而是同一条集合的两个视角。",
+            cites: [
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+              cite("levine", "Chapter 09 Pentatonic Scales"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "为什么它不容易错",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "没有半音就没有强倾向音，任何两个五声相邻音都不会打架，所以它既可以当旋律骨架，也可以整条压在慢变的和声上——同一条 C 大调五声可以覆盖 Cmaj7、Am7、Fmaj7 等一组相关和弦。把小调五声加一个 b5（蓝调音）就是布鲁斯音阶；爵士即兴再把它平移到“外部”和弦上制造离调色彩。",
+            cites: [
+              cite("levine", "Chapter 09 Pentatonic Scales"),
+              cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "听觉练习",
+            text: "先只弹黑键五声（Gb 大调五声即黑键）听它的悬浮感，再回到 C 大调五声对比：少了哪两个音，倾向就消失了。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-pentatonic-line",
+        title: "C 大调五声旋律线",
+        caption: "只用 C–D–E–G–A 五个音构成的旋律线；没有半音倾向，落点都稳。",
+        kind: "melody",
+        key: "C",
+        tempo: 88,
+        beats: 8,
+        events: line(0, 1, 1, ["C4", "D4", "E4", "G4", "A4", "C5", "A4", "G4"]),
+      }),
+    ],
+    related: ["major-scale", "blues", "pentatonic-outside", "symmetric-scales"],
+    review: {
+      question: "大调五声去掉了哪两个音？为什么它跨和弦更安全？",
+      answer:
+        "去掉 4 与 7（C 大调的 F 与 B），音阶内部没有半音与导音；没有强倾向音意味着音与和弦冲突的压力小，同一条五声可以覆盖一组相关和弦。",
+      hint: "去倾向，留骨架。",
+    },
+  },
 ];

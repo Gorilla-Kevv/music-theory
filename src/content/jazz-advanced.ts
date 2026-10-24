@@ -396,4 +396,90 @@ export const JAZZ_ADVANCED: Concept[] = [
       hint: "先分调式，再按主/二级/属分组。",
     },
   },
+  {
+    id: "symmetric-scales",
+    slug: "symmetric-scales",
+    number: "J-14",
+    title: "对称音阶：全音、八音与增",
+    titleEn: "SYMMETRIC SCALES: WHOLE TONE, OCTATONIC & AUGMENTED",
+    category: "jazz",
+    level: "高级",
+    aliases: ["对称音阶", "全音音阶", "八音音阶", "减音阶", "增音阶", "whole tone", "octatonic", "diminished scale", "augmented scale"],
+    tags: ["音阶", "对称", "属和弦"],
+    dimensions: ["color", "relationship"],
+    summary:
+      "全音、八音（减）、增三条音阶由等距音程生成，旋转对称、缺少单一引力中心；它们分别喂饱 7♯5、7♭9/dim7 与 maj7♯5，是对称色彩与属和弦变化的标准语汇。",
+    sections: [
+      {
+        id: "three-scales",
+        heading: "三条音阶与各自的和弦",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "全音音阶（6 个全音）：C–D–E–F♯–G♯–A♯，配 7♯5（Lydian 属七的近亲），没有 4、没有 9 与 ♯9 之分。",
+              "八音音阶／减音阶（半全交替）：C–D♭–E♭–E–F♯–G–A–B♭，配 7♭9 与 dim7；半全与全半两种旋转各管一类和弦。",
+              "增音阶（小三度与小二度交替）：C–D♯–E–G–A♭，配 maj7♯5 与增三和弦，颜色最“失重”。",
+            ],
+            cites: [
+              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+              cite("levine", "Chapter 3 Chord/Scale Theory（全音与减音阶）"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "对称意味着旋转有限：全音音阶只有两种旋转，八音音阶只有三种（减七和弦只有四个拼写）。旋转越少，独立音阶越少；同一个音集可以被重解释到多个主音上——等音与对称让“这是哪条音阶”变成视角问题。",
+            cites: [
+              cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "对称没有方向，终点要自己给",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "等分八度消解了引力中心：任何音听起来都像“临时主音”，旋律在上面转圈不会有自然的回归感。所以对称音阶的服务对象是有明确目标的和弦——在 7♯5、7♭9 上短暂施加对称色彩，再用功能和声收束；整段全音转来转去而没有目标和弦，听感会失焦。",
+            cites: [
+              cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+              cite("levine", "Chapter 3 Chord/Scale Theory（全音与减音阶）"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "练习提示",
+            text: "先弹 C7♯5 上跑全音、C7♭9 上跑半全八音，听两条音阶的不同“失重感”；再各解决回 F，体会对称色彩如何被功能落地。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-symmetric-dominants",
+        title: "C7♯5（全音）→ C7♭9（八音）→ C7 → F",
+        caption: "同一条 C7 换两种对称色彩：全音给 ♯5，八音给 ♭9；最后落回功能和声收束。",
+        kind: "progression",
+        key: "F",
+        tempo: 92,
+        beats: 16,
+        events: [
+          chord(0, 4, ["C3", "E3", "Bb3", "F#4"], { label: "C7♯5 · 全音" }),
+          chord(4, 4, ["C3", "E3", "Bb3", "Db4"], { label: "C7♭9 · 八音" }),
+          chord(8, 4, ["C3", "E3", "G3", "Bb3"], { label: "C7" }),
+          chord(12, 4, ["F3", "A3", "C4", "E4"], { label: "Fmaj7" }),
+        ],
+      }),
+    ],
+    related: ["diminished-seventh", "chord-scale", "constant-structure", "melodic-minor-modes"],
+    review: {
+      question: "对称音阶为什么“没有引力中心”？使用时要注意什么？",
+      answer:
+        "因为音程结构等分、旋转对称，任何音都可能被听成临时主音；缺少倾向与回归感。所以它常作为 7♯5/7♭9/dim7 上的短暂色彩，需要目标和弦用功能和声收束。",
+      hint: "等分 = 失重；色彩要有落点。",
+    },
+  },
 ];

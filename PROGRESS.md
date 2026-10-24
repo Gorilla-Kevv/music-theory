@@ -2,7 +2,7 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 16 B 站专栏文章归档（属降十和弦 / 7#9 归纳，完成）
+- 当前正在开发任务：阶段 19 站点目录驱动的知识扩充（新增 6 概念，完成）
 - 下一阶段任务：9.6 Sposobin 27 条笔记深度字段 → 9.7 Levine/Laitz 剩余 `confusions` → 图谱学习路径（未排期）
 - 可提前进行的任务：把书库笔记接入复习卡、FL Studio 侧适配
 - 未完成的任务：全量教材正文（版权边界，不做）；MCP server；Sposobin 33 章仅有目录；Levine/Laitz 剩余 `confusions`
@@ -286,6 +286,28 @@
 - 风险：`bvid` 字段复用存 CV 号属于务实折中；若后续文章数量增多，考虑把字段改名为通用 `refId`（需要同步 Agent 接口说明）。
 - 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
 - 本次文档更新时间：10.24 03:45
+
+## 阶段 19 站点目录驱动的知识扩充（新增 6 概念）[计划时间：10.24 10:40 BY solo-agent][完成时间：10.24 11:05 BY solo-agent]
+
+- 分支：dev
+- 调查方式：用户提供 music-theory.aizcutei.com（自由派音乐理论，SoundQuest 中译）全站目录截图与日文原站 soundquest.jp。按来源政策，站点目录只作为**选题地图**（PRODUCT.md 已将其列为信息组织参考），全部理论断言回三本书定位后入库。
+- 调查结论（选题地图 → 缺口盘点）：现有 44 概念缺少——节拍/切分（节奏领域空白）、旋律与动机发展（旋律领域空白）、和弦外音（分析刚需）、挂留和弦、对称音阶（全音/八音/增）、五声音阶（基础音阶缺位）。站点中无法在三本书定位的主题不入库：连接系统论、轴心体系、Lydian Chromatic Concept、新里曼理论、元音乐理、泛音列（Laitz/Sposobin 目录无对应章节）。
+- 已完成：
+  - 19.1 基础 +3：F-09 `meter-syncopation`（Laitz 1B/02）、F-10 `melody-motives`（Laitz 02/04）、F-11 `pentatonic-scales`（Laitz 30 + Levine 09）。
+  - 19.2 和声 +2：H-24 `non-chord-tones`（Laitz 04/10 + Sposobin 36/38——Sposobin 和弦外音全章首次启用）、H-25 `suspended-chords`（Laitz 04 + Levine 03）。
+  - 19.3 爵士 +1：J-14 `symmetric-scales`（Laitz 28/29 + Levine 03）。
+  - 19.4 每个概念含 2 节正文、可听谱例（切分对比、动机移位、五声线、外音旋律、Gsus4→G7→Cmaj7、C7♯5/C7♭9 对称对比）、复习卡、维度与关联；6 条白话拆解（deep dive 覆盖 50/50）。
+  - 19.5 图谱：新增 11 条前置链（节拍→和声节奏/乐段、旋律→乐段、外音→终止四六、挂留→四度和声、减七→对称、和弦音阶→对称、五声→外部五声等）；`ATLAS_HEIGHT` 1120 → 1320 容纳 13 行节点。
+- 统计更新：50 概念（基础 11 / 和声 25 / 爵士 14）/ 59 谱例 / 181 引用 / 50 白话拆解；图谱 3 来源 / 6 枢纽 / 50 概念 / 129 关联 / 45 前置。
+- 未完成：挂留和弦的 Levine 小节名（“sus 与 Phrygian 和弦”）建议下次持书核对；泛音列、多调性等待定位主题留作后续；9.6/9.7 队列不变。
+- 改动文件：src/content/foundations.ts、harmony-advanced.ts、jazz-advanced.ts、deep-dives.ts、graph/index.ts、public/knowledge.json、AGENTS.md、PRODUCT.md、HANDOFF.md、PROGRESS.md
+- 测试结果：
+  - `npm run typecheck`、`npm run knowledge`（50/59/181）、`npm run build` 通过。
+  - `npm run theory -- search 和弦外音` 命中 H-24。
+  - 截图：`/theory/non-chord-tones` 1280 完整渲染（正文/白话拆解/右栏大纲/别名/来源）；`/atlas` 显示 50 CONCEPTS · 129 RELATIONS · 45 PREREQUISITES，基础 11 / 和声 25 / 爵士 14；375 `scrollWidth=375`。
+  - 回归：`scroll-trace.mjs` 在新页 `/theory/symmetric-scales` 滚动全程正常（阶段 18 修复未被破坏）。
+- 下一阶段入口：9.6 Sposobin 深度字段 → 9.7 confusions → 9.8 图谱学习路径。
+- 本次文档更新时间：10.24 11:05
 
 ## 阶段 17 分类目录整栏可点击 [计划时间：10.24 04:00 BY solo-agent][完成时间：10.24 04:05 BY solo-agent]
 

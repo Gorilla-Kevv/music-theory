@@ -1116,4 +1116,148 @@ export const DEEP_DIVES: Record<string, DeepDive> = {
       },
     ],
   },
+  "meter-syncopation": {
+    title: "白话解释：拍子是骨架，切分是性格",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "先把拍子想成一条均分的网格：4/4 里每小节四格，强弱按“强—弱—次强—弱”循环。你听到的一切音符其实都在回答一个问题——“它落在网格的哪个位置”。同一个音组放在拍点上稳，放在反拍上就开始推。",
+        cites: [cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm")],
+      },
+      {
+        type: "p",
+        text:
+          "切分不是乱来，而是“推迟落点”：要么从弱位起、要么把音拉过强拍、要么直接在反拍加重音。听者一直在等那个强拍上的重音，你偏偏晚半拍给——这一推一补就是律动。所有让人想动的音乐，几乎都在玩这条错位。",
+        cites: [cite("laitz", "Chapter 1B Musical Time: Meter and Rhythm")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "练习：用同一组音弹两遍，一遍全在拍点、一遍全从反拍起；什么都不改，只改位置，听“性格”怎么变的。",
+      },
+    ],
+  },
+  "melody-motives": {
+    title: "白话解释：好旋律是长出来的，不是拼出来的",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "先立一个动机：三五个音加一种节奏，小到你一眼能记住。然后别再想新句子——把动机重复、挪高挪低、变长变短，听者一边认一边听，旋律就“长”出来了。旋律难写，通常不是素材不够，而是素材之间没有血缘。",
+        cites: [cite("laitz", "Chapter 02 Pitch and Meter Combine: Melody and Counterpoint")],
+      },
+      {
+        type: "p",
+        text:
+          "轮廓上记住三件事：级进为主，跳进是表情；跳进之后向反方向级进，把线收回来；全曲只留一个最高点，把它和和声高点对上。高点太多等于没有高点。",
+        cites: [cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "写完旋律先唱一遍：动机认得出、跳进收回了、高点只有一个——三问过关再装饰。",
+      },
+    ],
+  },
+  "pentatonic-scales": {
+    title: "白话解释：删掉倾向，留下骨架",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "拿走大调里的 4 和 7，剩下五个音就是大调五声。这两个音恰好是半音戏最多的位置——4 想去 3，7 想回家到 1；把它们删掉，音阶里没有任何音“急着去哪”，于是怎么弹都不刺耳。",
+        cites: [
+          cite("laitz", "Chapter 30 Centricity, Extended and Non-Tertian Sonorities, and Collections"),
+          cite("levine", "Chapter 09 Pentatonic Scales"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "从 A 开始排同一组音就是 A 小调五声——大小五声是同一条集合的两个视角，不是两条音阶。布鲁斯音阶就是小调五声加一个蓝调音 b5；编曲里一条五声线铺在一组和弦上，是最省力也最不容易错的旋律策略。",
+        cites: [cite("levine", "Chapter 09 Pentatonic Scales")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "只弹黑键（就是 Gb 大调五声），听那种没有方向的悬浮；再弹 C 大调五声对比——你会立刻知道被删掉的那两个音管的是什么。",
+      },
+    ],
+  },
+  "non-chord-tones": {
+    title: "白话解释：外音是声部的歌词",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "和弦音是骨架，外音是让骨架变成旋律的血肉。弱位的三种最好认：经过音填缝（C–D–E）、辅助音来回（C–D–C）、先现音抢跑。它们不占强拍，随时可以删掉而不伤和弦。",
+        cites: [
+          cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape"),
+          cite("sposobin", "第三十八章 一个声部中的自然经过音"),
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "强位的两种才有戏剧：延留音三段式——先作为上一个和弦的自己人出现（准备），赖到强拍制造冲突（延留），再下行还债（解决）；倚音更横，不准备直接跳到强拍上闯祸。终止四六就是两个倚音叠在属音上的大招。",
+        cites: [
+          cite("laitz", "Chapter 10 Accented and Chromatic Embellishing Tones"),
+          cite("sposobin", "第三十六章 在一个声部中的有准备的延留音"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "判断顺序",
+        text: "拍位 → 来源 → 解决方向，三步定名。听到刺耳的音先别当错音，先问它欠谁的、什么时候还。",
+      },
+    ],
+  },
+  "suspended-chords": {
+    title: "白话解释：三音还没表态",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "和弦的性质靠三音说话：三音是大三是大和弦，是小三是小和弦。sus4 把三音赶走、让四音站在它的位置——现在既不是大也不是小，像一个悬而未决的表情。传统用法是四音回落到三音，也就是 4–3 延留音的和声化。",
+        cites: [cite("laitz", "Chapter 04 The Role of Context: Embellishing Tones and Melodic Shape")],
+      },
+      {
+        type: "p",
+        text:
+          "爵士的玩法是不回落：Gsus4/G9sus4 没有三音就没有三全音，属和弦的解决压力被拆掉，整条 Mixolydian 随便跑。它和四度和声是亲戚——G–C–D 本身就是两个四度叠起来的。",
+        cites: [cite("levine", "Chapter 3 Chord/Scale Theory（sus 与 Phrygian 和弦）")],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "Gsus4 → G7 → Cmaj7 弹三遍：第一遍记住“悬”，第二遍听三音 B 落下时力量回来了，第三遍试着不让它回落——听听爵士的松。",
+      },
+    ],
+  },
+  "symmetric-scales": {
+    title: "白话解释：等分的世界没有家",
+    blocks: [
+      {
+        type: "p",
+        text:
+          "常规音阶不均等（全全半全全全半），所以有家、有引力。对称音阶全由等距音程生成：全音阶六格全一样大，八音阶半全交替，增音阶小三加大二——转一圈回到自己，转几格也像起点。没有不均等，就没有“想回家”的音。",
+        cites: [cite("laitz", "Chapter 28 Tonal Ambiguity and Symmetrically Constructed Harmonies")],
+      },
+      {
+        type: "p",
+        text:
+          "所以它们是“调味料”不是“主菜”：在 C7♯5 上跑全音、C7♭9 上跑八音，颜色立刻失重、悬空；但要让听者不迷路，就得回到一个有引力的目标和弦上收束。等音重解释也来自对称——减七和弦四个音轮流当根音，四种拼写同一个声音。",
+        cites: [
+          cite("laitz", "Chapter 29 Symmetry Stretches Tonality: Chromatic Sequences and Equal Divisions of the Octave"),
+          cite("levine", "Chapter 3 Chord/Scale Theory（全音与减音阶）"),
+        ],
+      },
+      {
+        type: "callout",
+        title: "一句话与练习",
+        text: "C7♯5 跑全音、C7♭9 跑半全，各解决回 Fmaj7——先听失重，再听落地。对称是颜色，功能是落点。",
+      },
+    ],
+  },
 };
