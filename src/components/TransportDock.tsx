@@ -1,5 +1,5 @@
 import { Activity, Play, Repeat2, Square } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTransport } from "../context/TransportContext";
 import { ProgressBar } from "./ui";
 
@@ -12,8 +12,12 @@ function formatClock(beats: number, tempo: number): string {
 
 export function TransportDock() {
   const { state, replay, stop, setTempo, toggleLoop } = useTransport();
+  const location = useLocation();
   const hasCurrent = Boolean(state.title);
   const tempo = state.tempo || 84;
+
+  // 体系图整页是地图画布；没有正在试听的内容时不占用底部空间。
+  if (location.pathname === "/atlas" && !hasCurrent) return null;
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line-dark bg-ink text-paper">

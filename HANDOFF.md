@@ -69,6 +69,7 @@
 - 体系图布局是“4 列网格 + 6 个系统枢纽”的 MLP 式分层：概念坐标由 `conceptPosition` 生成，改行距/列距时要同步检查 SVG 底部图例（`ATLAS_HEIGHT` 1000，图例在 y=968）与标签截断（`truncate` 默认 8 字）。
 - 图谱边语义固定：`source` 来源支撑、`system` 体系归属、`related` 概念关联、`prerequisite` 学习前置；`SOURCE_HUBS` 只连接实际相关的来源与枢纽，不要恢复成“每本书连所有枢纽”的噪声图。`/atlas?focus=<slug>` 是概念页“在体系图中查看”的深链。
 - 长按发声：`AudioEngine.holdStart/holdEnd` 独立于 `bus`（走 `holdBus` → dry/reverb），所以示例播放/停止不会切断长按；引擎强制最短发声 0.35s、松手 ~0.3s 淡出，合成回退有 8s 硬上限防无限延音。命中区/琴键用 pointer 事件（按下/抬起/移出/取消），键盘激活靠 click `detail===0` 区分；`useHeldPreview` hook 以 key 管理多个 hold，release 对未按住的 key 是 no-op。CDP 测试用 `.impeccable/hold-check.mjs`（注意先 `scrollIntoView`，否则坐标在视口外）。
+- 🔴 图谱画布交互：地图是固定高度画布（`react` 状态 `view{scale,x,y}` 作用于 `<g transform>`，`preserveAspectRatio="xMidYMin slice"`），滚轮缩放以指针为中心、左键拖拽平移（位移除以 `viewportInViewBox.factor`）；**不要在 pointerdown 就 `setPointerCapture`**——那会把 click 重定向到容器、点选节点失效；只在拖动超过 4px 后捕获，并在 pointerup 后短暂置 `suppressClickRef` 抑制拖拽收尾的 click。`/atlas` 空试听时隐藏 TransportDock。
 - 🔴 复习卡 v2：卡片 id 概念＝slug、章节＝`chapter:<chapterId>`、误解＝`chapter:<chapterId>:q<n>`；状态键 `tonic.review.v2`，加载/导入时自动迁移 v1 的 `conceptSlug` 字段；`getReviewQueue` 接受 unknown state（v1/v2），CLI `queue --state` 同步放宽。新增卡片只从 `keyPoints`/`confusions` 生成，不用整段 `deepSummary`。
 - 🔴 GitHub Pages 部署：`dev` push 触发 Actions；Vite `base` 由 `GITHUB_PAGES=true` 切到 `/music-theory/`，`BrowserRouter basename` 读 `import.meta.env.BASE_URL`；SPA 深链靠 `dist/404.html`；电子书只在本地（`__EMBEDDED_BOOKS__` 控制深链，CI 删目录并断言 `dist/books` 不存在）。本地 `npm run build` 仍按根路径并包含电子书，别把本地 dist 当线上产物。
 - 🔴 图谱学习路径模式：URL 为 `/atlas?mode=path&focus=<slug>`；只保留 `prerequisite` 边并隐藏系统枢纽，图中只显示目标先修/后续闭包与有章节支撑的书源；先修/后续链由 DAG 深度计算（远→近/近→远），多条路径合并，不代表唯一线性顺序；清除选择保留 `mode=path`。章节来源用 `getChaptersForConcept` 全量列出，书源节点显示“支撑 N 章”。
@@ -93,7 +94,7 @@
 
 ## 状态
 
-- 当前状态：v0.4 进行中；已上线 GitHub Pages：`https://gorilla-kevv.github.io/music-theory/`（Actions 构建，电子书不发布）；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库章节笔记 143）；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、完整先修/后续闭包、章节级书源）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.4 进行中；已上线 GitHub Pages：`https://gorilla-kevv.github.io/music-theory/`（Actions 构建，电子书不发布）；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库章节笔记 143）；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、缩放拖拽画布、路径自动分列取景、完整先修/后续闭包、跨书章节对照）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
@@ -103,7 +104,7 @@
   - 线上 `https://gorilla-kevv.github.io/music-theory/` 首页、`/theory/ii-v-i` 深链（404.html 回退）、`/atlas?mode=path&focus=ii-v-i`、`audio/salamander/*.mp3`、`knowledge.json` 均可访问；`/books/*` 返回 404（电子书不发布）。
   - `/theory/modal-characteristics` 显示五条调式谱例（D Dorian / E Phrygian / F Lydian / G Mixolydian / A Aeolian，共用 C 大调集合）。
   - `/theory/non-functional-dominants` 的相邻属和弦路径可视化可点击节点试听、播放整条进行；橙线为相邻上行，钴蓝线为下行五度。
-  - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点；`/atlas?mode=path&focus=ii-v-i` 只保留前置边，路径摘要列出 13 条先修、0 条后续、5 个支撑章节，清除选择回到全局前置图；`/atlas?focus=tonal-distance` 正常模式列出 24 个章节深链。
+  - `/atlas` 可筛选分类/维度、悬停/点击节点追踪邻域，并从概念页深链到指定节点；地图为固定高度画布，滚轮缩放、左键拖拽、适应/重置/全屏均可用且不吞节点点选；`/atlas?mode=path&focus=ii-v-i` 只保留前置边并按先修深度自动分列取景（13 先修 / 0 后续 / 5 支撑章节），清除选择回到全局前置图；`/atlas?focus=tonal-distance` 正常模式按书分组列出 24 个跨书章节（章号 + 标题 + 摘要），无播放内容时试听坞不遮挡地图。
   - `/drill` 可完成“显示答案 → 评分 → 下一卡”，并写入 localStorage；来源筛选（全部 209 / 概念 66 / 书库 143），书库卡显示书源徽标、多行要点答案与“打开章节笔记”链接；状态写入 `tonic.review.v2`。
   - `/library` 检索“五度圈”返回精确结果；清空恢复 50 条。
   - `/references` 台账显示 4 个合集卡片（爵士和声理论 / 学院派爵士理论 / 风格化创作 / 合集外公开课）与 20 条已读（含 VIA subtitle/asr/frames 标记）。
@@ -118,4 +119,4 @@
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
   6. 站点待读已清空（C63/C74/75 已补录）；图谱学习路径已完成（阶段 31）；Sposobin 深化已搁置（电子版无法获取）。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 23:28 BY solo-agent
+- 本次文档更新时间：10.25 00:10 BY solo-agent

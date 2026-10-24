@@ -1,5 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
-import { ArrowUpRight, BookOpen, Network, Route } from "lucide-react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  Maximize2,
+  Minimize2,
+  Network,
+  Route,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   BIBLIOGRAPHY_BY_ID,
@@ -18,17 +33,66 @@ import {
   getConceptHubs,
   getNextChain,
   getNextConcepts,
+  getPathDepths,
   getPrerequisiteChain,
   getPrerequisites,
   type AtlasNode,
 } from "../content/graph";
-import type { CategoryId, HarmonyDimension } from "../content/types";
+import type { CategoryId, HarmonyDimension, SourceId } from "../content/types";
 
-const SOURCE_LABEL: Record<string, string> = {
+const SOURCE_LABEL: Record<SourceId, string> = {
   levine: "Levine",
   laitz: "Laitz",
   sposobin: "Sposobin",
+  soundquest: "SoundQuest",
 };
+
+const BOOK_DOT: Record<SourceId, string> = {
+  levine: "bg-cadmium",
+  laitz: "bg-cobalt",
+  sposobin: "bg-acid",
+  soundquest: "bg-ink",
+};
+
+interface ViewState {
+  scale: number;
+  x: number;
+  y: number;
+}
+
+interface LayoutBounds {
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+function viewportInViewBox(rect: { width: number; height: number }) {
+  const factor = Math.max(rect.width / ATLAS_WIDTH, rect.height / ATLAS_HEIGHT);
+  const renderedWidth = ATLAS_WIDTH * factor;
+  const offsetX = (rect.width - renderedWidth) / 2;
+  return {
+    factor,
+    x0: -offsetX / factor,
+    y0: 0,
+    x1: (-offsetX + rect.width) / factor,
+    y1: rect.height / factor,
+  };
+}
+
+function clientToViewBox(clientX: number, clientY: number, rect: DOMRect) {
+  const { factor } = viewportInViewBox(rect);
+  const renderedWidth = ATLAS_WIDTH * factor;
+  const offsetX = (rect.width - renderedWidth) / 2;
+  return {
+    x: (clientX - rect.left - offsetX) / factor,
+    y: (clientY - rect.top) / factor,
+  };
+}
 
 const CATEGORY_FILL: Record<CategoryId, string> = {
   foundations: "var(--color-cobalt)",
@@ -52,7 +116,7 @@ function nodeText(node: AtlasNode): string {
   return node.category ? CATEGORY_TEXT[node.category] : "var(--color-ink)";
 }
 
-function edgePath(source: AtlasNode, target: AtlasNode): string {
+function edgePath(source: { x: number; y: number }, target: { x: number; y: number }): string {
   const dx = target.x - source.x;
   const bend = Math.max(42, Math.abs(dx) * 0.42);
   return `M ${source.x} ${source.y} C ${source.x + bend} ${source.y}, ${target.x - bend} ${target.y}, ${target.x} ${target.y}`;
@@ -72,6 +136,17 @@ export function Atlas() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [category, setCategory] = useState<CategoryId | "all">("all");
   const [dimension, setDimension] = useState<HarmonyDimension | "all">("all");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [view, setView] = useState<ViewState>({ scale: 1, x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    moved: boolean;
+  } | null>(null);
+  const suppressClickRef = useRef(false);
   const pathMode = params.get("mode") === "path";
   const setPathMode = (enabled: boolean) => {
     const next = new URLSearchParams(params);
@@ -99,7 +174,7 @@ export function Atlas() {
     [selected?.slug],
   );
   const chapterCountByBook = useMemo(() => {
-    const counts = new Map<string, number>();
+    const counts = new Map<SourceId, number>();
     for (const chapter of selectedBookChapters) {
       counts.set(chapter.book, (counts.get(chapter.book) ?? 0) + 1);
     }
@@ -109,6 +184,16 @@ export function Atlas() {
     () => new Set(chapterCountByBook.keys()),
     [chapterCountByBook],
   );
+  const chapterGroups = useMemo(() => {
+    const groups = new Map<SourceId, typeof selectedBookChapters>();
+    for (const chapter of selectedBookChapters) {
+      const list = groups.get(chapter.book) ?? [];
+      list.push(chapter);
+      groups.set(chapter.book, list);
+    }
+    return [...groups.entries()];
+  }, [selectedBookChapters]);
+
   const pathNodeIds = useMemo(() => {
     if (!selected?.slug) return new Set<string>();
     return new Set<string>([
@@ -117,6 +202,60 @@ export function Atlas() {
       ...nextChain.map((concept) => `concept-${concept.slug}`),
     ]);
   }, [selected?.id, selected?.slug, prerequisiteChain, nextChain]);
+
+  const pathDepths = useMemo(
+    () => (selected?.slug ? getPathDepths(selected.slug) : new Map<string, number>()),
+    [selected?.slug],
+  );
+  const pathLayoutActive = pathMode && Boolean(selectedConcept);
+  const pathLayout = useMemo(() => {
+    if (!pathLayoutActive || !selectedConcept) return null;
+    const byDepth = new Map<number, string[]>();
+    const addDepth = (depth: number, slug: string) => {
+      const list = byDepth.get(depth) ?? [];
+      if (!list.includes(slug)) list.push(slug);
+      byDepth.set(depth, list);
+    };
+    for (const [slug, depth] of pathDepths) addDepth(depth, slug);
+    addDepth(0, selectedConcept.slug);
+    const depthValues = [...byDepth.keys()];
+    const maxDepth = Math.max(0, ...depthValues);
+    const minDepth = Math.min(0, ...depthValues);
+    const levelCount = maxDepth - minDepth + 1;
+    const columnGap = Math.min(160, (ATLAS_WIDTH - 280) / Math.max(1, levelCount - 1));
+    const positions = new Map<string, { x: number; y: number }>();
+    for (let depth = maxDepth; depth >= minDepth; depth -= 1) {
+      const levelIndex = maxDepth - depth;
+      const concepts = (byDepth.get(depth) ?? [])
+        .map((slug) => CONCEPT_BY_SLUG[slug])
+        .filter((concept): concept is NonNullable<typeof concept> => Boolean(concept))
+        .sort((a, b) => a.number.localeCompare(b.number));
+      if (depth === 0 && !concepts.some((concept) => concept.slug === selectedConcept.slug)) {
+        concepts.unshift(selectedConcept);
+      }
+      concepts.forEach((concept, row) => {
+        positions.set(`concept-${concept.slug}`, {
+          x: 150 + levelIndex * columnGap,
+          y: 90 + row * 88,
+        });
+      });
+    }
+    [...supportSourceIds].forEach((sourceId, index) => {
+      positions.set(`source-${sourceId}`, { x: 62, y: 130 + index * 112 });
+    });
+    const points = [...positions.values()];
+    if (points.length === 0) return null;
+    const bounds: LayoutBounds = {
+      minX: Math.min(...points.map((point) => point.x)) - 70,
+      maxX: Math.max(...points.map((point) => point.x)) + 70,
+      minY: Math.min(...points.map((point) => point.y)) - 50,
+      maxY: Math.max(...points.map((point) => point.y)) + 60,
+    };
+    return { positions, bounds };
+  }, [pathLayoutActive, selectedConcept, pathDepths, supportSourceIds]);
+
+  const positionOf = (node: AtlasNode) =>
+    pathLayout?.positions.get(node.id) ?? { x: node.x, y: node.y };
 
   const visibleNodes = useMemo(() => {
     if (pathMode) {
@@ -177,6 +316,139 @@ export function Atlas() {
     next.delete("focus");
     setParams(next, { replace: true });
   };
+
+  const zoomAt = (clientX: number, clientY: number, factor: number) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const point = clientToViewBox(clientX, clientY, rect);
+    setView((current) => {
+      const scale = clamp(current.scale * factor, 0.4, 3.2);
+      const actual = scale / current.scale;
+      return {
+        scale,
+        x: point.x - actual * (point.x - current.x),
+        y: point.y - actual * (point.y - current.y),
+      };
+    });
+  };
+  const zoomByCenter = (factor: number) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, factor);
+  };
+  const fitTo = (bounds?: LayoutBounds) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const viewport = viewportInViewBox(rect);
+    const target = bounds ?? {
+      minX: 0,
+      maxX: ATLAS_WIDTH,
+      minY: 0,
+      maxY: ATLAS_HEIGHT,
+    };
+    const width = Math.max(1, target.maxX - target.minX);
+    const height = Math.max(1, target.maxY - target.minY);
+    const viewWidth = viewport.x1 - viewport.x0;
+    const viewHeight = viewport.y1 - viewport.y0;
+    const scale = clamp(Math.min(viewWidth / width, viewHeight / height) * 0.92, 0.4, 3.2);
+    const centerX = (target.minX + target.maxX) / 2;
+    const centerY = (target.minY + target.maxY) / 2;
+    setView({
+      scale,
+      x: (viewport.x0 + viewport.x1) / 2 - centerX * scale,
+      y: (viewport.y0 + viewport.y1) / 2 - centerY * scale,
+    });
+  };
+  const fitView = () => fitTo(pathLayout?.bounds);
+  const resetView = () => setView({ scale: 1, x: 0, y: 0 });
+  const zoomIn = () => zoomByCenter(1.2);
+  const zoomOut = () => zoomByCenter(1 / 1.2);
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) void document.exitFullscreen();
+    else void containerRef.current?.requestFullscreen();
+  };
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      zoomAt(event.clientX, event.clientY, Math.exp(-event.deltaY * 0.0015));
+    };
+    element.addEventListener("wheel", handleWheel, { passive: false });
+    return () => element.removeEventListener("wheel", handleWheel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (pathLayoutActive && pathLayout) fitTo(pathLayout.bounds);
+    else resetView();
+    // 仅在目标概念或模式切换时重新取景，不覆盖手动缩放拖拽。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathLayoutActive, pathMode, selected?.slug]);
+
+  useEffect(() => {
+    if (!pathLayoutActive || !pathLayout) return;
+    const handleResize = () => fitTo(pathLayout.bounds);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathLayoutActive, pathLayout]);
+
+  useEffect(() => {
+    const handle = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", handle);
+    return () => document.removeEventListener("fullscreenchange", handle);
+  }, []);
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    if ((event.target as HTMLElement).closest("button")) return;
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      moved: false,
+    };
+  };
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+    if (!drag.moved) {
+      drag.moved = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    drag.startX = event.clientX;
+    drag.startY = event.clientY;
+    setDragging(true);
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const { factor } = viewportInViewBox(rect);
+    setView((current) => ({
+      ...current,
+      x: current.x + dx / factor,
+      y: current.y + dy / factor,
+    }));
+  };
+  const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    setDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    if (drag.moved) {
+      suppressClickRef.current = true;
+      window.setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 0);
+    }
+  };
+
   const hubConcepts = selected?.kind === "hub"
     ? ATLAS_GRAPH.nodes.filter(
         (node) =>
@@ -389,35 +661,92 @@ export function Atlas() {
         <div className="min-w-0 border border-line bg-paper">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-3 py-2">
             <span className="mono-label text-muted">{pathMode ? "LEARNING PATH / 学习路径" : "MLP GRAPH / 分层关系网"}</span>
-            <span className="mono-label text-muted">
-              {pathMode ? "只显示前置边 · 高亮完整链 · 移动端左右滑动" : "悬停/点击追踪 · 移动端左右滑动"}
+            <span className="mono-label hidden text-muted sm:inline">
+              {pathMode ? "滚轮缩放 · 拖拽平移 · 点击节点" : "滚轮缩放 · 左键拖拽 · 点击节点"}
             </span>
           </div>
-          <div className="overflow-x-auto">
+          <div
+            id="atlas-graph"
+            ref={containerRef}
+            className={`relative overflow-hidden bg-paper ${isFullscreen ? "h-screen" : "h-[68vh] min-h-[420px]"}`}
+            style={{ cursor: dragging ? "grabbing" : "grab" }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+          >
+            <div className="absolute right-2 top-2 z-10 flex items-center gap-1 border border-line bg-paper p-1">
+              <button
+                type="button"
+                onClick={zoomOut}
+                aria-label="缩小"
+                className="inline-flex h-7 w-7 items-center justify-center text-muted hover:bg-ink hover:text-paper"
+              >
+                <ZoomOut size={13} aria-hidden />
+              </button>
+              <button
+                type="button"
+                onClick={zoomIn}
+                aria-label="放大"
+                className="inline-flex h-7 w-7 items-center justify-center text-muted hover:bg-ink hover:text-paper"
+              >
+                <ZoomIn size={13} aria-hidden />
+              </button>
+              <button
+                type="button"
+                onClick={fitView}
+                className="mono-label h-7 px-2 text-muted hover:bg-ink hover:text-paper"
+              >
+                适应
+              </button>
+              <button
+                type="button"
+                onClick={resetView}
+                className="mono-label h-7 px-2 text-muted hover:bg-ink hover:text-paper"
+              >
+                重置
+              </button>
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                aria-label={isFullscreen ? "退出全屏" : "全屏查看"}
+                className="inline-flex h-7 w-7 items-center justify-center text-muted hover:bg-ink hover:text-paper"
+              >
+                {isFullscreen ? <Minimize2 size={13} aria-hidden /> : <Maximize2 size={13} aria-hidden />}
+              </button>
+            </div>
             <svg
               viewBox={`0 0 ${ATLAS_WIDTH} ${ATLAS_HEIGHT}`}
-              className="w-full min-w-[1120px]"
+              preserveAspectRatio="xMidYMin slice"
+              className="h-full w-full select-none"
               role="img"
               aria-label="TONIC 乐理体系关系图"
             >
-              {hasVisibleSources ? (
-                <text x="80" y="24" textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
-                  SOURCES / 书
-                </text>
+              <g transform={`translate(${view.x} ${view.y}) scale(${view.scale})`}>
+              {!pathLayoutActive ? (
+                <>
+                  {hasVisibleSources ? (
+                    <text x="80" y="24" textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
+                      SOURCES / 书
+                    </text>
+                  ) : null}
+                  {!pathMode ? (
+                    <text x="350" y="24" textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
+                      SYSTEM / 体系
+                    </text>
+                  ) : null}
+                  <text x="830" y="24" textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
+                    CONCEPTS / 知识节点
+                  </text>
+                </>
               ) : null}
-              {!pathMode ? (
-                <text x="350" y="24" textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
-                  SYSTEM / 体系
-                </text>
-              ) : null}
-              <text x="830" y="24" textAnchor="middle" fill="var(--color-muted)" fontSize="10" letterSpacing="1.2">
-                CONCEPTS / 知识节点
-              </text>
 
               {visibleEdges.map((edge) => {
                 const source = getAtlasNode(edge.source);
                 const target = getAtlasNode(edge.target);
                 if (!source || !target) return null;
+                const sourcePoint = positionOf(source);
+                const targetPoint = positionOf(target);
                 const connected = activeId
                   ? edge.source === activeId || edge.target === activeId
                   : false;
@@ -444,7 +773,7 @@ export function Atlas() {
                 return (
                   <path
                     key={edge.id}
-                    d={edgePath(source, target)}
+                    d={edgePath(sourcePoint, targetPoint)}
                     fill="none"
                     stroke={style.stroke}
                     strokeWidth={style.width}
@@ -475,6 +804,7 @@ export function Atlas() {
                   ? !highlighted
                   : Boolean(activeId) && !inNeighborhood;
                 const radius = node.kind === "concept" ? 18 : 27;
+                const point = positionOf(node);
                 return (
                   <g
                     key={node.id}
@@ -485,7 +815,10 @@ export function Atlas() {
                     onMouseLeave={() => setHoveredId(null)}
                     onFocus={() => setHoveredId(node.id)}
                     onBlur={() => setHoveredId(null)}
-                    onClick={() => selectNode(node)}
+                    onClick={() => {
+                      if (suppressClickRef.current) return;
+                      selectNode(node);
+                    }}
                     onKeyDown={(event) => {
                       if (event.key === "Enter" || event.key === " ") {
                         event.preventDefault();
@@ -501,8 +834,8 @@ export function Atlas() {
                     </title>
                     {isSupportSource ? (
                       <circle
-                        cx={node.x}
-                        cy={node.y}
+                        cx={point.x}
+                        cy={point.y}
                         r={radius + 10}
                         fill="none"
                         stroke="var(--color-cadmium-ink)"
@@ -511,11 +844,11 @@ export function Atlas() {
                       />
                     ) : null}
                     {isActive ? (
-                      <circle cx={node.x} cy={node.y} r={radius + 6} fill="none" stroke="var(--color-acid)" strokeWidth={2} />
+                      <circle cx={point.x} cy={point.y} r={radius + 6} fill="none" stroke="var(--color-acid)" strokeWidth={2} />
                     ) : null}
                     <circle
-                      cx={node.x}
-                      cy={node.y}
+                      cx={point.x}
+                      cy={point.y}
                       r={radius}
                       fill={nodeFill(node)}
                       stroke={isSelected ? "var(--color-ink)" : "var(--color-ink)"}
@@ -523,8 +856,8 @@ export function Atlas() {
                     />
                     {node.kind === "concept" ? (
                       <text
-                        x={node.x}
-                        y={node.y + 2}
+                        x={point.x}
+                        y={point.y + 2}
                         textAnchor="middle"
                         dominantBaseline="middle"
                         fill={nodeText(node)}
@@ -535,8 +868,8 @@ export function Atlas() {
                       </text>
                     ) : null}
                     <text
-                      x={node.x}
-                      y={node.y + radius + 13}
+                      x={point.x}
+                      y={point.y + radius + 13}
                       textAnchor="middle"
                       fill="var(--color-ink)"
                       fontSize={node.kind === "concept" ? "10.5" : "12.5"}
@@ -546,8 +879,8 @@ export function Atlas() {
                     </text>
                     {node.kind !== "concept" && node.subtitle ? (
                       <text
-                        x={node.x}
-                        y={node.y + radius + 27}
+                        x={point.x}
+                        y={point.y + radius + 27}
                         textAnchor="middle"
                         fill="var(--color-muted)"
                         fontSize="8.5"
@@ -557,8 +890,8 @@ export function Atlas() {
                     ) : null}
                     {isSupportSource ? (
                       <text
-                        x={node.x}
-                        y={node.y + radius + 41}
+                        x={point.x}
+                        y={point.y + radius + 41}
                         textAnchor="middle"
                         fill="var(--color-cadmium-ink)"
                         fontSize="9"
@@ -571,25 +904,28 @@ export function Atlas() {
                 );
               })}
 
-              <g transform={`translate(80 ${ATLAS_HEIGHT - 36})`}>
-                {pathMode ? (
-                  <>
-                    <line x1="0" y1="0" x2="28" y2="0" stroke="var(--color-cadmium-ink)" strokeOpacity="0.6" strokeDasharray="6 3" />
-                    <text x="36" y="4" fill="var(--color-muted)" fontSize="9">前置</text>
-                    <text x="100" y="4" fill="var(--color-muted)" fontSize="9">书源环＝支撑章节</text>
-                  </>
-                ) : (
-                  <>
-                    <line x1="0" y1="0" x2="28" y2="0" stroke="var(--color-ink)" strokeOpacity="0.25" strokeDasharray="3 3" />
-                    <text x="36" y="4" fill="var(--color-muted)" fontSize="9">关联</text>
-                    <line x1="100" y1="0" x2="128" y2="0" stroke="var(--color-cadmium-ink)" strokeOpacity="0.6" strokeDasharray="6 3" />
-                    <text x="136" y="4" fill="var(--color-muted)" fontSize="9">前置</text>
-                    <line x1="190" y1="0" x2="218" y2="0" stroke="var(--color-cobalt)" strokeOpacity="0.5" />
-                    <text x="226" y="4" fill="var(--color-muted)" fontSize="9">体系</text>
-                    <line x1="280" y1="0" x2="308" y2="0" stroke="var(--color-ink)" strokeOpacity="0.2" />
-                    <text x="316" y="4" fill="var(--color-muted)" fontSize="9">来源</text>
-                  </>
-                )}
+              {!pathLayoutActive ? (
+                <g transform={`translate(80 ${ATLAS_HEIGHT - 36})`}>
+                  {pathMode ? (
+                    <>
+                      <line x1="0" y1="0" x2="28" y2="0" stroke="var(--color-cadmium-ink)" strokeOpacity="0.6" strokeDasharray="6 3" />
+                      <text x="36" y="4" fill="var(--color-muted)" fontSize="9">前置</text>
+                      <text x="100" y="4" fill="var(--color-muted)" fontSize="9">书源环＝支撑章节</text>
+                    </>
+                  ) : (
+                    <>
+                      <line x1="0" y1="0" x2="28" y2="0" stroke="var(--color-ink)" strokeOpacity="0.25" strokeDasharray="3 3" />
+                      <text x="36" y="4" fill="var(--color-muted)" fontSize="9">关联</text>
+                      <line x1="100" y1="0" x2="128" y2="0" stroke="var(--color-cadmium-ink)" strokeOpacity="0.6" strokeDasharray="6 3" />
+                      <text x="136" y="4" fill="var(--color-muted)" fontSize="9">前置</text>
+                      <line x1="190" y1="0" x2="218" y2="0" stroke="var(--color-cobalt)" strokeOpacity="0.5" />
+                      <text x="226" y="4" fill="var(--color-muted)" fontSize="9">体系</text>
+                      <line x1="280" y1="0" x2="308" y2="0" stroke="var(--color-ink)" strokeOpacity="0.2" />
+                      <text x="316" y="4" fill="var(--color-muted)" fontSize="9">来源</text>
+                    </>
+                  )}
+                </g>
+              ) : null}
               </g>
             </svg>
           </div>
@@ -631,24 +967,41 @@ export function Atlas() {
                   </div>
                   <div id="atlas-sources" className="mt-5 scroll-mt-24 border-t border-line pt-3">
                     <p className="mono-label text-muted">
-                      SOURCES / 支撑章节 · {selectedBookChapters.length}
+                      SOURCES / 跨书章节 · {selectedBookChapters.length}
                     </p>
                     {selectedBookChapters.length ? (
-                      <div className="mt-2 max-h-56 space-y-1.5 overflow-y-auto pr-1">
-                        {selectedBookChapters.map((chapter) => (
-                          <Link
-                            key={chapter.id}
-                            to={`/books?book=${chapter.book}&chapter=${chapter.id}`}
-                            className="group flex items-start justify-between gap-3 border border-ink/30 px-2.5 py-2 text-xs transition-colors hover:bg-ink hover:text-paper"
-                          >
-                            <span className="min-w-0">
-                              <span className="mono-label mr-1.5 text-cadmium-ink group-hover:text-paper">
-                                {SOURCE_LABEL[chapter.book] ?? chapter.book} · {chapter.number}
-                              </span>
-                              <span className="font-medium">{chapter.titleZh ?? chapter.title}</span>
-                            </span>
-                            <ArrowUpRight size={12} className="mt-0.5 shrink-0" aria-hidden />
-                          </Link>
+                      <div className="mt-2 max-h-64 space-y-3 overflow-y-auto pr-1">
+                        {chapterGroups.map(([book, chapters]) => (
+                          <div key={book}>
+                            <p className="mono-label flex items-center gap-1.5 text-muted">
+                              <span className={`inline-block h-1.5 w-1.5 ${BOOK_DOT[book]}`} aria-hidden />
+                              {SOURCE_LABEL[book]} · {chapters.length} 章
+                            </p>
+                            <div className="mt-1.5 space-y-1.5">
+                              {chapters.map((chapter) => (
+                                <Link
+                                  key={chapter.id}
+                                  to={`/books?book=${chapter.book}&chapter=${chapter.id}`}
+                                  className="group block border border-ink/30 px-2.5 py-2 text-xs transition-colors hover:bg-ink hover:text-paper"
+                                >
+                                  <span className="flex items-start justify-between gap-3">
+                                    <span className="min-w-0">
+                                      <span className="mono-label mr-1.5 text-cadmium-ink group-hover:text-paper">
+                                        CH.{chapter.number}
+                                      </span>
+                                      <span className="font-medium">{chapter.titleZh ?? chapter.title}</span>
+                                    </span>
+                                    <ArrowUpRight size={12} className="mt-0.5 shrink-0" aria-hidden />
+                                  </span>
+                                  {chapter.summary ? (
+                                    <span className="mt-1 block line-clamp-2 leading-relaxed text-muted group-hover:text-paper/80">
+                                      {chapter.summary}
+                                    </span>
+                                  ) : null}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     ) : (

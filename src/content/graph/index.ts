@@ -419,6 +419,15 @@ export function getNextChain(slug: string): Concept[] {
   return chainFromDepths(collectChainDepths(slug, "next"), "near-first");
 }
 
+/** 先修深度为正（直接前置 = 1），后续深度为负（直接后续 = -1）。 */
+export function getPathDepths(slug: string): Map<string, number> {
+  const depths = new Map<string, number>();
+  if (!CONCEPT_BY_SLUG[slug]) return depths;
+  for (const [id, depth] of collectChainDepths(slug, "prerequisites")) depths.set(id, depth);
+  for (const [id, depth] of collectChainDepths(slug, "next")) depths.set(id, -depth);
+  return depths;
+}
+
 export const ATLAS_STATS = {
   concepts: CONCEPTS.length,
   hubs: ATLAS_HUBS.length,
