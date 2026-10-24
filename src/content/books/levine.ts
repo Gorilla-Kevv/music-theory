@@ -126,7 +126,7 @@ const NOTES: Record<string, NoteSeed> = {
       "三全音替代用 bII7 替换 V7，共享同一个 tritone。",
       "重配和声的目标是改变“怎么走”，不是抹掉“去哪里”。",
     ],
-    concepts: ["tritone-substitution", "secondary-dominants", "rootless-voicings"],
+    concepts: ["tritone-substitution", "secondary-dominants", "rootless-voicings", "passing-chords"],
     dimensions: ["relationship", "color", "direction"],
   },
   "levine-14": {

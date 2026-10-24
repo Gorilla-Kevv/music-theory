@@ -2050,4 +2050,254 @@ export const HARMONY_ADVANCED: Concept[] = [
       hint: "先定哪里稳哪里紧，再换颜色，最后调味。",
     },
   },
+  {
+    id: "harmonic-polysemy",
+    slug: "harmonic-polysemy",
+    number: "H-33",
+    title: "和声多义性：一个和弦像几个东西",
+    titleEn: "HARMONIC POLYSEMY",
+    category: "harmony",
+    level: "高级",
+    aliases: ["和声多义性", "多义论", "polysemy", "枢纽和弦", "特定音", "Eigentone", "异名同音", "悖论型", "假设判定确定"],
+    tags: ["分析", "功能", "等音", "听觉"],
+    dimensions: ["function", "relationship", "color"],
+    summary:
+      "和弦的意义不是代号单独决定的，而是结构、前后文、时间与文化共同把它收窄。多义性研究“一个和弦同时像几个东西”：用共同音保持中立、用特定音缩小范围，并按假设→判定→确定设计听者的实时理解。",
+    sections: [
+      {
+        id: "sources",
+        heading: "多义性从哪来",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "传统演奏与分析都把“身份不明”当不速之客：演奏要确定背景音阶，分析要指出这是 CΔ7 还是 C7、是原位还是转位。这套价值观训练出识别力，但它默认代号只有一个正确答案。多义论先把这层默认放下：代号只是收窄意义的工具，不是声音本身。",
+            cites: [cite("soundquest", "和弦篇 C74「多义论❶：和声的多义性」2 从单义中解放出来")],
+          },
+          {
+            type: "list",
+            items: [
+              "构造信息：和弦包含哪些音、如何排列、低音是什么。",
+              "前文信息：前面建立的调性、旋律与声部连接。",
+              "后文信息：后面出现的音调与和弦进行。",
+              "时间信息：和弦落在节奏的什么位置、持续多长。",
+              "文化信息：风格、时代、乐器与编配惯例。",
+            ],
+            cites: [cite("soundquest", "和弦篇 C74「多义论❶：和声的多义性」3 结构和上下文")],
+          },
+          {
+            type: "p",
+            text:
+              "分析是离线看结果：把后面几小节都听完，再宣布“这里转到了 F”。听众却是实时在听：C 和弦响起的瞬间先形成假设，之后每个音才逐步缩小范围。多义论关心的正是这个“过程”，而不是事后报告的结果。",
+            cites: [cite("soundquest", "和弦篇 C74「多义论❶：和声的多义性」实时声音识别变化")],
+          },
+        ],
+      },
+      {
+        id: "pivot",
+        heading: "枢纽和弦、共同音与特定音",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "枢纽和弦在最典型的意义上同时属于前后两个调：皮卡迪终止里的 VI 兼 I，转调中的枢轴和弦也如此。它之所以暧昧，是因为前文解释与后文解释同时成立；不同作品的差别只在于哪一边压得更重、过渡是突然还是渐进。",
+            cites: [
+              cite("soundquest", "和弦篇 C74「多义论❶：和声的多义性」4 枢纽和弦的多义性"),
+              cite("laitz", "Chapter 19 Tonicization and Modulation"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "共同音让和弦保持中立——它两边都属于，所以不泄露方向。特定音（Eigentone）则相反：它只在其中一种解释里成立，一旦出现就把可能性砍掉一块。发不发特定音、什么时候发，决定了多义能维持多久；这正是编曲可以主动控制的东西。",
+            cites: [cite("soundquest", "和弦篇 C74「多义论❶：和声的多义性」共同音和特定音")],
+          },
+          {
+            type: "p",
+            text:
+              "认知分三段：假设（和弦进入瞬间想起某种意义）→ 判定（信息足够，选定一种）→ 确定（实际声音几乎排除其他可能）。三者不是分析术语的装饰，而是作曲可以引导的路径：可以友好地让听者判对，也可以先让他判错再背叛。",
+            cites: [cite("soundquest", "和弦篇 C74「多义论❶：和声的多义性」假设、判定和确定")],
+          },
+          {
+            type: "callout",
+            title: "分析陷阱",
+            text: "事后分析很容易说“这里已经是 F 调”；听者当时可能还停在假设阶段。报告结果没有错，但会漏掉音乐真正的张力来源——判断被推迟、误导或突然坐实的那几拍。",
+          },
+        ],
+      },
+      {
+        id: "enharmonic",
+        heading: "异名同音、过渡与悖论型",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "更高级的多义来自异名同音：同一组琴键可以拼成不同和弦。减七与加大七在 sus 条件下可能结构重合；II9 的第一转位塞入一个 ♭13，等音恰好是 F♯7 的三音，根音认知一摇，所有音的度数感也跟着摇。古典里的德国增六与属七等音也是同一类问题——声音相同，功能与解决方向不同。",
+            cites: [
+              cite("soundquest", "和弦篇 C75「多义论❷：异名同音的多态性」2 异名同音的多义论"),
+              cite("laitz", "Chapter 24 The Augmented Sixth Chord"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "过渡（Transition）是让替换不突兀的技术：把后向语境的特定音分批放出来，先让听者以为还是旧解释，再逐步坐实新解释。一次性把所有特定音砸出来会太突然；分批发出则像给耳朵铺台阶。",
+            cites: [cite("soundquest", "和弦篇 C75「多义论❷：异名同音的多态性」过渡")],
+          },
+          {
+            type: "p",
+            text:
+              "拿坡里式多义指两个解释通向同一个目标，后文无法替你裁决来源（ii 与 IV 都能去 V）。悖论型则更激进：同时发出两边各自的特定音，故意不让它收敛成单义——在单义视角下它自相矛盾，在听感上却可能成立。",
+            cites: [
+              cite("soundquest", "和弦篇 C75「多义论❷：异名同音的多态性」3 拿坡里式和悖论型"),
+              cite("laitz", "Chapter 9 The Pre-Dominant Function and the Phrase Model"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "使用边界",
+            text: "多义不是越糊越好。先有识别力，才谈操控：知道它本来会被听成什么，才能决定推迟、误导或保持摇摆。无目的的模糊只是没写清楚。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-polysemy-pivot",
+        title: "C 大三和弦的双重身份",
+        caption: "E♭–C–F–B♭：C 先是 E♭ 的 VI，随后被听成 F 的 V（在 B♭ 里是 V/V）。同一个和弦、同一个排列，功能由后文改写。",
+        kind: "progression",
+        key: "Bb",
+        tempo: 72,
+        beats: 8,
+        events: [
+          chord(0, 2, ["Eb3", "G3", "Bb3"], { label: "E♭：I" }),
+          chord(2, 2, ["C3", "E3", "G3"], { label: "C：VI / V" }),
+          chord(4, 2, ["F3", "A3", "C4"], { label: "F：I" }),
+          chord(6, 2, ["Bb2", "D3", "F3"], { label: "B♭：I" }),
+        ],
+      }),
+    ],
+    related: ["modal-mixture-color", "neo-riemannian", "tritone-substitution", "metatheory"],
+    review: {
+      question: "多义性的五类信息源是什么？特定音与共同音的区别？假设、判定、确定各指什么？",
+      answer:
+        "信息源：构造、前文、后文、时间、文化。共同音两边都成立、保持中立；特定音只在一种解释里成立，能缩小范围。假设＝和弦进入瞬间想起某种意义；判定＝信息足够后选定一种；确定＝实际声音几乎排除其他可能。",
+      hint: "共同音不泄密，特定音砍选项；听者是实时判案，不是事后复盘。",
+    },
+  },
+  {
+    id: "passing-chords",
+    slug: "passing-chords",
+    number: "H-34",
+    title: "经过和弦：减七桥与根音省略",
+    titleEn: "PASSING CHORDS",
+    category: "harmony",
+    level: "进阶",
+    aliases: ["经过和弦", "passing chord", "passing diminished", "经过减七", "根音省略", "rootless", "♯Io7", "♯IVo7", "♯IIo7", "♭IIIo7"],
+    tags: ["减七", "连接", "低音", "重属"],
+    dimensions: ["function", "direction"],
+    summary:
+      "经过和弦是在两个和弦之间插入的完整和弦实体，最典型是减七/半减七：它常是属九去掉根音后的形态，靠半音声部把相差全音的两个和弦缝起来。用得好是平滑桥梁，滥用则调性模糊。",
+    sections: [
+      {
+        id: "rootless",
+        heading: "根音省略体：从属九到减七",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "先在 4–5–3–6 进行里把“3”换成重属 III7：属七的冲击力还在，低音却能从三音平滑移动。再把它九和弦化，加入强倾向的 fa；声音太挤时，通常去掉与低音重叠的音或透明的五音——也可以干脆去掉根音。去掉后剩下的结构，往往正好是一个减七。",
+            cites: [
+              cite("soundquest", "和弦篇 C50「经过和弦」1 根音省略型"),
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "这就是根音省略体：观察一个和弦连同上下文，如果把它解释成另一个和弦去掉根音会更自然，就采用后者。III7(♭9) 去掉根音得到 ♯Vo7；它仍保留原属和弦的功能面貌，却获得了更平滑的低音与更轻的密度。",
+            cites: [cite("soundquest", "和弦篇 C50「经过和弦」根音省略体")],
+          },
+          {
+            type: "callout",
+            title: "别反推过头",
+            text: "不是所有减七都必须解释成某个属九的省略。根音省略是一种“更自然”的分析选择，不是唯一真理；上下文不支持时，硬套会扭曲功能。",
+          },
+        ],
+      },
+      {
+        id: "types",
+        heading: "四种经过减七",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "♯Io7：VI7 的改造形。除 do♯ 外还含 si♭，后者倾向 la，所以接 IIm 很顺；变位音让它比普通经过和弦更成熟。",
+              "♯IVo7：II7 的改造形，插在 IV 与 V 之间。mi♭ 会让调性一瞬间倾向同主小调，因此比其他几种更难插入。",
+              "♯IIo7：VII7 的改造形，插在 II 与 III 之间；古典时代已用，气质高贵。",
+              "♭IIIo7：下行经过和弦，用于 IIIm 下降到 IIm 的途中；它不宜简单当作重属派生，顺畅度与上行型不同。",
+            ],
+            cites: [cite("soundquest", "和弦篇 C50「经过和弦」2 Passing Diminished")],
+          },
+          {
+            type: "p",
+            text:
+              "♯IVo7 的 si♭ 会带来布鲁斯/小调味；若场景不需要，可以还原成自然七，变成半减七。♯Iø7、♯IVø7 这类“经过半减七”仍可看作重属的替代，听感更明亮，适合轻快的 2–5–1 语境。",
+            cites: [cite("soundquest", "和弦篇 C50「经过和弦」3 半减七的互换")],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "非中间用法与禁忌",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "经过和弦不必真的夹在两个和弦正中间。它可以从前面和弦跳出去，让后面的形状变成平滑的半音上行；也可以放在副歌前推进情绪。本质仍是“用一个变化较少的和弦把两个目标缝起来”，位置只是表层。",
+            cites: [cite("soundquest", "和弦篇 C50「经过和弦」4 不在中间的用法")],
+          },
+          {
+            type: "p",
+            text:
+              "经典素材是减七与导七：Laitz 把导七当作属功能的扩展，Levine 把经过和弦列入基础重配和声——两条传统都指向同一件事：它不改变目标的功能方向，只改变到达方式。",
+            cites: [
+              cite("laitz", "Chapter 8 More Contrapuntal Expansions: Inversions of V7, Introduction to Leading-Tone Seventh Chords, and Reduction and Elaboration"),
+              cite("levine", "Chapter 13 Basic Reharmonization"),
+            ],
+          },
+          {
+            type: "callout",
+            title: "判断顺序",
+            text: "① 找要连接的两个和弦 → ② 看根音是否相差全音 → ③ 用目标属九去根音得到减七 → ④ 检查低音是否形成半音线 → ⑤ 听整体是否被糊住。滥用会让调性失去锚点。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-passing-dim7",
+        title: "G – G♯o7 – Am – F",
+        caption: "G♯dim7 是 E7(♭9) 去掉根音；低音 G→G♯→A 半音级进，把 V 与 vi 缝在一起，再落到 F。",
+        kind: "progression",
+        key: "C",
+        tempo: 76,
+        beats: 8,
+        events: [
+          chord(0, 2, ["G3", "B3", "D4"], { label: "G" }),
+          chord(2, 2, ["G#3", "B3", "D4", "F4"], { label: "G♯o7" }),
+          chord(4, 2, ["A2", "C4", "E4"], { label: "Am" }),
+          chord(6, 2, ["F2", "A3", "C4"], { label: "F" }),
+        ],
+      }),
+    ],
+    related: ["diminished-seventh", "secondary-dominants", "bass-line", "non-chord-tones", "harmonic-sequence"],
+    review: {
+      question: "经过减七为什么常被解释成“属九去掉根音”？四种上行型各连接什么？使用时最大的风险是什么？",
+      answer:
+        "属九去掉根音后常得到减七结构，功能面貌仍在而低音更平滑。♯Io7 来自 VI7、接 IIm；♯IVo7 来自 II7、接 V；♯IIo7 来自 VII7、接 III；♭IIIo7 用于下行 IIIm→IIm。最大风险是滥用导致调性模糊。",
+      hint: "先找两个目标和弦，再用目标属九的无根音形态当桥。",
+    },
+  },
 ];

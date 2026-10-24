@@ -311,7 +311,7 @@ const NOTES: Record<string, NoteSeed> = {
       "减七的四个等音拼写可指向四个调性中心。",
       "等音转调的关键是重解释后的属准备与终止。",
     ],
-    concepts: ["diminished-seventh", "tonal-distance", "modulation"],
+    concepts: ["diminished-seventh", "tonal-distance", "modulation", "harmonic-polysemy"],
     dimensions: ["relationship", "color"],
   },
   "sposobin-59": {

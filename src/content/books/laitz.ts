@@ -160,7 +160,7 @@ const NOTES: Record<string, NoteSeed> = {
       "枢轴和弦在两调中有不同功能解释。",
       "转调分析要指出新调的属、主与终止，而不只是变化音。",
     ],
-    concepts: ["modulation", "tonal-distance", "circle-of-fifths"],
+    concepts: ["modulation", "tonal-distance", "circle-of-fifths", "harmonic-polysemy"],
     dimensions: ["relationship", "direction"],
   },
   "laitz-17": {
@@ -210,7 +210,7 @@ const NOTES: Record<string, NoteSeed> = {
       "b6 下行到属音，b4 上行到属音，形成八度扩张。",
       "德国增六与属七等音，但功能与解决方向不同。",
     ],
-    concepts: ["neapolitan-aug6", "voice-leading", "harmonic-color"],
+    concepts: ["neapolitan-aug6", "voice-leading", "harmonic-color", "harmonic-polysemy"],
     dimensions: ["color", "brightness", "function"],
   },
   "laitz-28": {
@@ -319,7 +319,7 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
       "V7 转位改变七音与三音的声部位置。",
       "导七解决到主，减七可作等音枢纽。",
     ],
-    concepts: ["seventh-chords", "diminished-seventh", "voice-leading"],
+    concepts: ["seventh-chords", "diminished-seventh", "voice-leading", "passing-chords"],
     dimensions: ["function", "color"],
     deepSummary:
       "第 4 版第 8 章的定位判断句是“原位 V7 是进行性和弦、常宣告终止、要省着用；转位属七是理想的装饰性和弦”。三种转位各有旋律身份：V6/5 = V6 的邻音身份 + 七音（七音常作为经过或邻音出现在高声部，与低音导音反向）；V4/3 最常作 I 与 I6 之间的经过和弦（低音 2 与 vii°6 同低音），Schubert《磨工的花》外声部平行十度时七音可不上行解决——平行十度的强度压过七音常规解决；V4/2 最不稳定（七音在低音），常参与带声部交换的主音扩展，把经过七音放进低音会造出“躲开的终止”（evaded cadence）。组合规则：多个转位连用时从低活动音走向高活动音（V4/3→V6/5 而非反向），S–A–G♯ 的级进线把它们串成双邻音。写作四要点：进出转位尽量级进/共同音、转位用完整和弦、转位放弱位、倾向音规则照旧（导音外声部上行、内声部可降到 5；七音下行，唯一例外 I–V4/3–I6 配 3–4–5）。",

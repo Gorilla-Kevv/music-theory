@@ -53,7 +53,7 @@ export const BIBLIOGRAPHY: BibliographyEntry[] = [
     edition: "网页版（和弦篇 C1–C75、旋律篇、节奏篇等）",
     language: "日文 / 中文译本",
     role:
-      "扩展来源（Tier 2）：三本书未覆盖的站点理论框架——泛音列、连接系统论、轴心体系、新里曼理论、Lydian Chromatic Concept 等。站点条目为原创归纳，不复制正文。",
+      "扩展来源（Tier 2）：三本书未覆盖的站点理论框架——泛音列、连接系统论、轴心体系、新里曼理论、Lydian Chromatic Concept、元音乐理论、多义论、经过和弦等。站点条目为原创归纳，不复制正文。",
     locatorNote:
       "引用定位到站内篇章编号与小节名（如 和弦篇 C64「轴心体系」）；站点持续增删，引用以抓取时的目录为准。",
     verifiedVia: "WebFetch 抓取页面后归纳；日文原站与中译站对照。",

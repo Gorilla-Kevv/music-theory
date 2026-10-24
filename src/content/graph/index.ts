@@ -203,6 +203,15 @@ const PREREQUISITES: Array<[string, string]> = [
   ["bass-line", "line-cliche"],
   ["gaijitsu-ks", "harmonization"],
   ["roman-numerals", "harmonization"],
+  ["roman-numerals", "metatheory"],
+  ["metatheory", "harmonic-polysemy"],
+  ["roman-numerals", "harmonic-polysemy"],
+  ["secondary-dominants", "harmonic-polysemy"],
+  ["tonal-distance", "harmonic-polysemy"],
+  ["diminished-seventh", "passing-chords"],
+  ["secondary-dominants", "passing-chords"],
+  ["bass-line", "passing-chords"],
+  ["harmonic-polysemy", "passing-chords"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {
