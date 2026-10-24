@@ -212,11 +212,12 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["harmonic-rhythm", "guide-tones"],
     dimensions: ["rhythm"],
     deepSummary:
-      "Levine 的练习观接近“刻意练习”：把一段进行拆成和弦连接、guide tones、节奏型或单一声部，慢到能听见每个错误，再逐步加速并放回曲目。练习的成果要用录音与演出检验。",
+      "第 12 章开宗明义：“每天练几小时不一定让你成为更好的爵士乐手，除非你懂得如何练习。”本章的目录本身就是一份练习清单：让练习富有音乐性、任何内容每个调都练、针对弱点练、速度来自准确、触觉与听觉、乐句与模式、扒谱、伴奏带、跟真正的唱片演奏、准备笔记本、放松、用脚打拍子、为自己创造环境、整体。强调这些方法“并非线性、右脑的”，对演奏爵士与学习和弦进行同等重要——爵士是即兴音乐，要求在几分之一秒内做决定，正确的准备是体验创造性的前提。",
     analysis: [
-      "把 ii–V–I 拆成低音、guide tones、音阶、节奏四层。",
-      "设定可观察目标（不掉拍、不碰错音、能循环四遍）。",
-      "录音回听，记录下一步唯一要修的点。",
+      "自查清单：对照章目录逐条打勾，缺哪条补哪条。",
+      "每调练 + 针对弱点：别只弹顺手的调与顺手的内容。",
+      "扒谱与跟唱片演奏是听觉训练的核心，不能只对节拍器。",
+      "笔记本记录练习目标与发现；放松与脚打拍属于技术基础同样要练。",
     ],
     crossBook: ["Laitz 5：声部进行"],
     visualHint: "试听坞 + 复习卡",
@@ -315,11 +316,11 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["phrase-structure", "guide-tones", "bass-line"],
     dimensions: ["rhythm", "direction"],
     deepSummary:
-      "Levine 的记曲方法把“记忆”拆成结构记忆与听觉记忆：结构记忆是 A/B、终止、turnaround；听觉记忆是低音、guide tones、旋律轮廓。两者结合，才能在台上不靠纸。",
+      "第 19 章短小而直接：把和弦总谱上的曲子记住，只涉及三件事——**曲式、主旋律、和弦进行**。这与中国菜谱式的三步正好对应本书前几章的工具：曲式（第 17 章的 AABA/ABAC 标段）、旋律（唱准与断句）、进行（guide tones 与低音）。记忆顺序即分析顺序：先立曲式地图，再挂旋律，最后填和声细节。",
     analysis: [
-      "先听三遍，标出段落与终止。",
-      "用低音和 guide tones 弹一遍，不弹旋律。",
-      "最后加旋律，检查段落连接处是否记得。",
+      "第一步背曲式：字母段落 + 每段末终止。",
+      "第二步背旋律：能不靠谱唱出，包括断句。",
+      "第三步背进行：低音走向 + guide tones，段落连接处重点检查。",
     ],
     crossBook: ["Laitz 15/16：乐段与句法"],
     visualHint: "体系图的曲式路径",
@@ -340,11 +341,11 @@ const EXTRA_NOTES: Record<string, NoteSeed> = {
     concepts: ["rhythm-changes", "blues", "phrase-structure"],
     dimensions: ["rhythm", "color"],
     deepSummary:
-      "Head 不是等待即兴开始的过场。它的旋律动机、节奏型与落音往往已经给出整首曲子的语气和即兴素材。Levine 建议从唱片模仿发音、连断与重音，再把它与和弦/曲式对应。",
+      "第 20 章给术语正名：古典里建在现有乐曲和声上的旋律叫改编曲（contrafact），爵士里对应物叫**曲头（head）**——且“曲头”也指任何一首曲的主旋律。血缘远近有谱系：严格遵循原进行的 Dig←Sweet Georgia Brown；只余微弱相似的 Exotica←I Can't Get Started；**混合血缘**的 Ah-Leu-Cha（A 段来自 Honeysuckle Rose、B 段来自 I've Got Rhythm）；甚至“曲头的曲头”——Fifth House←Hot House←What Is This Thing Called Love。章末的曲头对照表显示 I've Got Rhythm 是最大母体（多数只借 A 段，亦有借桥段者）。",
     analysis: [
-      "跟着唱片唱 head，模仿连音、重音与呼吸。",
-      "标出 head 的目标音与和弦变化点。",
-      "把 head 的动机移调到即兴中，形成统一语气。",
+      "写曲头先选母体：借全曲、只借 A 段、或混合两曲的血缘。",
+      "查对照表找母体：新旋律写成后可反向定位其血缘。",
+      "演奏曲头时把母体进行放在手边——即兴可随时回到更简的母版。",
     ],
     crossBook: ["Laitz 2：旋律", "Laitz 16：句法"],
     visualHint: "谱例点击 + 试听",
@@ -583,11 +584,12 @@ const DEEPEN: Record<string, Partial<NoteSeed>> = {
   },
   "levine-11": {
     deepSummary:
-      "Rhythm Changes 的价值在曲式模板：32 小节 AABA、A 段 I–vi–ii–V、B 段属和弦循环。和弦可以替换，但每段的目标与转折点必须保留；即兴迷路通常不是音阶问题，而是曲式地图不清。",
+      "第 11 章给出 Rhythm Changes 的历史层积与玩法本质。三版进行并排听=爵士和声史：Gershwin 原版 → 1930 年代变体（加减七、G-7 变 G7、V 加 ♯5）→ 比波普标准版（V 级自由加 ♭9/alt、桥段四个 V 改成 ii–V）。“演奏 Rhythm 就像同时知道好几首曲子并用在一首曲子里”——现场自由拼合各版本才是常态，这也是它对新手最难的原因。曲头清单蔚为大观：Oleo、Anthropology、Crazeology、Rhythm-A-Ning、The Serpent's Tooth……大多 B♭ 调。前四小节变体：Sonny Stitt 的 F♯7 起按五度圈（Levine 被盯到自惭的那段，“自己听，伙计”）；Jimmy Heath 的 CTA 下行 V 重复。桥段变体：D7 起半音下行到 B7（F7 的三全音属）；Kenny Dorham 的 Straight Ahead 高全音起步再加速。",
     analysis: [
-      "先标 A/B 段边界与每段最后一个目标和弦。",
-      "A 段只弹 guide tones，B 段只弹根音走向。",
-      "替换和弦后检查是否仍能在段末落到原目标。",
+      "三版连弹听演化：原版→1930s→比波普，注意 V 级变化音与桥段 ii–V 化。",
+      "前四小节练至少三种拼法（原版/Stitt 五度圈/CTA），现场可换。",
+      "桥段练两种：五度圈原版 + 半音下行版。",
+      "即兴迷路时只弹根音走句，找回曲式地图。",
     ],
     crossBook: ["Laitz 20：二部曲式与变奏", "Levine 02：五度圈"],
     visualHint: "曲式地图 + 五度圈",

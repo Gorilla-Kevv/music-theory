@@ -417,3 +417,16 @@
 - 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；8 条笔记 deepSummary/analysis 数据完整性已用 tsx 校验。
 - 下一批入口：Laitz Ch25/26/27（大曲式：三部/回旋/奏鸣）→ Levine Ch11/12/19/20 → 之后 Laitz 28–32 + Levine 21/22/23 + Sposobin 等电子版。
 - 本次文档更新时间：10.24 16:40
+
+## 阶段 26 书库深化批次 5：Laitz 大曲式 3 章 + Levine 4 章 [计划时间：10.24 17:00 BY solo-agent][完成时间：10.24 17:35 BY solo-agent]
+
+- 分支：dev
+- 任务定位：书库深化流水线第五批（队列来自阶段 25）。
+- 已完成：
+  - 26.1 Laitz 4e 三章全文提取精读：Ch25 三部曲式（4017 词）、Ch26 回旋曲（2403）、Ch27 奏鸣曲式（8787，全书最长章）。
+  - 26.2 三条 DEEPEN 按原文重写：Ch25 的复合曲式定义、三部三型（full sectional/sectional/continuous）与“B 段依赖度”判据、transition/retransition、compound ternary 三种载体（da capo/咏叹调/小步舞-三声中部）与可逆对位、动机变形暗线；Ch26 的叠部/插部术语、三部=小回旋的谱系、五部/七部回旋、法国 rondeau 起源、coda 与复合嵌套；Ch27 的奏鸣曲式=balanced+rounded binary 推导、FTA/STA 术语系统与奏鸣曲原则、完整部件清单（DTr/ITr/medial caesura/CL/codetta/RTr/coda）、monothematic、慢引子=巨大上拍、假再现、比例法则。
+  - 26.3 Levine 四章（中译 EPUB）：Ch11 Rhythm Changes 三版历史层积、“像同时知道好几首曲子”、Stitt 五度圈变体与桥段变体；Ch12 练习论（“练几小时不一定更好，除非懂得如何练习”+目录即清单）；Ch19 记曲三件事（曲式/主旋律/和弦进行）；Ch20 曲头谱系（contrafact 对照、Ah-Leu-Cha 混合血缘、曲头的曲头）——四条 DEEPEN 重写。
+- 本批读透标记：laitz 25/26/27 + levine 11/12/19/20（累计 41/117 章：Laitz 24/33、Levine 17/24）。
+- 测试结果：`npm run typecheck` / `npm run knowledge`（55/65/186）/ `npm run build` 通过；7 条笔记 deepSummary/analysis tsx 校验 7/7 OK（中途修复一处 deepSummary 内未转义引号导致的语法错误）。
+- 下一批入口（收尾批）：Laitz Ch28/29/30/31/32（19–21 世纪和声）+ Levine Ch06/08/21/22/23 → 之后仅剩 Sposobin 等电子版。
+- 本次文档更新时间：10.24 17:35
