@@ -1168,4 +1168,85 @@ export const FOUNDATIONS: Concept[] = [
       hint: "一个在拍的层面，一个在拍的内部。",
     },
   },
+  {
+    id: "gaijitsu-ks",
+    slug: "gaijitsu-ks",
+    number: "F-15",
+    title: "外质与 K·S 分析：旋律音的性格",
+    titleEn: "GAIJITSU (CHORD-TONE QUALITY) & K-S ANALYSIS",
+    category: "foundations",
+    level: "进阶",
+    aliases: ["外质", "K·S 分析", "本质与外质", "chord-tone quality", "K/S analysis", "旋律音性格"],
+    tags: ["旋律", "和弦音", "分析"],
+    dimensions: ["color", "function"],
+    summary:
+      "外质给和弦各音级在旋律中的性格命名：Root 力量朴素直接、3rd/7th 色彩丰富、5th 中性；K·S 分析＝本质（调性引力）+外质（度数质感）两轴诊断旋律——“硬/软、热/冷”由此可分析、可设计。",
+    sections: [
+      {
+        id: "gaijitsu",
+        heading: "各度数的外质性格",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Root：力量、朴素、直接——最清晰反映和弦性质，但缺色彩且易与贝斯根音重叠压底；适合欢快上口、强冲击（愤怒而非哀怨）、机械感、riff 齐奏。",
+              "3rd 与 7th：色彩丰富、有魅力——“赋予声响色彩”，但不够直截了当。",
+              "5th：中性偏安全；大调 5th 外质明亮空洞，常与奇偶外质搭配。",
+              "偶数度（2nd/4th/6th）：紧张、悬置——外质框架把 1/3/5/7 归“奇=稳定”，2/4/6 归“偶=紧张”，与调性引力的稳定音/不稳定音互相印证。",
+            ],
+            cites: [
+              cite("soundquest", "旋律篇 M17「Root外质的用法」"),
+              cite("soundquest", "旋律篇 M18–M20「3rd/5th/7th外质的用法」"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "外质的立场是“简单不等于差”：Root 正因简单而有冲击力（Rolling in the Deep 副歌长音贴 VIm 根音直抒愤怒、The Robots 贴根音造机械无情感）；选哪个度数作旋律，服务于歌曲要表达的情绪。日本音乐旋律普遍复杂，Root 外质用例少，多见于 Hip-hop/广告歌等单纯冲击场景。",
+            cites: [cite("soundquest", "旋律篇 M17「Root外质的用法」")],
+          },
+        ],
+      },
+      {
+        id: "ks",
+        heading: "K·S 分析：两轴诊断旋律",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "K·S 分析＝本质（K：音阶内音与调性引力）+外质（S：相对和弦的度数质感）。步骤：① 抓关键位置（和弦变换瞬间、小节头、最高音、长音——开头的声音印象最深）；② 看外质度数（奇/偶、硬/软、热/冷）；③ 查本质与引力（不稳定音有没有浪费、终止有没有用对地方）；④ 查节奏与高低潮分配；⑤ 找“浪费弹药”——对表达造成阻力的音。",
+            cites: [cite("soundquest", "旋律篇 M21「K、S分析」")],
+          },
+          {
+            type: "callout",
+            title: "诊断示例",
+            text: "安静清凉的曲子应交织 7th/2nd/6th（软外质）；若小节头大量砸 1/3/5 度会“又硬又强”而单调，安静的曲子用三连音重音也违和——不懂理论只能模糊觉得“不合适”，K·S 让你说出原因。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-gaijitsu-compare",
+        title: "同一和弦的三种外质",
+        caption: "C 大三和弦上分别停留 Root（C）、3rd（E）、7th 场景（Bb 配属七）——力量、色彩、紧张三种性格。",
+        kind: "progression",
+        key: "C",
+        tempo: 84,
+        beats: 9,
+        events: [
+          chord(0, 3, ["C2", "C4"], { label: "Rt 外质" }),
+          chord(3, 3, ["C2", "E4"], { label: "3rd 外质" }),
+          chord(6, 3, ["C2", "Bb3"], { label: "7th 张力" }),
+        ],
+      }),
+    ],
+    related: ["tonal-gravity", "melody-motives", "guide-tones", "harmonization"],
+    review: {
+      question: "Root 外质的性格与适用场景是什么？K·S 分析的两轴分别看什么？",
+      answer:
+        "Root＝力量、朴素、直接，适合强冲击/机械感/riff 齐奏，但缺色彩。K 轴看本质（音阶内音与调性引力、终止安排），S 轴看外质（旋律音相对和弦的度数质感）。",
+      hint: "一个问“这是哪个度数”，一个问“它想不想回家”。",
+    },
+  },
 ];

@@ -1888,4 +1888,166 @@ export const HARMONY_ADVANCED: Concept[] = [
       hint: "调号差越大越戏剧；小三度是“换平行”的自然档。",
     },
   },
+  {
+    id: "line-cliche",
+    slug: "line-cliche",
+    number: "H-31",
+    title: "Line Cliché：和弦内的半音线",
+    titleEn: "LINE CLICHÉ",
+    category: "harmony",
+    level: "进阶",
+    aliases: ["line cliché", "线条陈规", "半音线", "bass line cliché", "低音半音下行", "内声部半音移动"],
+    tags: ["装饰", "半音", "低音"],
+    dimensions: ["color", "direction"],
+    summary:
+      "在和弦不变的前提下让某一个声部按半音移动——听感是“同一个和弦在微妙变化”而非换和弦；最常动的是 5th 升高或根音降低，3rd 尽量不动（会改大小性质）。",
+    sections: [
+      {
+        id: "mechanics",
+        heading: "机制与可动音",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "两个要点：移动的音每次只走半音、其余声部尽量固定。可选方向有讲究：升 5th（到 6th、7th）或降根音不破坏三和弦结构、最安全；动 3rd 会让大/小性质翻转，失去“装饰同一和弦”的目的；小和弦的上行 3rd 方向几乎不可用。",
+            cites: [cite("soundquest", "和弦篇 C45「line cliché」")],
+          },
+          {
+            type: "p",
+            text:
+              "Bass line cliché 是反向变体：上声部固定、低音半音滑动（本质是高音持续音）。小调系低音半音下行常见于 J-Pop 副歌结尾与抒情曲（Stairway to Heaven 的吉他虽同行但换了和弦，严格说不算）；大调系常做成两或四小节模式收在 V。",
+            cites: [
+              cite("soundquest", "和弦篇 C45「line cliché」"),
+              cite("levine", "Chapter 2 Major Scale and Progressions（声部进行）"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "usage",
+        heading: "用法哲学",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "听感整体稳定而细腻，营造庄严/奇幻/情绪丰富氛围；上行版适合情绪升华，快速小节内版产生推向下一个和弦的动力。用法建议反直觉：既然叫“陈词滥调”，就大胆、充分、反复地用，靠旋律与用法取胜而非 chord 本身；通常不写入和弦谱，只当装饰层。与持续音的区别：持续音是低音独自固定、上方自由；line cliché 是全部声部克制微动——控制力更强的编曲手法。",
+            cites: [cite("soundquest", "和弦篇 C45「line cliché」")],
+          },
+          {
+            type: "callout",
+            title: "写作抓手",
+            text: "先锁和弦与两端声部，再给一个内声部画半音台阶；小调 emotive 段落优先试低音半音下行版。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-line-cliche",
+        title: "Am 上的 line cliché（升 5th 线）",
+        caption: "低音 A 保持，上方声部 C→C♯→D 半音上行——听感是同一个 Am 在变浓，不是换了和弦。",
+        kind: "progression",
+        key: "C",
+        tempo: 72,
+        beats: 9,
+        events: [
+          chord(0, 3, ["A2", "C4", "E4"], { label: "Am" }),
+          chord(3, 3, ["A2", "C#4", "E4"], { label: "↑½" }),
+          chord(6, 3, ["A2", "D4", "F#4"], { label: "Am(6)" }),
+        ],
+      }),
+    ],
+    related: ["bass-line", "non-chord-tones", "suspended-chords", "modal-harmony"],
+    review: {
+      question: "为什么 line cliché 通常不动 3rd？与持续音的区别是什么？",
+      answer:
+        "动 3rd 会翻转大小性质、破坏“装饰同一和弦”的听感；最安全的是升 5th 或降根音。持续音是低音独自固定上方自由变化，line cliché 是全体声部克制地微动，控制力更强。",
+      hint: "性质不动，浓淡在动。",
+    },
+  },
+  {
+    id: "harmonization",
+    slug: "harmonization",
+    number: "H-32",
+    title: "旋律和声化三步法",
+    titleEn: "MELODY HARMONIZATION IN THREE STEPS",
+    category: "harmony",
+    level: "高级",
+    aliases: ["和声化", "配和声", "harmonization", "给旋律配和弦", "外质奇偶"],
+    tags: ["旋律配和弦", "外质", "工艺"],
+    dimensions: ["function", "color", "direction"],
+    summary:
+      "给旋律配和弦的工程流程：① 定奇偶（旋律音哪些落稳定外质、哪些留紧张）→ ② 定根音（根音上下挪三度换外质而不破坏奇偶）→ ③ 定性质与剩余音（3rd/7th 按“声音效果+前后文”敲定）。",
+    sections: [
+      {
+        id: "three-steps",
+        heading: "三个过程",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "❶ 奇偶性设定：先决定旋律重要音配奇数外质（1/3/5/7=稳定）还是偶数（2/4/6=紧张）；判断依据是紧张/松弛的流动节奏、倾向性与跳级进、音在小节中的位置长短高低。实操从结尾倒推：想要结尾 mi 稳定，末尾走向应为“奇→奇”或“偶→奇”。",
+              "❷ 根音设定：起点和弦太平淡（重要音都落在 P5 和 Rt）时，把根音上下移三度更换外质——奇偶原则基本不变，调整高效；再检查与前后和弦的连接。",
+              "❸ 性质设定：旋律与根音都没锁定的音（尤其 3rd/7th）自由改性质（VIm→VI7），从声音效果与前后文两方面敲定。",
+            ],
+            cites: [
+              cite("soundquest", "旋律篇 M48「和声化❶3个过程」"),
+              cite("soundquest", "旋律篇 M49「和声化❷上下文考量」"),
+              cite("soundquest", "旋律篇 M50「和声化❸性质测试」"),
+            ],
+          },
+          {
+            type: "p",
+            text:
+              "古典对应物是“为旋律配和声”的教学传统（先定终止、再按功能回填）；三步法把同一工作拆成外质语言，并强调现代判断：“理论上可行”不等于“音乐上好听”——激进和弦在只有 Lead+低音的编曲里无法融合；混浊容忍度取决于曲风（EDM/合成器音色低，薄 Lead 厚和弦的编曲高）。",
+            cites: [
+              cite("soundquest", "旋律篇 M49「和声化❷上下文考量」"),
+              cite("sposobin", "第四章 用正三和弦为旋律配和声"),
+            ],
+          },
+        ],
+      },
+      {
+        id: "caveats",
+        heading: "边界与心法",
+        blocks: [
+          {
+            type: "p",
+            text:
+              "偶数外质增多会难以立声，但 M2 这类弱倾向的混浊有时反而时髦——关键看混浊是与根音碰撞还是非根音间碰撞（后者更可接受）。过程不要固定化：熟练后三步瞬间完成，它的价值在于发现每个环节被遗漏的可能性，而不是流水线套路。",
+            cites: [cite("soundquest", "旋律篇 M51「和声化❹垂直思考和分辨率」")],
+          },
+          {
+            type: "callout",
+            title: "实操抓手",
+            text: "拿一段八小节旋律：先标每个音的奇偶 → 从末尾倒推选起点和弦 → 根音挪三度试两版 → 最后改性质对比录音。",
+          },
+        ],
+      },
+    ],
+    examples: [
+      example({
+        id: "ex-harmonization",
+        title: "同一旋律的两种和声化",
+        caption: "旋律 E–D–C：前两小节配 C（3rd 外质、稳定）；后两小节根音下移三度换成 Am——奇偶不变、色彩变暗。",
+        kind: "progression",
+        key: "C",
+        tempo: 80,
+        beats: 8,
+        events: [
+          chord(0, 2, ["C3", "E4"], { label: "C：3rd" }),
+          chord(2, 2, ["G2", "D4"], { label: "G：5th" }),
+          chord(4, 2, ["A2", "E4"], { label: "Am：5th" }),
+          chord(6, 2, ["E2", "C4"], { label: "Em：♭6 张力" }),
+        ],
+      }),
+    ],
+    related: ["gaijitsu-ks", "tonal-gravity", "roman-numerals", "predominant"],
+    review: {
+      question: "和声化三步的顺序是什么？为什么根音挪三度是高效调整？",
+      answer:
+        "①定奇偶（稳定/紧张分布，从结尾倒推）→ ②定根音（上下挪三度换外质而奇偶基本不变）→ ③定性质与剩余音（声音效果+前后文）。三度挪动保持外质奇偶结构，只换色彩。",
+      hint: "先定哪里稳哪里紧，再换颜色，最后调味。",
+    },
+  },
 ];

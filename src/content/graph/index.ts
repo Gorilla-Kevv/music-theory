@@ -197,6 +197,12 @@ const PREREQUISITES: Array<[string, string]> = [
   ["tonal-distance", "pop-modulation"],
   ["meter-syncopation", "clave"],
   ["blues", "clave"],
+  ["tonal-gravity", "gaijitsu-ks"],
+  ["guide-tones", "gaijitsu-ks"],
+  ["non-chord-tones", "line-cliche"],
+  ["bass-line", "line-cliche"],
+  ["gaijitsu-ks", "harmonization"],
+  ["roman-numerals", "harmonization"],
 ];
 
 function hubForConcept(slug: string): AtlasHub {

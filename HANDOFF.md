@@ -26,7 +26,7 @@
 
 - 关键目录：
   - `src/content/`：知识事实源（55 概念、65 谱例、188 引用、55 条白话拆解）。
-  - `src/content/graph/`：体系图谱数据（6 枢纽 / 60 概念 / 166 关联 / 64 前置；ATLAS_HEIGHT 随概念数自适应）。
+  - `src/content/graph/`：体系图谱数据（6 枢纽 / 63 概念 / 172 关联 / 70 前置；ATLAS_HEIGHT 随概念数自适应）。
   - `src/content/bilibili.ts`：B 站课程调研台账（5 合集/板块 · 112 条视频与文章 / 20 条已读 / 92 条仅编目）。
   - `src/content/books/`：三本书 117 章（真实原书结构）+ 117 条笔记；Levine 24 章（中译 EPUB 深链）、Laitz 33 章（4e，PDF 页码深链）、Sposobin 60 章（无电子版）。
   - `src/lib/`：音频（采样 + 合成回退）、搜索、SRS、听辨、音符/谱面工具、Agent API。
@@ -109,4 +109,4 @@
   4. FL Studio 侧读取 `public/knowledge.json` 的事件级音符，或调用 CLI 的 `--json` 输出。
   5. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.24 19:30 BY solo-agent
+- 本次文档更新时间：10.24 20:30 BY solo-agent
