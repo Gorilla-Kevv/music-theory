@@ -23,6 +23,7 @@
       <nav class="tabs" role="tablist" aria-label="TONIC FL 面板">
         <button type="button" class="tab active" data-tab="lookup">查概念</button>
         <button type="button" class="tab" data-tab="agent">Agent</button>
+        <button type="button" class="tab" data-tab="fl">FL</button>
         <button type="button" class="tab" data-tab="settings">设置</button>
       </nav>
 
@@ -66,6 +67,19 @@
             <textarea id="chat-input" rows="2" placeholder="问理论，或让 Agent 操作 FL…"></textarea>
             <button id="chat-send" type="submit">发送</button>
           </form>
+        </section>
+
+        <section id="tab-fl" class="panel">
+          <div class="agent-head">
+            <div>
+              <p class="mono muted">FL SESSION / 结构诊断</p>
+              <p class="agent-hint">通道路由、混音器电平/声像、插件链与发送；不测量峰值/LUFS。</p>
+            </div>
+            <button id="refresh-fl" type="button" class="ghost">刷新</button>
+          </div>
+          <div id="fl-report" class="fl-report">
+            <p class="muted">点击“刷新”读取当前 FL session；路由、电平、多段写入可交给 Agent。</p>
+          </div>
         </section>
 
         <section id="tab-settings" class="panel">

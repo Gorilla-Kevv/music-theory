@@ -91,6 +91,114 @@ const FL_TOOLS: ToolSchema[] = [
       required: ["name"],
     },
   },
+  {
+    name: "fl_session_report",
+    description:
+      "FL session 结构诊断（只读）：通道路由、混音器推子/声像、插件链、发送、命名问题。不含峰值/LUFS 测量。",
+    inputSchema: { type: "object", properties: {} },
+  },
+  {
+    name: "fl_route",
+    description:
+      "把通道路由到混音器轨道（会修改工程）。assignments 例：[{channels:'808 Kick,808 Clap', mixerTrack:'6'}]。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        assignments: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              channels: { type: "string" },
+              mixerTrack: { type: "string" },
+            },
+            required: ["channels", "mixerTrack"],
+          },
+        },
+      },
+      required: ["assignments"],
+    },
+  },
+  {
+    name: "fl_set_levels",
+    description:
+      "调整混音器轨道绝对电平/声像/静音/独奏（会修改工程）。tracks 例：[{target:'808 Kick', volumeDb:-6, pan:-0.2}]。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        tracks: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              target: { type: "string" },
+              volumeDb: { type: "number" },
+              pan: { type: "number" },
+              muted: { type: "boolean" },
+              solo: { type: "boolean" },
+            },
+            required: ["target"],
+          },
+        },
+      },
+      required: ["tracks"],
+    },
+  },
+  {
+    name: "fl_write_notes",
+    description:
+      "把任意 MIDI 音符写入 FL 当前/指定通道的钢琴卷帘，写后读回音符数。notes 每项 {midi,beat,duration,velocity}。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        channel: { type: "string" },
+        notes: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              midi: { type: "number" },
+              beat: { type: "number" },
+              duration: { type: "number" },
+              velocity: { type: "number" },
+            },
+            required: ["midi", "beat", "duration"],
+          },
+        },
+        mode: { type: "string", enum: ["append", "replace"] },
+        startBeat: { type: "number" },
+      },
+      required: ["notes"],
+    },
+  },
+  {
+    name: "fl_compose",
+    description:
+      "多通道作曲写入：parts 每项可用 conceptSlug/exampleId 或显式 notes，指定 channel/mode/startBeat/transpose。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        parts: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              channel: { type: "string" },
+              conceptSlug: { type: "string" },
+              exampleId: { type: "string" },
+              notes: { type: "array", items: { type: "object" } },
+              mode: { type: "string", enum: ["append", "replace"] },
+              startBeat: { type: "number" },
+              transpose: { type: "number" },
+              velocity: { type: "number" },
+            },
+          },
+        },
+        mode: { type: "string", enum: ["append", "replace"] },
+      },
+      required: ["parts"],
+    },
+  },
 ];
 
 const ALL_TOOLS: ToolSchema[] = [...TOOL_SCHEMAS, ...FL_TOOLS];
@@ -224,6 +332,28 @@ async function runTool(name: string, args: Record<string, unknown>): Promise<unk
         body: JSON.stringify({ name: toolName, arguments: toolArgs }),
       });
     }
+    case "fl_session_report":
+      return bridgeJson("/api/fl/report");
+    case "fl_route":
+      return bridgeJson("/api/fl/route", {
+        method: "POST",
+        body: JSON.stringify({ assignments: args.assignments }),
+      });
+    case "fl_set_levels":
+      return bridgeJson("/api/fl/levels", {
+        method: "POST",
+        body: JSON.stringify({ tracks: args.tracks }),
+      });
+    case "fl_write_notes":
+      return bridgeJson("/api/fl/write", {
+        method: "POST",
+        body: JSON.stringify(args),
+      });
+    case "fl_compose":
+      return bridgeJson("/api/fl/compose", {
+        method: "POST",
+        body: JSON.stringify(args),
+      });
     default:
       throw new Error(`未知工具：${name}`);
   }
@@ -237,9 +367,11 @@ const server = new Server(
 使用规则：
 1. 任何理论问题先调用 search_theory；需要解释或引用时调用 get_concept / get_concept_sources。
 2. 理论断言必须带工具返回的章节级 locator（如 "Laitz, Chapter 19 Tonicization and Modulation"）；不能编造引用、页码或原文。
-3. 写钢琴卷帘前先用 get_fl_payload 核对音符，再调用 apply_example；不要凭空生成 MIDI。
-4. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；写入后报告实际提交的 payload。
-5. FL 2026 必须通过 \`npm run fl:bridge -- --launch-fl --panel\` 启动，并打开 Gopher 面板（Alt+F1）；桥服务地址可用 TONIC_FL_BRIDGE 覆盖。`,
+3. 写钢琴卷帘前先用 get_fl_payload 核对音符，再调用 apply_example；多通道/多段作曲用 fl_compose，原始音符用 fl_write_notes；不要凭空生成 MIDI。
+4. 混音/路由改动前先调用 fl_session_report；用 fl_route 路由、fl_set_levels 调整绝对电平/声像/静音/独奏。这些操作会修改 FL 工程，执行前说明，执行后报告 verified 结果。
+5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；写入后报告实际提交的 payload。
+6. fl_session_report 的诊断基于推子/声像/路由/插件链，不包含峰值/LUFS；不要声称已测量响度或削波。
+7. FL 2026 必须通过 \`npm run fl:bridge -- --launch-fl --panel\` 启动，并打开 Gopher 面板（Alt+F1）；桥服务地址可用 TONIC_FL_BRIDGE 覆盖。`,
   },
 );
 

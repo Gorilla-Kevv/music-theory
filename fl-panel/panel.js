@@ -93,7 +93,57 @@
       panel.classList.toggle("active", panel.id === `tab-${name}`);
     });
     if (name === "settings") fillSettings();
+    if (name === "fl") void refreshFlReport();
   }
+
+  async function refreshFlReport() {
+    const target = $("#fl-report");
+    target.innerHTML = `<p class="muted">读取 FL session…</p>`;
+    try {
+      const data = await api("/api/fl/report");
+      const findings = data.findings || [];
+      const summary = data.summary || {};
+      target.innerHTML = `
+        <div class="fl-summary">
+          <span>${escapeHtml(data.tempoBpm ?? "—")} BPM</span>
+          <span>${escapeHtml(data.channelCount)} CH</span>
+          <span>${escapeHtml(data.mixerTrackCount)} MIXER</span>
+          <span>RISK ${escapeHtml(summary.risk ?? 0)}</span>
+          <span>WARN ${escapeHtml(summary.warn ?? 0)}</span>
+          <span>INFO ${escapeHtml(summary.info ?? 0)}</span>
+        </div>
+        <p class="muted">${escapeHtml(data.measurementNote || "")}</p>
+        ${
+          findings.length
+            ? findings
+                .map(
+                  (item) => `
+            <div class="finding ${escapeHtml(item.severity)}">
+              <span class="code">${escapeHtml(item.code)} · ${escapeHtml(item.severity)}</span>
+              ${escapeHtml(item.message)}
+              ${item.suggestion ? `<span class="suggestion">→ ${escapeHtml(item.suggestion)}</span>` : ""}
+            </div>`,
+                )
+                .join("")
+            : `<p class="muted">没有发现结构性问题。</p>`
+        }
+        <div class="fl-routing">
+          ${(data.routing || [])
+            .map(
+              (item) =>
+                `${escapeHtml(item.channel || `#${item.channelIndex}`)} → mixer ${escapeHtml(
+                  item.mixerTrack ?? "?",
+                )}`,
+            )
+            .join("<br />")}
+        </div>
+      `;
+    } catch (error) {
+      target.innerHTML = `<p class="muted">读取失败：${escapeHtml(error.message)}</p>`;
+    }
+  }
+
+  $("#refresh-fl").addEventListener("click", () => refreshFlReport());
 
   document.querySelectorAll(".tab").forEach((tab) => {
     tab.addEventListener("click", () => setTab(tab.dataset.tab));

@@ -15,8 +15,10 @@ import {
   getFlPayload,
   listFlExamples,
   makePianoRollScript,
+  makeRawNoteScript,
   payloadSummary,
   type ApplyMode,
+  type RawFlNote,
 } from "./fl-payload";
 
 const PORT = Number(process.env.TONIC_FL_PORT ?? 5127);
@@ -154,6 +156,121 @@ const SOURCE_SHORT: Record<string, string> = {
   soundquest: "SoundQuest",
 };
 
+function flResultText(result: unknown): string {
+  if (typeof result === "string") {
+    const marker = result.indexOf('"text": "');
+    if (marker >= 0) {
+      const start = marker + '"text": "'.length;
+      const isError = result.indexOf('"isError"', start);
+      const end =
+        isError > start ? result.lastIndexOf('"', isError - 1) : result.lastIndexOf('"');
+      if (end > start) return result.slice(start, end);
+    }
+    return result;
+  }
+  if (result && typeof result === "object") {
+    const content = (result as { content?: unknown }).content;
+    if (Array.isArray(content)) {
+      return content
+        .map((item) =>
+          item && typeof item === "object" && typeof (item as { text?: unknown }).text === "string"
+            ? (item as { text: string }).text
+            : "",
+        )
+        .join("\n");
+    }
+  }
+  return String(result ?? "");
+}
+
+function flResultJson<T>(result: unknown): T | null {
+  const rawText = flResultText(result);
+  const candidates = [
+    rawText,
+    rawText
+      .replace(/\\n/g, "\n")
+      .replace(/\\r/g, "\r")
+      .replace(/\\t/g, "\t")
+      .replace(/\\"/g, '"'),
+  ];
+  for (const candidate of candidates) {
+    let text = candidate;
+    for (let depth = 0; depth < 3; depth += 1) {
+      try {
+        const parsed = JSON.parse(text) as unknown;
+        if (typeof parsed === "string") {
+          text = parsed;
+          continue;
+        }
+        return parsed as T;
+      } catch {
+        break;
+      }
+    }
+  }
+  return null;
+}
+
+async function flCall(name: string, args: Record<string, unknown> = {}): Promise<unknown> {
+  await requireFl();
+  return fl.callTool(name, args);
+}
+
+async function openPianoRoll(channel: string | number | undefined): Promise<void> {
+  if (channel === undefined || channel === null || channel === "") return;
+  await flCall("open_piano_roll_for_channel", { target_channel: String(channel) });
+}
+
+async function runPianoRoll(source: string): Promise<unknown> {
+  return flCall("run_piano_roll_script", { source });
+}
+
+async function verifyPianoRollCount(): Promise<number | null> {
+  try {
+    const result = await runPianoRoll(
+      'import flpianoroll as fp\nraise Exception("TONIC_NOTES=" + str(fp.score.noteCount))',
+    );
+    const match = flResultText(result).match(/TONIC_NOTES=(\d+)/);
+    return match ? Number(match[1]) : null;
+  } catch {
+    return null;
+  }
+}
+
+interface FlSessionChannel {
+  index: number;
+  name: string;
+  generator_plugin?: string | null;
+  volume_db?: number;
+  pan?: number;
+  routed_to_mixer_track?: number | null;
+}
+
+interface FlSessionMixerTrack {
+  index: number;
+  name: string;
+  is_master?: boolean;
+  volume_db?: number;
+  pan?: number;
+  effect_plugins?: Array<{ slot?: number; name?: string }>;
+  sends?: Array<{ to_track?: number; to_name?: string; level?: number }>;
+}
+
+interface FlSessionContext {
+  tempo_bpm?: number;
+  active_channels?: FlSessionChannel[];
+  active_mixer_tracks?: FlSessionMixerTrack[];
+}
+
+async function getSessionContext(): Promise<FlSessionContext> {
+  const result = await flCall("get_session_context", {});
+  const data = flResultJson<FlSessionContext>(result);
+  if (!data) {
+    throw new Error(`无法解析 FL session 快照：${flResultText(result).slice(0, 300)}`);
+  }
+  return data;
+}
+
 function sourceLabel(source: string): string {
   return SOURCE_SHORT[source] ?? BIBLIOGRAPHY_BY_ID[source as keyof typeof BIBLIOGRAPHY_BY_ID]?.authors ?? source;
 }
@@ -204,27 +321,480 @@ async function applyExample(input: Record<string, unknown>) {
   const exampleId = typeof input.exampleId === "string" ? input.exampleId : undefined;
   const startBeat = typeof input.startBeat === "number" ? input.startBeat : 0;
   const mode: ApplyMode = input.mode === "replace" ? "replace" : "append";
-  const channel = typeof input.channel === "number" ? input.channel : undefined;
+  const channel =
+    typeof input.channel === "number" || typeof input.channel === "string"
+      ? input.channel
+      : undefined;
   const payload = getFlPayload({ conceptSlug, exampleId, startBeat });
   if (!payload) throw new Error("找不到对应的谱例；请提供有效的 conceptSlug 或 exampleId。");
   await requireFl();
-  if (channel) {
-    await fl.callTool("open_piano_roll_for_channel", { target_channel: String(channel) });
-  }
+  await openPianoRoll(channel);
   const script = makePianoRollScript(payload, mode);
-  const result = await fl.callTool("run_piano_roll_script", { source: script });
-  let verifiedNotes: number | null = null;
-  try {
-    // FL 的脚本工具不返回 stdout；抛异常是唯一可靠的读回方式，且不会弹窗。
-    const verify = await fl.callTool("run_piano_roll_script", {
-      source: 'import flpianoroll as fp\nraise Exception("TONIC_NOTES=" + str(fp.score.noteCount))',
-    });
-    const match = JSON.stringify(verify).match(/TONIC_NOTES=(\d+)/);
-    if (match) verifiedNotes = Number(match[1]);
-  } catch {
-    verifiedNotes = null;
-  }
+  const result = await runPianoRoll(script);
+  // FL 的脚本工具不返回 stdout；抛异常是唯一可靠的读回方式，且不会弹窗。
+  const verifiedNotes = await verifyPianoRollCount();
   return { ok: true, payload, summary: payloadSummary(payload), script, result, verifiedNotes };
+}
+
+interface SessionFinding {
+  code: string;
+  severity: "info" | "warn" | "risk";
+  message: string;
+  evidence?: string;
+  suggestion?: string;
+}
+
+function isDefaultMixerName(name: string): boolean {
+  return !name.trim() || /^(插入|Insert)\s*\d+$/i.test(name.trim());
+}
+
+async function sessionReport() {
+  const session = await getSessionContext();
+  const channels = session.active_channels ?? [];
+  const mixerTracks = session.active_mixer_tracks ?? [];
+  const routed = new Map<number, string[]>();
+  const usedMixerIndexes = new Set<number>([0]);
+  for (const channel of channels) {
+    const target = channel.routed_to_mixer_track;
+    if (typeof target === "number") {
+      usedMixerIndexes.add(target);
+      const names = routed.get(target) ?? [];
+      names.push(channel.name || `#${channel.index}`);
+      routed.set(target, names);
+    }
+  }
+  for (const track of mixerTracks) {
+    const hasPlugins = (track.effect_plugins?.length ?? 0) > 0;
+    const hasExtraSends = (track.sends ?? []).some(
+      (send) => typeof send.to_track === "number" && send.to_track !== 0,
+    );
+    if (hasPlugins || hasExtraSends || !isDefaultMixerName(track.name)) {
+      usedMixerIndexes.add(track.index);
+    }
+  }
+
+  const findings: SessionFinding[] = [];
+  for (const channel of channels) {
+    if (channel.routed_to_mixer_track == null) {
+      findings.push({
+        code: "channel-unrouted",
+        severity: "warn",
+        message: `通道「${channel.name || `#${channel.index}`}」没有分配到混音器轨道。`,
+        evidence: `channel index=${channel.index}`,
+        suggestion: "用 fl_route 把它路由到一个混音器插入轨道。",
+      });
+    }
+    if (!channel.name.trim()) {
+      findings.push({
+        code: "channel-unnamed",
+        severity: "info",
+        message: `通道 #${channel.index} 没有名称，后续按名字操作会不稳定。`,
+        suggestion: "在 FL 通道机架重命名，或用索引操作。",
+      });
+    }
+  }
+
+  const master = mixerTracks.find((track) => track.index === 0 || track.is_master);
+  if (master) {
+    if ((master.volume_db ?? 0) > 0) {
+      findings.push({
+        code: "master-hot",
+        severity: "risk",
+        message: `主轨推子为 +${(master.volume_db ?? 0).toFixed(1)} dB，存在削波风险（实际峰值未测量）。`,
+        suggestion: "把主轨降回 0 dB，或先检查各分轨电平。",
+      });
+    }
+    if ((master.effect_plugins?.length ?? 0) > 0) {
+      findings.push({
+        code: "master-chain",
+        severity: "info",
+        message: `主轨有 ${master.effect_plugins!.length} 个效果器：${master.effect_plugins!.map((item) => item.name ?? "?").join(" / ")}。`,
+      });
+    }
+  }
+
+  for (const track of mixerTracks) {
+    if (!usedMixerIndexes.has(track.index) || track.is_master || track.index === 0) continue;
+    const name = track.name || `插入 ${track.index}`;
+    if ((track.volume_db ?? 0) > 0.5) {
+      findings.push({
+        code: "track-hot",
+        severity: "warn",
+        message: `「${name}」推子为 +${(track.volume_db ?? 0).toFixed(1)} dB，处于增益状态（实际峰值未测量）。`,
+        evidence: `mixer ${track.index}`,
+        suggestion: "结合峰值表确认；必要时用 fl_set_levels 降回 0 dB 或更低。",
+      });
+    }
+    if ((track.volume_db ?? 0) <= -24) {
+      findings.push({
+        code: "track-quiet",
+        severity: "info",
+        message: `「${name}」推子很低（${(track.volume_db ?? 0).toFixed(1)} dB），可能被其他轨道淹没。`,
+        evidence: `mixer ${track.index}`,
+      });
+    }
+    if (Math.abs(track.pan ?? 0) >= 0.95) {
+      findings.push({
+        code: "track-hard-pan",
+        severity: "info",
+        message: `「${name}」几乎硬声像（${(track.pan ?? 0).toFixed(2)}），检查是否符合编曲意图。`,
+        evidence: `mixer ${track.index}`,
+      });
+    }
+    const extraSends = (track.sends ?? []).filter(
+      (send) => typeof send.to_track === "number" && send.to_track !== 0,
+    );
+    if (extraSends.length) {
+      findings.push({
+        code: "track-sends",
+        severity: "info",
+        message: `「${name}」有额外发送：${extraSends
+          .map((send) => `${send.to_name ?? send.to_track} @${Math.round((send.level ?? 0) * 100)}%`)
+          .join(" / ")}。`,
+        evidence: `mixer ${track.index}`,
+      });
+    }
+  }
+
+  for (const [trackIndex, names] of routed.entries()) {
+    if (trackIndex === 0 || names.length <= 1) continue;
+    const track = mixerTracks.find((item) => item.index === trackIndex);
+    findings.push({
+      code: "shared-mixer-track",
+      severity: "info",
+      message: `${names.length} 个通道共享混音器「${track?.name ?? trackIndex}」：${names.join(" / ")}。`,
+      evidence: `mixer ${trackIndex}`,
+      suggestion: "若这是总线/鼓组，属正常；否则检查是否误路由。",
+    });
+  }
+
+  const severityRank = { risk: 0, warn: 1, info: 2 } as const;
+  findings.sort((a, b) => severityRank[a.severity] - severityRank[b.severity]);
+
+  return {
+    ok: true,
+    measurementAvailable: false,
+    measurementNote:
+      "这是基于推子、声像、路由、插件链的结构诊断；FL 内置 MCP 不提供峰值/LUFS/频谱，不能用它判断真实响度或削波。",
+    tempoBpm: session.tempo_bpm ?? null,
+    channelCount: channels.length,
+    mixerTrackCount: mixerTracks.length,
+    routing: channels.map((channel) => ({
+      channel: channel.name,
+      channelIndex: channel.index,
+      mixerTrack: channel.routed_to_mixer_track ?? null,
+    })),
+    master: master
+      ? {
+          name: master.name,
+          volumeDb: master.volume_db ?? null,
+          pan: master.pan ?? null,
+          effects: master.effect_plugins ?? [],
+        }
+      : null,
+    findings,
+    summary: {
+      risk: findings.filter((item) => item.severity === "risk").length,
+      warn: findings.filter((item) => item.severity === "warn").length,
+      info: findings.filter((item) => item.severity === "info").length,
+    },
+  };
+}
+
+interface RouteAssignment {
+  channels: string;
+  mixerTrack: string;
+}
+
+function normalizeRouteAssignments(input: Record<string, unknown>): RouteAssignment[] {
+  const raw = Array.isArray(input.assignments)
+    ? input.assignments
+    : [{ channels: input.channels, mixerTrack: input.mixerTrack }];
+  return raw.map((item) => {
+    if (!item || typeof item !== "object") throw new Error("路由分配格式无效。");
+    const entry = item as Record<string, unknown>;
+    const channels = Array.isArray(entry.channels)
+      ? entry.channels.map(String).join(",")
+      : String(entry.channels ?? "");
+    const mixerTrack = String(entry.mixerTrack ?? "");
+    if (!channels.trim() || !mixerTrack.trim()) {
+      throw new Error("每条路由需要 channels 与 mixerTrack。");
+    }
+    return { channels, mixerTrack };
+  });
+}
+
+async function routeChannels(input: Record<string, unknown>) {
+  const assignments = normalizeRouteAssignments(input);
+  const results: Array<Record<string, unknown>> = [];
+  for (const assignment of assignments) {
+    const result = await flCall("route_channels_to_mixer", {
+      target_channels: assignment.channels,
+      mixer_track_target: assignment.mixerTrack,
+    });
+    results.push({ ...assignment, result });
+  }
+  const session = await getSessionContext();
+  const mixerTracks = session.active_mixer_tracks ?? [];
+  const verified = assignments.flatMap((assignment) => {
+    const targetNumber = Number(assignment.mixerTrack);
+    const targetTrack = Number.isFinite(targetNumber)
+      ? targetNumber
+      : mixerTracks.find((track) => track.name === assignment.mixerTrack)?.index;
+    return assignment.channels.split(",").map((token) => {
+      const value = token.trim();
+      const channel = (session.active_channels ?? []).find(
+        (item) => item.name === value || String(item.index) === value,
+      );
+      return {
+        channel: value,
+        mixerTrack: assignment.mixerTrack,
+        matched: Boolean(channel),
+        actualMixerTrack: channel?.routed_to_mixer_track ?? null,
+        verified:
+          Boolean(channel) &&
+          targetTrack !== undefined &&
+          channel!.routed_to_mixer_track === targetTrack,
+      };
+    });
+  });
+  return { ok: true, results, verified };
+}
+
+interface LevelChange {
+  target: string;
+  volumeDb?: number;
+  pan?: number;
+  muted?: boolean;
+  solo?: boolean;
+}
+
+function normalizeLevelChanges(input: Record<string, unknown>): LevelChange[] {
+  if (!Array.isArray(input.tracks) || input.tracks.length === 0) {
+    throw new Error("需要 tracks 数组，例如 [{ target: '808 Kick', volumeDb: -6 }]。");
+  }
+  return input.tracks.map((item) => {
+    if (!item || typeof item !== "object") throw new Error("电平变更格式无效。");
+    const entry = item as Record<string, unknown>;
+    const target = String(entry.target ?? "");
+    if (!target.trim()) throw new Error("每条电平变更需要 target。");
+    const volumeDb = entry.volumeDb;
+    const pan = entry.pan;
+    const change: LevelChange = { target };
+    if (volumeDb !== undefined) {
+      const value = Number(volumeDb);
+      if (!Number.isFinite(value) || value < -60 || value > 12) {
+        throw new Error(`volumeDb 必须在 -60–12 之间：${volumeDb}`);
+      }
+      change.volumeDb = value;
+    }
+    if (pan !== undefined) {
+      const value = Number(pan);
+      if (!Number.isFinite(value) || value < -1 || value > 1) {
+        throw new Error(`pan 必须在 -1–1 之间：${pan}`);
+      }
+      change.pan = value;
+    }
+    if (typeof entry.muted === "boolean") change.muted = entry.muted;
+    if (typeof entry.solo === "boolean") change.solo = entry.solo;
+    if (
+      change.volumeDb === undefined &&
+      change.pan === undefined &&
+      change.muted === undefined &&
+      change.solo === undefined
+    ) {
+      throw new Error(`target ${target} 没有任何变更。`);
+    }
+    return change;
+  });
+}
+
+async function setLevels(input: Record<string, unknown>) {
+  const changes = normalizeLevelChanges(input);
+  const results: Array<Record<string, unknown>> = [];
+  for (const change of changes) {
+    const calls: Array<{ tool: string; args: Record<string, unknown> }> = [];
+    if (change.volumeDb !== undefined) {
+      calls.push({
+        tool: "set_mixer_tracks_volume_db",
+        args: { target_tracks: change.target, volume_db: String(change.volumeDb) },
+      });
+    }
+    if (change.pan !== undefined) {
+      calls.push({
+        tool: "set_mixer_tracks_pan",
+        args: { target_tracks: change.target, pan: String(change.pan) },
+      });
+    }
+    if (change.muted !== undefined) {
+      calls.push({
+        tool: "mute_mixer_tracks",
+        args: { target_tracks: change.target, muted: change.muted ? 1 : 0 },
+      });
+    }
+    if (change.solo !== undefined) {
+      calls.push({
+        tool: "solo_mixer_tracks",
+        args: { target_tracks: change.target, value: change.solo ? 1 : 0 },
+      });
+    }
+    const changeResults = [];
+    for (const call of calls) changeResults.push(await flCall(call.tool, call.args));
+    results.push({ ...change, results: changeResults });
+  }
+  const session = await getSessionContext();
+  const verified = changes.map((change) => {
+    const numeric = Number(change.target);
+    const track = (session.active_mixer_tracks ?? []).find(
+      (item) => item.name === change.target || (Number.isFinite(numeric) && item.index === numeric),
+    );
+    return {
+      target: change.target,
+      matched: Boolean(track),
+      volumeDb: track?.volume_db ?? null,
+      pan: track?.pan ?? null,
+      volumeVerified:
+        change.volumeDb === undefined ||
+        (typeof track?.volume_db === "number" &&
+          Math.abs(track.volume_db - change.volumeDb) <= 0.15),
+      panVerified:
+        change.pan === undefined ||
+        (typeof track?.pan === "number" && Math.abs(track.pan - change.pan) <= 0.02),
+      note: "mute/solo 不在 get_session_context 快照中，无法自动核对。",
+    };
+  });
+  return { ok: true, results, verified };
+}
+
+function normalizeRawNotes(input: Record<string, unknown>): RawFlNote[] {
+  if (!Array.isArray(input.notes) || input.notes.length === 0) {
+    throw new Error("需要 notes 数组，每项包含 midi/beat/duration/velocity。");
+  }
+  return input.notes.map((item) => {
+    if (!item || typeof item !== "object") throw new Error("音符格式无效。");
+    const note = item as Record<string, unknown>;
+    const midi = Number(note.midi);
+    const beat = Number(note.beat);
+    const duration = Number(note.duration);
+    const velocity = note.velocity === undefined ? 85 : Number(note.velocity);
+    if (!Number.isFinite(midi) || midi < 0 || midi > 127) throw new Error(`midi 无效：${note.midi}`);
+    if (!Number.isFinite(beat) || beat < 0) throw new Error(`beat 无效：${note.beat}`);
+    if (!Number.isFinite(duration) || duration <= 0) throw new Error(`duration 无效：${note.duration}`);
+    if (!Number.isFinite(velocity) || velocity < 1 || velocity > 100) {
+      throw new Error(`velocity 必须在 1–100：${note.velocity}`);
+    }
+    return {
+      midi: Math.round(midi),
+      beat: beat + (typeof input.startBeat === "number" ? input.startBeat : 0),
+      duration,
+      velocity: Math.round(velocity),
+    };
+  });
+}
+
+async function writeNotes(input: Record<string, unknown>) {
+  const notes = normalizeRawNotes(input);
+  const mode: ApplyMode = input.mode === "replace" ? "replace" : "append";
+  const channel =
+    typeof input.channel === "number" || typeof input.channel === "string"
+      ? input.channel
+      : undefined;
+  await requireFl();
+  await openPianoRoll(channel);
+  const script = makeRawNoteScript(notes, mode, "TONIC · raw notes");
+  const result = await runPianoRoll(script);
+  const verifiedNotes = await verifyPianoRollCount();
+  return {
+    ok: true,
+    channel: channel ?? "current",
+    expectedNotes: notes.length,
+    verifiedNotes,
+    script,
+    result,
+  };
+}
+
+interface ComposePart {
+  channel?: string | number;
+  conceptSlug?: string;
+  exampleId?: string;
+  notes?: RawFlNote[];
+  mode?: ApplyMode;
+  startBeat?: number;
+  transpose?: number;
+  velocity?: number;
+}
+
+async function compose(input: Record<string, unknown>) {
+  if (!Array.isArray(input.parts) || input.parts.length === 0) {
+    throw new Error("需要 parts 数组，例如 [{ channel: 6, conceptSlug: 'ii-v-i' }]。");
+  }
+  const globalMode: ApplyMode = input.mode === "replace" ? "replace" : "append";
+  const results: Array<Record<string, unknown>> = [];
+  for (const item of input.parts) {
+    if (!item || typeof item !== "object") throw new Error("part 格式无效。");
+    const part = item as ComposePart;
+    const mode = part.mode === "replace" ? "replace" : globalMode;
+    const channel =
+      typeof part.channel === "number" || typeof part.channel === "string"
+        ? part.channel
+        : undefined;
+    try {
+      let notes: RawFlNote[];
+      let title: string;
+      if (Array.isArray(part.notes) && part.notes.length > 0) {
+        notes = normalizeRawNotes({
+          notes: part.notes,
+          startBeat: typeof part.startBeat === "number" ? part.startBeat : 0,
+        });
+        if (typeof part.velocity === "number") {
+          notes = notes.map((note) => ({ ...note, velocity: part.velocity }));
+        }
+        title = "TONIC · raw notes";
+      } else {
+        const payload = getFlPayload({
+          conceptSlug: part.conceptSlug,
+          exampleId: part.exampleId,
+          startBeat: typeof part.startBeat === "number" ? part.startBeat : 0,
+          velocity: typeof part.velocity === "number" ? part.velocity : 85,
+        });
+        if (!payload) throw new Error("找不到谱例；需要 notes 或有效的 conceptSlug/exampleId。");
+        notes = payload.notes;
+        title = `TONIC · ${payload.conceptTitle} / ${payload.title}`;
+      }
+      const transpose = Number(part.transpose ?? 0);
+      if (!Number.isFinite(transpose)) throw new Error("transpose 必须是数字。");
+      if (transpose !== 0) {
+        notes = notes.map((note) => ({ ...note, midi: note.midi + Math.round(transpose) }));
+      }
+      if (notes.some((note) => note.midi < 0 || note.midi > 127)) {
+        throw new Error("transpose 后超出 MIDI 0–127。");
+      }
+      await openPianoRoll(channel);
+      const script = makeRawNoteScript(notes, mode, title);
+      const result = await runPianoRoll(script);
+      const verifiedNotes = await verifyPianoRollCount();
+      results.push({
+        ok: true,
+        channel: channel ?? "current",
+        title,
+        mode,
+        expectedNotes: notes.length,
+        verifiedNotes,
+        result,
+      });
+    } catch (error) {
+      results.push({
+        ok: false,
+        channel: channel ?? "current",
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+  return {
+    ok: results.every((item) => item.ok === true),
+    parts: results,
+  };
 }
 
 const AGENT_TOOLS = [
@@ -329,6 +899,129 @@ const AGENT_TOOLS = [
           arguments: { type: "object" },
         },
         required: ["name"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_session_report",
+      description:
+        "读取 FL 当前 session 的结构诊断：通道路由、混音器推子/声像、插件链、发送与命名问题。只读；不含峰值/LUFS 测量。",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_route",
+      description:
+        "把通道路由到混音器轨道。assignments 例：[{channels:'808 Kick,808 Clap', mixerTrack:'6'}]。会修改工程，执行前说明。",
+      parameters: {
+        type: "object",
+        properties: {
+          assignments: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                channels: { type: "string", description: "逗号分隔的通道名或 1-based 索引" },
+                mixerTrack: { type: "string", description: "混音器轨道名或编号（Master=0）" },
+              },
+              required: ["channels", "mixerTrack"],
+            },
+          },
+        },
+        required: ["assignments"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_set_levels",
+      description:
+        "调整混音器轨道的绝对电平/声像/静音/独奏。tracks 例：[{target:'808 Kick', volumeDb:-6, pan:-0.2, muted:false}]。会修改工程。",
+      parameters: {
+        type: "object",
+        properties: {
+          tracks: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                target: { type: "string", description: "混音器轨道名或编号" },
+                volumeDb: { type: "number", description: "-60–12 dB" },
+                pan: { type: "number", description: "-1–1" },
+                muted: { type: "boolean" },
+                solo: { type: "boolean" },
+              },
+              required: ["target"],
+            },
+          },
+        },
+        required: ["tracks"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_write_notes",
+      description:
+        "把任意 MIDI 音符写入 FL 当前/指定通道的钢琴卷帘。notes 每项 {midi,beat,duration,velocity}。写后读回音符数。",
+      parameters: {
+        type: "object",
+        properties: {
+          channel: { type: "string", description: "通道名或 1-based 索引；省略则用当前钢琴卷帘" },
+          notes: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                midi: { type: "number" },
+                beat: { type: "number" },
+                duration: { type: "number" },
+                velocity: { type: "number" },
+              },
+              required: ["midi", "beat", "duration"],
+            },
+          },
+          mode: { type: "string", enum: ["append", "replace"] },
+          startBeat: { type: "number" },
+        },
+        required: ["notes"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_compose",
+      description:
+        "多通道作曲写入：parts 每项可用 conceptSlug/exampleId 或显式 notes，指定 channel、mode、startBeat、transpose。会修改多个钢琴卷帘。",
+      parameters: {
+        type: "object",
+        properties: {
+          parts: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                channel: { type: "string" },
+                conceptSlug: { type: "string" },
+                exampleId: { type: "string" },
+                notes: { type: "array", items: { type: "object" } },
+                mode: { type: "string", enum: ["append", "replace"] },
+                startBeat: { type: "number" },
+                transpose: { type: "number" },
+                velocity: { type: "number" },
+              },
+            },
+          },
+          mode: { type: "string", enum: ["append", "replace"] },
+        },
+        required: ["parts"],
       },
     },
   },
@@ -760,6 +1453,16 @@ async function executeAgentTool(name: string, args: Record<string, unknown>): Pr
           : {};
       return fl.callTool(String(args.name ?? ""), toolArgs);
     }
+    case "fl_session_report":
+      return sessionReport();
+    case "fl_route":
+      return routeChannels(args);
+    case "fl_set_levels":
+      return setLevels(args);
+    case "fl_write_notes":
+      return writeNotes(args);
+    case "fl_compose":
+      return compose(args);
     default:
       throw new Error(`Unknown tool: ${name}`);
   }
@@ -780,10 +1483,12 @@ const AGENT_SYSTEM_PROMPT = `你是 TONIC-FL，一个乐理优先的 FL Studio 2
 规则：
 1. 回答理论问题前先调用 search_theory；需要解释或引用时调用 get_concept / get_concept_sources。
 2. 每条理论断言必须带工具返回的章节级 locator，不能编造引用或页码。
-3. 用户要写钢琴卷帘时，先 get_fl_payload 或直接 apply_example；不要凭空发明 MIDI 音符。apply_example 会把 TONIC 谱例写入 FL 当前钢琴卷帘。
-4. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；执行前说明意图。
-5. 用中文回答：先结论，再依据，最后说明实际写入了什么。不要声称自己听到了声音。
-6. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。`;
+3. 用户要写钢琴卷帘时，先 get_fl_payload 或直接 apply_example；多通道/多段作曲用 fl_compose，原始音符用 fl_write_notes；不要凭空发明 MIDI 音符。
+4. 混音/路由改动前先调用 fl_session_report；用 fl_route 路由、fl_set_levels 调整绝对电平/声像/静音/独奏。这些会修改工程，执行前说明，执行后报告 verified 结果。
+5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；执行前说明意图。
+6. fl_session_report 的诊断基于推子/声像/路由/插件链，不包含峰值/LUFS；不要声称已测量响度或削波。
+7. 用中文回答：先结论，再依据，最后说明实际写入了什么。不要声称自己听到了声音。
+8. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。`;
 
 async function runAgent(
   rawMessages: unknown,
@@ -948,6 +1653,26 @@ const server = createServer(async (req, res) => {
       await requireFl();
       lastTools = await fl.listTools();
       json(res, 200, { tools: lastTools });
+      return;
+    }
+    if (req.method === "GET" && url.pathname === "/api/fl/report") {
+      json(res, 200, await sessionReport());
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/route") {
+      json(res, 200, await routeChannels(await readJson(req)));
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/levels") {
+      json(res, 200, await setLevels(await readJson(req)));
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/write") {
+      json(res, 200, await writeNotes(await readJson(req)));
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/compose") {
+      json(res, 200, await compose(await readJson(req)));
       return;
     }
     if (req.method === "POST" && url.pathname === "/api/fl/call") {

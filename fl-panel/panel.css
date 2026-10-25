@@ -607,3 +607,70 @@ code {
     flex-wrap: wrap;
   }
 }
+
+.fl-report {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fl-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.fl-summary span {
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  padding: 3px 6px;
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.finding {
+  border-left: 3px solid var(--line);
+  background: #fffdf8;
+  padding: 7px 9px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.finding.risk {
+  border-color: var(--cadmium);
+  background: rgba(255, 90, 31, 0.08);
+}
+
+.finding.warn {
+  border-color: var(--cadmium);
+}
+
+.finding.info {
+  border-color: var(--cobalt);
+}
+
+.finding .code {
+  display: block;
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.finding .suggestion {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.fl-routing {
+  margin-top: 2px;
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.6;
+}

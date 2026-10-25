@@ -114,18 +114,29 @@ function escapePythonString(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/\n/g, "\\n");
 }
 
+export interface RawFlNote {
+  midi: number;
+  beat: number;
+  duration: number;
+  velocity?: number;
+}
+
 /**
  * FL Studio 2026 的 run_piano_roll_script 接受完整 Python 源码；
  * 只使用内置 flpianoroll 模块，不依赖外部包。
  */
-export function makePianoRollScript(payload: FlPayload, mode: ApplyMode = "append"): string {
-  const notes = payload.notes
+export function makeRawNoteScript(
+  notes: RawFlNote[],
+  mode: ApplyMode = "append",
+  title = "TONIC · raw notes",
+): string {
+  const lines = notes
     .map(
       (note) =>
-        `    (${note.midi}, ${note.beat.toFixed(4)}, ${note.duration.toFixed(4)}, ${note.velocity}),`,
+        `    (${Math.round(note.midi)}, ${note.beat.toFixed(4)}, ${Math.max(0.01, note.duration).toFixed(4)}, ${Math.max(1, Math.min(100, Math.round(note.velocity ?? 85)))}),`,
     )
     .join("\n");
-  const header = `# TONIC · ${escapePythonString(payload.conceptTitle)} / ${escapePythonString(payload.title)}`;
+  const header = `# ${escapePythonString(title)}`;
   const clear = mode === "replace" ? "score.clearNotes()\n" : "";
   return `${header}
 import flpianoroll as fp
@@ -133,7 +144,7 @@ import flpianoroll as fp
 score = fp.score
 ppq = score.PPQ
 ${clear}notes = [
-${notes}
+${lines}
 ]
 
 for midi, beat, duration, velocity in notes:
@@ -144,6 +155,14 @@ for midi, beat, duration, velocity in notes:
     n.length = max(1, int(round(duration * ppq)))
     score.addNote(n)
 `;
+}
+
+export function makePianoRollScript(payload: FlPayload, mode: ApplyMode = "append"): string {
+  return makeRawNoteScript(
+    payload.notes,
+    mode,
+    `TONIC · ${payload.conceptTitle} / ${payload.title}`,
+  );
 }
 
 export function payloadSummary(payload: FlPayload): string {

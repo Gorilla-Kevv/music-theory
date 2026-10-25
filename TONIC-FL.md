@@ -102,7 +102,17 @@ npm run fl:bridge -- --panel
 
 **知识工具**：`search_theory`、`get_concept`、`get_concept_sources`、`search_sources`、`get_source_note`、`get_book_outline`、`list_examples`、`get_related`、`get_review_queue`、`get_video_research`、`get_bibliography`、`get_citation_policy`。
 
-**FL 工具**：`get_fl_payload`、`apply_example`、`fl_status`、`fl_list_tools`、`fl_call_tool`。
+**FL 工具**：`get_fl_payload`、`apply_example`、`fl_status`、`fl_list_tools`、`fl_call_tool`，以及操作封装层：
+
+| 工具 | 类型 | 用途 |
+|---|---|---|
+| `fl_session_report` | 只读 | 通道路由、混音器电平/声像、插件链、发送、命名问题的结构诊断；不测量峰值/LUFS |
+| `fl_route` | 写入 | 把通道路由到混音器轨道，返回 verified 结果 |
+| `fl_set_levels` | 写入 | 设置混音器轨道绝对 dB/声像/静音/独奏，返回 verified 结果 |
+| `fl_write_notes` | 写入 | 任意 MIDI 音符写入当前/指定钢琴卷帘，写后读回音符数 |
+| `fl_compose` | 写入 | 多通道/多段作曲：每段可用 TONIC 谱例或显式音符，指定 channel/mode/startBeat/transpose |
+
+面板中的 **FL** 标签页可直接刷新 session 结构诊断；路由、电平、多段写入可交给面板 Agent 或外部 MCP Agent。
 
 ### 4. Agent 必须遵守的规则
 
@@ -122,6 +132,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 外部 MCP 的 `fl_status` / `fl_list_tools` / `apply_example` 全链路成功，读回 15 个音符。
 - 面板 Agent 用 mock 端点验证了 **五种协议**的工具循环：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生均先调用 `get_concept_sources`，再返回带章节 locator 的回答。
 - 面板设置里协议下拉、保存、OpenAI Responses 聊天链路已实测。
+- 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时两个 FL Keys 通道路由到插入 16、设 -12 dB / pan 0.2，`fl_compose` 分别写入 2 与 3 个音符并读回一致；清理后恢复 5 个原始通道、插入 16 回 0 dB / pan 0。
+- MCP 工具总数 22；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、发现列表与通道路由。
 
 ## 故障排查
 
@@ -140,4 +152,6 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 面板 Agent 只访问你配置的 LLM 端点；API Key 存本机 localStorage。
 - FL 2026 内置 MCP 是官方控制面，但 `run_piano_roll_script` 可执行任意 `flpianoroll` Python；只对可信 Agent 开放。
 - 不能通过 FL API 加载插件、加载音频或渲染音频；这些仍需在 FL 界面完成。
+- `fl_session_report` 是**结构诊断**（推子/声像/路由/插件链），不是音频测量；峰值、LUFS、频谱需要导出音频后另做分析，当前不提供。
+- `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；曲式与配器仍由 Agent/用户决定。
 - 测试脚本曾临时添加 FL Keys 通道并写入示例，已清理；不会修改你的原始 808 通道。

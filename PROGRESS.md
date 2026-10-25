@@ -2,9 +2,9 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 38 已完成（面板 Agent 多协议 LLM）
-- 下一阶段任务：用用户实际 Qwen/Claude/Gemini/Ollama 端点验证；线上内容维护；图谱/可视化细节打磨
-- 可提前进行的任务：更多 FL 组合动作（进行/音阶批量写入、通道/混音）、Agent 侧路径查询
+- 当前正在开发任务：阶段 39 已完成（FL 操作封装层：结构诊断/路由/电平/多段写入）
+- 下一阶段任务：真实音频测量/Mix Doctor（导出音频后分析）；用用户实际 LLM 端点验证；线上维护
+- 可提前进行的任务：更多编曲动作（音阶/琶音批量写入、曲式模板）、Agent 侧路径查询
 - 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写
 
 ## 已完成阶段简表（1–28，详见 git log 与各阶段提交）
@@ -190,3 +190,20 @@
 - 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
 - 下一阶段入口：用用户实际 Qwen MaaS（`compatible-mode/v1`）/Claude/Gemini/Ollama 端点验证；补更多 FL 组合动作；线上维护。
 - 本次文档更新时间：10.25 21:10
+
+## 阶段 39 FL 操作封装层 [计划时间：10.25 21:20 BY solo-agent][完成时间：10.25 21:55 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 39.1 `fl_session_report`：读取 `get_session_context`，输出通道路由、混音器推子/声像、插件链、发送、命名问题；规则含未路由通道、正增益推子（> +0.5 dB）、过低推子（≤ -24 dB）、硬声像、共享混音轨、主轨插件；明确标注不含峰值/LUFS/频谱。
+  - 39.2 `fl_route`：批量通道路由到混音器轨道，执行后用 session 快照逐通道 verify。
+  - 39.3 `fl_set_levels`：绝对 dB/声像/静音/独奏，带范围校验与写后 verify（mute/solo 快照不可读，已注明）。
+  - 39.4 `fl_write_notes`：任意 MIDI 音符写入当前/指定钢琴卷帘，支持 append/replace/startBeat，写后读回音符数。
+  - 39.5 `fl_compose`：多通道/多段写入；每段可用 TONIC 谱例或显式 notes，支持 channel/mode/startBeat/transpose/velocity，逐段读回。
+  - 39.6 桥端点 `/api/fl/report|route|levels|write|compose`、面板 Agent 工具、MCP 工具（22 个）与 Gopher 面板 FL 标签页全部接通。
+- 关键修复：FL 的 `get_session_context` 返回的文本可能被双重编码/带未转义引号；桥用 `flResultText` + 容错 unescape/递归解析，不能直接 `JSON.parse`。
+- 测试结果：报告读取 5 通道 / 18 混音轨、0 risk；临时两个 FL Keys 通道路由到插入 16、设 -12 dB / pan 0.2，verified 通过；`fl_compose` 两段分别写入 2 与 3 个音符并读回一致；MCP `fl_session_report` 通过、工具总数 22；面板 FL 标签页显示 130 BPM / 5 CH / 18 MIXER / 1 info。清理后原始 5 个 808 通道保留、插入 16 恢复 0 dB / pan 0。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：session 报告是结构诊断，不是音频测量；`fl_compose` 是多通道写入，不是自动编曲。真正的 Mix Doctor 需要导出音频后做峰值/LUFS/频谱分析（后续）。
+- 下一阶段入口：真实音频测量/Mix Doctor；用户实际 LLM 端点验证；线上维护。
+- 本次文档更新时间：10.25 21:55

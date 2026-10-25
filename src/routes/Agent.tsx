@@ -224,7 +224,7 @@ theoryApi.videos({ status: "read" });`}
           <section className="border border-line p-4 sm:p-5">
             <h2 className="text-lg font-semibold">5 · FL Studio 2026</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。面板 Agent 支持 OpenAI Chat Completions / Responses、Anthropic、Gemini、Ollama 五种协议。写钢琴卷帘前先用
+              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。面板 Agent 支持 OpenAI Chat Completions / Responses、Anthropic、Gemini、Ollama 五种协议；FL 标签页显示 session 结构诊断（不含峰值/LUFS）。写钢琴卷帘前先用
               <code className="font-mono text-xs"> get_fl_payload </code>
               核对音符，写入后桥会读回实际音符数。
             </p>
@@ -237,8 +237,11 @@ npm run mcp`}
               label="MCP / FL 工具"
               code={`get_fl_payload({ conceptSlug: "ii-v-i" })
 apply_example({ conceptSlug: "ii-v-i", mode: "replace", channel: 6 })
-fl_list_tools()
-fl_call_tool({ name: "run_piano_roll_script", arguments: { source: python } })`}
+fl_session_report()
+fl_route({ assignments: [{ channels: "6,7", mixerTrack: "16" }] })
+fl_set_levels({ tracks: [{ target: "16", volumeDb: -12, pan: 0.2 }] })
+fl_write_notes({ channel: "6", notes: [{ midi: 36, beat: 0, duration: 1 }] })
+fl_compose({ parts: [{ channel: "6", conceptSlug: "ii-v-i", mode: "replace" }] })`}
             />
             <p className="mt-3 text-xs leading-relaxed text-muted">
               完整安装、MCP 配置、Agent 引用规则与故障排查见仓库根目录
