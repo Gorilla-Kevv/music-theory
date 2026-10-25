@@ -188,10 +188,13 @@ theoryApi.videos({ status: "read" });`}
           <section className="border border-line p-4 sm:p-5">
             <h2 className="text-lg font-semibold">4 · MCP 工具映射</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-              <code className="font-mono text-xs">npm run mcp</code> 已启动 stdio server（17 个知识/FL 工具）；下列为知识侧 schema。FL 侧另有
+              <code className="font-mono text-xs">npm run mcp</code> 已启动 stdio server（22 个知识/FL 工具）；下列为知识侧 schema。FL 侧另有
               <code className="font-mono text-xs"> get_fl_payload </code>、<code className="font-mono text-xs">apply_example</code>、
               <code className="font-mono text-xs"> fl_status </code>、<code className="font-mono text-xs">fl_list_tools</code>、
-              <code className="font-mono text-xs"> fl_call_tool </code>。
+              <code className="font-mono text-xs"> fl_call_tool </code>，以及操作封装层
+              <code className="font-mono text-xs"> fl_session_report </code>、<code className="font-mono text-xs">fl_route</code>、
+              <code className="font-mono text-xs"> fl_set_levels </code>、<code className="font-mono text-xs">fl_write_notes</code>、
+              <code className="font-mono text-xs"> fl_compose </code>。
             </p>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[560px] border-collapse text-left text-xs">
