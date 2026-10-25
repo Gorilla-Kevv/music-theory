@@ -73,6 +73,7 @@
 - 长按发声：`AudioEngine.holdStart/holdEnd` 独立于 `bus`（走 `holdBus` → dry/reverb），所以示例播放/停止不会切断长按；引擎强制最短发声 0.35s、松手 ~0.3s 淡出，合成回退有 8s 硬上限防无限延音。命中区/琴键用 pointer 事件（按下/抬起/移出/取消），键盘激活靠 click `detail===0` 区分；`useHeldPreview` hook 以 key 管理多个 hold，release 对未按住的 key 是 no-op。CDP 测试用 `.impeccable/hold-check.mjs`（注意先 `scrollIntoView`，否则坐标在视口外）。
 - 🔴 FL Studio 2026 集成：不使用第三方 FL MCP/loopMIDI。`fl-bridge.ts` 以 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，CDP 连 Gopher WebView2，通过 `script_handler.runJson` 调 FL 内置 MCP（实测 48 工具；`run_piano_roll_script` 可跑 `flpianoroll` Python）。`tonic-mcp.ts` 提供知识工具 + `get_fl_payload`/`apply_example`/`fl_*` 代理；Gopher 面板可切到 `fl-panel/`，内置知识搜索、跨书引用、写入与 OpenAI-compatible Agent。写后读回靠 `raise Exception("TONIC_NOTES=...")`（FL 脚本无 stdout）；`open_piano_roll_for_channel` 参数是 `target_channel`。桥不主动关闭用户 FL；测试通道/音符要清理。面板 Agent 的 LLM 层用统一 AgentMessage + 工具循环，协议适配在 `requestModel`：OpenAI Chat（ChatMessage/tool_calls）、OpenAI Responses（input/function_call/function_call_output）、Anthropic（messages/tool_use/tool_result）、Gemini（contents/functionCall/functionResponse）、Ollama（/api/chat）；端点由 Base URL 自动补齐，模型不支持工具时降级纯文本。
 - 🔴 FL 操作封装层（阶段 39）：`fl_session_report`（结构诊断：未路由通道、未命名通道、推子 > +0.5 dB / ≤ -24 dB、硬声像、发送、共享混音轨、主轨插件）、`fl_route`、`fl_set_levels`（绝对 dB/pan/mute/solo）、`fl_write_notes`（append/replace/startBeat）、`fl_compose`（多通道/多段，可引用 TONIC 谱例）。四个写操作都做写后快照 verify；mute/solo 快照不可读，报告里要说明。⚠️ `get_session_context` 返回文本可能双重编码或带未转义引号，必须走 `flResultText`（截至 `"isError"` 前）+ `flResultJson`（先直接 parse，失败再 unescape `\n`/`\r`/`\t`/`\"`），不能裸 `JSON.parse`。**session 报告不是音频测量**：没有峰值/LUFS/频谱，Mix Doctor 需先导出音频（未做）。
+- 🔴 FL 启动与 API 存放：根目录 `start-tonic-fl.bat`（ASCII + CRLF）是推荐入口——桥未运行时 `npm run fl:start` 启动桥 + FL，桥已运行时 POST `/api/panel` 把 Gopher 切回 TONIC；`npm run fl:attach` 只附加已带调试端口的 FL。面板 API 配置只在「设置」里填，存 `localStorage["tonic.fl.llm.v1"]`（origin `http://127.0.0.1:5127`）；**Gopher WebView2 与普通浏览器存储互相独立**，要各自填；桥不落盘。FL 没有公开的第三方工具栏按钮 API，VST3 需要独立原生工程（未排期），当前用 bat / 桌面快捷方式。
 - 🔴 可视化预览的音频：张力光谱/五度圈等点击走 `audioEngine.previewChord`；CDP 实测点击后 AudioContext `running`、4 个采样源启动，代码路径有声。组件挂载即 `preloadSamples()` 预热（避免首次点击等 9 个 mp3 下载造成“没声音”的错觉）；若排查外放问题先看系统输出设备与标签页静音，再看 AudioContext 状态。
 - 🔴 图谱画布交互：地图是固定高度画布（`react` 状态 `view{scale,x,y}` 作用于 `<g transform>`，`preserveAspectRatio="xMidYMin slice"`），滚轮缩放以指针为中心、左键拖拽平移（位移除以 `viewportInViewBox.factor`）；**不要在 pointerdown 就 `setPointerCapture`**——那会把 click 重定向到容器、点选节点失效；只在拖动超过 4px 后捕获，并在 pointerup 后短暂置 `suppressClickRef` 抑制拖拽收尾的 click。`/atlas` 空试听时隐藏 TransportDock。
 - 🔴 复习卡 v2：卡片 id 概念＝slug、章节＝`chapter:<chapterId>`、误解＝`chapter:<chapterId>:q<n>`；状态键 `tonic.review.v2`，加载/导入时自动迁移 v1 的 `conceptSlug` 字段；`getReviewQueue` 接受 unknown state（v1/v2），CLI `queue --state` 同步放宽。新增卡片只从 `keyPoints`/`confusions` 生成，不用整段 `deepSummary`。
@@ -96,12 +97,13 @@
 - CLI 书库：`npm run theory -- books` / `npm run theory -- source levine-13` / `npm run theory -- sources "转调" --book sposobin --dimension relationship`
 - CLI 复习队列：`npm run theory -- queue --state ./tonic-review-state.json --json`
 - TONIC MCP：`npm run mcp`（stdio；知识与 FL 工具 22 个）
+- FL 一键启动：双击 `start-tonic-fl.bat`；或 `npm run fl:start`（桥 + FL）/ `npm run fl:attach`（FL 已带调试端口）
 - FL 桥/面板：`npm run fl:bridge -- --launch-fl --panel`（已运行的 FL 用 `--panel`）
 - UI 检测：`impeccable detect --json src index.html`（当前返回 `[]`）
 
 ## 状态
 
-- 当前状态：v0.4 进行中；已上线 GitHub Pages：`https://gorilla-kevv.github.io/music-theory/`（Actions 构建，电子书不发布）；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库章节笔记 143）；FL 2026 集成已跑通（外部 MCP 22 工具 + Gopher 面板，48 个内置工具，操作封装层含 session 结构诊断/路由/绝对电平/多段写音符并全部写后读回；面板 Agent 支持 OpenAI Chat/Responses、Anthropic、Gemini、Ollama 五协议）；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、缩放拖拽画布、路径自动分列取景、完整先修/后续闭包、跨书章节对照）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.4 进行中；已上线 GitHub Pages：`https://gorilla-kevv.github.io/music-theory/`（Actions 构建，电子书不发布）；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库章节笔记 143）；FL 2026 集成已跑通（外部 MCP 22 工具 + Gopher 面板，48 个内置工具，操作封装层含 session 结构诊断/路由/绝对电平/多段写音符并全部写后读回；面板 Agent 支持 OpenAI Chat/Responses、Anthropic、Gemini、Ollama 五协议；`start-tonic-fl.bat` 一键启动）；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、缩放拖拽画布、路径自动分列取景、完整先修/后续闭包、跨书章节对照）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
@@ -124,7 +126,7 @@
   2. 图谱第三阶段已完成（阶段 34：画布缩放/拖拽、路径自动分列、跨书章节对照）；后续只做细节打磨，不再扩展视图。
   3. 书库笔记接入复习卡已完成（阶段 33：209 张卡，v2 状态）；后续新增章节卡只从 `keyPoints`/`confusions` 生成。
   4. stdio MCP server 已完成（`npm run mcp`，22 个知识/FL 工具）；后续补 MCP prompts/resources 与更多组合工具。
-  5. FL Studio 2026 集成已完成（`npm run fl:bridge -- --launch-fl --panel`）：CDP 复用官方内置 MCP（48 工具）、Gopher 内嵌 TONIC 面板、操作封装层（结构诊断/路由/电平/写音符/多段 compose）与写后读回；后续接用户实际 LLM 端点、更多编曲动作与真实音频测量。
+  5. FL Studio 2026 集成已完成（`npm run fl:bridge -- --launch-fl --panel` 或 `start-tonic-fl.bat`）：CDP 复用官方内置 MCP（48 工具）、Gopher 内嵌 TONIC 面板、操作封装层（结构诊断/路由/电平/写音符/多段 compose）与写后读回；后续接用户实际 LLM 端点、更多编曲动作与真实音频测量。VST3 未做（需独立 C++/JUCE 工程，成本高）；若要做“更像应用”的启动器，优先 Tauri/Electron 托盘。
   6. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜；Sposobin 无电子版，深化已搁置。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.25 22:05 BY solo-agent（阶段 39 FL 操作封装层）
+- 本次文档更新时间：10.25 22:05 BY solo-agent（阶段 40 FL 一键启动与外部 harness 说明）

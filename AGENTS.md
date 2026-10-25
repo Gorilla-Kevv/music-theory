@@ -129,14 +129,15 @@ src/content/
 
 - 目标：把知识库接进 FL 2026，而不是做 VST。外部 Agent 走 `tonic-mcp`；FL 内走 Gopher WebView2 的 TONIC 面板。
 - 文件：`scripts/tonic-mcp.ts`（stdio MCP）、`scripts/fl-bridge.ts`（本地 HTTP + 面板 + 启动/附加 FL）、`scripts/fl-cdp.ts`（WebView2 CDP 与 `script_handler` 注入）、`scripts/fl-payload.ts`（谱例→FL 音符/Python）、`fl-panel/`（Gopher 内嵌 UI）、`TONIC-FL.md`（安装/配置/规则）。
-- 启动：`npm run fl:bridge -- --launch-fl --panel`；FL 已运行且带调试端口时用 `npm run fl:bridge -- --panel`。外部 MCP：`npm run mcp`。
+- 启动：双击根目录 `start-tonic-fl.bat`（桥已运行会尝试切回 TONIC 面板；否则启动桥 + FL）；等价 `npm run fl:start` / `npm run fl:attach`；手动 `npm run fl:bridge -- --launch-fl --panel`。外部 MCP：`npm run mcp`。
+- 外部 harness：MCP 22 工具（已用真实 stdio 客户端验证）；非 MCP 的本地脚本/harness 也可直连 `127.0.0.1:5127` 的 `/api/status`、`/api/fl/*`。
 - FL 2026 内置 MCP 通过 Gopher WebView2 的 `script_handler` 暴露 48 个工具；`run_piano_roll_script` 可执行 `flpianoroll` Python。桥用 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，CDP 目标为 Gopher 页面；**不要假设 44 个工具**，以实际目录为准。
 - 写入规则：先 `get_fl_payload` 核对音符，再 `apply_example`（或 `fl_call_tool`）；`open_piano_roll_for_channel` 的参数是 `target_channel`（1-based 字符串/名称）；写后桥会用抛异常的方式读回 `fp.score.noteCount`，返回 `verifiedNotes`。
 - 操作封装层：`fl_session_report`（只读结构诊断）、`fl_route`、`fl_set_levels`、`fl_write_notes`、`fl_compose`；MCP 共 22 工具；面板 FL 标签页显示 session 报告。报告基于推子/声像/路由/插件链，不含峰值/LUFS；路由/电平/写入会修改工程，执行前说明、执行后报告 verified。`fl_compose` 是多通道写入，不是自动编曲。
 - 知识规则不变：理论断言必须带章节级 locator；Agent 先查 TONIC，再操作 FL；MCP instructions 已写入这些约束。
 - 安全：桥只绑定 `127.0.0.1:5127`；不关闭用户 FL（无调试端口时提示保存后重启）；测试添加的通道/音符要清理；`run_piano_roll_script` 只对可信 Agent 开放。
-- 面板 Agent 的 LLM 层支持五种协议：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生；面板设置里选择协议并填 Base URL/模型/Key，服务端按协议补端点与工具格式。若模型不支持工具，自动降级纯文本回答。
-- 限制：FL API 不能加载插件/音频或渲染；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。
+- 面板 Agent 的 LLM 层支持五种协议：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生；面板设置里选择协议并填 Base URL/模型/Key，服务端按协议补端点与工具格式。若模型不支持工具，自动降级纯文本回答。配置存面板 localStorage `tonic.fl.llm.v1`（Gopher WebView2 与普通浏览器各自独立），不写入仓库或桥文件。
+- 限制：FL API 不能加载插件/音频或渲染；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。FL 没有公开的第三方工具栏按钮 API，所以启动入口是 `start-tonic-fl.bat` / 桌面快捷方式而不是 FL 内按钮；VST3 未实现，需要独立 C++/JUCE + VST3 SDK 工程，成本高，当前不排期。
 
 ## 编辑与构建规则
 

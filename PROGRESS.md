@@ -207,3 +207,18 @@
 - 边界：session 报告是结构诊断，不是音频测量；`fl_compose` 是多通道写入，不是自动编曲。真正的 Mix Doctor 需要导出音频后做峰值/LUFS/频谱分析（后续）。
 - 下一阶段入口：真实音频测量/Mix Doctor；用户实际 LLM 端点验证；线上维护。
 - 本次文档更新时间：10.25 21:55
+
+## 阶段 40 FL 一键启动与外部 harness 说明 [计划时间：10.25 22:00 BY solo-agent][完成时间：10.25 22:05 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 40.1 根目录新增 `start-tonic-fl.bat`（ASCII + CRLF）：桥未运行时启动桥 + FL；桥已运行时调用 `/api/panel` 把 Gopher 切回 TONIC；端口被非 TONIC 应用占用时报错退出。
+  - 40.2 新增 npm 脚本 `fl:start`（`--launch-fl --panel`）与 `fl:attach`（`--panel`），bat 与手动命令共用同一入口。
+  - 40.3 TONIC-FL.md 补「API 填在哪里、存在哪里」：面板「设置」/「LLM 设置」，localStorage `tonic.fl.llm.v1`，Gopher WebView2 与普通浏览器各自独立，桥不落盘。
+  - 40.4 补外部 harness 的两种接法：stdio MCP（22 工具）与非 MCP 脚本可直连的本地 HTTP API；补 FL 无第三方工具栏按钮 API、VST3 成本评估与 Tauri/Electron 托盘替代。
+  - 40.5 AGENTS/HANDOFF 同步启动命令、API 存储、VST3 边界。
+- 测试：`start-tonic-fl.bat` 在桥已运行时识别成功、退出码 0，并 POST `/api/panel`；真实 stdio MCP 客户端列出 22 工具，`fl_status` 返回 attached + 48 工具，`get_concept_sources("ii-v-i")` 返回 Levine 章节；typecheck 通过。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：未做 VST3；FL 没有公开的第三方工具栏按钮 API，快速启动靠 bat/桌面快捷方式。
+- 下一阶段入口：用户实际 LLM 端点验证；真实音频测量/Mix Doctor；若要做常驻启动器，优先 Tauri/Electron 托盘。
+- 本次文档更新时间：10.25 22:05

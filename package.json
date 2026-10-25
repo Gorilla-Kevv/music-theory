@@ -12,6 +12,8 @@
     "theory": "tsx scripts/theory-cli.ts",
     "mcp": "tsx scripts/tonic-mcp.ts",
     "fl:bridge": "tsx scripts/fl-bridge.ts",
+    "fl:start": "tsx scripts/fl-bridge.ts --launch-fl --panel",
+    "fl:attach": "tsx scripts/fl-bridge.ts --panel",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

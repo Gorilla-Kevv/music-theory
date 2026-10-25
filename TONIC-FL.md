@@ -27,7 +27,24 @@ FL 2026 的 Gopher 面板是一个 WebView2 页面；FL 向该页面注入 `scri
 
 ## 快速开始
 
-### 1. 启动桥与 FL
+### 1. 一键启动（Windows，推荐）
+
+在项目根双击 **`start-tonic-fl.bat`**：
+
+- 桥未运行时：启动桥，并以 WebView2 调试端口启动 FL 2026；
+- 桥已运行时：不再重复启动，并尝试把 Gopher 切回 TONIC 面板；
+- 终端窗口需要保持打开；关掉窗口就是停止桥。
+
+等价的命令：
+
+```bat
+npm run fl:start      :: 启动桥 + FL + 面板
+npm run fl:attach     :: FL 已带调试端口时，只启动桥并切面板
+```
+
+如果 FL 已在运行但没有调试端口，脚本**不会关闭 FL**。请先保存工程，关闭 FL，再运行上面的命令。
+
+### 2. 手动启动
 
 ```bat
 cd F:\schoolCompWorks\clone\music-theory
@@ -35,14 +52,13 @@ npm install
 npm run fl:bridge -- --launch-fl --panel
 ```
 
-- 如果 FL 没在运行，桥会用 WebView2 调试端口启动 `FL64.exe`。
-- 如果 FL 已在运行但没有调试端口，脚本**不会关闭 FL**，请先保存工程，关闭后重新执行上面的命令。
 - 看到 `[TONIC-FL] 面板：http://127.0.0.1:5127/panel` 后，在 FL 里打开一次 **Gopher** 面板（工具栏 Gopher / `Alt+F1`）。
 - Gopher 页面出现后，桥会自动把它切到 TONIC 面板。
+- 桥连接成功后，`start-tonic-fl.bat` 会调用 `/api/panel` 把已打开的 Gopher 再切回 TONIC；如果 Gopher 还没打开，先按 `Alt+F1`。
 
 > 关闭 FL 再正常启动即可恢复官方 Gopher；也可以用浏览器的 `http://127.0.0.1:5127/panel` 单独使用面板。
 
-### 2. 面板用法
+### 3. 面板用法
 
 **查概念**
 
@@ -69,6 +85,15 @@ npm run fl:bridge -- --launch-fl --panel
 - Agent 会先查 TONIC，再回答或调用 `apply_example` / FL 工具；工具轨迹显示在对话下方。
 - OpenAI Chat / Responses / Anthropic / Gemini / Ollama 的工具调用都已适配；若模型不支持工具，自动降级为纯文本回答。
 - 配置只存本机 localStorage。
+
+**API 填在哪里、存在哪里**
+
+1. 打开 TONIC 面板，点右侧 **「设置」**，或在 Agent 页点 **「LLM 设置」**。
+2. 选 **API 协议**，填 **Base URL / Model / API Key**，点 **保存设置**，面板会跳回 Agent。
+3. 配置保存在面板所在浏览器环境的 `localStorage["tonic.fl.llm.v1"]`，**不会写入仓库、`knowledge.json` 或桥的磁盘文件**；聊天时由面板随请求发给本机桥，桥只转发到你填的 LLM 端点。
+4. 关键区别：**FL 的 Gopher WebView2 和普通 Chrome/Edge 是两套独立存储**。在浏览器面板里填过的 Key，不会自动出现在 Gopher 里；要用 FL 内面板，就在 Gopher 面板里再填一次。
+5. 同一地址（`http://127.0.0.1:5127`）+ 同一 WebView2 配置下，重启 FL/桥后配置仍在；清除站点数据、换端口或换浏览器配置后会丢失，需要重填。
+6. API Key 目前没有导出/导入功能；不要把 `localStorage` 里的内容提交到仓库或截图外发。
 
 ### 3. 外部 Agent（Qoder / Claude）
 
@@ -100,6 +125,12 @@ npm run fl:bridge -- --panel
 
 也可以直接运行 `npm run mcp` 验证 stdio 服务（它会等待标准输入输出，不会自己退出）。
 
+**外部 harness 的两种接法**
+
+- **MCP（推荐）**：`tonic-mcp.ts` 是标准 stdio MCP server，Qoder、Claude Desktop、Claude Code 等任意 MCP 客户端都能接。已用真实 MCP 客户端验证：列出 **22 个工具**；`fl_status` 返回 `attached: true` 与 48 个 FL 内置工具；`get_concept_sources("ii-v-i")` 返回 Levine 章节级来源。知识工具不依赖 FL；只有 `apply_example` / `fl_*` 需要桥在跑。
+- **HTTP（给非 MCP 的脚本/harness）**：桥在 `127.0.0.1:5127` 暴露 `GET /api/status`、`GET /api/search`、`GET /api/fl/report`、`POST /api/fl/route|levels|write|compose`、`POST /api/apply` 等端点。任何本地 harness 都可以直接 `fetch` 这些端点；数据不出本机。
+- 外部 harness 不需要打开 FL 内的 TONIC 面板；面板和 MCP 共用同一个桥。但 FL 必须由桥启动（或带 9222 调试端口启动）并打开过 Gopher，否则 FL 工具没有控制通道。
+
 **知识工具**：`search_theory`、`get_concept`、`get_concept_sources`、`search_sources`、`get_source_note`、`get_book_outline`、`list_examples`、`get_related`、`get_review_queue`、`get_video_research`、`get_bibliography`、`get_citation_policy`。
 
 **FL 工具**：`get_fl_payload`、`apply_example`、`fl_status`、`fl_list_tools`、`fl_call_tool`，以及操作封装层：
@@ -125,6 +156,14 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 5. FL 2026 的 `open_piano_roll_for_channel` 参数是 `target_channel`（1-based 索引或通道名），不是 `channel`。
 6. `run_piano_roll_script` 只作用于当前钢琴卷帘；没有打开钢琴卷帘时先打开通道。
 
+## FL 内启动方式与 VST3
+
+- 目前 FL 2026 可用的扩展面是 **Gopher / 内置 MCP**，没有公开“在工具栏加第三方按钮”的 API。TONIC 的 FL 内入口就是 Gopher（`Alt+F1`）：桥通过 CDP 把 Gopher 页面切到本地面板，所以不能靠新增一个 FL 原生按钮来启动桥。
+- 当前最快的启动方式就是 **双击 `start-tonic-fl.bat`**；想更顺手，可以右键把它发送到桌面快捷方式或固定到任务栏。
+- 可选：把桥加入 Windows 启动项/计划任务，让 `127.0.0.1:5127` 常驻；之后每次只需启动 FL 并打开 Gopher。代价是后台常驻一个 Node 进程，且 FL 必须由带调试端口的实例启动（或先关闭重开）。
+- **VST3 技术上可行，但不是把现有 HTML 面板“打包一下”**：需要独立的 C++/JUCE（或 iPlug2）工程、VST3 SDK、WebView2 嵌入、安装器与签名；插件实例还得启动或连接本机桥才能控制 FL，而且它是工程内的一个插件，不是全局启动器。工作量远大于当前面板，不建议只为“少点一次 bat”做。
+- 更轻的替代是 **Tauri/Electron 托盘启动器**：一个常驻图标，点一下启动桥并打开面板；如果以后要做“更像应用”的启动体验，优先这个而不是 VST3。
+
 ## 已验证
 
 - FL 2026（`C:\Program Files\Image-Line\FL Studio 2026\FL64.exe`）启动后，CDP 目标为 Gopher WebView2，内置 MCP 返回 **48 个工具**。
@@ -134,6 +173,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 面板设置里协议下拉、保存、OpenAI Responses 聊天链路已实测。
 - 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时两个 FL Keys 通道路由到插入 16、设 -12 dB / pan 0.2，`fl_compose` 分别写入 2 与 3 个音符并读回一致；清理后恢复 5 个原始通道、插入 16 回 0 dB / pan 0。
 - MCP 工具总数 22；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、发现列表与通道路由。
+- 外部 MCP 用真实 stdio 客户端复验：22 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
+- `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
 
 ## 故障排查
 

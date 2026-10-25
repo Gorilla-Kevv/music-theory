@@ -231,9 +231,19 @@ theoryApi.videos({ status: "read" });`}
               <code className="font-mono text-xs"> get_fl_payload </code>
               核对音符，写入后桥会读回实际音符数。
             </p>
+            <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
+              Windows 上双击项目根
+              <code className="font-mono text-xs"> start-tonic-fl.bat </code>
+              即可启动桥与 FL（桥已运行时会切回面板）；等价命令是
+              <code className="font-mono text-xs"> npm run fl:start </code>
+              ，FL 已带调试端口时用
+              <code className="font-mono text-xs"> npm run fl:attach </code>
+              。LLM 的 Base URL / 模型 / Key 在面板「设置」里填，只存本机 localStorage；Gopher WebView2 与普通浏览器各存一份。
+            </p>
             <CodeBlock
               label="TERMINAL / FL 桥与 MCP"
-              code={`npm run fl:bridge -- --launch-fl --panel
+              code={`start-tonic-fl.bat
+npm run fl:attach
 npm run mcp`}
             />
             <CodeBlock
