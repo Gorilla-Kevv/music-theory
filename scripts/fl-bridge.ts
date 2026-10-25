@@ -334,18 +334,390 @@ const AGENT_TOOLS = [
   },
 ];
 
+type LlmProtocol = "openai-chat" | "openai-responses" | "anthropic" | "gemini" | "ollama";
+
 interface ChatConfig {
+  protocol?: LlmProtocol;
   baseUrl?: string;
   apiKey?: string;
   model?: string;
   temperature?: number;
 }
 
-interface ChatMessage {
-  role: "system" | "user" | "assistant" | "tool";
-  content: string | null;
-  tool_calls?: Array<{ id: string; type: "function"; function: { name: string; arguments: string } }>;
-  tool_call_id?: string;
+interface AgentToolCall {
+  id: string;
+  name: string;
+  args: Record<string, unknown>;
+}
+
+interface AgentMessage {
+  role: "user" | "assistant" | "tool";
+  content: string;
+  toolCalls?: AgentToolCall[];
+  toolCallId?: string;
+  toolName?: string;
+}
+
+interface ModelTurn {
+  content: string;
+  toolCalls: AgentToolCall[];
+}
+
+interface ModelResult {
+  ok: boolean;
+  status: number;
+  text: string;
+  turn: ModelTurn;
+}
+
+function normalizeProtocol(value: unknown): LlmProtocol {
+  return value === "openai-responses" ||
+    value === "anthropic" ||
+    value === "gemini" ||
+    value === "ollama"
+    ? value
+    : "openai-chat";
+}
+
+function asRecord(value: unknown): Record<string, unknown> {
+  if (value && typeof value === "object") return value as Record<string, unknown>;
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value) as unknown;
+      if (parsed && typeof parsed === "object") return parsed as Record<string, unknown>;
+    } catch {
+      // fall through
+    }
+  }
+  return {};
+}
+
+function trimBase(value: string): string {
+  return value.trim().replace(/\/+$/, "");
+}
+
+function providerEndpoint(protocol: LlmProtocol, baseUrl: string, model: string): string {
+  const base = trimBase(baseUrl);
+  if (protocol === "openai-chat") {
+    return base.endsWith("/chat/completions") ? base : `${base}/chat/completions`;
+  }
+  if (protocol === "openai-responses") {
+    return base.endsWith("/responses") ? base : `${base}/responses`;
+  }
+  if (protocol === "anthropic") {
+    if (base.endsWith("/messages")) return base;
+    if (/\/v1$/.test(base)) return `${base}/messages`;
+    return `${base}/v1/messages`;
+  }
+  if (protocol === "gemini") {
+    if (base.includes(":generateContent")) return base;
+    const suffix = `/models/${encodeURIComponent(model)}:generateContent`;
+    return /\/v1beta$|\/v1$/.test(base) ? `${base}${suffix}` : `${base}/v1beta${suffix}`;
+  }
+  if (base.endsWith("/api/chat")) return base;
+  return /\/api$/.test(base) ? `${base}/chat` : `${base}/api/chat`;
+}
+
+function providerHeaders(protocol: LlmProtocol, config: ChatConfig): Record<string, string> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (!config.apiKey) return headers;
+  if (protocol === "anthropic") {
+    headers["x-api-key"] = config.apiKey;
+    headers["anthropic-version"] = "2023-06-01";
+  } else if (protocol === "gemini") {
+    headers["x-goog-api-key"] = config.apiKey;
+  } else if (protocol !== "ollama") {
+    headers.Authorization = `Bearer ${config.apiKey}`;
+  }
+  return headers;
+}
+
+function toOpenAiChatMessages(system: string, messages: AgentMessage[]) {
+  return [
+    { role: "system", content: system },
+    ...messages.map((message) => {
+      if (message.role === "tool") {
+        return { role: "tool", tool_call_id: message.toolCallId, content: message.content };
+      }
+      if (message.role === "assistant") {
+        return {
+          role: "assistant",
+          content: message.content || null,
+          ...(message.toolCalls?.length
+            ? {
+                tool_calls: message.toolCalls.map((call) => ({
+                  id: call.id,
+                  type: "function",
+                  function: { name: call.name, arguments: JSON.stringify(call.args) },
+                })),
+              }
+            : {}),
+        };
+      }
+      return { role: "user", content: message.content };
+    }),
+  ];
+}
+
+function toResponsesInput(messages: AgentMessage[]) {
+  const input: Array<Record<string, unknown>> = [];
+  for (const message of messages) {
+    if (message.role === "user") {
+      input.push({ role: "user", content: [{ type: "input_text", text: message.content }] });
+    } else if (message.role === "assistant") {
+      if (message.content) {
+        input.push({ role: "assistant", content: [{ type: "output_text", text: message.content }] });
+      }
+      for (const call of message.toolCalls ?? []) {
+        input.push({
+          type: "function_call",
+          call_id: call.id,
+          name: call.name,
+          arguments: JSON.stringify(call.args),
+        });
+      }
+    } else {
+      input.push({
+        type: "function_call_output",
+        call_id: message.toolCallId,
+        output: message.content,
+      });
+    }
+  }
+  return input;
+}
+
+function toAnthropicMessages(messages: AgentMessage[]) {
+  const result: Array<Record<string, unknown>> = [];
+  for (const message of messages) {
+    if (message.role === "user") {
+      result.push({ role: "user", content: [{ type: "text", text: message.content }] });
+    } else if (message.role === "assistant") {
+      const content: Array<Record<string, unknown>> = [];
+      if (message.content) content.push({ type: "text", text: message.content });
+      for (const call of message.toolCalls ?? []) {
+        content.push({ type: "tool_use", id: call.id, name: call.name, input: call.args });
+      }
+      result.push({ role: "assistant", content: content.length ? content : [{ type: "text", text: "" }] });
+    } else {
+      result.push({
+        role: "user",
+        content: [
+          { type: "tool_result", tool_use_id: message.toolCallId, content: message.content },
+        ],
+      });
+    }
+  }
+  return result;
+}
+
+function toGeminiContents(messages: AgentMessage[]) {
+  const result: Array<Record<string, unknown>> = [];
+  for (const message of messages) {
+    if (message.role === "user") {
+      result.push({ role: "user", parts: [{ text: message.content }] });
+    } else if (message.role === "assistant") {
+      const parts: Array<Record<string, unknown>> = [];
+      if (message.content) parts.push({ text: message.content });
+      for (const call of message.toolCalls ?? []) {
+        parts.push({ functionCall: { name: call.name, args: call.args } });
+      }
+      result.push({ role: "model", parts: parts.length ? parts : [{ text: "" }] });
+    } else {
+      result.push({
+        role: "user",
+        parts: [
+          {
+            functionResponse: {
+              name: message.toolName ?? "unknown_tool",
+              response: { content: message.content },
+            },
+          },
+        ],
+      });
+    }
+  }
+  return result;
+}
+
+function openAiTools() {
+  return AGENT_TOOLS;
+}
+
+function responsesTools() {
+  return AGENT_TOOLS.map((tool) => ({
+    type: "function",
+    name: tool.function.name,
+    description: tool.function.description,
+    parameters: tool.function.parameters,
+  }));
+}
+
+function anthropicTools() {
+  return AGENT_TOOLS.map((tool) => ({
+    name: tool.function.name,
+    description: tool.function.description,
+    input_schema: tool.function.parameters,
+  }));
+}
+
+function geminiTools() {
+  return [
+    {
+      functionDeclarations: AGENT_TOOLS.map((tool) => ({
+        name: tool.function.name,
+        description: tool.function.description,
+        parameters: tool.function.parameters,
+      })),
+    },
+  ];
+}
+
+async function requestModel(
+  protocol: LlmProtocol,
+  config: ChatConfig,
+  system: string,
+  messages: AgentMessage[],
+  useTools: boolean,
+): Promise<ModelResult> {
+  if (!config.baseUrl || !config.model) {
+    throw new Error("请先在面板设置里填写 LLM Base URL 与模型名。");
+  }
+  const endpoint = providerEndpoint(protocol, config.baseUrl, config.model);
+  const temperature = config.temperature ?? 0.3;
+  let body: Record<string, unknown>;
+  if (protocol === "openai-chat") {
+    body = {
+      model: config.model,
+      messages: toOpenAiChatMessages(system, messages),
+      temperature,
+      ...(useTools ? { tools: openAiTools(), tool_choice: "auto" } : {}),
+    };
+  } else if (protocol === "openai-responses") {
+    body = {
+      model: config.model,
+      instructions: system,
+      input: toResponsesInput(messages),
+      temperature,
+      ...(useTools ? { tools: responsesTools(), tool_choice: "auto" } : {}),
+    };
+  } else if (protocol === "anthropic") {
+    body = {
+      model: config.model,
+      max_tokens: 2048,
+      system,
+      messages: toAnthropicMessages(messages),
+      temperature,
+      ...(useTools ? { tools: anthropicTools() } : {}),
+    };
+  } else if (protocol === "gemini") {
+    body = {
+      contents: toGeminiContents(messages),
+      systemInstruction: { parts: [{ text: system }] },
+      generationConfig: { temperature },
+      ...(useTools ? { tools: geminiTools() } : {}),
+    };
+  } else {
+    body = {
+      model: config.model,
+      stream: false,
+      messages: toOpenAiChatMessages(system, messages),
+      options: { temperature },
+      ...(useTools ? { tools: openAiTools() } : {}),
+    };
+  }
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: providerHeaders(protocol, config),
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(90_000),
+  });
+  const text = await response.text();
+  let data: unknown = null;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    data = null;
+  }
+  const payload = (data ?? {}) as Record<string, unknown>;
+  const turn: ModelTurn = { content: "", toolCalls: [] };
+  if (protocol === "openai-chat") {
+    const message = ((payload.choices as Array<{ message?: Record<string, unknown> }> | undefined)?.[0]?.message ?? {}) as Record<string, unknown>;
+    turn.content = typeof message.content === "string" ? message.content : "";
+    const calls = Array.isArray(message.tool_calls) ? message.tool_calls : [];
+    turn.toolCalls = calls.map((call: Record<string, unknown>, index) => {
+      const fn = (call.function ?? {}) as Record<string, unknown>;
+      return {
+        id: typeof call.id === "string" ? call.id : `openai-${index}`,
+        name: String(fn.name ?? ""),
+        args: asRecord(fn.arguments),
+      };
+    });
+  } else if (protocol === "openai-responses") {
+    turn.content = typeof payload.output_text === "string" ? payload.output_text : "";
+    const output = Array.isArray(payload.output) ? payload.output : [];
+    for (const item of output) {
+      if (!item || typeof item !== "object") continue;
+      const entry = item as Record<string, unknown>;
+      if (entry.type === "message" && Array.isArray(entry.content)) {
+        for (const part of entry.content) {
+          if (part && typeof part === "object" && (part as { type?: string }).type === "output_text") {
+            const value = (part as { text?: unknown }).text;
+            if (typeof value === "string") turn.content += value;
+          }
+        }
+      } else if (entry.type === "function_call") {
+        turn.toolCalls.push({
+          id: String(entry.call_id ?? entry.id ?? crypto.randomUUID()),
+          name: String(entry.name ?? ""),
+          args: asRecord(entry.arguments),
+        });
+      }
+    }
+  } else if (protocol === "anthropic") {
+    const content = Array.isArray(payload.content) ? payload.content : [];
+    for (const block of content) {
+      if (!block || typeof block !== "object") continue;
+      const entry = block as Record<string, unknown>;
+      if (entry.type === "text" && typeof entry.text === "string") turn.content += entry.text;
+      if (entry.type === "tool_use") {
+        turn.toolCalls.push({
+          id: String(entry.id ?? crypto.randomUUID()),
+          name: String(entry.name ?? ""),
+          args: asRecord(entry.input),
+        });
+      }
+    }
+  } else if (protocol === "gemini") {
+    const candidates = Array.isArray(payload.candidates) ? payload.candidates : [];
+    const parts = ((candidates[0] as Record<string, unknown> | undefined)?.content as { parts?: unknown } | undefined)?.parts;
+    for (const [index, part] of (Array.isArray(parts) ? parts : []).entries()) {
+      if (!part || typeof part !== "object") continue;
+      const entry = part as Record<string, unknown>;
+      if (typeof entry.text === "string") turn.content += entry.text;
+      if (entry.functionCall && typeof entry.functionCall === "object") {
+        const call = entry.functionCall as Record<string, unknown>;
+        turn.toolCalls.push({
+          id: `gemini-${index}-${crypto.randomUUID()}`,
+          name: String(call.name ?? ""),
+          args: asRecord(call.args),
+        });
+      }
+    }
+  } else {
+    const message = (payload.message ?? {}) as Record<string, unknown>;
+    turn.content = typeof message.content === "string" ? message.content : "";
+    const calls = Array.isArray(message.tool_calls) ? message.tool_calls : [];
+    turn.toolCalls = calls.map((call: Record<string, unknown>, index) => {
+      const fn = (call.function ?? {}) as Record<string, unknown>;
+      return {
+        id: typeof call.id === "string" ? call.id : `ollama-${index}-${crypto.randomUUID()}`,
+        name: String(fn.name ?? ""),
+        args: asRecord(fn.arguments),
+      };
+    });
+  }
+  return { ok: response.ok, status: response.status, text, turn };
 }
 
 async function executeAgentTool(name: string, args: Record<string, unknown>): Promise<unknown> {
@@ -413,43 +785,11 @@ const AGENT_SYSTEM_PROMPT = `你是 TONIC-FL，一个乐理优先的 FL Studio 2
 5. 用中文回答：先结论，再依据，最后说明实际写入了什么。不要声称自己听到了声音。
 6. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。`;
 
-async function callChatCompletion(
-  config: ChatConfig,
-  messages: ChatMessage[],
-  useTools: boolean,
-): Promise<{ status: number; ok: boolean; data: unknown; text: string }> {
-  if (!config.baseUrl || !config.model) {
-    throw new Error("请先在面板设置里填写 LLM Base URL 与模型名。");
-  }
-  const endpoint = `${config.baseUrl.replace(/\/$/, "")}/chat/completions`;
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(config.apiKey ? { Authorization: `Bearer ${config.apiKey}` } : {}),
-    },
-    body: JSON.stringify({
-      model: config.model,
-      messages,
-      temperature: config.temperature ?? 0.3,
-      ...(useTools ? { tools: AGENT_TOOLS, tool_choice: "auto" } : {}),
-    }),
-    signal: AbortSignal.timeout(90_000),
-  });
-  const text = await response.text();
-  let data: unknown = null;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    data = null;
-  }
-  return { status: response.status, ok: response.ok, data, text };
-}
-
 async function runAgent(
   rawMessages: unknown,
   config: ChatConfig,
 ): Promise<{ content: string; trace: Array<Record<string, unknown>> }> {
+  const protocol = normalizeProtocol(config.protocol);
   const history = Array.isArray(rawMessages)
     ? rawMessages
         .filter(
@@ -459,78 +799,72 @@ async function runAgent(
             typeof (item as { content?: unknown }).content === "string",
         )
         .slice(-12)
-        .map((item) => ({ role: item.role, content: item.content }))
+        .map((item) => ({
+          role: (item.role === "assistant" ? "assistant" : "user") as "assistant" | "user",
+          content: item.content,
+        }))
     : [];
   const lastUser = [...history].reverse().find((item) => item.role === "user")?.content ?? "";
   const context = preSearchContext(lastUser);
-  const messages: ChatMessage[] = [
-    {
-      role: "system",
-      content: `${AGENT_SYSTEM_PROMPT}${context ? `\n\nTONIC 预检索（可继续调用工具核对）：\n${context}` : ""}`,
-    },
-    ...history.map((item) => ({
-      role: (item.role === "assistant" ? "assistant" : "user") as "assistant" | "user",
-      content: item.content,
-    })),
-  ];
+  const system = `${AGENT_SYSTEM_PROMPT}${context ? `
+
+TONIC 预检索（可继续调用工具核对）：
+${context}` : ""}`;
+  const messages: AgentMessage[] = history.map((item) => ({
+    role: item.role,
+    content: item.content,
+  }));
   const trace: Array<Record<string, unknown>> = [];
   let useTools = true;
   for (let round = 0; round < 6; round += 1) {
-    let response = await callChatCompletion(config, messages, useTools);
-    if (!response.ok && useTools && /tool|function/i.test(response.text)) {
+    let result = await requestModel(protocol, config, system, messages, useTools);
+    if (!result.ok && useTools && /tool|function/i.test(result.text)) {
       useTools = false;
-      response = await callChatCompletion(config, messages, false);
+      result = await requestModel(protocol, config, system, messages, false);
     }
-    if (!response.ok) {
-      throw new Error(`LLM 请求失败 (${response.status})：${response.text.slice(0, 500)}`);
+    if (!result.ok) {
+      throw new Error(
+        `LLM 请求失败 (${result.status}, ${protocol})：${result.text.slice(0, 500)}`,
+      );
     }
-    const data = response.data as {
-      choices?: Array<{
-        message?: {
-          content?: string | null;
-          tool_calls?: ChatMessage["tool_calls"];
-        };
-      }>;
-    };
-    const message = data.choices?.[0]?.message;
-    if (!message) throw new Error("LLM 返回为空。");
-    if (useTools && message.tool_calls?.length) {
+    if (useTools && result.turn.toolCalls.length) {
       messages.push({
         role: "assistant",
-        content: message.content ?? null,
-        tool_calls: message.tool_calls,
+        content: result.turn.content,
+        toolCalls: result.turn.toolCalls,
       });
-      for (const call of message.tool_calls) {
+      for (const call of result.turn.toolCalls) {
         let parsedArgs: Record<string, unknown> = {};
         try {
-          parsedArgs = JSON.parse(call.function.arguments || "{}") as Record<string, unknown>;
+          parsedArgs = call.args;
         } catch {
           parsedArgs = {};
         }
-        let result: unknown;
+        let toolResult: unknown;
         let ok = true;
         try {
-          result = await executeAgentTool(call.function.name, parsedArgs);
+          toolResult = await executeAgentTool(call.name, parsedArgs);
         } catch (error) {
           ok = false;
-          result = { error: error instanceof Error ? error.message : String(error) };
+          toolResult = { error: error instanceof Error ? error.message : String(error) };
         }
-        const serialized = JSON.stringify(result);
+        const serialized = JSON.stringify(toolResult);
         trace.push({
-          name: call.function.name,
+          name: call.name,
           args: parsedArgs,
           ok,
           preview: serialized.length > 400 ? `${serialized.slice(0, 400)}…` : serialized,
         });
         messages.push({
           role: "tool",
-          tool_call_id: call.id,
+          toolCallId: call.id,
+          toolName: call.name,
           content: serialized.length > 20_000 ? `${serialized.slice(0, 20_000)}…` : serialized,
         });
       }
       continue;
     }
-    return { content: message.content?.trim() || "（模型没有返回文本）", trace };
+    return { content: result.turn.content.trim() || "（模型没有返回文本）", trace };
   }
   return { content: "工具调用超过 6 轮，已停止。请缩小请求范围。", trace };
 }

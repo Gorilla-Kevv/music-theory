@@ -47,10 +47,42 @@
     localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
   }
 
+  const PROTOCOL_HINTS = {
+    "openai-chat": {
+      base: "https://api.openai.com/v1",
+      note: "标准 /chat/completions；多数国产兼容端点（如 Qwen compatible-mode）选这个。",
+    },
+    "openai-responses": {
+      base: "https://api.openai.com/v1",
+      note: "OpenAI Responses API：请求 /responses，支持 function_call 工具循环。",
+    },
+    anthropic: {
+      base: "https://api.anthropic.com",
+      note: "Anthropic Messages：服务端自动补 /v1/messages，使用 x-api-key 与 anthropic-version。",
+    },
+    gemini: {
+      base: "https://generativelanguage.googleapis.com",
+      note: "Google Gemini：服务端自动补 /v1beta/models/{model}:generateContent。",
+    },
+    ollama: {
+      base: "http://127.0.0.1:11434",
+      note: "Ollama 原生 /api/chat；本地模型可留空 API Key。",
+    },
+  };
+
+  function updateProtocolHint() {
+    const protocol = $("#cfg-protocol").value;
+    const hint = PROTOCOL_HINTS[protocol] ?? PROTOCOL_HINTS["openai-chat"];
+    $("#cfg-base").placeholder = hint.base;
+    $("#protocol-note").textContent = hint.note;
+  }
+
   function fillSettings() {
+    $("#cfg-protocol").value = state.config.protocol || "openai-chat";
     $("#cfg-base").value = state.config.baseUrl || "";
     $("#cfg-model").value = state.config.model || "";
     $("#cfg-key").value = state.config.apiKey || "";
+    updateProtocolHint();
   }
 
   function setTab(name) {
@@ -358,8 +390,11 @@
     }
   });
 
+  $("#cfg-protocol").addEventListener("change", updateProtocolHint);
+
   $("#save-settings").addEventListener("click", () => {
     saveConfig({
+      protocol: $("#cfg-protocol").value,
       baseUrl: $("#cfg-base").value.trim(),
       model: $("#cfg-model").value.trim(),
       apiKey: $("#cfg-key").value.trim(),

@@ -2,8 +2,8 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 37 已完成（FL Studio 2026 集成：MCP + CDP 桥 + Gopher 面板）
-- 下一阶段任务：把面板 Agent 接到用户实际 LLM；线上内容维护；图谱/可视化细节打磨
+- 当前正在开发任务：阶段 38 已完成（面板 Agent 多协议 LLM）
+- 下一阶段任务：用用户实际 Qwen/Claude/Gemini/Ollama 端点验证；线上内容维护；图谱/可视化细节打磨
 - 可提前进行的任务：更多 FL 组合动作（进行/音阶批量写入、通道/混音）、Agent 侧路径查询
 - 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写
 
@@ -177,3 +177,16 @@
 - 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
 - 下一阶段入口：把面板 Agent 接到用户实际 LLM；补更多 FL 组合动作（进行/音阶批量写入、通道/混音）；或把 FL 面板入口加到站点文档。
 - 本次文档更新时间：10.25 01:35
+
+## 阶段 38 面板 Agent 多协议 LLM [计划时间：10.25 20:40 BY solo-agent][完成时间：10.25 21:10 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 38.1 统一 Agent 消息/工具循环；新增协议适配器：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生；服务端按协议补端点、鉴权头与工具 schema。
+  - 38.2 面板设置新增「API 协议」下拉与协议提示（5 项），保存到 localStorage；默认 OpenAI Chat Completions；Qwen compatible-mode 可切换 OpenAI Responses 或 Chat Completions。
+  - 38.3 Responses 的 function_call/function_call_output、Anthropic 的 tool_use/tool_result、Gemini 的 functionCall/functionResponse、Ollama 的 tool_calls 均已解析；模型不支持工具时自动降级纯文本。
+  - 38.4 TONIC-FL.md、AGENTS、PRODUCT、站点 `/agent` 页同步多协议说明。
+- 测试：typecheck 通过；mock 端点五协议全部完成 `get_concept_sources` 工具循环并返回带 Levine locator 的回答；面板协议下拉 5 项、保存 `openai-responses`、Responses 聊天 UI 实测；FL 桥仍连接 48 工具。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 下一阶段入口：用用户实际 Qwen MaaS（`compatible-mode/v1`）/Claude/Gemini/Ollama 端点验证；补更多 FL 组合动作；线上维护。
+- 本次文档更新时间：10.25 21:10

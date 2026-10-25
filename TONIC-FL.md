@@ -54,9 +54,20 @@ npm run fl:bridge -- --launch-fl --panel
 
 **Agent**
 
-- 面板「设置」填写 OpenAI-compatible LLM：Base URL、模型名、API Key（本地模型可留空）；
-- 例如本地 `http://127.0.0.1:8080/v1` + 你的模型名；
-- Agent 会先查 TONIC，再回答或调用 `apply_example` / FL 工具；工具轨迹显示在对话下方；
+面板「设置」里的 **API 协议**支持五种，按端点实际协议选择：
+
+| 协议 | 请求端点 | Base URL 示例 | 鉴权 |
+|---|---|---|---|
+| OpenAI Chat Completions | `/chat/completions` | `https://api.openai.com/v1`；Qwen 兼容模式 `https://maas.qianwenai.../compatible-mode/v1` | `Authorization: Bearer` |
+| OpenAI Responses | `/responses` | 同上（需要服务端支持 Responses） | `Authorization: Bearer` |
+| Anthropic Messages | `/v1/messages` | `https://api.anthropic.com` | `x-api-key` |
+| Google Gemini | `/v1beta/models/{model}:generateContent` | `https://generativelanguage.googleapis.com` | `x-goog-api-key` |
+| Ollama 原生 | `/api/chat` | `http://127.0.0.1:11434` | 无（本地） |
+
+- Base URL 填到 `/v1` 即可，路径由面板按协议补齐；不要重复填 `/chat/completions` 等端点。
+- 模型名自由填写（如 `qwen3.8-max`、`claude-...`、`gemini-...`、`llama3.1`）。
+- Agent 会先查 TONIC，再回答或调用 `apply_example` / FL 工具；工具轨迹显示在对话下方。
+- OpenAI Chat / Responses / Anthropic / Gemini / Ollama 的工具调用都已适配；若模型不支持工具，自动降级为纯文本回答。
 - 配置只存本机 localStorage。
 
 ### 3. 外部 Agent（Qoder / Claude）
@@ -109,7 +120,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - FL 2026（`C:\Program Files\Image-Line\FL Studio 2026\FL64.exe`）启动后，CDP 目标为 Gopher WebView2，内置 MCP 返回 **48 个工具**。
 - 面板搜索 `ii–V–I` → 显示 5 条章节引用 → 写入 FL Keys 通道 → 读回 **15 个音符**（PPQ 96）。
 - 外部 MCP 的 `fl_status` / `fl_list_tools` / `apply_example` 全链路成功，读回 15 个音符。
-- 面板 Agent 用 mock OpenAI-compatible 端点验证工具循环：先调用 `get_concept_sources`，再返回带章节 locator 的回答。
+- 面板 Agent 用 mock 端点验证了 **五种协议**的工具循环：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生均先调用 `get_concept_sources`，再返回带章节 locator 的回答。
+- 面板设置里协议下拉、保存、OpenAI Responses 聊天链路已实测。
 
 ## 故障排查
 
@@ -119,7 +131,7 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 | 找不到 Gopher WebView | 打开 FL 的 Gopher 面板（Gopher / Alt+F1）；确认 FL 由桥启动或带 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` |
 | 9222 端口不出现 | 如果 FL 已在运行，先保存并关闭；重新用 `--launch-fl` 启动 |
 | 写入报 `target_channel` 错误 | 使用 `open_piano_roll_for_channel({"target_channel":"6"})` 或省略通道直接用当前钢琴卷帘 |
-| Agent 没反应 | 在面板「设置」填 LLM Base URL / 模型；确认端点兼容 `/chat/completions` |
+| Agent 没反应 | 在面板「设置」填 Base URL / 模型，并选择与端点匹配的 **API 协议**（Chat Completions / Responses / Anthropic / Gemini / Ollama） |
 | 想恢复官方 Gopher | 关闭并正常重启 FL，或在 Gopher 面板重新打开官方页面 |
 
 ## 边界与安全

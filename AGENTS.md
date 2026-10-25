@@ -134,7 +134,8 @@ src/content/
 - 写入规则：先 `get_fl_payload` 核对音符，再 `apply_example`（或 `fl_call_tool`）；`open_piano_roll_for_channel` 的参数是 `target_channel`（1-based 字符串/名称）；写后桥会用抛异常的方式读回 `fp.score.noteCount`，返回 `verifiedNotes`。
 - 知识规则不变：理论断言必须带章节级 locator；Agent 先查 TONIC，再操作 FL；MCP instructions 已写入这些约束。
 - 安全：桥只绑定 `127.0.0.1:5127`；不关闭用户 FL（无调试端口时提示保存后重启）；测试添加的通道/音符要清理；`run_piano_roll_script` 只对可信 Agent 开放。
-- 限制：FL API 不能加载插件/音频或渲染；面板 Agent 需要用户配置 OpenAI-compatible LLM；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。
+- 面板 Agent 的 LLM 层支持五种协议：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生；面板设置里选择协议并填 Base URL/模型/Key，服务端按协议补端点与工具格式。若模型不支持工具，自动降级纯文本回答。
+- 限制：FL API 不能加载插件/音频或渲染；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。
 
 ## 编辑与构建规则
 

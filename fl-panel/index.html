@@ -71,13 +71,22 @@
         <section id="tab-settings" class="panel">
           <h2>LLM 设置</h2>
           <p class="muted">
-            面板内的 Agent 使用 OpenAI-compatible <code>/chat/completions</code>。
-            设置只保存在本机 localStorage，不会写入仓库。
+            面板内的 Agent 支持多种协议；设置只保存在本机 localStorage，不会写入仓库。
           </p>
-          <label>Base URL<input id="cfg-base" placeholder="http://127.0.0.1:8080/v1" /></label>
+          <label>API 协议
+            <select id="cfg-protocol">
+              <option value="openai-chat">OpenAI Chat Completions</option>
+              <option value="openai-responses">OpenAI Responses</option>
+              <option value="anthropic">Anthropic Messages</option>
+              <option value="gemini">Google Gemini</option>
+              <option value="ollama">Ollama 原生</option>
+            </select>
+          </label>
+          <label>Base URL<input id="cfg-base" placeholder="https://api.openai.com/v1" /></label>
           <label>Model<input id="cfg-model" placeholder="例如 qwen2.5-7b-instruct" /></label>
           <label>API Key<input id="cfg-key" type="password" placeholder="本地模型可留空" /></label>
           <button id="save-settings" type="button">保存设置</button>
+          <p id="protocol-note" class="muted"></p>
           <p id="settings-note" class="muted"></p>
         </section>
       </main>

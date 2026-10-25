@@ -539,7 +539,8 @@ label {
   text-transform: uppercase;
 }
 
-label input {
+label input,
+label select {
   display: block;
   width: 100%;
   margin-top: 4px;
@@ -550,6 +551,11 @@ label input {
   font-size: 12px;
   letter-spacing: 0;
   text-transform: none;
+}
+
+label select:focus {
+  outline: 2px solid var(--cobalt);
+  outline-offset: -2px;
 }
 
 #save-settings {
