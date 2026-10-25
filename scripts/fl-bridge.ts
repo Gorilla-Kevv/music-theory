@@ -11,6 +11,8 @@ import {
 } from "../src/content";
 import { searchTheory } from "../src/lib/theory-api";
 import { FlCdp } from "./fl-cdp";
+import { buildArrangement, type ArrangementPartRequest } from "./arranger";
+import { analyzeWavBuffer } from "./audio-analyze";
 import {
   getFlPayload,
   listFlExamples,
@@ -185,14 +187,23 @@ function flResultText(result: unknown): string {
 
 function flResultJson<T>(result: unknown): T | null {
   const rawText = flResultText(result);
-  const candidates = [
-    rawText,
+  const candidates = new Set<string>([rawText]);
+  let nested = rawText;
+  for (let level = 0; level < 3; level += 1) {
+    nested = nested
+      .replace(/\\\\n/g, "\n")
+      .replace(/\\\\r/g, "\r")
+      .replace(/\\\\t/g, "\t")
+      .replace(/\\\\"/g, '"');
+    candidates.add(nested);
+  }
+  candidates.add(
     rawText
       .replace(/\\n/g, "\n")
       .replace(/\\r/g, "\r")
       .replace(/\\t/g, "\t")
       .replace(/\\"/g, '"'),
-  ];
+  );
   for (const candidate of candidates) {
     let text = candidate;
     for (let depth = 0; depth < 3; depth += 1) {
@@ -269,6 +280,249 @@ async function getSessionContext(): Promise<FlSessionContext> {
     throw new Error(`无法解析 FL session 快照：${flResultText(result).slice(0, 300)}`);
   }
   return data;
+}
+
+interface FlRoutingSend {
+  to_track?: number;
+  to_name?: string;
+  level?: number;
+}
+
+interface FlRoutingRow {
+  from_track?: number;
+  from_name?: string;
+  sends?: FlRoutingSend[];
+}
+
+interface RoutingEdge {
+  from: number;
+  fromName: string;
+  to: number;
+  toName: string;
+  level: number;
+}
+
+type RoutingNodeKind = "master" | "bus" | "return" | "strip" | "empty";
+
+interface RoutingNode {
+  index: number;
+  name: string;
+  kind: RoutingNodeKind;
+  channels: string[];
+  plugins: string[];
+  incomingSends: number;
+  outgoingSends: number;
+  reachableToMaster: boolean;
+}
+
+interface RoutingGraph {
+  nodes: RoutingNode[];
+  edges: RoutingEdge[];
+  buses: RoutingNode[];
+  returns: RoutingNode[];
+  cycles: string[];
+  maxDepth: number;
+}
+
+async function getRoutingMatrix(): Promise<FlRoutingRow[]> {
+  const result = await flCall("get_mixer_routing", {});
+  const data = flResultJson<FlRoutingRow[]>(result);
+  if (!Array.isArray(data)) {
+    throw new Error(`无法解析 FL 混音路由矩阵：${flResultText(result).slice(0, 300)}`);
+  }
+  return data;
+}
+
+function sessionRoutingMatrix(session: FlSessionContext): FlRoutingRow[] {
+  return (session.active_mixer_tracks ?? []).map((track) => ({
+    from_track: track.index,
+    from_name: track.name,
+    sends: track.sends,
+  }));
+}
+
+function buildRoutingGraph(
+  matrix: FlRoutingRow[],
+  channels: FlSessionChannel[],
+  mixerTracks: FlSessionMixerTrack[],
+): RoutingGraph {
+  const nodes = new Map<number, RoutingNode>();
+  for (const track of mixerTracks) {
+    nodes.set(track.index, {
+      index: track.index,
+      name: track.name || (track.index === 0 ? "Master" : `插入 ${track.index}`),
+      kind: track.index === 0 || track.is_master ? "master" : "empty",
+      channels: [],
+      plugins: (track.effect_plugins ?? [])
+        .map((plugin) => plugin.name)
+        .filter((name): name is string => Boolean(name)),
+      incomingSends: 0,
+      outgoingSends: 0,
+      reachableToMaster: track.index === 0 || track.is_master === true,
+    });
+  }
+  for (const row of matrix) {
+    const index = Number(row.from_track);
+    if (!Number.isFinite(index)) continue;
+    const current = nodes.get(index) ?? {
+      index,
+      name: row.from_name || `插入 ${index}`,
+      kind: index === 0 ? "master" : "empty",
+      channels: [],
+      plugins: [],
+      incomingSends: 0,
+      outgoingSends: 0,
+      reachableToMaster: index === 0,
+    };
+    current.name = row.from_name || current.name;
+    nodes.set(index, current);
+  }
+
+  const edges: RoutingEdge[] = [];
+  for (const row of matrix) {
+    const from = Number(row.from_track);
+    if (!Number.isFinite(from)) continue;
+    const fromNode = nodes.get(from);
+    for (const send of row.sends ?? []) {
+      const to = Number(send.to_track);
+      const level = Number(send.level ?? 0);
+      if (!Number.isFinite(to) || !Number.isFinite(level) || level <= 0.0001) continue;
+      edges.push({
+        from,
+        fromName: fromNode?.name ?? `插入 ${from}`,
+        to,
+        toName: send.to_name ?? nodes.get(to)?.name ?? (to === 0 ? "Master" : `插入 ${to}`),
+        level,
+      });
+      if (fromNode) fromNode.outgoingSends += 1;
+      const toNode = nodes.get(to);
+      if (toNode) toNode.incomingSends += 1;
+    }
+  }
+
+  for (const channel of channels) {
+    const target = channel.routed_to_mixer_track;
+    if (typeof target !== "number") continue;
+    const node = nodes.get(target);
+    if (node) node.channels.push(channel.name || `#${channel.index}`);
+  }
+
+  const adjacency = new Map<number, RoutingEdge[]>();
+  for (const edge of edges) {
+    const list = adjacency.get(edge.from) ?? [];
+    list.push(edge);
+    adjacency.set(edge.from, list);
+  }
+
+  const canReachMaster = (start: number): boolean => {
+    if (start === 0) return true;
+    const visited = new Set<number>();
+    const stack = [start];
+    while (stack.length) {
+      const current = stack.pop()!;
+      if (current === 0) return true;
+      if (visited.has(current)) continue;
+      visited.add(current);
+      for (const edge of adjacency.get(current) ?? []) stack.push(edge.to);
+    }
+    return false;
+  };
+
+  const depthToMaster = new Map<number, number>();
+  const measureDepth = (start: number, visiting: Set<number>): number => {
+    if (start === 0) return 0;
+    if (depthToMaster.has(start)) return depthToMaster.get(start)!;
+    if (visiting.has(start)) return 0;
+    visiting.add(start);
+    let best = -1;
+    for (const edge of adjacency.get(start) ?? []) {
+      const child = measureDepth(edge.to, visiting);
+      if (child >= 0) best = Math.max(best, child + 1);
+    }
+    visiting.delete(start);
+    depthToMaster.set(start, best);
+    return best;
+  };
+
+  const cycles = new Set<string>();
+  const color = new Map<number, 0 | 1 | 2>();
+  const stack: number[] = [];
+  const visit = (node: number): void => {
+    color.set(node, 1);
+    stack.push(node);
+    for (const edge of adjacency.get(node) ?? []) {
+      const state = color.get(edge.to) ?? 0;
+      if (state === 1) {
+        const start = stack.indexOf(edge.to);
+        const cycleNodes = stack.slice(start >= 0 ? start : 0).concat(edge.to);
+        cycles.add(cycleNodes.map((index) => nodes.get(index)?.name ?? String(index)).join(" → "));
+      } else if (state === 0) {
+        visit(edge.to);
+      }
+    }
+    stack.pop();
+    color.set(node, 2);
+  };
+  for (const index of nodes.keys()) {
+    if ((color.get(index) ?? 0) === 0) visit(index);
+  }
+
+  let maxDepth = 0;
+  for (const node of nodes.values()) {
+    node.reachableToMaster = canReachMaster(node.index);
+    const depth = measureDepth(node.index, new Set());
+    if (depth > maxDepth) maxDepth = depth;
+    if (node.index === 0) {
+      node.kind = "master";
+      continue;
+    }
+    const outgoingToNonMaster = (adjacency.get(node.index) ?? []).some((edge) => edge.to !== 0);
+    if (node.channels.length > 0 && (node.channels.length > 1 || outgoingToNonMaster || !isDefaultMixerName(node.name))) {
+      node.kind = "bus";
+    } else if (node.channels.length === 0 && node.incomingSends > 0) {
+      node.kind = "return";
+    } else if (node.channels.length > 0) {
+      node.kind = "strip";
+    } else {
+      node.kind = "empty";
+    }
+  }
+
+  const sortedNodes = [...nodes.values()].sort((a, b) => a.index - b.index);
+  return {
+    nodes: sortedNodes,
+    edges,
+    buses: sortedNodes.filter((node) => node.kind === "bus"),
+    returns: sortedNodes.filter((node) => node.kind === "return"),
+    cycles: [...cycles],
+    maxDepth,
+  };
+}
+
+function isMasterToken(token: string): boolean {
+  return /^(0|master|master track|主|主轨)$/i.test(token.trim());
+}
+
+function findMixerTrack(
+  session: FlSessionContext,
+  token: string,
+): FlSessionMixerTrack | undefined {
+  const numeric = Number(token);
+  return (session.active_mixer_tracks ?? []).find((track) =>
+    isMasterToken(token)
+      ? track.index === 0 || track.is_master === true
+      : track.name === token || (Number.isFinite(numeric) && track.index === numeric),
+  );
+}
+
+function findRoutingRow(matrix: FlRoutingRow[], token: string): FlRoutingRow | undefined {
+  const numeric = Number(token);
+  return matrix.find(
+    (row) =>
+      (isMasterToken(token) && row.from_track === 0) ||
+      row.from_name === token ||
+      (Number.isFinite(numeric) && row.from_track === numeric),
+  );
 }
 
 function sourceLabel(source: string): string {
@@ -352,6 +606,13 @@ async function sessionReport() {
   const session = await getSessionContext();
   const channels = session.active_channels ?? [];
   const mixerTracks = session.active_mixer_tracks ?? [];
+  let routingMatrix = sessionRoutingMatrix(session);
+  try {
+    routingMatrix = await getRoutingMatrix();
+  } catch {
+    // session 快照里的 sends 作为回退；矩阵工具失败时不阻断整个报告。
+  }
+  const routingGraph = buildRoutingGraph(routingMatrix, channels, mixerTracks);
   const routed = new Map<number, string[]>();
   const usedMixerIndexes = new Set<number>([0]);
   for (const channel of channels) {
@@ -392,6 +653,82 @@ async function sessionReport() {
         suggestion: "在 FL 通道机架重命名，或用索引操作。",
       });
     }
+    const track = mixerTracks.find((item) => item.index === channel.routed_to_mixer_track);
+    if (
+      typeof channel.volume_db === "number" &&
+      channel.volume_db >= -0.05 &&
+      (track?.volume_db ?? 0) > 0.5
+    ) {
+      findings.push({
+        code: "channel-gain-stack",
+        severity: "risk",
+        message: `通道「${channel.name || `#${channel.index}`}」在 0 dB，且下游「${track?.name ?? "混音器"}」推子为 +${(track?.volume_db ?? 0).toFixed(1)} dB，增益叠加（实际峰值未测量）。`,
+        evidence: `channel ${channel.index} → mixer ${track?.index ?? "?"}`,
+        suggestion: "先把通道或混音器推子降回 0 dB，再用 WAV 分析确认峰值与 LUFS。",
+      });
+    }
+    if (typeof channel.volume_db === "number" && channel.volume_db <= -24) {
+      findings.push({
+        code: "channel-quiet",
+        severity: "info",
+        message: `通道「${channel.name || `#${channel.index}`}」电平很低（${channel.volume_db.toFixed(1)} dB），检查是否靠下游增益补偿。`,
+        evidence: `channel ${channel.index}`,
+      });
+    }
+    if (Math.abs(channel.pan ?? 0) >= 0.95) {
+      findings.push({
+        code: "channel-hard-pan",
+        severity: "info",
+        message: `通道「${channel.name || `#${channel.index}`}」几乎硬声像（${(channel.pan ?? 0).toFixed(2)}）。`,
+        evidence: `channel ${channel.index}`,
+      });
+    }
+  }
+
+  for (const cycle of routingGraph.cycles) {
+    findings.push({
+      code: "routing-cycle",
+      severity: "risk",
+      message: `混音发送存在环路：${cycle}。`,
+      suggestion: "用 fl_send 关闭环路中的一条发送；反馈环路可能导致失控增益。",
+    });
+  }
+  for (const node of routingGraph.nodes) {
+    const receivesSignal = node.channels.length > 0 || node.incomingSends > 0;
+    if (node.index !== 0 && receivesSignal && !node.reachableToMaster) {
+      findings.push({
+        code: "routing-dead-end",
+        severity: "risk",
+        message: `「${node.name}」有输入但没有任何路径到主轨，声音会被丢弃。`,
+        evidence: `mixer ${node.index}`,
+        suggestion: "用 fl_send 把它或它的上游接回主轨/总线。",
+      });
+    }
+  }
+  for (const edge of routingGraph.edges) {
+    if (edge.from === edge.to) {
+      findings.push({
+        code: "send-to-self",
+        severity: "risk",
+        message: `「${edge.fromName}」发送到自身，可能形成反馈。`,
+        evidence: `mixer ${edge.from} → ${edge.to}`,
+        suggestion: "关闭这条自发发送。",
+      });
+    } else if (edge.to !== 0 && edge.level >= 0.999) {
+      findings.push({
+        code: "send-full",
+        severity: "info",
+        message: `「${edge.fromName}」以 100% 发送到「${edge.toName}」，会与干声并行叠加。`,
+        evidence: `mixer ${edge.from} → ${edge.to}`,
+      });
+    }
+  }
+  if (routingGraph.maxDepth > 3) {
+    findings.push({
+      code: "routing-deep",
+      severity: "info",
+      message: `混音路由最深 ${routingGraph.maxDepth} 级才到主轨，排查链路时要注意上下游顺序。`,
+    });
   }
 
   const master = mixerTracks.find((track) => track.index === 0 || track.is_master);
@@ -475,7 +812,7 @@ async function sessionReport() {
     ok: true,
     measurementAvailable: false,
     measurementNote:
-      "这是基于推子、声像、路由、插件链的结构诊断；FL 内置 MCP 不提供峰值/LUFS/频谱，不能用它判断真实响度或削波。",
+      "这是基于推子、声像、路由拓扑、插件链与通道电平的结构诊断；FL 内置 MCP 不提供峰值/LUFS/频谱。需要真实响度时，先在 FL 导出 WAV，再用 analyze_audio 分析。",
     tempoBpm: session.tempo_bpm ?? null,
     channelCount: channels.length,
     mixerTrackCount: mixerTracks.length,
@@ -484,6 +821,22 @@ async function sessionReport() {
       channelIndex: channel.index,
       mixerTrack: channel.routed_to_mixer_track ?? null,
     })),
+    channelLevels: channels.map((channel) => ({
+      channel: channel.name,
+      channelIndex: channel.index,
+      volumeDb: channel.volume_db ?? null,
+      pan: channel.pan ?? null,
+      mixerTrack: channel.routed_to_mixer_track ?? null,
+      generator: channel.generator_plugin ?? null,
+    })),
+    routingGraph: {
+      nodes: routingGraph.nodes,
+      edges: routingGraph.edges,
+      buses: routingGraph.buses,
+      returns: routingGraph.returns,
+      cycles: routingGraph.cycles,
+      maxDepth: routingGraph.maxDepth,
+    },
     master: master
       ? {
           name: master.name,
@@ -499,6 +852,288 @@ async function sessionReport() {
       info: findings.filter((item) => item.severity === "info").length,
     },
   };
+}
+
+async function mixerRoutingReport() {
+  const session = await getSessionContext();
+  const matrix = await getRoutingMatrix();
+  const graph = buildRoutingGraph(
+    matrix,
+    session.active_channels ?? [],
+    session.active_mixer_tracks ?? [],
+  );
+  return {
+    ok: true,
+    measurementAvailable: false,
+    measurementNote:
+      "路由拓扑来自 FL 的 send/receive 矩阵；不含真实峰值/LUFS。电平诊断请结合 analyze_audio 分析导出的 WAV。",
+    tempoBpm: session.tempo_bpm ?? null,
+    channelCount: (session.active_channels ?? []).length,
+    mixerTrackCount: (session.active_mixer_tracks ?? []).length,
+    graph,
+    matrix: matrix.map((row) => ({
+      from: row.from_track ?? null,
+      fromName: row.from_name ?? null,
+      sends: (row.sends ?? [])
+        .filter((send) => (send.level ?? 0) > 0.0001)
+        .map((send) => ({
+          to: send.to_track ?? null,
+          toName: send.to_name ?? null,
+          level: send.level ?? null,
+        })),
+    })),
+  };
+}
+
+interface SendChange {
+  source: string;
+  dest: string;
+  active: boolean;
+  level: number;
+}
+
+function normalizeSendChanges(input: Record<string, unknown>): SendChange[] {
+  const raw = Array.isArray(input.sends)
+    ? input.sends
+    : [{ source: input.source, dest: input.dest, active: input.active, level: input.level }];
+  return raw.map((item) => {
+    if (!item || typeof item !== "object") throw new Error("发送路由格式无效。");
+    const entry = item as Record<string, unknown>;
+    const source = String(entry.source ?? "");
+    const dest = String(entry.dest ?? "");
+    if (!source.trim() || !dest.trim()) throw new Error("每条发送需要 source 与 dest。");
+    const active = entry.active === undefined ? true : Boolean(entry.active);
+    const level = entry.level === undefined ? 1 : Number(entry.level);
+    if (!Number.isFinite(level) || level < 0 || level > 1) {
+      throw new Error(`发送电平必须在 0–1：${entry.level}`);
+    }
+    return { source, dest, active, level: active ? level : 0 };
+  });
+}
+
+async function setSends(input: Record<string, unknown>) {
+  const changes = normalizeSendChanges(input);
+  const session = await getSessionContext();
+  const beforeMatrix = await getRoutingMatrix();
+  const canReach = (from: number, to: number, visited = new Set<number>()): boolean => {
+    if (from === to) return true;
+    if (visited.has(from)) return false;
+    visited.add(from);
+    const row = beforeMatrix.find((item) => item.from_track === from);
+    return (row?.sends ?? []).some(
+      (send) =>
+        (send.level ?? 0) > 0.0001 &&
+        typeof send.to_track === "number" &&
+        canReach(send.to_track, to, visited),
+    );
+  };
+  for (const change of changes) {
+    const source = findMixerTrack(session, change.source);
+    const dest = findMixerTrack(session, change.dest);
+    if (!source) throw new Error(`找不到源混音器轨道：${change.source}`);
+    if (!dest) throw new Error(`找不到目标混音器轨道：${change.dest}`);
+    if (source.index === 0 || source.is_master) {
+      throw new Error("不能从主轨创建发送；请选择插入轨道。");
+    }
+    if (source.index === dest.index) throw new Error("发送的源和目标不能相同。");
+    if (change.active && canReach(dest.index, source.index)) {
+      throw new Error(
+        `发送 ${change.source} → ${change.dest} 会形成反馈环路；如确实需要，请用 fl_call_tool 直接设置。`,
+      );
+    }
+  }
+
+  const results: Array<Record<string, unknown>> = [];
+  for (const change of changes) {
+    results.push({
+      ...change,
+      result: await flCall("set_mixer_routing", {
+        source_track: change.source,
+        dest_track: change.dest,
+        active: change.active ? 1 : 0,
+        level: change.level,
+      }),
+    });
+  }
+
+  const afterSession = await getSessionContext();
+  const matrix = await getRoutingMatrix();
+  const verified = changes.map((change) => {
+    const source = findMixerTrack(afterSession, change.source);
+    const dest = findMixerTrack(afterSession, change.dest);
+    const row = matrix.find((item) => item.from_track === source?.index);
+    const edge = row?.sends?.find((send) => send.to_track === dest?.index);
+    const actualLevel = edge?.level ?? 0;
+    return {
+      source: change.source,
+      dest: change.dest,
+      expectedActive: change.active,
+      expectedLevel: change.level,
+      actualLevel: edge ? actualLevel : null,
+      verified: change.active
+        ? Boolean(edge) && Math.abs(actualLevel - change.level) <= 0.02
+        : !edge || actualLevel <= 0.001,
+    };
+  });
+  return { ok: verified.every((item) => item.verified), results, verified };
+}
+
+interface BusSpec {
+  name: string;
+  mixerTrack: string;
+  channels: string;
+  masterLevel?: number;
+  allowExisting: boolean;
+}
+
+function normalizeBusSpecs(input: Record<string, unknown>): BusSpec[] {
+  const raw = Array.isArray(input.buses)
+    ? input.buses
+    : [{ name: input.name, mixerTrack: input.mixerTrack, channels: input.channels }];
+  return raw.map((item) => {
+    if (!item || typeof item !== "object") throw new Error("总线格式无效。");
+    const entry = item as Record<string, unknown>;
+    const name = String(entry.name ?? "").trim();
+    const mixerTrack = String(entry.mixerTrack ?? "").trim();
+    if (!name || !mixerTrack) throw new Error("每条总线需要 name 与 mixerTrack。");
+    if (!/^[\x20-\x7e]+$/.test(name)) {
+      throw new Error("总线名请使用 ASCII；FL 的 rename_mixer_tracks 经 CDP 对非 ASCII 名称会乱码。");
+    }
+    const channels = Array.isArray(entry.channels)
+      ? entry.channels.map(String).join(",")
+      : String(entry.channels ?? "");
+    const tokens = channels
+      .split(",")
+      .map((token) => token.trim())
+      .filter(Boolean);
+    if (tokens.some((token) => /^(all|selected)$/i.test(token))) {
+      throw new Error("fl_bus 不接受 all/selected，请列出具体通道。");
+    }
+    const masterLevel =
+      entry.masterLevel === undefined ? undefined : Number(entry.masterLevel);
+    if (
+      masterLevel !== undefined &&
+      (!Number.isFinite(masterLevel) || masterLevel < 0 || masterLevel > 1)
+    ) {
+      throw new Error(`masterLevel 必须在 0–1：${entry.masterLevel}`);
+    }
+    return {
+      name,
+      mixerTrack,
+      channels: tokens.join(","),
+      masterLevel,
+      allowExisting: entry.allowExisting === true,
+    };
+  });
+}
+
+async function setupBuses(input: Record<string, unknown>) {
+  const specs = normalizeBusSpecs(input);
+  const prepared: Array<Record<string, unknown>> = [];
+  for (const spec of specs) {
+    const session = await getSessionContext();
+    const target = findMixerTrack(session, spec.mixerTrack);
+    if (!target) throw new Error(`找不到混音器轨道：${spec.mixerTrack}`);
+    if (target.index === 0 || target.is_master) throw new Error("不能把主轨当作总线。");
+    const duplicate = (session.active_mixer_tracks ?? []).find(
+      (track) => track.index !== target.index && track.name === spec.name,
+    );
+    if (duplicate) throw new Error(`混音器轨道名已被占用：${spec.name}`);
+    const existingChannels = (session.active_channels ?? [])
+      .filter((channel) => channel.routed_to_mixer_track === target.index)
+      .map((channel) => channel.name || `#${channel.index}`);
+    const existingPlugins = target.effect_plugins ?? [];
+    const pristine =
+      isDefaultMixerName(target.name) &&
+      existingChannels.length === 0 &&
+      existingPlugins.length === 0;
+    if (!pristine && !spec.allowExisting) {
+      throw new Error(
+        `混音器 ${target.index}「${target.name}」已有内容（${existingChannels.length} 通道 / ${existingPlugins.length} 插件）；如确认要改，传 allowExisting: true。`,
+      );
+    }
+    if (spec.channels) {
+      for (const token of spec.channels.split(",").map((item) => item.trim()).filter(Boolean)) {
+        const channel = (session.active_channels ?? []).find(
+          (entry) => entry.name === token || String(entry.index) === token,
+        );
+        if (!channel) throw new Error(`找不到要路由的通道：${token}`);
+      }
+    }
+    await flCall("rename_mixer_tracks", {
+      track_mapping: JSON.stringify({ [target.index]: spec.name }),
+    });
+    if (spec.channels) {
+      await flCall("route_channels_to_mixer", {
+        target_channels: spec.channels,
+        mixer_track_target: String(target.index),
+      });
+    }
+    const matrixBefore = await getRoutingMatrix();
+    const row = matrixBefore.find((item) => item.from_track === target.index);
+    const masterEdge = row?.sends?.find((send) => send.to_track === 0);
+    const masterLevel = spec.masterLevel ?? masterEdge?.level ?? 0.8;
+    if (!masterEdge || spec.masterLevel !== undefined) {
+      await flCall("set_mixer_routing", {
+        source_track: String(target.index),
+        dest_track: "0",
+        active: 1,
+        level: masterLevel,
+      });
+    }
+    prepared.push({
+      name: spec.name,
+      mixerTrack: spec.mixerTrack,
+      targetIndex: target.index,
+      previousName: target.name,
+      channels: spec.channels,
+      masterLevel,
+    });
+  }
+
+  const afterSession = await getSessionContext();
+  const matrixAfter = await getRoutingMatrix();
+  const verified = prepared.map((item) => {
+    const track = (afterSession.active_mixer_tracks ?? []).find(
+      (entry) => entry.index === Number(item.targetIndex),
+    );
+    const channelTokens = String(item.channels ?? "")
+      .split(",")
+      .map((token) => token.trim())
+      .filter(Boolean);
+    const channelChecks = channelTokens.map((token) => {
+      const channel = (afterSession.active_channels ?? []).find(
+        (entry) => entry.name === token || String(entry.index) === token,
+      );
+      return {
+        channel: token,
+        matched: Boolean(channel),
+        actualMixerTrack: channel?.routed_to_mixer_track ?? null,
+        verified:
+          Boolean(channel) &&
+          channel?.routed_to_mixer_track === Number(item.targetIndex),
+      };
+    });
+    const row = matrixAfter.find((entry) => entry.from_track === Number(item.targetIndex));
+    const masterEdge = row?.sends?.find((send) => send.to_track === 0);
+    return {
+      name: item.name,
+      mixerTrack: item.mixerTrack,
+      targetIndex: item.targetIndex,
+      previousName: item.previousName,
+      nameVerified: track?.name === item.name,
+      masterSendVerified:
+        Boolean(masterEdge) &&
+        Math.abs((masterEdge?.level ?? 0) - Number(item.masterLevel)) <= 0.02,
+      channels: channelChecks,
+      verified:
+        track?.name === item.name &&
+        Boolean(masterEdge) &&
+        Math.abs((masterEdge?.level ?? 0) - Number(item.masterLevel)) <= 0.02 &&
+        channelChecks.every((check) => check.verified),
+    };
+  });
+  return { ok: verified.every((item) => item.verified), buses: verified };
 }
 
 interface RouteAssignment {
@@ -797,6 +1432,73 @@ async function compose(input: Record<string, unknown>) {
   };
 }
 
+async function arrange(input: Record<string, unknown>) {
+  const parts: ArrangementPartRequest[] = Array.isArray(input.parts)
+    ? (input.parts as Array<Record<string, unknown>>).map((part) => ({
+        role: String(part.role ?? "") as ArrangementPartRequest["role"],
+        channel:
+          typeof part.channel === "string" || typeof part.channel === "number"
+            ? part.channel
+            : undefined,
+        range:
+          Array.isArray(part.range) && part.range.length === 2
+            ? [Number(part.range[0]), Number(part.range[1])]
+            : undefined,
+        mode: part.mode === "append" ? "append" : part.mode === "replace" ? "replace" : undefined,
+        startBeat: typeof part.startBeat === "number" ? part.startBeat : undefined,
+        transpose: typeof part.transpose === "number" ? part.transpose : undefined,
+        velocity: typeof part.velocity === "number" ? part.velocity : undefined,
+        pattern:
+          typeof part.pattern === "string"
+            ? (part.pattern as ArrangementPartRequest["pattern"])
+            : undefined,
+      }))
+    : [];
+  const plan = buildArrangement({
+    conceptSlug: typeof input.conceptSlug === "string" ? input.conceptSlug : undefined,
+    exampleId: typeof input.exampleId === "string" ? input.exampleId : undefined,
+    startBeat: typeof input.startBeat === "number" ? input.startBeat : 0,
+    mode: input.mode === "append" ? "append" : "replace",
+    parts,
+  });
+  if (input.write !== true) {
+    return { ok: true, written: false, note: "未写入；传 write: true 才写 FL。", ...plan };
+  }
+  const missing = plan.parts.filter((part) => part.channel === undefined);
+  if (missing.length) {
+    throw new Error(`写入需要每个声部都有 channel；缺少：${missing.map((part) => part.role).join(" / ")}`);
+  }
+  const writeResult = await compose({
+    mode: input.mode === "append" ? "append" : "replace",
+    parts: plan.parts.map((part) => ({
+      channel: part.channel,
+      notes: part.notes,
+      mode: part.mode,
+    })),
+  });
+  return { ok: writeResult.ok, written: true, ...plan, writeResult };
+}
+
+const MAX_AUDIO_BYTES = 200 * 1024 * 1024;
+
+async function analyzeAudio(input: Record<string, unknown>) {
+  let buffer: Buffer;
+  let file: string | null = null;
+  if (typeof input.path === "string" && input.path.trim()) {
+    file = resolve(input.path);
+    buffer = await readFile(file);
+  } else if (typeof input.base64 === "string" && input.base64.trim()) {
+    buffer = Buffer.from(input.base64, "base64");
+    file = typeof input.filename === "string" ? input.filename : null;
+  } else {
+    throw new Error("需要 path（本机 WAV 路径）或 base64（面板上传）。");
+  }
+  if (buffer.length > MAX_AUDIO_BYTES) {
+    throw new Error(`WAV 超过 ${MAX_AUDIO_BYTES / 1024 / 1024} MB，请先缩短或降低采样率。`);
+  }
+  return analyzeWavBuffer(buffer, file);
+}
+
 const AGENT_TOOLS = [
   {
     type: "function",
@@ -1022,6 +1724,129 @@ const AGENT_TOOLS = [
           mode: { type: "string", enum: ["append", "replace"] },
         },
         required: ["parts"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_mixer_routing",
+      description:
+        "只读：读取完整混音发送矩阵、总线/返回轨、环路、死端与最深路由层级。",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_send",
+      description:
+        "创建/修改/移除混音器发送。sends 例：[{source:'6',dest:'10',active:true,level:0.5}]；读写后都会验证。会修改工程。",
+      parameters: {
+        type: "object",
+        properties: {
+          sends: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                source: { type: "string", description: "源混音器轨道名或编号" },
+                dest: { type: "string", description: "目标混音器轨道名或编号（Master=0）" },
+                active: { type: "boolean" },
+                level: { type: "number", description: "0–1 发送电平" },
+              },
+              required: ["source", "dest"],
+            },
+          },
+        },
+        required: ["sends"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_bus",
+      description:
+        "安全建立总线：重命名混音器轨道、把通道路由到总线、确保总线回到主轨。buses 例：[{name:'Drums',mixerTrack:'16',channels:'Kick,Snare'}]；默认拒绝覆盖已有内容的轨道。",
+      parameters: {
+        type: "object",
+        properties: {
+          buses: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                name: { type: "string" },
+                mixerTrack: { type: "string" },
+                channels: { type: "string", description: "逗号分隔的通道名或索引" },
+                masterLevel: { type: "number", description: "0–1，省略则保留现有主发送" },
+                allowExisting: { type: "boolean", description: "允许覆盖非空/已命名轨道" },
+              },
+              required: ["name", "mixerTrack"],
+            },
+          },
+        },
+        required: ["buses"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "fl_arrange",
+      description:
+        "把 TONIC 谱例展开成多声部：bass/comp/pad/melody/arp，支持音域、移调、节奏型。默认只预览；write:true 才写入多个钢琴卷帘。不会自动创建通道。",
+      parameters: {
+        type: "object",
+        properties: {
+          conceptSlug: { type: "string" },
+          exampleId: { type: "string" },
+          startBeat: { type: "number" },
+          mode: { type: "string", enum: ["append", "replace"] },
+          write: { type: "boolean", description: "true 时写入 FL；每段必须有 channel" },
+          parts: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                role: { type: "string", enum: ["bass", "comp", "pad", "melody", "arp"] },
+                channel: { type: "string", description: "通道名或 1-based 索引" },
+                range: {
+                  type: "array",
+                  items: { type: "number" },
+                  description: "[低, 高] MIDI 音域",
+                },
+                pattern: {
+                  type: "string",
+                  description: "bass: roots/root-fifth/pulse；comp/pad: sustain/half/quarter/eighth",
+                },
+                transpose: { type: "number" },
+                velocity: { type: "number" },
+                mode: { type: "string", enum: ["append", "replace"] },
+                startBeat: { type: "number" },
+              },
+              required: ["role"],
+            },
+          },
+        },
+        required: ["parts"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "analyze_audio",
+      description:
+        "分析导出的 WAV：sample peak、RMS、BS.1770 integrated LUFS、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/IEEE float WAV。",
+      parameters: {
+        type: "object",
+        properties: {
+          path: { type: "string", description: "本机 WAV 绝对路径" },
+          base64: { type: "string", description: "WAV 文件的 base64（面板上传时用）" },
+          filename: { type: "string" },
+        },
       },
     },
   },
@@ -1463,6 +2288,16 @@ async function executeAgentTool(name: string, args: Record<string, unknown>): Pr
       return writeNotes(args);
     case "fl_compose":
       return compose(args);
+    case "fl_mixer_routing":
+      return mixerRoutingReport();
+    case "fl_send":
+      return setSends(args);
+    case "fl_bus":
+      return setupBuses(args);
+    case "fl_arrange":
+      return arrange(args);
+    case "analyze_audio":
+      return analyzeAudio(args);
     default:
       throw new Error(`Unknown tool: ${name}`);
   }
@@ -1483,10 +2318,10 @@ const AGENT_SYSTEM_PROMPT = `你是 TONIC-FL，一个乐理优先的 FL Studio 2
 规则：
 1. 回答理论问题前先调用 search_theory；需要解释或引用时调用 get_concept / get_concept_sources。
 2. 每条理论断言必须带工具返回的章节级 locator，不能编造引用或页码。
-3. 用户要写钢琴卷帘时，先 get_fl_payload 或直接 apply_example；多通道/多段作曲用 fl_compose，原始音符用 fl_write_notes；不要凭空发明 MIDI 音符。
-4. 混音/路由改动前先调用 fl_session_report；用 fl_route 路由、fl_set_levels 调整绝对电平/声像/静音/独奏。这些会修改工程，执行前说明，执行后报告 verified 结果。
+3. 用户要写钢琴卷帘时，先 get_fl_payload 或直接 apply_example；多通道/多段作曲用 fl_compose，多声部编配用 fl_arrange（默认只预览，write:true 才写入），原始音符用 fl_write_notes；不要凭空发明 MIDI 音符。
+4. 混音/路由改动前先调用 fl_session_report 或 fl_mixer_routing；用 fl_route 路由通道、fl_bus 建总线、fl_send 建发送、fl_set_levels 调整绝对电平/声像/静音/独奏。这些会修改工程，执行前说明，执行后报告 verified 结果。
 5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；执行前说明意图。
-6. fl_session_report 的诊断基于推子/声像/路由/插件链，不包含峰值/LUFS；不要声称已测量响度或削波。
+6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV。
 7. 用中文回答：先结论，再依据，最后说明实际写入了什么。不要声称自己听到了声音。
 8. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。`;
 
@@ -1655,8 +2490,28 @@ const server = createServer(async (req, res) => {
       json(res, 200, { tools: lastTools });
       return;
     }
+    if (req.method === "POST" && url.pathname === "/api/audio/analyze") {
+      json(res, 200, await analyzeAudio(await readJson(req)));
+      return;
+    }
     if (req.method === "GET" && url.pathname === "/api/fl/report") {
       json(res, 200, await sessionReport());
+      return;
+    }
+    if (req.method === "GET" && url.pathname === "/api/fl/routing") {
+      json(res, 200, await mixerRoutingReport());
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/send") {
+      json(res, 200, await setSends(await readJson(req)));
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/bus") {
+      json(res, 200, await setupBuses(await readJson(req)));
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/fl/arrange") {
+      json(res, 200, await arrange(await readJson(req)));
       return;
     }
     if (req.method === "POST" && url.pathname === "/api/fl/route") {

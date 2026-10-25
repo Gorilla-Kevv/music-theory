@@ -2,10 +2,10 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 39 已完成（FL 操作封装层：结构诊断/路由/电平/多段写入）
-- 下一阶段任务：真实音频测量/Mix Doctor（导出音频后分析）；用用户实际 LLM 端点验证；线上维护
-- 可提前进行的任务：更多编曲动作（音阶/琶音批量写入、曲式模板）、Agent 侧路径查询
-- 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写
+- 当前正在开发任务：阶段 41 已完成（混音诊断/路由总线/多轨编配/WAV 分析）
+- 下一阶段任务：true peak/频谱/LRA 与混音目标评估；用户实际 LLM 端点验证；线上内容维护
+- 可提前进行的任务：更多编曲模板（鼓组/节奏型）、混音参考曲线、Agent 侧路径查询
+- 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写；VST3 未排期
 
 ## 已完成阶段简表（1–28，详见 git log 与各阶段提交）
 
@@ -222,3 +222,21 @@
 - 边界：未做 VST3；FL 没有公开的第三方工具栏按钮 API，快速启动靠 bat/桌面快捷方式。
 - 下一阶段入口：用户实际 LLM 端点验证；真实音频测量/Mix Doctor；若要做常驻启动器，优先 Tauri/Electron 托盘。
 - 本次文档更新时间：10.25 22:05
+
+## 阶段 41 混音诊断 / 路由总线 / 多轨编配 / WAV 分析 [计划时间：10.25 22:30 BY solo-agent][完成时间：10.25 23:40 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 41.1 修复 `get_mixer_routing` 的多重转义解析（`flResultJson` 逐级 unescape）；`fl_session_report` 加入通道电平/硬声像/增益叠加、总线/返回轨、发送矩阵、环路、死端、最深路由层级。
+  - 41.2 新增只读 `fl_mixer_routing`；新增写入工具 `fl_send`（按矩阵验证发送 level/关闭，默认拒绝反馈环路）与 `fl_bus`（重命名、通道路由、回主发送；默认拒绝覆盖非空轨道，总线名限制 ASCII 以避免 FL 改名乱码）。
+  - 41.3 新增 `scripts/arranger.ts` 与 `fl_arrange`：从 TONIC 谱例生成 bass/comp/pad/melody/arp；低音按原谱最低音、comp/pad 按音域折叠并就近连接、melody 取和弦音就近、arp 八分循环；默认预览，`write:true` 才写，必须显式 channel。
+  - 41.4 新增 `scripts/audio-analyze.ts` 与 CLI `audio:analyze`：解析 PCM 8/16/24/32-bit 与 IEEE float 32/64，计算 sample peak、RMS、crest、DC、削波、立体声相关/宽度、ITU-R BS.1770-4 integrated LUFS 与 short-term max。面板 FL 标签新增 WAV 上传分析；MCP 新增 `analyze_audio`。
+  - 41.5 MCP 扩至 27 工具；桥新增 `/api/fl/routing|send|bus|arrange`、`/api/audio/analyze`；AGENTS/TONIC-FL/HANDOFF/PRODUCT/线上 `/agent` 同步。
+- 实测：
+  - 临时 3 个 FL Keys 通道 → `fl_bus` 把插入 16 命名为 TONIC Test Bus 并路由三通道（verified）→ `fl_send` 16→15 0.5（verified）→ `fl_arrange` 写入 bass 3 / comp 30 / melody 12 音符并逐轨读回一致；清理后删除三通道、插入 16 重置为默认空轨（Insert 16）、0 dB/pan 0、主发送 0.8。
+  - 负向测试：非 ASCII 总线名被拒绝；不存在的通道路由在改名之前报错，插入 16 保持默认；16→15 后再发 15→16 被环路保护拒绝，关闭后矩阵恢复。
+  - WAV：16-bit 正弦 peak -6.02 dBFS / RMS -9.03 / LUFS -6.7 / 相关 1.00；24-bit 反相相关 -1.00 并报 phase；削波文件 35920 样本 / 17960 帧；静音文件只报 `audio-silence`；面板上传与 MCP `analyze_audio`、CLI 三路结果一致。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：WAV 只支持 PCM/float，`sample peak` 不是 true peak、不做频谱；FL 不能自动渲染；`fl_arrange` 是确定性声部展开，不是自动编曲；总线名不能用中文（FL 工具会写成 U+FFFD）。
+- 下一阶段入口：真实混音目标评估（LRA/频谱/true peak）、更多编曲模板（鼓组/节奏型）、用户实际 LLM 端点验证；VST3 仍需独立原生工程。
+- 本次文档更新时间：10.25 23:40

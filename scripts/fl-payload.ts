@@ -55,6 +55,10 @@ function findExample(options: PayloadOptions): { example: Example; concept: Conc
   return null;
 }
 
+export function findFlExample(options: PayloadOptions): { example: Example; concept: Concept } | null {
+  return findExample(options);
+}
+
 export function getFlPayload(options: PayloadOptions): FlPayload | null {
   const found = findExample(options);
   if (!found) return null;

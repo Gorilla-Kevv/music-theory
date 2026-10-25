@@ -24,6 +24,7 @@ import {
   type ToolSchema,
 } from "../src/lib/theory-api";
 import { getFlPayload } from "./fl-payload";
+import { analyzeWavBuffer, analyzeWavFile } from "./audio-analyze";
 
 const BRIDGE_URL = (process.env.TONIC_FL_BRIDGE ?? "http://127.0.0.1:5127").replace(/\/$/, "");
 
@@ -75,7 +76,7 @@ const FL_TOOLS: ToolSchema[] = [
   {
     name: "fl_list_tools",
     description:
-      "读取 FL Studio 2026 内置 MCP 的完整工具目录（44 个：传输/通道/混音/插件/钢琴卷帘等）。",
+      "读取 FL Studio 2026 内置 MCP 的完整工具目录（实测 48 个：传输/通道/混音/插件/钢琴卷帘等）。",
     inputSchema: { type: "object", properties: {} },
   },
   {
@@ -197,6 +198,107 @@ const FL_TOOLS: ToolSchema[] = [
         mode: { type: "string", enum: ["append", "replace"] },
       },
       required: ["parts"],
+    },
+  },
+  {
+    name: "fl_mixer_routing",
+    description:
+      "只读：完整混音发送矩阵、总线/返回轨、环路、死端与最深路由层级。",
+    inputSchema: { type: "object", properties: {} },
+  },
+  {
+    name: "fl_send",
+    description:
+      "创建/修改/移除混音器发送（会修改工程）。sends 例：[{source:'6',dest:'10',active:true,level:0.5}]，写后验证。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        sends: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              source: { type: "string" },
+              dest: { type: "string" },
+              active: { type: "boolean" },
+              level: { type: "number" },
+            },
+            required: ["source", "dest"],
+          },
+        },
+      },
+      required: ["sends"],
+    },
+  },
+  {
+    name: "fl_bus",
+    description:
+      "安全建立总线：重命名混音器轨道、把通道路由到总线、确保总线回到主轨（会修改工程）。默认拒绝覆盖已有内容的轨道。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        buses: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              name: { type: "string" },
+              mixerTrack: { type: "string" },
+              channels: { type: "string" },
+              masterLevel: { type: "number" },
+              allowExisting: { type: "boolean" },
+            },
+            required: ["name", "mixerTrack"],
+          },
+        },
+      },
+      required: ["buses"],
+    },
+  },
+  {
+    name: "fl_arrange",
+    description:
+      "把 TONIC 谱例展开成多声部（bass/comp/pad/melody/arp），支持音域、移调、节奏型。默认只预览；write:true 才写入多个钢琴卷帘。不会自动创建通道。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        conceptSlug: { type: "string" },
+        exampleId: { type: "string" },
+        startBeat: { type: "number" },
+        mode: { type: "string", enum: ["append", "replace"] },
+        write: { type: "boolean" },
+        parts: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              role: { type: "string", enum: ["bass", "comp", "pad", "melody", "arp"] },
+              channel: { type: "string" },
+              range: { type: "array", items: { type: "number" } },
+              pattern: { type: "string" },
+              transpose: { type: "number" },
+              velocity: { type: "number" },
+              mode: { type: "string", enum: ["append", "replace"] },
+              startBeat: { type: "number" },
+            },
+            required: ["role"],
+          },
+        },
+      },
+      required: ["parts"],
+    },
+  },
+  {
+    name: "analyze_audio",
+    description:
+      "分析导出的 WAV：sample peak、RMS、ITU-R BS.1770 integrated LUFS、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/float WAV。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        path: { type: "string", description: "本机 WAV 路径" },
+        base64: { type: "string", description: "WAV base64（无路径时使用）" },
+        filename: { type: "string" },
+      },
     },
   },
 ];
@@ -354,6 +456,36 @@ async function runTool(name: string, args: Record<string, unknown>): Promise<unk
         method: "POST",
         body: JSON.stringify(args),
       });
+    case "fl_mixer_routing":
+      return bridgeJson("/api/fl/routing");
+    case "fl_send":
+      return bridgeJson("/api/fl/send", {
+        method: "POST",
+        body: JSON.stringify({ sends: args.sends }),
+      });
+    case "fl_bus":
+      return bridgeJson("/api/fl/bus", {
+        method: "POST",
+        body: JSON.stringify({ buses: args.buses }),
+      });
+    case "fl_arrange":
+      return bridgeJson("/api/fl/arrange", {
+        method: "POST",
+        body: JSON.stringify(args),
+      });
+    case "analyze_audio": {
+      if (typeof args.path === "string" && args.path.trim()) {
+        return analyzeWavFile(args.path);
+      }
+      if (typeof args.base64 === "string" && args.base64.trim()) {
+        const buffer = Buffer.from(args.base64, "base64");
+        return analyzeWavBuffer(
+          buffer,
+          typeof args.filename === "string" ? args.filename : null,
+        );
+      }
+      throw new Error("需要 path 或 base64。");
+    }
     default:
       throw new Error(`未知工具：${name}`);
   }
@@ -367,10 +499,10 @@ const server = new Server(
 使用规则：
 1. 任何理论问题先调用 search_theory；需要解释或引用时调用 get_concept / get_concept_sources。
 2. 理论断言必须带工具返回的章节级 locator（如 "Laitz, Chapter 19 Tonicization and Modulation"）；不能编造引用、页码或原文。
-3. 写钢琴卷帘前先用 get_fl_payload 核对音符，再调用 apply_example；多通道/多段作曲用 fl_compose，原始音符用 fl_write_notes；不要凭空生成 MIDI。
-4. 混音/路由改动前先调用 fl_session_report；用 fl_route 路由、fl_set_levels 调整绝对电平/声像/静音/独奏。这些操作会修改 FL 工程，执行前说明，执行后报告 verified 结果。
+3. 写钢琴卷帘前先用 get_fl_payload 核对音符，再调用 apply_example；多通道/多段作曲用 fl_compose，多声部编配用 fl_arrange（默认只预览，write:true 才写入），原始音符用 fl_write_notes；不要凭空生成 MIDI。
+4. 混音/路由改动前先调用 fl_session_report 或 fl_mixer_routing；用 fl_route 路由通道、fl_bus 建总线、fl_send 建发送、fl_set_levels 调整绝对电平/声像/静音/独奏。这些操作会修改 FL 工程，执行前说明，执行后报告 verified 结果。
 5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；写入后报告实际提交的 payload。
-6. fl_session_report 的诊断基于推子/声像/路由/插件链，不包含峰值/LUFS；不要声称已测量响度或削波。
+6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV（FL 不能渲染）。
 7. FL 2026 必须通过 \`npm run fl:bridge -- --launch-fl --panel\` 启动，并打开 Gopher 面板（Alt+F1）；桥服务地址可用 TONIC_FL_BRIDGE 覆盖。`,
   },
 );

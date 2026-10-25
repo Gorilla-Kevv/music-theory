@@ -14,13 +14,15 @@ Qoder / Claude Desktop
   └─ tonic-mcp (stdio, npm run mcp)
        ├─ 知识工具：search_theory / get_concept / get_concept_sources / ...
        ├─ get_fl_payload：谱例 → MIDI 音符 + 章节引用
-       └─ FL 工具代理：apply_example / fl_status / fl_list_tools / fl_call_tool
+       ├─ FL 工具代理：apply_example / fl_status / fl_list_tools / fl_call_tool
+       ├─ 操作层：fl_session_report / fl_mixer_routing / fl_route / fl_bus / fl_send / fl_set_levels / fl_write_notes / fl_compose / fl_arrange
+       └─ WAV 分析：analyze_audio
               │ HTTP 127.0.0.1:5127
               ▼
        fl-bridge (npm run fl:bridge)
          ├─ CDP → FL 2026 Gopher WebView2 → script_handler → FL 内置 MCP（48 tools）
-         ├─ /panel 本地面板（查概念 / 写入 / Agent）
-         └─ 写后读回钢琴卷帘音符数
+         ├─ /panel 本地面板（查概念 / 写入 / Agent / 混音分析）
+         └─ 写后读回钢琴卷帘音符数 + 混音矩阵验证
 ```
 
 FL 2026 的 Gopher 面板是一个 WebView2 页面；FL 向该页面注入 `script_handler` 主机对象。给它赋 JSON-RPC 的 `tools/call` 就能执行 FL 自己的 MCP 工具，其中 `run_piano_roll_script` 接受完整的 `flpianoroll` Python。TONIC 桥通过 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，再用 CDP 连接 Gopher 页面，复用这套官方控制通道。
@@ -67,6 +69,15 @@ npm run fl:bridge -- --launch-fl --panel
 - 选择谱例 → `写入`（追加）或 `清空写入`（替换当前钢琴卷帘）；
 - 可选填通道号（1-based）；省略则写入当前已打开的钢琴卷帘；
 - 写入后桥会读回实际音符数，面板显示“读回 N 个音符”。
+
+**混音分析（FL 标签）**
+
+- 在 FL 里导出 WAV（PCM 16/24/32-bit 或 IEEE float）；
+- 打开面板 **FL** 标签 → **MIX ANALYSIS / WAV** → 选择文件 → **分析 WAV**；
+- 得到 sample peak、RMS、integrated LUFS、short-term max、crest、peak-to-loudness、DC、削波、立体声相关/宽度，以及 risk/warn/info 发现；
+- 也可用命令行：`npm run audio:analyze -- "F:\Exports\mix.wav"`（输出 JSON）；
+- 外部 Agent 用 MCP 工具 `analyze_audio({ path })`。
+- 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；`sample peak` 不是 true peak，频谱分析未提供。
 
 **Agent**
 
@@ -127,8 +138,8 @@ npm run fl:bridge -- --panel
 
 **外部 harness 的两种接法**
 
-- **MCP（推荐）**：`tonic-mcp.ts` 是标准 stdio MCP server，Qoder、Claude Desktop、Claude Code 等任意 MCP 客户端都能接。已用真实 MCP 客户端验证：列出 **22 个工具**；`fl_status` 返回 `attached: true` 与 48 个 FL 内置工具；`get_concept_sources("ii-v-i")` 返回 Levine 章节级来源。知识工具不依赖 FL；只有 `apply_example` / `fl_*` 需要桥在跑。
-- **HTTP（给非 MCP 的脚本/harness）**：桥在 `127.0.0.1:5127` 暴露 `GET /api/status`、`GET /api/search`、`GET /api/fl/report`、`POST /api/fl/route|levels|write|compose`、`POST /api/apply` 等端点。任何本地 harness 都可以直接 `fetch` 这些端点；数据不出本机。
+- **MCP（推荐）**：`tonic-mcp.ts` 是标准 stdio MCP server，Qoder、Claude Desktop、Claude Code 等任意 MCP 客户端都能接。已用真实 MCP 客户端验证：列出 **27 个工具**；`fl_status` 返回 `attached: true` 与 48 个 FL 内置工具；`get_concept_sources("ii-v-i")` 返回 Levine 章节级来源。知识工具不依赖 FL；只有 `apply_example` / `fl_*` 需要桥在跑。
+- **HTTP（给非 MCP 的脚本/harness）**：桥在 `127.0.0.1:5127` 暴露 `GET /api/status`、`GET /api/search`、`GET /api/fl/report|routing`、`POST /api/fl/route|levels|write|compose|send|bus|arrange`、`POST /api/apply`、`POST /api/audio/analyze` 等端点。任何本地 harness 都可以直接 `fetch` 这些端点；数据不出本机。
 - 外部 harness 不需要打开 FL 内的 TONIC 面板；面板和 MCP 共用同一个桥。但 FL 必须由桥启动（或带 9222 调试端口启动）并打开过 Gopher，否则 FL 工具没有控制通道。
 
 **知识工具**：`search_theory`、`get_concept`、`get_concept_sources`、`search_sources`、`get_source_note`、`get_book_outline`、`list_examples`、`get_related`、`get_review_queue`、`get_video_research`、`get_bibliography`、`get_citation_policy`。
@@ -137,13 +148,33 @@ npm run fl:bridge -- --panel
 
 | 工具 | 类型 | 用途 |
 |---|---|---|
-| `fl_session_report` | 只读 | 通道路由、混音器电平/声像、插件链、发送、命名问题的结构诊断；不测量峰值/LUFS |
+| `fl_session_report` | 只读 | 通道路由、混音器电平/声像、插件链、发送、通道电平与命名问题的结构诊断；附总线/返回/环路/死端 |
+| `fl_mixer_routing` | 只读 | 完整 send/receive 矩阵、总线、返回轨、环路、最深路由层级 |
 | `fl_route` | 写入 | 把通道路由到混音器轨道，返回 verified 结果 |
+| `fl_send` | 写入 | 建立/修改/关闭混音器发送，`set_mixer_routing` 后按矩阵验证 level；默认拒绝会形成反馈环路的发送 |
+| `fl_bus` | 写入 | 安全建立总线：命名混音器轨道、路由通道、确保回主发送；默认拒绝覆盖非空轨道 |
 | `fl_set_levels` | 写入 | 设置混音器轨道绝对 dB/声像/静音/独奏，返回 verified 结果 |
 | `fl_write_notes` | 写入 | 任意 MIDI 音符写入当前/指定钢琴卷帘，写后读回音符数 |
 | `fl_compose` | 写入 | 多通道/多段作曲：每段可用 TONIC 谱例或显式音符，指定 channel/mode/startBeat/transpose |
+| `fl_arrange` | 预览/写入 | 把 TONIC 谱例展开成 bass/comp/pad/melody/arp 多声部；默认只预览，`write:true` 才写入，不自动创建通道 |
+| `analyze_audio` | 只读 | 分析导出的 WAV：sample peak、RMS、BS.1770 integrated LUFS、crest、DC、削波、立体声相关；FL 不能渲染，需先导出 WAV |
 
-面板中的 **FL** 标签页可直接刷新 session 结构诊断；路由、电平、多段写入可交给面板 Agent 或外部 MCP Agent。
+面板中的 **FL** 标签页显示结构诊断，并可直接选择 FL 导出的 WAV 做真实电平分析；路由、发送、总线、多轨编配可交给面板 Agent 或外部 MCP Agent。
+
+**混音/编配示例**
+
+```text
+fl_bus({ buses: [{ name: "Drums", mixerTrack: "16", channels: "808 Kick,808 Clap" }] })
+fl_send({ sends: [{ source: "16", dest: "15", active: true, level: 0.35 }] })
+fl_arrange({ conceptSlug: "ii-v-i", write: true, parts: [
+  { role: "bass", channel: "Bass" },
+  { role: "comp", channel: "Keys", pattern: "half" },
+  { role: "melody", channel: "Lead" }
+] })
+analyze_audio({ path: "F:\\Exports\\mix.wav" })
+```
+
+`fl_arrange` 是确定性的声部展开：低音按原谱最低音、和弦按音域做八度折叠与就近连接、旋律取和弦音就近进行、arp 按八分音符循环。它是编配起点，不是自动作曲。
 
 ### 4. Agent 必须遵守的规则
 
@@ -151,10 +182,12 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 
 1. 任何理论问题先 `search_theory`；需要解释/引用时 `get_concept` / `get_concept_sources`。
 2. 每条理论断言必须带工具返回的章节级 locator，不编造引用、页码或原文。
-3. 写钢琴卷帘前先 `get_fl_payload` 核对音符，再 `apply_example`；不要凭空生成 MIDI。
-4. 其他 FL 操作先 `fl_list_tools`，再 `fl_call_tool`；执行前说明意图，写入后报告实际 payload / 读回音符数。
-5. FL 2026 的 `open_piano_roll_for_channel` 参数是 `target_channel`（1-based 索引或通道名），不是 `channel`。
-6. `run_piano_roll_script` 只作用于当前钢琴卷帘；没有打开钢琴卷帘时先打开通道。
+3. 写钢琴卷帘前先 `get_fl_payload` 核对音符，再 `apply_example`；多通道/多段用 `fl_compose`，多声部用 `fl_arrange`（默认只预览，`write:true` 才写入）；不要凭空生成 MIDI。
+4. 混音/路由改动前先 `fl_session_report` 或 `fl_mixer_routing`；用 `fl_route`、`fl_bus`、`fl_send`、`fl_set_levels`，执行前说明，执行后报告 verified。
+5. 其他 FL 操作先 `fl_list_tools`，再 `fl_call_tool`；执行前说明意图，写入后报告实际 payload / 读回音符数。
+6. FL 2026 的 `open_piano_roll_for_channel` 参数是 `target_channel`（1-based 索引或通道名），不是 `channel`。
+7. `run_piano_roll_script` 只作用于当前钢琴卷帘；没有打开钢琴卷帘时先打开通道。
+8. `fl_session_report` 是结构诊断；真实峰值/LUFS 用 `analyze_audio` 分析导出的 WAV，不能声称 FL 已测量响度。
 
 ## FL 内启动方式与 VST3
 
@@ -171,10 +204,12 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 外部 MCP 的 `fl_status` / `fl_list_tools` / `apply_example` 全链路成功，读回 15 个音符。
 - 面板 Agent 用 mock 端点验证了 **五种协议**的工具循环：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生均先调用 `get_concept_sources`，再返回带章节 locator 的回答。
 - 面板设置里协议下拉、保存、OpenAI Responses 聊天链路已实测。
-- 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时两个 FL Keys 通道路由到插入 16、设 -12 dB / pan 0.2，`fl_compose` 分别写入 2 与 3 个音符并读回一致；清理后恢复 5 个原始通道、插入 16 回 0 dB / pan 0。
-- MCP 工具总数 22；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、发现列表与通道路由。
-- 外部 MCP 用真实 stdio 客户端复验：22 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
+- 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时三个 FL Keys 通道分别命名为 TONIC Test Bass/Comp/Melody，`fl_bus` 将插入 16 命名为 TONIC Test Bus 并把三通道路由到它，`fl_send` 建立 Bus→Insert 15 的 0.5 发送，`fl_arrange` 写入 3/30/12 个音符并逐轨读回；清理后移除三通道，插入 16 重置为默认空轨（Insert 16）、0 dB/pan 0、主发送 0.8。
+- 环路保护实测：建立 16→15 后再发 15→16 被拒绝（“会形成反馈环路”）；关闭 16→15 后矩阵恢复为各自只送主轨 0.8。
+- MCP 工具总数 27；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、总线/返回/环路与发现列表。
+- 外部 MCP 用真实 stdio 客户端复验：27 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
 - `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
+- WAV 分析实测：16-bit/48k 立体声正弦 peak -6.02 dBFS、RMS -9.03 dBFS、integrated LUFS -6.7、相关 1.00；24-bit 反相立体声相关 -1.00 并给出 phase 警告；削波文件检测到 35920 个削波样本/17960 帧；面板上传 WAV 后显示同样指标与发现。
 
 ## 故障排查
 
@@ -193,6 +228,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 面板 Agent 只访问你配置的 LLM 端点；API Key 存本机 localStorage。
 - FL 2026 内置 MCP 是官方控制面，但 `run_piano_roll_script` 可执行任意 `flpianoroll` Python；只对可信 Agent 开放。
 - 不能通过 FL API 加载插件、加载音频或渲染音频；这些仍需在 FL 界面完成。
-- `fl_session_report` 是**结构诊断**（推子/声像/路由/插件链），不是音频测量；峰值、LUFS、频谱需要导出音频后另做分析，当前不提供。
-- `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；曲式与配器仍由 Agent/用户决定。
-- 测试脚本曾临时添加 FL Keys 通道并写入示例，已清理；不会修改你的原始 808 通道。
+- `fl_session_report` 是**结构诊断**（推子/声像/路由拓扑/插件链/通道电平），不是音频测量；峰值、LUFS 必须用 `analyze_audio` 分析导出的 WAV。`analyze_audio` 给的是 **sample peak**，不是 true peak，也不做频谱分析。
+- FL API 不能自动渲染/导出音频；`analyze_audio` 需要你先在 FL 里导出 WAV。
+- `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；`fl_arrange` 也是确定性的声部展开起点，曲式与配器仍由 Agent/用户决定。
+- `fl_bus` 的总线名限制为 ASCII：FL 的 `rename_mixer_tracks` 经 CDP 对非 ASCII 名称会乱码；现有中文通道名仍可用于路由/写入。
+- 测试脚本曾临时添加 FL Keys 通道并写入示例，已清理；原始 5 个 808 通道保留，插入 16 已恢复默认空轨。

@@ -137,6 +137,19 @@
             )
             .join("<br />")}
         </div>
+        <div class="fl-routing">
+          ${(data.routingGraph?.buses || [])
+            .map((bus) => `BUS ${escapeHtml(bus.name)} · ${bus.channels.length} ch`)
+            .join("<br />")}
+          ${(data.routingGraph?.returns || [])
+            .map((ret) => `<br />RETURN ${escapeHtml(ret.name)} · ${ret.incomingSends} sends`)
+            .join("")}
+          ${
+            data.routingGraph?.cycles?.length
+              ? `<br />CYCLES ${data.routingGraph.cycles.length}`
+              : ""
+          }
+        </div>
       `;
     } catch (error) {
       target.innerHTML = `<p class="muted">读取失败：${escapeHtml(error.message)}</p>`;
@@ -144,6 +157,78 @@
   }
 
   $("#refresh-fl").addEventListener("click", () => refreshFlReport());
+
+  function toBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    let binary = "";
+    const chunk = 0x8000;
+    for (let index = 0; index < bytes.length; index += chunk) {
+      binary += String.fromCharCode(...bytes.subarray(index, index + chunk));
+    }
+    return btoa(binary);
+  }
+
+  function renderAudioReport(data) {
+    const findings = data.findings || [];
+    const target = $("#wav-report");
+    const number = (value, digits = 1) =>
+      typeof value === "number" && Number.isFinite(value) ? value.toFixed(digits) : "—";
+    target.innerHTML = `
+      <div class="fl-summary">
+        <span>${escapeHtml(data.format)}</span>
+        <span>${escapeHtml(data.sampleRate)} Hz / ${escapeHtml(data.channels)} CH</span>
+        <span>${number(data.durationSeconds, 1)} S</span>
+        <span>${number(data.peakDbfs, 2)} dBFS PEAK</span>
+        <span>${number(data.integratedLufs, 1)} LUFS</span>
+      </div>
+      <div class="audio-metrics">
+        <div class="audio-metric"><span>RMS</span>${number(data.rmsDbfs, 2)} dBFS</div>
+        <div class="audio-metric"><span>CREST</span>${number(data.crestFactorDb, 1)} dB</div>
+        <div class="audio-metric"><span>SHORT-TERM MAX</span>${number(data.shortTermLufsMax, 1)} LUFS</div>
+        <div class="audio-metric"><span>PEAK TO LOUDNESS</span>${number(data.peakToLoudnessDb, 1)} dB</div>
+        <div class="audio-metric"><span>STEREO CORR</span>${number(data.stereoCorrelation, 2)}</div>
+        <div class="audio-metric"><span>STEREO WIDTH</span>${number(data.stereoWidth, 2)}</div>
+        <div class="audio-metric"><span>DC OFFSET</span>${number(data.dcOffset, 4)}</div>
+        <div class="audio-metric"><span>CLIPPED</span>${escapeHtml(data.clippedSamples)} samples / ${escapeHtml(data.clippedFrames)} frames</div>
+      </div>
+      <p class="muted">${escapeHtml(data.measurementNote || "")}</p>
+      ${
+        findings.length
+          ? findings
+              .map(
+                (item) => `
+            <div class="finding ${escapeHtml(item.severity)}">
+              <span class="code">${escapeHtml(item.code)} · ${escapeHtml(item.severity)}</span>
+              ${escapeHtml(item.message)}
+              ${item.suggestion ? `<span class="suggestion">→ ${escapeHtml(item.suggestion)}</span>` : ""}
+            </div>`,
+              )
+              .join("")
+          : `<p class="muted">没有发现明显的电平问题。</p>`
+      }
+    `;
+  }
+
+  $("#analyze-wav").addEventListener("click", async () => {
+    const input = $("#wav-file");
+    const file = input.files && input.files[0];
+    const target = $("#wav-report");
+    if (!file) {
+      target.innerHTML = `<p class="muted">先在 FL 导出 WAV，再选择文件。</p>`;
+      return;
+    }
+    target.innerHTML = `<p class="muted">分析中…（大文件需要几秒）</p>`;
+    try {
+      const buffer = await file.arrayBuffer();
+      const data = await api("/api/audio/analyze", {
+        method: "POST",
+        body: JSON.stringify({ base64: toBase64(buffer), filename: file.name }),
+      });
+      renderAudioReport(data);
+    } catch (error) {
+      target.innerHTML = `<p class="muted">分析失败：${escapeHtml(error.message)}</p>`;
+    }
+  });
 
   document.querySelectorAll(".tab").forEach((tab) => {
     tab.addEventListener("click", () => setTab(tab.dataset.tab));

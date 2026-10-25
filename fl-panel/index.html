@@ -73,12 +73,22 @@
           <div class="agent-head">
             <div>
               <p class="mono muted">FL SESSION / 结构诊断</p>
-              <p class="agent-hint">通道路由、混音器电平/声像、插件链与发送；不测量峰值/LUFS。</p>
+              <p class="agent-hint">通道路由、混音器电平/声像、总线与发送；下方可分析导出的 WAV（峰值/LUFS/削波/立体声）。</p>
             </div>
             <button id="refresh-fl" type="button" class="ghost">刷新</button>
           </div>
           <div id="fl-report" class="fl-report">
             <p class="muted">点击“刷新”读取当前 FL session；路由、电平、多段写入可交给 Agent。</p>
+          </div>
+
+          <div class="audio-analyze">
+            <p class="mono muted">MIX ANALYSIS / WAV</p>
+            <p class="agent-hint">在 FL 导出 WAV 后选择文件；分析 sample peak、LUFS、削波、立体声相关。</p>
+            <div class="audio-controls">
+              <input id="wav-file" type="file" accept=".wav,audio/wav" />
+              <button id="analyze-wav" type="button">分析 WAV</button>
+            </div>
+            <div id="wav-report" class="fl-report"></div>
           </div>
         </section>
 
