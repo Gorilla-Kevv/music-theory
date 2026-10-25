@@ -84,10 +84,29 @@
           <div class="audio-analyze">
             <p class="mono muted">MIX ANALYSIS / WAV</p>
             <p class="agent-hint">在 FL 导出 WAV 后选择文件；分析 true peak、LUFS/LRA、频谱、削波与立体声相关。</p>
+            <div class="audio-options">
+              <label>参考 WAV（可选）
+                <input id="wav-reference" type="file" accept=".wav,audio/wav" />
+              </label>
+              <label>目标
+                <select id="wav-target">
+                  <option value="">不设目标</option>
+                  <option value="streaming">通用流媒体 -14 LUFS / -1 dBTP</option>
+                  <option value="custom">自定义目标…</option>
+                </select>
+              </label>
+            </div>
+            <div id="custom-target" class="target-grid hidden">
+              <label>LUFS<input id="target-lufs" type="number" step="0.1" placeholder="-14" /></label>
+              <label>LRA min<input id="target-lra-min" type="number" step="0.1" placeholder="3" /></label>
+              <label>LRA max<input id="target-lra-max" type="number" step="0.1" placeholder="12" /></label>
+              <label>dBTP max<input id="target-tp" type="number" step="0.1" placeholder="-1" /></label>
+            </div>
             <div class="audio-controls">
               <input id="wav-file" type="file" accept=".wav,audio/wav" />
               <button id="analyze-wav" type="button">分析 WAV</button>
             </div>
+            <p class="muted audio-note">参考 WAV 用于频段/响度对照，不是投放目标；频段比较按占比归一化。</p>
             <div id="wav-report" class="fl-report"></div>
           </div>
         </section>

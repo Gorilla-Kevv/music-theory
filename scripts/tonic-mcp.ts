@@ -25,6 +25,7 @@ import {
 } from "../src/lib/theory-api";
 import { getFlPayload } from "./fl-payload";
 import { analyzeWavBuffer, analyzeWavFile } from "./audio-analyze";
+import { compareAudioAnalyses } from "./audio-compare";
 
 const BRIDGE_URL = (process.env.TONIC_FL_BRIDGE ?? "http://127.0.0.1:5127").replace(/\/$/, "");
 
@@ -291,13 +292,28 @@ const FL_TOOLS: ToolSchema[] = [
   {
     name: "analyze_audio",
     description:
-      "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、ITU-R BS.1770 integrated LUFS、LRA、倍频程频谱、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/float WAV。",
+      "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、ITU-R BS.1770 integrated LUFS、LRA、倍频程频谱/多段频谱、crest、DC、削波、立体声相关。可对比目标 LUFS/LRA/true peak，或与参考 WAV 比较频段。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/float WAV。",
     inputSchema: {
       type: "object",
       properties: {
         path: { type: "string", description: "本机 WAV 路径" },
         base64: { type: "string", description: "WAV base64（无路径时使用）" },
         filename: { type: "string" },
+        referencePath: { type: "string", description: "参考 WAV 路径" },
+        referenceBase64: { type: "string", description: "参考 WAV base64" },
+        referenceFilename: { type: "string" },
+        target: {
+          type: "object",
+          description: "preset='streaming' 或自定义 targetLufs/lraMinLu/lraMaxLu/truePeakMaxDbtp/toleranceLu",
+          properties: {
+            preset: { type: "string" },
+            targetLufs: { type: "number" },
+            lraMinLu: { type: "number" },
+            lraMaxLu: { type: "number" },
+            truePeakMaxDbtp: { type: "number" },
+            toleranceLu: { type: "number" },
+          },
+        },
       },
     },
   },
@@ -474,17 +490,31 @@ async function runTool(name: string, args: Record<string, unknown>): Promise<unk
         body: JSON.stringify(args),
       });
     case "analyze_audio": {
-      if (typeof args.path === "string" && args.path.trim()) {
-        return analyzeWavFile(args.path);
-      }
-      if (typeof args.base64 === "string" && args.base64.trim()) {
-        const buffer = Buffer.from(args.base64, "base64");
-        return analyzeWavBuffer(
-          buffer,
-          typeof args.filename === "string" ? args.filename : null,
-        );
-      }
-      throw new Error("需要 path 或 base64。");
+      const readSource = async (
+        pathValue: unknown,
+        base64Value: unknown,
+        filenameValue: unknown,
+      ) => {
+        if (typeof pathValue === "string" && pathValue.trim()) {
+          return analyzeWavFile(pathValue);
+        }
+        if (typeof base64Value === "string" && base64Value.trim()) {
+          return analyzeWavBuffer(
+            Buffer.from(base64Value, "base64"),
+            typeof filenameValue === "string" ? filenameValue : null,
+          );
+        }
+        return null;
+      };
+      const mix = await readSource(args.path, args.base64, args.filename);
+      if (!mix) throw new Error("需要 path 或 base64。");
+      const reference = await readSource(
+        args.referencePath,
+        args.referenceBase64,
+        args.referenceFilename,
+      );
+      const comparison = compareAudioAnalyses(mix, reference, args.target);
+      return comparison ? { ...mix, comparison } : mix;
     }
     default:
       throw new Error(`未知工具：${name}`);

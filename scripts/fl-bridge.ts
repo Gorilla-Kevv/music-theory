@@ -13,6 +13,7 @@ import { searchTheory } from "../src/lib/theory-api";
 import { FlCdp } from "./fl-cdp";
 import { buildArrangement, type ArrangementPartRequest } from "./arranger";
 import { analyzeWavBuffer } from "./audio-analyze";
+import { compareAudioAnalyses } from "./audio-compare";
 import {
   getFlPayload,
   listFlExamples,
@@ -1504,22 +1505,44 @@ async function arrange(input: Record<string, unknown>) {
 
 const MAX_AUDIO_BYTES = 200 * 1024 * 1024;
 
-async function analyzeAudio(input: Record<string, unknown>) {
+async function loadAudioInput(
+  pathValue: unknown,
+  base64Value: unknown,
+  filenameValue: unknown,
+): Promise<{ buffer: Buffer; file: string | null } | null> {
   let buffer: Buffer;
   let file: string | null = null;
-  if (typeof input.path === "string" && input.path.trim()) {
-    file = resolve(input.path);
+  if (typeof pathValue === "string" && pathValue.trim()) {
+    file = resolve(pathValue);
     buffer = await readFile(file);
-  } else if (typeof input.base64 === "string" && input.base64.trim()) {
-    buffer = Buffer.from(input.base64, "base64");
-    file = typeof input.filename === "string" ? input.filename : null;
+  } else if (typeof base64Value === "string" && base64Value.trim()) {
+    buffer = Buffer.from(base64Value, "base64");
+    file = typeof filenameValue === "string" ? filenameValue : null;
   } else {
-    throw new Error("需要 path（本机 WAV 路径）或 base64（面板上传）。");
+    return null;
   }
   if (buffer.length > MAX_AUDIO_BYTES) {
     throw new Error(`WAV 超过 ${MAX_AUDIO_BYTES / 1024 / 1024} MB，请先缩短或降低采样率。`);
   }
-  return analyzeWavBuffer(buffer, file);
+  return { buffer, file };
+}
+
+async function analyzeAudio(input: Record<string, unknown>) {
+  const mixSource = await loadAudioInput(input.path, input.base64, input.filename);
+  if (!mixSource) {
+    throw new Error("需要 path（本机 WAV 路径）或 base64（面板上传）。");
+  }
+  const analysis = analyzeWavBuffer(mixSource.buffer, mixSource.file);
+  const referenceSource = await loadAudioInput(
+    input.referencePath,
+    input.referenceBase64,
+    input.referenceFilename,
+  );
+  const reference = referenceSource
+    ? analyzeWavBuffer(referenceSource.buffer, referenceSource.file)
+    : null;
+  const comparison = compareAudioAnalyses(analysis, reference, input.target);
+  return comparison ? { ...analysis, comparison } : analysis;
 }
 
 const AGENT_TOOLS = [
@@ -1862,13 +1885,29 @@ const AGENT_TOOLS = [
     function: {
       name: "analyze_audio",
       description:
-        "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、BS.1770 integrated LUFS、LRA、倍频程频谱、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/IEEE float WAV。",
+        "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、BS.1770 integrated LUFS、LRA、倍频程频谱/多段频谱、crest、DC、削波、立体声相关。可对比目标 LUFS/LRA/true peak，或与参考 WAV 比较频段。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/IEEE float WAV。",
       parameters: {
         type: "object",
         properties: {
           path: { type: "string", description: "本机 WAV 绝对路径" },
           base64: { type: "string", description: "WAV 文件的 base64（面板上传时用）" },
           filename: { type: "string" },
+          referencePath: { type: "string", description: "参考 WAV 的本机路径" },
+          referenceBase64: { type: "string", description: "参考 WAV 的 base64" },
+          referenceFilename: { type: "string" },
+          target: {
+            type: "object",
+            description:
+              "目标：preset='streaming'，或自定义 targetLufs/lraMinLu/lraMaxLu/truePeakMaxDbtp/toleranceLu",
+            properties: {
+              preset: { type: "string" },
+              targetLufs: { type: "number" },
+              lraMinLu: { type: "number" },
+              lraMaxLu: { type: "number" },
+              truePeakMaxDbtp: { type: "number" },
+              toleranceLu: { type: "number" },
+            },
+          },
         },
       },
     },

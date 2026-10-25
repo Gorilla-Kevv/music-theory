@@ -16,6 +16,19 @@ export interface SpectrumBand {
   sharePercent: number;
 }
 
+export interface SpectrogramColumn {
+  timeSeconds: number;
+  bands: number[];
+  totalDb: number | null;
+}
+
+export interface AudioSpectrogram {
+  segmentSeconds: number;
+  hopSeconds: number;
+  bandNames: string[];
+  columns: SpectrogramColumn[];
+}
+
 export interface AudioSpectrum {
   method: string;
   fftSize: number;
@@ -25,6 +38,7 @@ export interface AudioSpectrum {
   rolloff85Hz: number | null;
   tiltDbPerOctave: number | null;
   bands: SpectrumBand[];
+  spectrogram: AudioSpectrogram | null;
 }
 
 export interface AudioAnalysis {
@@ -385,6 +399,33 @@ function analyzeSpectrum(
     hop = Math.max(1, Math.ceil((frames - fftSize) / (maxFramesPerChannel - 1)));
   }
   const half = fftSize / 2;
+  const binHz = sampleRate / fftSize;
+  const nyquist = sampleRate / 2;
+  const bandRanges: Array<{
+    name: string;
+    centerHz: number;
+    lowHz: number;
+    highHz: number;
+    lowBin: number;
+    highBin: number;
+  }> = [];
+  for (const centerHz of OCTAVE_CENTERS) {
+    const lowHz = centerHz / Math.SQRT2;
+    const highHz = Math.min(centerHz * Math.SQRT2, nyquist);
+    if (lowHz >= nyquist) continue;
+    const lowBin = Math.max(1, Math.ceil(lowHz / binHz));
+    const highBin = Math.min(half, Math.floor(highHz / binHz));
+    if (highBin < lowBin) continue;
+    bandRanges.push({
+      name: centerHz >= 1000 ? `${centerHz / 1000}k` : `${centerHz}`,
+      centerHz,
+      lowHz,
+      highHz,
+      lowBin,
+      highBin,
+    });
+  }
+
   const window = new Float64Array(fftSize);
   let windowSquares = 0;
   for (let index = 0; index < fftSize; index += 1) {
@@ -395,6 +436,26 @@ function analyzeSpectrum(
   const real = new Float64Array(fftSize);
   const imag = new Float64Array(fftSize);
   const power = new Float64Array(half + 1);
+  const binToBand = new Int16Array(half + 1).fill(-1);
+  for (let bandIndex = 0; bandIndex < bandRanges.length; bandIndex += 1) {
+    for (let bin = bandRanges[bandIndex].lowBin; bin <= bandRanges[bandIndex].highBin; bin += 1) {
+      if (binToBand[bin] < 0) binToBand[bin] = bandIndex;
+    }
+  }
+
+  const durationSeconds = frames / sampleRate;
+  const maxColumns = 120;
+  const segmentSeconds = Math.max(1, durationSeconds / maxColumns);
+  const segmentHop = segmentSeconds;
+  const segmentCount = Math.max(1, Math.ceil(durationSeconds / segmentSeconds));
+  const segmentBandPowers = Array.from(
+    { length: segmentCount },
+    () => new Float64Array(bandRanges.length),
+  );
+  const segmentTotals = new Float64Array(segmentCount);
+  const segmentCounts = new Uint32Array(segmentCount);
+  const frameBandPower = new Float64Array(bandRanges.length);
+
   let analyzedFrames = 0;
   for (const samples of channels) {
     for (let start = 0; start + fftSize <= frames; start += hop) {
@@ -403,12 +464,31 @@ function analyzeSpectrum(
         imag[index] = 0;
       }
       fftInPlace(real, imag, reverse);
+      frameBandPower.fill(0);
+      let frameTotal = 0;
       for (let bin = 0; bin <= half; bin += 1) {
         const binPower =
           ((real[bin] * real[bin] + imag[bin] * imag[bin]) /
             (fftSize * windowSquares)) *
           (bin > 0 && bin < half ? 2 : 1);
         power[bin] += binPower;
+        if (bin > 0) {
+          frameTotal += binPower;
+          const bandIndex = binToBand[bin];
+          if (bandIndex >= 0) frameBandPower[bandIndex] += binPower;
+        }
+      }
+      const centerTime = (start + fftSize / 2) / sampleRate;
+      const segmentIndex = Math.min(
+        segmentCount - 1,
+        Math.max(0, Math.floor(centerTime / segmentSeconds)),
+      );
+      if (frameTotal > 0) {
+        segmentCounts[segmentIndex] += 1;
+        segmentTotals[segmentIndex] += frameTotal;
+        for (let bandIndex = 0; bandIndex < bandRanges.length; bandIndex += 1) {
+          segmentBandPowers[segmentIndex][bandIndex] += frameBandPower[bandIndex];
+        }
       }
       analyzedFrames += 1;
     }
@@ -419,27 +499,18 @@ function analyzeSpectrum(
   for (let bin = 1; bin <= half; bin += 1) totalPower += power[bin];
   if (totalPower <= 0) return null;
 
-  const binHz = sampleRate / fftSize;
-  const nyquist = sampleRate / 2;
-  const bands: SpectrumBand[] = [];
-  for (const centerHz of OCTAVE_CENTERS) {
-    const lowHz = centerHz / Math.SQRT2;
-    const highHz = Math.min(centerHz * Math.SQRT2, nyquist);
-    if (lowHz >= nyquist) continue;
-    const lowBin = Math.max(1, Math.ceil(lowHz / binHz));
-    const highBin = Math.min(half, Math.floor(highHz / binHz));
-    if (highBin < lowBin) continue;
+  const bands: SpectrumBand[] = bandRanges.map((range) => {
     let bandPower = 0;
-    for (let bin = lowBin; bin <= highBin; bin += 1) bandPower += power[bin];
-    bands.push({
-      name: centerHz >= 1000 ? `${centerHz / 1000}k` : `${centerHz}`,
-      centerHz,
-      lowHz,
-      highHz,
+    for (let bin = range.lowBin; bin <= range.highBin; bin += 1) bandPower += power[bin];
+    return {
+      name: range.name,
+      centerHz: range.centerHz,
+      lowHz: range.lowHz,
+      highHz: range.highHz,
       energyDb: bandPower > 0 ? 10 * Math.log10(bandPower) : SILENCE_DB,
       sharePercent: (bandPower / totalPower) * 100,
-    });
-  }
+    };
+  });
 
   let weightedFrequency = 0;
   for (let bin = 1; bin <= half; bin += 1) {
@@ -475,6 +546,28 @@ function analyzeSpectrum(
     if (denominator > 0) tiltDbPerOctave = numerator / denominator;
   }
 
+  const columns: SpectrogramColumn[] = [];
+  for (let segment = 0; segment < segmentCount; segment += 1) {
+    if (!segmentCounts[segment] || segmentTotals[segment] <= 0) continue;
+    columns.push({
+      timeSeconds: segment * segmentSeconds,
+      bands: bandRanges.map(
+        (_, bandIndex) =>
+          (segmentBandPowers[segment][bandIndex] / segmentTotals[segment]) * 100,
+      ),
+      totalDb: 10 * Math.log10(segmentTotals[segment] / segmentCounts[segment]),
+    });
+  }
+  const spectrogram: AudioSpectrogram | null =
+    columns.length >= 2
+      ? {
+          segmentSeconds,
+          hopSeconds: segmentHop,
+          bandNames: bands.map((band) => band.name),
+          columns,
+        }
+      : null;
+
   return {
     method: `Hann 窗 · FFT ${fftSize} · hop ${hop} · ${analyzedFrames} 帧（声道合计）`,
     fftSize,
@@ -484,6 +577,7 @@ function analyzeSpectrum(
     rolloff85Hz,
     tiltDbPerOctave,
     bands,
+    spectrogram,
   };
 }
 

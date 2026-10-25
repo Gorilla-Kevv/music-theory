@@ -168,8 +168,143 @@
     return btoa(binary);
   }
 
+  function renderSpectrogram(spectrogram) {
+    if (!spectrogram || !spectrogram.columns.length) return "";
+    const columns = spectrogram.columns;
+    const names = spectrogram.bandNames;
+    let maxShare = 0;
+    for (const column of columns) {
+      for (const share of column.bands) maxShare = Math.max(maxShare, share || 0);
+    }
+    if (maxShare <= 0) return "";
+    const labelEvery = Math.max(1, Math.ceil(columns.length / 8));
+    const timeRow = columns
+      .map(
+        (column, index) =>
+          `<span class="spectrogram-time">${
+            index % labelEvery === 0 ? `${column.timeSeconds.toFixed(1)}s` : ""
+          }</span>`,
+      )
+      .join("");
+    const rows = names
+      .map(
+        (name, bandIndex) =>
+          `<span class="spectrogram-band">${escapeHtml(name)}</span>` +
+          columns
+            .map((column) => {
+              const share = column.bands[bandIndex] || 0;
+              const opacity = Math.min(1, share / maxShare);
+              return `<span class="spectrogram-cell" style="background:rgba(36,71,255,${opacity.toFixed(
+                3,
+              )})" title="${escapeHtml(name)} · ${column.timeSeconds.toFixed(
+                1,
+              )}s · ${share.toFixed(1)}%"></span>`;
+            })
+            .join(""),
+      )
+      .join("");
+    return `<div class="spectrogram-wrap"><p class="mono muted">MULTI-SEGMENT / ${spectrogram.segmentSeconds.toFixed(
+      1,
+    )}s 段 · ${columns.length} 列</p><div class="spectrogram" style="grid-template-columns: 34px repeat(${
+      columns.length
+    }, minmax(2px, 1fr));"><span></span>${timeRow}${rows}</div><p class="muted">行 = 倍频程，列 = 时间；颜色为段内能量占比。</p></div>`;
+  }
+
+  function renderComparison(comparison) {
+    if (!comparison) return "";
+    const number = (value, digits = 1) =>
+      typeof value === "number" && Number.isFinite(value) ? value.toFixed(digits) : "—";
+    const signed = (value, digits = 1) =>
+      typeof value === "number" && Number.isFinite(value)
+        ? `${value >= 0 ? "+" : ""}${value.toFixed(digits)}`
+        : "—";
+    const deltaLabel = (value) =>
+      typeof value === "number" && Number.isFinite(value)
+        ? Math.abs(value) > 24
+          ? value > 0
+            ? "> +24"
+            : "< −24"
+          : signed(value, 1)
+        : "—";
+    const target = comparison.target;
+    const targetDeltas = comparison.targetDeltas;
+    let targetHtml = "";
+    if (target) {
+      targetHtml = `<div class="compare-block">
+        <p class="mono muted">TARGET / ${escapeHtml(target.label)}</p>
+        <div class="fl-summary">
+          <span>目标 ${target.targetLufs === null ? "—" : target.targetLufs} LUFS</span>
+          <span>Δ ${signed(targetDeltas?.lufs)} LU</span>
+          <span>TP 余量 ${signed(targetDeltas?.truePeakMarginDb, 2)} dB</span>
+          <span>LRA ${
+            targetDeltas?.lraInRange === null || targetDeltas?.lraInRange === undefined
+              ? "—"
+              : targetDeltas.lraInRange
+                ? "IN RANGE"
+                : "OUT"
+          }</span>
+        </div>
+        <p class="muted">${escapeHtml(target.note)}</p>
+      </div>`;
+    }
+    const reference = comparison.reference;
+    let referenceHtml = "";
+    if (reference) {
+      const deltas = comparison.referenceDeltas;
+      const bands = (comparison.bands || [])
+        .filter(
+          (band) =>
+            band.deltaDb !== null &&
+            Math.max(band.mixSharePercent, band.referenceSharePercent) >= 0.5,
+        )
+        .sort((a, b) => Math.abs(b.deltaDb) - Math.abs(a.deltaDb))
+        .slice(0, 6);
+      referenceHtml = `<div class="compare-block">
+        <p class="mono muted">REFERENCE / ${escapeHtml(reference.file || "参考 WAV")}</p>
+        <div class="fl-summary">
+          <span>REF ${number(reference.integratedLufs)} LUFS</span>
+          <span>Δ ${signed(deltas?.lufs)} LU</span>
+          <span>REF TP ${number(reference.truePeakDbtp, 2)} dBTP</span>
+          <span>Δ TP ${signed(deltas?.truePeak, 2)} dB</span>
+          <span>REF LRA ${number(reference.loudnessRangeLu)} LU</span>
+        </div>
+        ${
+          bands.length
+            ? `<div class="band-deltas">${bands
+                .map(
+                  (band) => `<div class="band-delta" title="${escapeHtml(
+                    band.name,
+                  )}：mix ${band.mixSharePercent.toFixed(1)}% / ref ${band.referenceSharePercent.toFixed(
+                    1,
+                  )}%"><span>${escapeHtml(band.name)}</span><span>${deltaLabel(
+                    band.deltaDb,
+                  )} dB</span><span class="delta-bar"><i style="width:${Math.min(
+                    100,
+                    (Math.abs(band.deltaDb) / 12) * 100,
+                  ).toFixed(1)}%;background:${
+                    band.deltaDb >= 0 ? "var(--cobalt)" : "var(--cadmium)"
+                  }"></i></span><span>${band.mixSharePercent.toFixed(
+                    1,
+                  )}% / ${band.referenceSharePercent.toFixed(1)}%</span></div>`,
+                )
+                .join("")}</div>`
+            : ""
+        }
+        <p class="muted">频段差值按能量占比归一化；参考不是投放目标。</p>
+      </div>`;
+    }
+    return targetHtml || referenceHtml
+      ? `<div class="comparison">${targetHtml}${referenceHtml}</div>`
+      : "";
+  }
+
   function renderAudioReport(data) {
-    const findings = data.findings || [];
+    const findings = [...(data.findings || []), ...(data.comparison?.findings || [])];
+    const severityRank = { risk: 0, warn: 1, info: 2 };
+    findings.sort(
+      (left, right) =>
+        (severityRank[left.severity] ?? 3) - (severityRank[right.severity] ?? 3),
+    );
     const target = $("#wav-report");
     const number = (value, digits = 1) =>
       typeof value === "number" && Number.isFinite(value) ? value.toFixed(digits) : "—";
@@ -201,6 +336,8 @@
       : data.peakDbfs <= -119
         ? `<p class="muted">全静音，没有可分析的频谱。</p>`
         : `<p class="muted">文件太短，无法计算频谱（至少 256 帧）。</p>`;
+    const spectrogramHtml = renderSpectrogram(data.spectrum?.spectrogram);
+    const comparisonHtml = renderComparison(data.comparison);
     target.innerHTML = `
       <div class="fl-summary">
         <span>${escapeHtml(data.format)}</span>
@@ -227,6 +364,8 @@
         <div class="audio-metric"><span>CLIPPED</span>${escapeHtml(data.clippedSamples)} samples / ${escapeHtml(data.clippedFrames)} frames</div>
       </div>
       ${spectrumHtml}
+      ${spectrogramHtml}
+      ${comparisonHtml}
       <p class="muted">${escapeHtml(data.measurementNote || "")}</p>
       ${
         findings.length
@@ -245,6 +384,10 @@
     `;
   }
 
+  $("#wav-target").addEventListener("change", () => {
+    $("#custom-target").classList.toggle("hidden", $("#wav-target").value !== "custom");
+  });
+
   $("#analyze-wav").addEventListener("click", async () => {
     const input = $("#wav-file");
     const file = input.files && input.files[0];
@@ -253,12 +396,47 @@
       target.innerHTML = `<p class="muted">先在 FL 导出 WAV，再选择文件。</p>`;
       return;
     }
-    target.innerHTML = `<p class="muted">分析中…（大文件需要几秒）</p>`;
+    target.innerHTML = `<p class="muted">分析中…（大文件/参考轨需要几秒）</p>`;
     try {
       const buffer = await file.arrayBuffer();
+      const referenceFile = $("#wav-reference").files && $("#wav-reference").files[0];
+      const referencePayload = referenceFile
+        ? {
+            referenceBase64: toBase64(await referenceFile.arrayBuffer()),
+            referenceFilename: referenceFile.name,
+          }
+        : {};
+      const targetMode = $("#wav-target").value;
+      const targetNumber = (selector) => {
+        const value = $(selector).value.trim();
+        if (!value) return undefined;
+        const numeric = Number(value);
+        return Number.isFinite(numeric) ? numeric : undefined;
+      };
+      const customTarget = {
+        preset: "custom",
+        targetLufs: targetNumber("#target-lufs"),
+        lraMinLu: targetNumber("#target-lra-min"),
+        lraMaxLu: targetNumber("#target-lra-max"),
+        truePeakMaxDbtp: targetNumber("#target-tp"),
+      };
+      const hasCustomTarget = Object.values(customTarget).some(
+        (value) => typeof value === "number",
+      );
+      const targetPayload =
+        targetMode === "streaming"
+          ? { target: { preset: "streaming" } }
+          : targetMode === "custom" && hasCustomTarget
+            ? { target: customTarget }
+            : {};
       const data = await api("/api/audio/analyze", {
         method: "POST",
-        body: JSON.stringify({ base64: toBase64(buffer), filename: file.name }),
+        body: JSON.stringify({
+          base64: toBase64(buffer),
+          filename: file.name,
+          ...referencePayload,
+          ...targetPayload,
+        }),
       });
       renderAudioReport(data);
     } catch (error) {

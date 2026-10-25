@@ -73,11 +73,13 @@ npm run fl:bridge -- --launch-fl --panel
 **混音分析（FL 标签）**
 
 - 在 FL 里导出 WAV（PCM 16/24/32-bit 或 IEEE float）；
-- 打开面板 **FL** 标签 → **MIX ANALYSIS / WAV** → 选择文件 → **分析 WAV**；
-- 得到 sample peak、4× 过采样 true peak、RMS、integrated LUFS、short-term min/max、LRA、crest、true-peak crest、peak-to-loudness、DC、削波、立体声相关/宽度、倍频程频谱（31.5 Hz–16 kHz）、频谱质心与 85% rolloff，以及 risk/warn/info 发现；
-- 也可用命令行：`npm run audio:analyze -- "F:\Exports\mix.wav"`（输出 JSON）；
-- 外部 Agent 用 MCP 工具 `analyze_audio({ path })`。
-- 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；true peak 为 4× windowed-sinc 近似（非实验室级表），频谱是声道平均倍频程能量，不做逐帧频谱图。
+- 打开面板 **FL** 标签 → **MIX ANALYSIS / WAV** → 选择混音 WAV → **分析 WAV**；
+- 得到 sample peak、4× 过采样 true peak、RMS、integrated LUFS、short-term min/max、LRA、crest、true-peak crest、peak-to-loudness、DC、削波、立体声相关/宽度、倍频程频谱（31.5 Hz–16 kHz）、多段倍频程热力图、频谱质心与 85% rolloff，以及 risk/warn/info 发现；
+- 可选 **参考 WAV**：比较响度、true peak、LRA、crest 与各倍频程占比；频段差值按占比归一化，参考不是投放目标；
+- 可选 **目标**：通用流媒体预设（-14 LUFS / -1 dBTP / LRA 3–12，仅通用检查）或自定义 LUFS / LRA 范围 / dBTP；
+- 命令行：`npm run audio:analyze -- "F:\Exports\mix.wav" --reference "F:\Exports\ref.wav" --preset streaming`；自定义用 `--lufs -14 --lra-min 3 --lra-max 12 --tp -1`；
+- 外部 Agent 用 MCP 工具 `analyze_audio({ path, referencePath, target })`。
+- 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；true peak 为 4× windowed-sinc 近似（非实验室级表），频谱是声道平均倍频程能量，多段热力图不是逐帧 FFT 瀑布图。
 
 **Agent**
 
@@ -157,7 +159,7 @@ npm run fl:bridge -- --panel
 | `fl_write_notes` | 写入 | 任意 MIDI 音符写入当前/指定钢琴卷帘，写后读回音符数 |
 | `fl_compose` | 写入 | 多通道/多段作曲：每段可用 TONIC 谱例或显式音符，指定 channel/mode/startBeat/transpose |
 | `fl_arrange` | 预览/写入 | 把 TONIC 谱例展开成 bass/comp/pad/melody/arp 多声部；默认只预览，`write:true` 才写入，不自动创建通道 |
-| `analyze_audio` | 只读 | 分析导出的 WAV：true peak（4× 过采样）、sample peak、RMS、BS.1770 integrated LUFS、LRA、倍频程频谱、crest、DC、削波、立体声相关；FL 不能渲染，需先导出 WAV |
+| `analyze_audio` | 只读 | 分析导出的 WAV：true peak（4× 过采样）、LUFS/LRA、倍频程频谱与多段热力图、削波/立体声；可对目标或参考 WAV 做响度/频段对比；FL 不能渲染，需先导出 WAV |
 
 面板中的 **FL** 标签页显示结构诊断，并可直接选择 FL 导出的 WAV 做真实电平分析；路由、发送、总线、多轨编配可交给面板 Agent 或外部 MCP Agent。
 
@@ -172,6 +174,11 @@ fl_arrange({ conceptSlug: "ii-v-i", write: true, parts: [
   { role: "melody", channel: "Lead" }
 ] })
 analyze_audio({ path: "F:\\Exports\\mix.wav" })
+analyze_audio({
+  path: "F:\\Exports\\mix.wav",
+  referencePath: "F:\\Exports\\reference.wav",
+  target: { preset: "streaming" }
+})
 ```
 
 `fl_arrange` 是确定性的声部展开：低音按原谱最低音、和弦按音域做八度折叠与就近连接、旋律取和弦音就近进行、arp 按八分音符循环。它是编配起点，不是自动作曲。
@@ -212,6 +219,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
 - WAV 分析实测：16-bit/48k 立体声正弦 peak -6.02 dBFS、RMS -9.03 dBFS、integrated LUFS -6.7、相关 1.00；24-bit 反相立体声相关 -1.00 并给出 phase 警告；削波文件检测到 35920 个削波样本/17960 帧；面板上传 WAV 后显示同样指标与发现。
 - true peak/频谱/LRA 实测：12 kHz、相位 45°、幅度 0.9 的正弦 sample peak -3.93 dBFS、true peak -0.80 dBTP（高出 3.12 dB，触发 intersample peak）；频谱质心 12000 Hz、16k 倍频程占 100%；5 秒 -10 dBFS + 5 秒 -20 dBFS 的信号 LRA 10.0 LU、short-term -17.0 到 -7.0 LUFS。
+- 目标/参考/多段频谱实测：10 秒双电平信号对 `streaming` 目标得到 ΔLUFS +4.4、true peak 余量 +5.99 dB、LRA in range；与 440 Hz 参考 WAV 对比时 1k/500 Hz 频段被正确识别为只在混音/参考中有能量；多段频谱为 1s × 10 列 × 10 倍频程，面板显示 100 个热力格。
+- 自定义目标实测：`--lufs -14 --lra-min 3 --lra-max 12 --tp -1` 与预设走同一对比路径；目标预设明确标注为通用检查，不是平台强制标准。
 
 ## 故障排查
 
@@ -230,7 +239,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 面板 Agent 只访问你配置的 LLM 端点；API Key 存本机 localStorage。
 - FL 2026 内置 MCP 是官方控制面，但 `run_piano_roll_script` 可执行任意 `flpianoroll` Python；只对可信 Agent 开放。
 - 不能通过 FL API 加载插件、加载音频或渲染音频；这些仍需在 FL 界面完成。
-- `fl_session_report` 是**结构诊断**（推子/声像/路由拓扑/插件链/通道电平），不是音频测量；峰值、LUFS/LRA、频谱必须用 `analyze_audio` 分析导出的 WAV。`analyze_audio` 的 true peak 是 4× windowed-sinc 近似，不是实验室级 true-peak 表；频谱是声道平均倍频程能量，不做逐帧频谱图。
+- `fl_session_report` 是**结构诊断**（推子/声像/路由拓扑/插件链/通道电平），不是音频测量；峰值、LUFS/LRA、频谱必须用 `analyze_audio` 分析导出的 WAV。`analyze_audio` 的 true peak 是 4× windowed-sinc 近似，不是实验室级 true-peak 表；频谱是声道平均倍频程能量，多段热力图是倍频程随时间的聚合，不是逐帧 FFT 瀑布图。
+- 目标预设（-14 LUFS / -1 dBTP / LRA 3–12）是通用检查值，不是平台强制标准；参考 WAV 只用于相对比较，频段差异按占比归一化，比较前先看响度差。
 - FL API 不能自动渲染/导出音频；`analyze_audio` 需要你先在 FL 里导出 WAV。
 - `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；`fl_arrange` 也是确定性的声部展开起点，曲式与配器仍由 Agent/用户决定。
 - `fl_bus` 会对总线名做 `\uXXXX` 转义后再调用 FL；直接通过 `fl_call_tool` 给 `rename_mixer_tracks` 传字面非 ASCII 名称可能被写成 U+FFFD。

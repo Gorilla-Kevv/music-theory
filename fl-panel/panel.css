@@ -689,6 +689,151 @@ code {
   align-items: center;
 }
 
+.audio-options {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.audio-options label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.audio-options input[type="file"] {
+  max-width: 230px;
+  font-size: 10px;
+}
+
+.audio-options select {
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  padding: 4px 5px;
+  font-size: 10px;
+}
+
+.target-grid {
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.target-grid.hidden {
+  display: none;
+}
+
+.target-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.target-grid input {
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  padding: 4px 5px;
+  font-size: 10px;
+}
+
+.audio-note {
+  margin: 6px 0 0;
+  font-size: 9px;
+}
+
+.comparison {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compare-block {
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  padding: 7px 9px;
+}
+
+.compare-block .mono {
+  font-size: 8px;
+}
+
+.band-deltas {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.band-delta {
+  display: grid;
+  grid-template-columns: 32px 46px minmax(0, 1fr) 78px;
+  gap: 5px;
+  align-items: center;
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.band-delta .delta-bar {
+  display: block;
+  height: 4px;
+  background: rgba(11, 13, 16, 0.08);
+  position: relative;
+}
+
+.band-delta .delta-bar i {
+  display: block;
+  height: 100%;
+  background: var(--cobalt);
+}
+
+.spectrogram-wrap {
+  margin-top: 7px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  padding: 7px 8px;
+  overflow-x: auto;
+}
+
+.spectrogram {
+  display: grid;
+  gap: 1px;
+  min-width: 320px;
+}
+
+.spectrogram-time,
+.spectrogram-band {
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 7px;
+  color: var(--muted);
+  line-height: 9px;
+}
+
+.spectrogram-time {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.spectrogram-band {
+  padding-right: 3px;
+  text-align: right;
+}
+
+.spectrogram-cell {
+  display: block;
+  height: 9px;
+  background: transparent;
+}
+
 .audio-controls input[type="file"] {
   max-width: 250px;
   font-size: 10px;
