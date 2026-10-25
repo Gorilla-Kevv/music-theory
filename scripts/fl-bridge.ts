@@ -503,6 +503,23 @@ function isMasterToken(token: string): boolean {
   return /^(0|master|master track|主|主轨)$/i.test(token.trim());
 }
 
+function asciiJson(value: unknown): string {
+  return JSON.stringify(value).replace(/[^\x00-\x7f]+/g, (chunk) =>
+    [...chunk]
+      .map((char) => {
+        const code = char.codePointAt(0)!;
+        if (code <= 0xffff) return `\\u${code.toString(16).padStart(4, "0")}`;
+        const offset = code - 0x10000;
+        const high = 0xd800 + (offset >> 10);
+        const low = 0xdc00 + (offset & 0x3ff);
+        return `\\u${high.toString(16).padStart(4, "0")}\\u${low
+          .toString(16)
+          .padStart(4, "0")}`;
+      })
+      .join(""),
+  );
+}
+
 function findMixerTrack(
   session: FlSessionContext,
   token: string,
@@ -927,7 +944,7 @@ async function setSends(input: Record<string, unknown>) {
         canReach(send.to_track, to, visited),
     );
   };
-  for (const change of changes) {
+  const resolved = changes.map((change) => {
     const source = findMixerTrack(session, change.source);
     const dest = findMixerTrack(session, change.dest);
     if (!source) throw new Error(`找不到源混音器轨道：${change.source}`);
@@ -941,17 +958,18 @@ async function setSends(input: Record<string, unknown>) {
         `发送 ${change.source} → ${change.dest} 会形成反馈环路；如确实需要，请用 fl_call_tool 直接设置。`,
       );
     }
-  }
+    return { change, sourceIndex: source.index, destIndex: dest.index };
+  });
 
   const results: Array<Record<string, unknown>> = [];
-  for (const change of changes) {
+  for (const entry of resolved) {
     results.push({
-      ...change,
+      ...entry.change,
       result: await flCall("set_mixer_routing", {
-        source_track: change.source,
-        dest_track: change.dest,
-        active: change.active ? 1 : 0,
-        level: change.level,
+        source_track: String(entry.sourceIndex),
+        dest_track: String(entry.destIndex),
+        active: entry.change.active ? 1 : 0,
+        level: entry.change.level,
       }),
     });
   }
@@ -996,9 +1014,6 @@ function normalizeBusSpecs(input: Record<string, unknown>): BusSpec[] {
     const name = String(entry.name ?? "").trim();
     const mixerTrack = String(entry.mixerTrack ?? "").trim();
     if (!name || !mixerTrack) throw new Error("每条总线需要 name 与 mixerTrack。");
-    if (!/^[\x20-\x7e]+$/.test(name)) {
-      throw new Error("总线名请使用 ASCII；FL 的 rename_mixer_tracks 经 CDP 对非 ASCII 名称会乱码。");
-    }
     const channels = Array.isArray(entry.channels)
       ? entry.channels.map(String).join(",")
       : String(entry.channels ?? "");
@@ -1052,20 +1067,28 @@ async function setupBuses(input: Record<string, unknown>) {
         `混音器 ${target.index}「${target.name}」已有内容（${existingChannels.length} 通道 / ${existingPlugins.length} 插件）；如确认要改，传 allowExisting: true。`,
       );
     }
+    let channelIndexes: number[] = [];
     if (spec.channels) {
-      for (const token of spec.channels.split(",").map((item) => item.trim()).filter(Boolean)) {
+      const channelTokens = spec.channels.split(",").map((item) => item.trim()).filter(Boolean);
+      for (const token of channelTokens) {
         const channel = (session.active_channels ?? []).find(
           (entry) => entry.name === token || String(entry.index) === token,
         );
         if (!channel) throw new Error(`找不到要路由的通道：${token}`);
       }
+      channelIndexes = channelTokens.map((token) => {
+        const channel = (session.active_channels ?? []).find(
+          (entry) => entry.name === token || String(entry.index) === token,
+        )!;
+        return channel.index;
+      });
     }
     await flCall("rename_mixer_tracks", {
-      track_mapping: JSON.stringify({ [target.index]: spec.name }),
+      track_mapping: asciiJson({ [target.index]: spec.name }),
     });
-    if (spec.channels) {
+    if (channelIndexes.length) {
       await flCall("route_channels_to_mixer", {
-        target_channels: spec.channels,
+        target_channels: channelIndexes.join(","),
         mixer_track_target: String(target.index),
       });
     }

@@ -228,15 +228,15 @@
 - 分支：dev
 - 已完成：
   - 41.1 修复 `get_mixer_routing` 的多重转义解析（`flResultJson` 逐级 unescape）；`fl_session_report` 加入通道电平/硬声像/增益叠加、总线/返回轨、发送矩阵、环路、死端、最深路由层级。
-  - 41.2 新增只读 `fl_mixer_routing`；新增写入工具 `fl_send`（按矩阵验证发送 level/关闭，默认拒绝反馈环路）与 `fl_bus`（重命名、通道路由、回主发送；默认拒绝覆盖非空轨道，总线名限制 ASCII 以避免 FL 改名乱码）。
+  - 41.2 新增只读 `fl_mixer_routing`；新增写入工具 `fl_send`（按矩阵验证发送 level/关闭，默认拒绝反馈环路）与 `fl_bus`（重命名、通道路由、回主发送；默认拒绝覆盖非空轨道；总线名经 `\uXXXX` 转义避免 FL 改名乱码，通道用数值索引路由）。
   - 41.3 新增 `scripts/arranger.ts` 与 `fl_arrange`：从 TONIC 谱例生成 bass/comp/pad/melody/arp；低音按原谱最低音、comp/pad 按音域折叠并就近连接、melody 取和弦音就近、arp 八分循环；默认预览，`write:true` 才写，必须显式 channel。
   - 41.4 新增 `scripts/audio-analyze.ts` 与 CLI `audio:analyze`：解析 PCM 8/16/24/32-bit 与 IEEE float 32/64，计算 sample peak、RMS、crest、DC、削波、立体声相关/宽度、ITU-R BS.1770-4 integrated LUFS 与 short-term max。面板 FL 标签新增 WAV 上传分析；MCP 新增 `analyze_audio`。
   - 41.5 MCP 扩至 27 工具；桥新增 `/api/fl/routing|send|bus|arrange`、`/api/audio/analyze`；AGENTS/TONIC-FL/HANDOFF/PRODUCT/线上 `/agent` 同步。
 - 实测：
-  - 临时 3 个 FL Keys 通道 → `fl_bus` 把插入 16 命名为 TONIC Test Bus 并路由三通道（verified）→ `fl_send` 16→15 0.5（verified）→ `fl_arrange` 写入 bass 3 / comp 30 / melody 12 音符并逐轨读回一致；清理后删除三通道、插入 16 重置为默认空轨（Insert 16）、0 dB/pan 0、主发送 0.8。
-  - 负向测试：非 ASCII 总线名被拒绝；不存在的通道路由在改名之前报错，插入 16 保持默认；16→15 后再发 15→16 被环路保护拒绝，关闭后矩阵恢复。
+  - 临时 3 个 FL Keys 通道 → `fl_bus` 把插入 16 命名为 TONIC Test Bus 并路由三通道（verified）→ `fl_send` 16→15 0.5（verified）→ `fl_arrange` 写入 bass 3 / comp 30 / melody 12 音符并逐轨读回一致；清理后删除三通道、插入 16 重置为默认空轨（插入 16）、0 dB/pan 0、主发送 0.8。
+  - 负向测试：不存在的通道路由在改名之前报错，插入 16 保持默认；16→15 后再发 15→16 被环路保护拒绝，关闭后矩阵恢复；中文总线名经 `\uXXXX` 转义可正确写入/读回，并已恢复为“插入 16”。
   - WAV：16-bit 正弦 peak -6.02 dBFS / RMS -9.03 / LUFS -6.7 / 相关 1.00；24-bit 反相相关 -1.00 并报 phase；削波文件 35920 样本 / 17960 帧；静音文件只报 `audio-silence`；面板上传与 MCP `analyze_audio`、CLI 三路结果一致。
 - 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
-- 边界：WAV 只支持 PCM/float，`sample peak` 不是 true peak、不做频谱；FL 不能自动渲染；`fl_arrange` 是确定性声部展开，不是自动编曲；总线名不能用中文（FL 工具会写成 U+FFFD）。
+- 边界：WAV 只支持 PCM/float，`sample peak` 不是 true peak、不做频谱；FL 不能自动渲染；`fl_arrange` 是确定性声部展开，不是自动编曲；直接 `fl_call_tool` 传中文轨道名给 FL rename 工具可能乱码（`fl_bus` 已转义）。
 - 下一阶段入口：真实混音目标评估（LRA/频谱/true peak）、更多编曲模板（鼓组/节奏型）、用户实际 LLM 端点验证；VST3 仍需独立原生工程。
 - 本次文档更新时间：10.25 23:40

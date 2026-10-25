@@ -204,8 +204,9 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 外部 MCP 的 `fl_status` / `fl_list_tools` / `apply_example` 全链路成功，读回 15 个音符。
 - 面板 Agent 用 mock 端点验证了 **五种协议**的工具循环：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生均先调用 `get_concept_sources`，再返回带章节 locator 的回答。
 - 面板设置里协议下拉、保存、OpenAI Responses 聊天链路已实测。
-- 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时三个 FL Keys 通道分别命名为 TONIC Test Bass/Comp/Melody，`fl_bus` 将插入 16 命名为 TONIC Test Bus 并把三通道路由到它，`fl_send` 建立 Bus→Insert 15 的 0.5 发送，`fl_arrange` 写入 3/30/12 个音符并逐轨读回；清理后移除三通道，插入 16 重置为默认空轨（Insert 16）、0 dB/pan 0、主发送 0.8。
+- 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时三个 FL Keys 通道分别命名为 TONIC Test Bass/Comp/Melody，`fl_bus` 将插入 16 命名为 TONIC Test Bus 并把三通道路由到它，`fl_send` 建立 Bus→Insert 15 的 0.5 发送，`fl_arrange` 写入 3/30/12 个音符并逐轨读回；清理后移除三通道，插入 16 重置为默认空轨（插入 16）、0 dB/pan 0、主发送 0.8。
 - 环路保护实测：建立 16→15 后再发 15→16 被拒绝（“会形成反馈环路”）；关闭 16→15 后矩阵恢复为各自只送主轨 0.8。
+- 中文总线名实测：`fl_bus` 用 `\uXXXX` 转义写入“测试总线”并读回一致，再恢复为“插入 16”；直接通过 `fl_call_tool` 传字面中文给 `rename_mixer_tracks` 仍可能乱码。
 - MCP 工具总数 27；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、总线/返回/环路与发现列表。
 - 外部 MCP 用真实 stdio 客户端复验：27 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
 - `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
@@ -231,5 +232,5 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - `fl_session_report` 是**结构诊断**（推子/声像/路由拓扑/插件链/通道电平），不是音频测量；峰值、LUFS 必须用 `analyze_audio` 分析导出的 WAV。`analyze_audio` 给的是 **sample peak**，不是 true peak，也不做频谱分析。
 - FL API 不能自动渲染/导出音频；`analyze_audio` 需要你先在 FL 里导出 WAV。
 - `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；`fl_arrange` 也是确定性的声部展开起点，曲式与配器仍由 Agent/用户决定。
-- `fl_bus` 的总线名限制为 ASCII：FL 的 `rename_mixer_tracks` 经 CDP 对非 ASCII 名称会乱码；现有中文通道名仍可用于路由/写入。
+- `fl_bus` 会对总线名做 `\uXXXX` 转义后再调用 FL；直接通过 `fl_call_tool` 给 `rename_mixer_tracks` 传字面非 ASCII 名称可能被写成 U+FFFD。
 - 测试脚本曾临时添加 FL Keys 通道并写入示例，已清理；原始 5 个 808 通道保留，插入 16 已恢复默认空轨。
