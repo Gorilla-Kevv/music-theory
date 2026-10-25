@@ -24,7 +24,7 @@ Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_module
 
 ## Operating Context
 
-- 主要入口是浏览器中的本地站点；构建后离线可用。线上镜像：`https://gorilla-kevv.github.io/music-theory/`（只含原创知识内容与授权采样，不含电子书）。
+- 主要入口是浏览器中的本地站点；构建后离线可用。线上镜像：`https://gorilla-kevv.github.io/music-theory/`（只含原创知识内容与授权采样，不含电子书；`/books/*` 在线上返回 404）。
 - 与 FL Studio、本地脚本和未来的 MCP 客户端共享 `knowledge.json` 与导出的学习状态。
 - 理论来源两层（2026-10-24 修订）：Tier 1 三本主教材——Mark Levine《The Jazz Theory Book》（中译 EPUB 已内嵌）、Steven G. Laitz & Michael R. Callahan《The Complete Musician》（**第 4 版**英文原版 PDF 已内嵌）、斯波索宾等《和声学教程》（第 3 版，陈敏译）；Tier 2 SoundQuest 站点（soundquest.jp / 中译 music-theory.aizcutei.com，篇章级定位）——承载三本书未覆盖的站点理论框架。**书库为源知识数据（原书真实章目 + 章节深链），知识库为总结精炼、白话解释的个人笔记与拓展知识。**电子书文件仅存本地（gitignore），所有条目为原创改写，不复制任何来源正文。
 - 三本书在本地整理为「完整章目 + 原创章节笔记 + 深度归纳 + 概念映射」的书库，不复制教材正文；和声概念按功能、走向、色彩、明暗、关系、和声节奏六个维度组织。
@@ -44,7 +44,7 @@ Vite + React + TypeScript + Tailwind CSS v4，依赖全部从本地 `node_module
 
 ## Evidence on Hand
 
-- 三本著作的版次、出版社与章节目录已核对到公开书目记录/出版社页面；Levine 24 章、Laitz 34 章、Sposobin 60 章已整理为本地书库目录；Levine 24/24、Laitz 33/33（4e）、Sposobin 60/60 章已有原创笔记，Levine/Laitz 已按内嵌电子书逐章深化；Laitz 的 PDF 页码来自原书书签核对并写入深链，Levine 用 EPUB 章节 HTML 深链，Sposobin 只标章。
+- 三本著作的版次、出版社与章节目录已核对到公开书目记录/出版社页面；Levine 24 章、Laitz 33 章（4e：1A/1B + 02–32）、Sposobin 60 章，共 117 章，已整理为本地书库目录；Levine 24/24、Laitz 33/33、Sposobin 60/60 章已有原创笔记，Levine/Laitz 已按内嵌电子书逐章深化；Laitz 的 PDF 页码来自原书书签核对并写入深链，Levine 用 EPUB 章节 HTML 深链，Sposobin 只标章。
 - 参考站点：pianochord.org 的和弦图鉴结构、music-theory.aizcutei.com 的中文长篇章节结构（SoundQuest 的中译本；日文原站 soundquest.jp）。二者仅作为信息组织与选题地图参考，不复制其视觉资产或正文；站点原创框架（连接系统论、轴心体系、新里曼、LCC、元音乐理论、多义论、经过和弦等）作为 Tier 2 收入知识库，条目为原创归纳并明确标注“站点框架/创作工具/元框架”，不冒充学界定论。
 - 钢琴采样来自 Salamander Grand Piano V3（Alexander Holm，CC BY 3.0），本地子集与许可文件在 `public/audio/salamander/`。
 - 无现成品牌资产、logo、用户评价或商业数据；不得虚构。

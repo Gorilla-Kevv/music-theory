@@ -196,7 +196,7 @@ export function buildKnowledgePack(): KnowledgePack {
   return {
     meta: {
       name: "TONIC · 主音",
-      version: "0.3.0",
+      version: "0.4.0",
       builtAt: new Date().toISOString(),
       conceptCount: CONCEPTS.length,
       exampleCount: ALL_EXAMPLES.length,

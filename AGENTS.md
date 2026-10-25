@@ -14,7 +14,7 @@ TONIC 是一个本地优先的个人乐理强化工作台。核心不是“多�
 
 1. **Tier 1 · 主教材**（优先，理论断言的首选依据）：
    - Mark Levine, *The Jazz Theory Book*（Sher Music, 1995；中译本《爵士乐宝典》赵贝露译，上海音乐出版社 2017，**EPUB 已内嵌**，24 章章序与英文原版一致）。
-   - Steven G. Laitz & Michael R. Callahan, *The Complete Musician*, **4th ed.**（OUP, © 2016，**英文原版 PDF 已内嵌**，1A/1B + 32 章共九个 Part）。
+   - Steven G. Laitz & Michael R. Callahan, *The Complete Musician*, **4th ed.**（OUP, © 2016，**英文原版 PDF 已内嵌**，1A/1B + 31 个编号章（02–32）共 33 章、九个 Part）。
    - 伊·杜波夫斯基、斯·叶甫谢耶夫、伊·斯波索宾、符·索科洛夫《和声学教程》第 3 版（陈敏译，人民音乐出版社，2021）——**电子版无法获取，深化任务搁置（2026-10-24 用户决定）**。
    - 引用给到**章节级 locator**（章号 + 章名/小节名）。Laitz 一律按第 4 版章名（与第 5 版不同！）；持有电子版的书可附 PDF 页码（内嵌深链 `#page=N`）。
 2. **Tier 2 · SoundQuest 站点**（`source: "soundquest"`，补三本书覆盖不到的主题）：
@@ -52,7 +52,7 @@ src/content/
   jazz-advanced.ts     爵士深化 8 条（旋律小调调式、对称音阶、LCC、Clave）
   deep-dives.ts        66 条白话拆解（全部概念）
   bilibili.ts          B 站课程调研台账：5 个合集/板块，112 条视频与文章 / 20 条已读 / 92 条仅编目
-  graph/index.ts       体系图谱：3 书源 + 站点 / 6 枢纽 / 66 概念 / 188 关联 / 79 前置
+  graph/index.ts       体系图谱：3 书源 / 6 枢纽 / 66 概念 / 188 关联 / 79 前置（SoundQuest 为书目层，不入图）
   books/               三本书的完整章目 + 原创章节笔记（117 章目 / 117 条笔记；Levine/Laitz 与内嵌电子书逐一对应）
   bibliography.ts      书目（含 soundquest 站点条目）、版次、定位政策
 ```
@@ -61,7 +61,7 @@ src/content/
 
 - 每本书一个 `BookOutline`：完整章目（章号、原书章名、中文对照、Part/上册下册、内嵌电子书定位）。
 - 已展开章节带 `summary`、`keyPoints`、`concepts`（知识库 slug）、`dimensions`；深度笔记再带 `deepSummary`、`analysis`、`crossBook`、`visualHint`、`confusions`。
-- 当前覆盖：Levine 24/24 章、Laitz 34 章（4e：1A/1B + 32 章）、Sposobin 60/60 章（118/118 条笔记）。Levine/Laitz 章节结构已与用户持有的电子版逐一核对（EPUB 目录 / PDF 书签），每章带 `sourceFile`（EPUB HTML）或 `pdfPage`（PDF 页码）深链。
+- 当前覆盖：Levine 24/24 章、Laitz 33/33 章（4e：1A/1B + 02–32）、Sposobin 60/60 章（117/117 条笔记）。Levine/Laitz 章节结构已与用户持有的电子版逐一核对（EPUB 目录 / PDF 书签），每章带 `sourceFile`（EPUB HTML）或 `pdfPage`（PDF 页码）深链。
 - **电子书内嵌**：`/books/`（用户原件）与 `/public/books/`（jazz-baodian EPUB 解包 + complete-musician-4e.pdf），均 gitignore；书籍页面提供"打开原书本章"深链。Sposobin 无电子版，无深链。
 - 书库页面：`/books`；Agent 接口：`get_book_outline`、`get_source_note`、`search_sources`、`window.TONIC.bookOutline/sourceNote/searchSources`。
 - 新增笔记：先确认章节 locator → 写 ≤200 字原创摘要 → 列 2–4 个关键点 → 写 `deepSummary`/`analysis`/`crossBook` → 映射到现有/新增概念 → 标维度。不要在 book 数据里放大段原文。
