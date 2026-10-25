@@ -125,6 +125,17 @@ src/content/
 6. 需要“今天复习什么”：网页导出的 `review-state.json` → `get_review_queue`。
 7. 需要批量离线：`public/knowledge.json`（`npm run knowledge` 生成）。
 
+## FL Studio 2026 集成（TONIC-FL）
+
+- 目标：把知识库接进 FL 2026，而不是做 VST。外部 Agent 走 `tonic-mcp`；FL 内走 Gopher WebView2 的 TONIC 面板。
+- 文件：`scripts/tonic-mcp.ts`（stdio MCP）、`scripts/fl-bridge.ts`（本地 HTTP + 面板 + 启动/附加 FL）、`scripts/fl-cdp.ts`（WebView2 CDP 与 `script_handler` 注入）、`scripts/fl-payload.ts`（谱例→FL 音符/Python）、`fl-panel/`（Gopher 内嵌 UI）、`TONIC-FL.md`（安装/配置/规则）。
+- 启动：`npm run fl:bridge -- --launch-fl --panel`；FL 已运行且带调试端口时用 `npm run fl:bridge -- --panel`。外部 MCP：`npm run mcp`。
+- FL 2026 内置 MCP 通过 Gopher WebView2 的 `script_handler` 暴露 48 个工具；`run_piano_roll_script` 可执行 `flpianoroll` Python。桥用 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，CDP 目标为 Gopher 页面；**不要假设 44 个工具**，以实际目录为准。
+- 写入规则：先 `get_fl_payload` 核对音符，再 `apply_example`（或 `fl_call_tool`）；`open_piano_roll_for_channel` 的参数是 `target_channel`（1-based 字符串/名称）；写后桥会用抛异常的方式读回 `fp.score.noteCount`，返回 `verifiedNotes`。
+- 知识规则不变：理论断言必须带章节级 locator；Agent 先查 TONIC，再操作 FL；MCP instructions 已写入这些约束。
+- 安全：桥只绑定 `127.0.0.1:5127`；不关闭用户 FL（无调试端口时提示保存后重启）；测试添加的通道/音符要清理；`run_piano_roll_script` 只对可信 Agent 开放。
+- 限制：FL API 不能加载插件/音频或渲染；面板 Agent 需要用户配置 OpenAI-compatible LLM；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。
+
 ## 编辑与构建规则
 
 - 单一事实源：页面、搜索、音频、复习、书库、Agent 都从 `src/content` 读取；不要另建一套 JSON 真相。
@@ -151,6 +162,7 @@ src/content/
 - 线上：`https://gorilla-kevv.github.io/music-theory/`（GitHub Pages，Actions 部署；电子书不发布）
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图、学习路径视图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
+- FL Studio 2026：`tonic-mcp`（17 个知识/FL 工具）+ `fl-bridge`（48 个 FL 内置工具代理）+ Gopher 内嵌面板；实测写入并读回 15 音符
 - 站点待读：已清空（C63 元音乐理论、C74/75 多义论已于阶段 30 补录；C47–49 延伸音细节并入 J-04，C39–40 转位/持续音/混合和弦由既有条目覆盖）
 - 书库深化：Levine/Laitz 已读透；Sposobin 电子版无法获取，深化任务搁置（60/60 章名级笔记保留）
-- 未交付：stdio MCP server（schema 已固定）、全量教材正文（版权边界）
+- 未交付：全量教材正文（版权边界）、FL 原生插件/VST（不做）

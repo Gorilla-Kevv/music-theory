@@ -10,10 +10,13 @@
     "preview": "vite preview",
     "knowledge": "tsx scripts/build-knowledge.ts",
     "theory": "tsx scripts/theory-cli.ts",
+    "mcp": "tsx scripts/tonic-mcp.ts",
+    "fl:bridge": "tsx scripts/fl-bridge.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@fontsource/anton": "^5.1.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "lucide-react": "^0.468.0",
     "minisearch": "^7.1.0",
     "react": "^18.3.1",

@@ -74,7 +74,9 @@ export function Agent() {
         <p className="mono-label text-muted">AGENT / 接口</p>
         <h1 className="zh-display mt-2 text-4xl sm:text-5xl">让 Agent 读到同一份乐理</h1>
         <p className="reading-column mt-3 max-w-[64ch] text-sm leading-relaxed text-muted">
-          页面、搜索、谱例、复习卡、书库与 Agent 输出共用一套 TypeScript 数据。首版提供本地知识包、类型化查询函数与 Node CLI；接口按 MCP 工具形状设计，下一阶段可直接包装成 stdio MCP server。
+          页面、搜索、谱例、复习卡、书库与 Agent 输出共用一套 TypeScript 数据。已提供本地知识包、类型化查询、Node CLI、stdio MCP server（
+          <code className="font-mono text-xs">npm run mcp</code>）与 FL Studio 2026 桥（
+          <code className="font-mono text-xs">npm run fl:bridge -- --launch-fl --panel</code>）。
         </p>
         <p className="mono-label mt-3 text-muted">
           {BOOK_STATS.chapters} CHAPTERS · {SOURCE_NOTES.length} SOURCE NOTES · NO FULL-TEXT COPY
@@ -186,7 +188,10 @@ theoryApi.videos({ status: "read" });`}
           <section className="border border-line p-4 sm:p-5">
             <h2 className="text-lg font-semibold">4 · MCP 工具映射</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-              下列 schema 已按 MCP <code className="font-mono text-xs">tools/list</code> 形状定义；首版不启动 server，但接口名称、输入与输出已固定，后续可直接注册。
+              <code className="font-mono text-xs">npm run mcp</code> 已启动 stdio server（17 个知识/FL 工具）；下列为知识侧 schema。FL 侧另有
+              <code className="font-mono text-xs"> get_fl_payload </code>、<code className="font-mono text-xs">apply_example</code>、
+              <code className="font-mono text-xs"> fl_status </code>、<code className="font-mono text-xs">fl_list_tools</code>、
+              <code className="font-mono text-xs"> fl_call_tool </code>。
             </p>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[560px] border-collapse text-left text-xs">
@@ -217,7 +222,39 @@ theoryApi.videos({ status: "read" });`}
           </section>
 
           <section className="border border-line p-4 sm:p-5">
-            <h2 className="text-lg font-semibold">5 · 一个编曲现场</h2>
+            <h2 className="text-lg font-semibold">5 · FL Studio 2026</h2>
+            <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
+              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。写钢琴卷帘前先用
+              <code className="font-mono text-xs"> get_fl_payload </code>
+              核对音符，写入后桥会读回实际音符数。
+            </p>
+            <CodeBlock
+              label="TERMINAL / FL 桥与 MCP"
+              code={`npm run fl:bridge -- --launch-fl --panel
+npm run mcp`}
+            />
+            <CodeBlock
+              label="MCP / FL 工具"
+              code={`get_fl_payload({ conceptSlug: "ii-v-i" })
+apply_example({ conceptSlug: "ii-v-i", mode: "replace", channel: 6 })
+fl_list_tools()
+fl_call_tool({ name: "run_piano_roll_script", arguments: { source: python } })`}
+            />
+            <p className="mt-3 text-xs leading-relaxed text-muted">
+              完整安装、MCP 配置、Agent 引用规则与故障排查见仓库根目录
+              <a
+                href="https://github.com/Gorilla-Kevv/music-theory/blob/dev/TONIC-FL.md"
+                target="_blank"
+                rel="noreferrer"
+                className="ml-1 text-cobalt-ink hover:text-ink"
+              >
+                TONIC-FL.md ↗
+              </a>
+            </p>
+          </section>
+
+          <section className="border border-line p-4 sm:p-5">
+            <h2 className="text-lg font-semibold">6 · 一个编曲现场</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
               当 Agent 接到“把这段 ii–V–I 换成更爵士的终止”时，先用搜索定位三全音替代，再读谱例与引用，最后用导出的复习状态决定是否把该概念排进今天的复习。
             </p>
@@ -292,15 +329,15 @@ get_review_queue({ state: exportedState })`}
           <div className="border border-line bg-ink p-4 text-paper">
             <p className="mono-label text-acid">LOCAL FIRST</p>
             <p className="mt-2 text-xs leading-relaxed text-paper/65">
-              页面、音频、搜索、知识包与 CLI 全部离线运行。没有账户、云端同步或遥测；只有你主动点击外部书目链接时才会离开本地。
+              页面、音频、搜索、知识包、CLI、MCP 与 FL 桥全部在本机运行。没有账户、云端同步或遥测；只有你主动点击外部书目链接、或在 FL 面板配置 LLM 时才会访问外部端点。
             </p>
           </div>
 
           <div className="border border-line p-4">
             <p className="mono-label text-muted">NEXT / 扩展点</p>
             <ul className="mt-2 space-y-2 text-xs leading-relaxed text-muted">
-              <li>· 把 TOOL_SCHEMAS 包装成 stdio MCP server。</li>
-              <li>· 让 FL Studio 脚本读取 knowledge.json 的谱例事件。</li>
+              <li>· 把 FL 面板 Agent 接到你的实际 LLM。</li>
+              <li>· 补更多 FL 组合动作（进行/音阶批量写入、通道/混音）。</li>
               <li>· 增加和弦进行分析工具与复习弱项路由。</li>
             </ul>
           </div>

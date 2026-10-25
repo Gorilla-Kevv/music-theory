@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0d10" />
+    <title>TONIC × FL Studio</title>
+    <link rel="stylesheet" href="/panel.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="brand">
+          <span class="logo">TONIC</span>
+          <span class="sub">FL BRIDGE · 2026</span>
+        </div>
+        <div class="status">
+          <span id="status-dot" class="dot"></span>
+          <span id="status-text">连接中…</span>
+        </div>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="TONIC FL 面板">
+        <button type="button" class="tab active" data-tab="lookup">查概念</button>
+        <button type="button" class="tab" data-tab="agent">Agent</button>
+        <button type="button" class="tab" data-tab="settings">设置</button>
+      </nav>
+
+      <main>
+        <section id="tab-lookup" class="panel active">
+          <div class="searchbar">
+            <input id="search-input" type="search" placeholder="搜索概念 / 和弦 / 术语…" autocomplete="off" />
+            <button id="search-btn" type="button">检索</button>
+          </div>
+
+          <div id="search-results" class="results">
+            <p class="muted">输入关键词，或试试：</p>
+            <div class="suggestions">
+              <button type="button" data-query="五度圈">五度圈</button>
+              <button type="button" data-query="ii–V–I">ii–V–I</button>
+              <button type="button" data-query="张力光谱">张力光谱</button>
+              <button type="button" data-query="经过和弦">经过和弦</button>
+              <button type="button" data-query="和声多义性">和声多义性</button>
+            </div>
+          </div>
+
+          <article id="concept-detail" class="detail hidden"></article>
+        </section>
+
+        <section id="tab-agent" class="panel">
+          <div class="agent-head">
+            <div>
+              <p class="mono muted">TONIC-FL AGENT</p>
+              <p class="agent-hint">先查 TONIC，再引用章节，最后写入 FL。</p>
+            </div>
+            <button id="open-settings" type="button" class="ghost">LLM 设置</button>
+          </div>
+          <div id="chat-log" class="chat">
+            <div class="bubble assistant">
+              我可以先检索 TONIC，再回答或把谱例写进当前钢琴卷帘。例如：<br />
+              “在 C 大调写一个 ii–V–I，用九音，告诉我教材依据。”
+            </div>
+          </div>
+          <div id="chat-trace" class="trace"></div>
+          <form id="chat-form" class="chat-form">
+            <textarea id="chat-input" rows="2" placeholder="问理论，或让 Agent 操作 FL…"></textarea>
+            <button id="chat-send" type="submit">发送</button>
+          </form>
+        </section>
+
+        <section id="tab-settings" class="panel">
+          <h2>LLM 设置</h2>
+          <p class="muted">
+            面板内的 Agent 使用 OpenAI-compatible <code>/chat/completions</code>。
+            设置只保存在本机 localStorage，不会写入仓库。
+          </p>
+          <label>Base URL<input id="cfg-base" placeholder="http://127.0.0.1:8080/v1" /></label>
+          <label>Model<input id="cfg-model" placeholder="例如 qwen2.5-7b-instruct" /></label>
+          <label>API Key<input id="cfg-key" type="password" placeholder="本地模型可留空" /></label>
+          <button id="save-settings" type="button">保存设置</button>
+          <p id="settings-note" class="muted"></p>
+        </section>
+      </main>
+
+      <footer class="foot">
+        <span>FL 2026 内置 MCP · <span id="tool-count">—</span> tools</span>
+        <a href="/api/status" target="_blank" rel="noreferrer">STATUS</a>
+      </footer>
+    </div>
+    <script src="/panel.js"></script>
+  </body>
+</html>

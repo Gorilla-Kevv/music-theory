@@ -2,10 +2,10 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 36 已完成（交付文档同步：66 概念 / 117 章 / 209 卡 / 5 个 B 站合集）
-- 下一阶段任务：FL Studio 侧适配；线上内容维护；图谱细节打磨；stdio MCP server（未排期）
-- 可提前进行的任务：Agent 侧路径查询、跨书章节摘要、复习卡内容扩充
-- 未完成的任务：全量教材正文（版权边界，不做）；stdio MCP server；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）
+- 当前正在开发任务：阶段 37 已完成（FL Studio 2026 集成：MCP + CDP 桥 + Gopher 面板）
+- 下一阶段任务：把面板 Agent 接到用户实际 LLM；线上内容维护；图谱/可视化细节打磨
+- 可提前进行的任务：更多 FL 组合动作（进行/音阶批量写入、通道/混音）、Agent 侧路径查询
+- 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写
 
 ## 已完成阶段简表（1–28，详见 git log 与各阶段提交）
 
@@ -158,3 +158,22 @@
   - Sposobin 无电子版，60 章仍为章名级笔记；不要在文档中写成“已读透”。
 - 下一阶段入口：FL Studio 适配；线上内容维护；图谱/可视化细节打磨；stdio MCP server（未排期）。
 - 本次文档更新时间：10.25 01:20
+
+## 阶段 37 FL Studio 2026 集成：MCP + CDP 桥 + Gopher 面板 [计划时间：10.25 00:40 BY solo-agent][完成时间：10.25 01:35 BY solo-agent]
+
+- 分支：dev；FL 2026 已安装（`C:\Program Files\Image-Line\FL Studio 2026\FL64.exe`）
+- 已完成：
+  - 37.1 `tonic-mcp.ts`：stdio MCP，17 个工具（11 知识 + `get_fl_payload`/`apply_example`/`fl_status`/`fl_list_tools`/`fl_call_tool`），MCP instructions 强制“先查知识、带章节 locator、再写 FL”。
+  - 37.2 `fl-cdp.ts`：以 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，CDP 连 Gopher WebView2，向页面注入 `script_handler` 单飞 Promise 桥；直接复用 FL 2026 官方内置 MCP（实测 48 工具），不装第三方 FL MCP、不需要 loopMIDI。
+  - 37.3 `fl-bridge.ts` + `fl-panel/`：本地 HTTP（127.0.0.1:5127）提供知识搜索、概念/章节引用、谱例写入、状态；Gopher 自动切到 TONIC 面板；面板含查概念/ Agent/设置三页，Agent 使用 OpenAI-compatible `/chat/completions` 做工具循环。
+  - 37.4 写入链路：`fl-payload.ts` 把谱例转 FL 音符与 `flpianoroll` Python；`apply_example` 写当前/指定钢琴卷帘，写后抛异常读回 `fp.score.noteCount` 返回 `verifiedNotes`；修正 `open_piano_roll_for_channel` 的 `target_channel` 参数。
+  - 37.5 文档 `TONIC-FL.md`（安装/两种 Agent 模式/MCP 配置/故障排查/安全边界）；AGENTS/HANDOFF/PRODUCT/PROGRESS 同步。
+  - 37.6 站点 `/agent` 页同步：stdio MCP/FL 桥命令、MCP 工具映射说明与 TONIC-FL 链接；扩展点列表更新。
+- 测试结果：
+  - MCP stdio：17 工具、搜索五度圈、ii–V–I payload、跨书章节引用通过。
+  - FL：Gopher CDP 连接成功、48 个内置工具；添加 FL Keys 测试通道 → 写入 ii–V–I（15 音符）→ 读回 `TONIC_NOTES=15;PPQ=96`；外部 MCP `apply_example` 与 Gopher 面板写入均成功。
+  - 面板 Agent 用 mock LLM 验证：先调用 `get_concept_sources`，再返回带 Levine/Laitz locator 的回答；工具轨迹显示正常。
+  - 清理：删除测试 FL Keys 通道（原始 808 通道保留）、清空面板 mock LLM 配置。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 下一阶段入口：把面板 Agent 接到用户实际 LLM；补更多 FL 组合动作（进行/音阶批量写入、通道/混音）；或把 FL 面板入口加到站点文档。
+- 本次文档更新时间：10.25 01:35
