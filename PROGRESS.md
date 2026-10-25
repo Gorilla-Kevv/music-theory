@@ -2,9 +2,9 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 41 已完成（混音诊断/路由总线/多轨编配/WAV 分析）
-- 下一阶段任务：true peak/频谱/LRA 与混音目标评估；用户实际 LLM 端点验证；线上内容维护
-- 可提前进行的任务：更多编曲模板（鼓组/节奏型）、混音参考曲线、Agent 侧路径查询
+- 当前正在开发任务：阶段 42 已完成（true peak/倍频程频谱/LRA）
+- 下一阶段任务：混音参考曲线与目标对比；用户实际 LLM 端点验证；线上内容维护
+- 可提前进行的任务：更多编曲模板（鼓组/节奏型）、多段频谱图、母带链路检查
 - 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写；VST3 未排期
 
 ## 已完成阶段简表（1–28，详见 git log 与各阶段提交）
@@ -240,3 +240,17 @@
 - 边界：WAV 只支持 PCM/float，`sample peak` 不是 true peak、不做频谱；FL 不能自动渲染；`fl_arrange` 是确定性声部展开，不是自动编曲；直接 `fl_call_tool` 传中文轨道名给 FL rename 工具可能乱码（`fl_bus` 已转义）。
 - 下一阶段入口：真实混音目标评估（LRA/频谱/true peak）、更多编曲模板（鼓组/节奏型）、用户实际 LLM 端点验证；VST3 仍需独立原生工程。
 - 本次文档更新时间：10.25 23:40
+
+## 阶段 42 true peak / 倍频程频谱 / LRA [计划时间：10.25 23:45 BY solo-agent][完成时间：10.26 00:05 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 42.1 true peak：4× 过采样 windowed-sinc（每相 16 taps，Blackman 窗，DC 归一），输出 dBTP、true−sample 差值、true-peak crest；新增 intersample peak/true peak headroom 发现。
+  - 42.2 频谱：Hann 窗 + radix-2 FFT（默认 4096，短文件自动降级，最多 2048 帧/声道），声道平均；输出 31.5 Hz–16 kHz 倍频程能量/占比、频谱质心、85% rolloff、dB/oct tilt。
+  - 42.3 LRA：3 秒短时响度、1 秒 hop，按 EBU Tech 3342 做绝对 -70 与相对 -20 LU 门限，输出 LRA、short-term min/max。
+  - 42.4 面板显示 true peak、true−sample、LRA、true crest、频谱质心/rolloff 与倍频程条；MCP/CLI 自动输出新字段；文档与 `/agent` 同步。
+- 实测：12 kHz、相位 45°、幅度 0.9 正弦 sample peak -3.93 dBFS、true peak -0.80 dBTP（+3.12 dB，触发 intersample peak），频谱质心 12000 Hz、16k 倍频程 100%；5 秒 -10 dBFS + 5 秒 -20 dBFS 的信号 LRA 10.0 LU、short-term -17.0/-7.0 LUFS；1 kHz 正弦质心 1000 Hz；面板上传显示 true peak/LRA/频谱。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：true peak 是 4× windowed-sinc 近似（12k 测试误差约 0.1 dB），不是实验室级 true-peak 表；频谱是声道平均倍频程，不做逐帧频谱图；LRA 需要至少约 4 秒短时窗口才有统计意义；FL 仍不能自动渲染。
+- 下一阶段入口：参考曲线/目标 LUFS-LRA 对比、多段频谱、用户实际 LLM 端点验证；VST3 仍需独立原生工程。
+- 本次文档更新时间：10.26 00:05

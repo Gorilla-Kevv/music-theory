@@ -7,6 +7,26 @@ export interface AudioFinding {
   suggestion?: string;
 }
 
+export interface SpectrumBand {
+  name: string;
+  centerHz: number;
+  lowHz: number;
+  highHz: number;
+  energyDb: number;
+  sharePercent: number;
+}
+
+export interface AudioSpectrum {
+  method: string;
+  fftSize: number;
+  binHz: number;
+  framesAnalyzed: number;
+  centroidHz: number | null;
+  rolloff85Hz: number | null;
+  tiltDbPerOctave: number | null;
+  bands: SpectrumBand[];
+}
+
 export interface AudioAnalysis {
   ok: true;
   measurementAvailable: true;
@@ -19,11 +39,18 @@ export interface AudioAnalysis {
   frames: number;
   durationSeconds: number;
   peakDbfs: number;
+  truePeakDbtp: number;
+  truePeakOversampling: number;
+  truePeakAboveSampleDb: number;
   rmsDbfs: number;
   integratedLufs: number | null;
+  shortTermLufsMin: number | null;
   shortTermLufsMax: number | null;
+  loudnessRangeLu: number | null;
   crestFactorDb: number;
+  truePeakCrestDb: number;
   peakToLoudnessDb: number | null;
+  truePeakToLoudnessDb: number | null;
   dcOffset: number;
   clippedSamples: number;
   clippedFrames: number;
@@ -31,6 +58,7 @@ export interface AudioAnalysis {
   midRmsDbfs: number | null;
   sideRmsDbfs: number | null;
   stereoWidth: number | null;
+  spectrum: AudioSpectrum | null;
   findings: AudioFinding[];
 }
 
@@ -224,6 +252,241 @@ function applyBiquad(input: Float32Array, coefficients: Biquad): Float32Array {
   return output;
 }
 
+const TRUE_PEAK_PHASES = 4;
+const TRUE_PEAK_HALF_TAPS = 8;
+
+function buildTruePeakKernels(): Float64Array[] {
+  const kernels: Float64Array[] = [];
+  const taps = TRUE_PEAK_HALF_TAPS * 2;
+  for (let phase = 1; phase < TRUE_PEAK_PHASES; phase += 1) {
+    const fraction = phase / TRUE_PEAK_PHASES;
+    const kernel = new Float64Array(taps);
+    let sum = 0;
+    for (let tap = 0; tap < taps; tap += 1) {
+      const offset = tap - TRUE_PEAK_HALF_TAPS + 1;
+      const x = offset - fraction;
+      const sinc = Math.abs(x) < 1e-12 ? 1 : Math.sin(Math.PI * x) / (Math.PI * x);
+      const window =
+        Math.abs(x) <= TRUE_PEAK_HALF_TAPS
+          ? 0.42 +
+            0.5 * Math.cos((Math.PI * x) / TRUE_PEAK_HALF_TAPS) +
+            0.08 * Math.cos((2 * Math.PI * x) / TRUE_PEAK_HALF_TAPS)
+          : 0;
+      kernel[tap] = sinc * window;
+      sum += kernel[tap];
+    }
+    if (sum !== 0) {
+      for (let tap = 0; tap < taps; tap += 1) kernel[tap] /= sum;
+    }
+    kernels.push(kernel);
+  }
+  return kernels;
+}
+
+const TRUE_PEAK_KERNELS = buildTruePeakKernels();
+
+function measureTruePeak(
+  channels: Float32Array[],
+  frames: number,
+  samplePeak: number,
+): number {
+  if (samplePeak === 0) return 0;
+  let maximum = samplePeak;
+  const taps = TRUE_PEAK_HALF_TAPS * 2;
+  for (const samples of channels) {
+    for (let index = 0; index < frames; index += 1) {
+      for (const kernel of TRUE_PEAK_KERNELS) {
+        let sum = 0;
+        for (let tap = 0; tap < taps; tap += 1) {
+          const source = index - (tap - TRUE_PEAK_HALF_TAPS + 1);
+          if (source >= 0 && source < frames) {
+            sum += samples[source] * kernel[tap];
+          }
+        }
+        const absolute = Math.abs(sum);
+        if (absolute > maximum) maximum = absolute;
+      }
+    }
+  }
+  return maximum;
+}
+
+const OCTAVE_CENTERS = [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+
+function makeBitReverse(size: number): Uint32Array {
+  const bits = Math.round(Math.log2(size));
+  const reverse = new Uint32Array(size);
+  for (let index = 0; index < size; index += 1) {
+    let value = index;
+    let result = 0;
+    for (let bit = 0; bit < bits; bit += 1) {
+      result = (result << 1) | (value & 1);
+      value >>= 1;
+    }
+    reverse[index] = result;
+  }
+  return reverse;
+}
+
+function fftInPlace(real: Float64Array, imag: Float64Array, reverse: Uint32Array): void {
+  const size = real.length;
+  for (let index = 0; index < size; index += 1) {
+    const target = reverse[index];
+    if (target > index) {
+      [real[index], real[target]] = [real[target], real[index]];
+      [imag[index], imag[target]] = [imag[target], imag[index]];
+    }
+  }
+  for (let length = 2; length <= size; length <<= 1) {
+    const angle = (-2 * Math.PI) / length;
+    const stepReal = Math.cos(angle);
+    const stepImag = Math.sin(angle);
+    for (let start = 0; start < size; start += length) {
+      let twiddleReal = 1;
+      let twiddleImag = 0;
+      for (let offset = 0; offset < length / 2; offset += 1) {
+        const even = start + offset;
+        const odd = even + length / 2;
+        const oddReal = real[odd] * twiddleReal - imag[odd] * twiddleImag;
+        const oddImag = real[odd] * twiddleImag + imag[odd] * twiddleReal;
+        real[odd] = real[even] - oddReal;
+        imag[odd] = imag[even] - oddImag;
+        real[even] += oddReal;
+        imag[even] += oddImag;
+        const nextReal = twiddleReal * stepReal - twiddleImag * stepImag;
+        twiddleImag = twiddleReal * stepImag + twiddleImag * stepReal;
+        twiddleReal = nextReal;
+      }
+    }
+  }
+}
+
+function percentile(sorted: number[], fraction: number): number {
+  if (sorted.length === 0) return 0;
+  const position = Math.min(1, Math.max(0, fraction)) * (sorted.length - 1);
+  const lower = Math.floor(position);
+  const upper = Math.ceil(position);
+  if (lower === upper) return sorted[lower];
+  return sorted[lower] + (sorted[upper] - sorted[lower]) * (position - lower);
+}
+
+function analyzeSpectrum(
+  channels: Float32Array[],
+  frames: number,
+  sampleRate: number,
+): AudioSpectrum | null {
+  if (frames < 256) return null;
+  let fftSize = 4096;
+  while (fftSize > frames && fftSize > 256) fftSize >>= 1;
+  const maxFramesPerChannel = 2048;
+  let hop = Math.floor(fftSize / 2);
+  const possible = Math.floor((frames - fftSize) / hop) + 1;
+  if (possible > maxFramesPerChannel) {
+    hop = Math.max(1, Math.ceil((frames - fftSize) / (maxFramesPerChannel - 1)));
+  }
+  const half = fftSize / 2;
+  const window = new Float64Array(fftSize);
+  let windowSquares = 0;
+  for (let index = 0; index < fftSize; index += 1) {
+    window[index] = 0.5 * (1 - Math.cos((2 * Math.PI * index) / fftSize));
+    windowSquares += window[index] * window[index];
+  }
+  const reverse = makeBitReverse(fftSize);
+  const real = new Float64Array(fftSize);
+  const imag = new Float64Array(fftSize);
+  const power = new Float64Array(half + 1);
+  let analyzedFrames = 0;
+  for (const samples of channels) {
+    for (let start = 0; start + fftSize <= frames; start += hop) {
+      for (let index = 0; index < fftSize; index += 1) {
+        real[index] = samples[start + index] * window[index];
+        imag[index] = 0;
+      }
+      fftInPlace(real, imag, reverse);
+      for (let bin = 0; bin <= half; bin += 1) {
+        const binPower =
+          ((real[bin] * real[bin] + imag[bin] * imag[bin]) /
+            (fftSize * windowSquares)) *
+          (bin > 0 && bin < half ? 2 : 1);
+        power[bin] += binPower;
+      }
+      analyzedFrames += 1;
+    }
+  }
+  if (analyzedFrames === 0) return null;
+  for (let bin = 0; bin <= half; bin += 1) power[bin] /= analyzedFrames;
+  let totalPower = 0;
+  for (let bin = 1; bin <= half; bin += 1) totalPower += power[bin];
+  if (totalPower <= 0) return null;
+
+  const binHz = sampleRate / fftSize;
+  const nyquist = sampleRate / 2;
+  const bands: SpectrumBand[] = [];
+  for (const centerHz of OCTAVE_CENTERS) {
+    const lowHz = centerHz / Math.SQRT2;
+    const highHz = Math.min(centerHz * Math.SQRT2, nyquist);
+    if (lowHz >= nyquist) continue;
+    const lowBin = Math.max(1, Math.ceil(lowHz / binHz));
+    const highBin = Math.min(half, Math.floor(highHz / binHz));
+    if (highBin < lowBin) continue;
+    let bandPower = 0;
+    for (let bin = lowBin; bin <= highBin; bin += 1) bandPower += power[bin];
+    bands.push({
+      name: centerHz >= 1000 ? `${centerHz / 1000}k` : `${centerHz}`,
+      centerHz,
+      lowHz,
+      highHz,
+      energyDb: bandPower > 0 ? 10 * Math.log10(bandPower) : SILENCE_DB,
+      sharePercent: (bandPower / totalPower) * 100,
+    });
+  }
+
+  let weightedFrequency = 0;
+  for (let bin = 1; bin <= half; bin += 1) {
+    weightedFrequency += bin * binHz * power[bin];
+  }
+  const centroidHz = weightedFrequency / totalPower;
+  const target = totalPower * 0.85;
+  let cumulative = 0;
+  let rolloff85Hz: number | null = null;
+  for (let bin = 1; bin <= half; bin += 1) {
+    cumulative += power[bin];
+    if (cumulative >= target) {
+      rolloff85Hz = bin * binHz;
+      break;
+    }
+  }
+
+  const usableBands = bands.filter(
+    (band) => band.energyDb > -80 && band.sharePercent >= 0.5,
+  );
+  let tiltDbPerOctave: number | null = null;
+  if (usableBands.length >= 2) {
+    const xs = usableBands.map((band) => Math.log2(band.centerHz));
+    const ys = usableBands.map((band) => band.energyDb);
+    const meanX = xs.reduce((sum, value) => sum + value, 0) / xs.length;
+    const meanY = ys.reduce((sum, value) => sum + value, 0) / ys.length;
+    let numerator = 0;
+    let denominator = 0;
+    for (let index = 0; index < xs.length; index += 1) {
+      numerator += (xs[index] - meanX) * (ys[index] - meanY);
+      denominator += (xs[index] - meanX) ** 2;
+    }
+    if (denominator > 0) tiltDbPerOctave = numerator / denominator;
+  }
+
+  return {
+    method: `Hann 窗 · FFT ${fftSize} · hop ${hop} · ${analyzedFrames} 帧（声道合计）`,
+    fftSize,
+    binHz,
+    framesAnalyzed: analyzedFrames,
+    centroidHz,
+    rolloff85Hz,
+    tiltDbPerOctave,
+    bands,
+  };
+}
+
 function channelWeight(channels: number, index: number): number {
   if (channels <= 2) return 1;
   if (index === 3) return 0;
@@ -256,7 +519,12 @@ function integrateLoudness(
   channels: number,
   sampleRate: number,
   frames: number,
-): { integrated: number | null; shortTermMax: number | null } {
+): {
+  integrated: number | null;
+  shortTermMin: number | null;
+  shortTermMax: number | null;
+  loudnessRangeLu: number | null;
+} {
   const blockSize = Math.round(sampleRate * 0.4);
   const hop = Math.round(sampleRate * 0.1);
   const blocks: number[] = [];
@@ -285,14 +553,40 @@ function integrateLoudness(
 
   const shortSize = Math.round(sampleRate * 3);
   const shortHop = Math.round(sampleRate * 1);
-  let shortTermMax: number | null = null;
+  const shortTermValues: number[] = [];
   for (let start = 0; start + shortSize <= frames; start += shortHop) {
     const loudness = blockLoudness(weighted, channels, start, shortSize);
-    if (loudness !== null && Number.isFinite(loudness)) {
-      shortTermMax = shortTermMax === null ? loudness : Math.max(shortTermMax, loudness);
+    if (loudness !== null && Number.isFinite(loudness) && loudness > -70) {
+      shortTermValues.push(loudness);
     }
   }
-  return { integrated, shortTermMax };
+  let shortTermMin: number | null = null;
+  let shortTermMax: number | null = null;
+  let loudnessRangeLu: number | null = null;
+  if (shortTermValues.length) {
+    shortTermMin = shortTermValues[0];
+    shortTermMax = shortTermValues[0];
+    for (const value of shortTermValues) {
+      if (value < shortTermMin) shortTermMin = value;
+      if (value > shortTermMax) shortTermMax = value;
+    }
+    if (shortTermValues.length >= 2) {
+      const meanEnergy =
+        shortTermValues.reduce(
+          (sum, value) => sum + Math.pow(10, (value + 0.691) / 10),
+          0,
+        ) / shortTermValues.length;
+      const relativeGate = -0.691 + 10 * Math.log10(meanEnergy) - 20;
+      const gated = shortTermValues
+        .filter((value) => value > relativeGate)
+        .sort((a, b) => a - b);
+      if (gated.length >= 2) {
+        loudnessRangeLu = percentile(gated, 0.95) - percentile(gated, 0.1);
+      }
+    }
+  }
+
+  return { integrated, shortTermMin, shortTermMax, loudnessRangeLu };
 }
 
 function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
@@ -322,6 +616,9 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
     dcOffsets.push(channelSum / frames);
   }
   const clippedFrames = clippedFrameFlags.reduce((sum, value) => sum + value, 0);
+  const truePeak = measureTruePeak(samples, frames, peak);
+  const truePeakDbtp = db(truePeak);
+  const truePeakAboveSampleDb = peak > 0 ? truePeakDbtp - db(peak) : 0;
 
   let stereoCorrelation: number | null = null;
   let midRmsDbfs: number | null = null;
@@ -359,19 +656,23 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
   const peakDbfs = db(peak);
   const rmsDbfs = db(rms);
   const crestFactorDb = rms > 0 ? peakDbfs - rmsDbfs : 0;
+  const truePeakCrestDb = rms > 0 ? truePeakDbtp - rmsDbfs : 0;
   const dcOffset = Math.max(...dcOffsets.map((value) => Math.abs(value)));
   const coefficients = kWeighting(sampleRate);
   const weighted = samples.map((channel) =>
     applyBiquad(applyBiquad(channel, coefficients[0]), coefficients[1]),
   );
-  const { integrated, shortTermMax } = integrateLoudness(
+  const { integrated, shortTermMin, shortTermMax, loudnessRangeLu } = integrateLoudness(
     weighted,
     channels,
     sampleRate,
     frames,
   );
+  const spectrum = analyzeSpectrum(samples, frames, sampleRate);
   const peakToLoudnessDb =
     integrated === null ? null : peakDbfs - integrated;
+  const truePeakToLoudnessDb =
+    integrated === null ? null : truePeakDbtp - integrated;
 
   const findings: AudioFinding[] = [];
   if (peak === 0) {
@@ -404,6 +705,30 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
       message: `sample peak 为 ${peakDbfs.toFixed(2)} dBFS，余量偏小。`,
     });
   }
+  if (peak > 0) {
+    if (truePeakDbtp > -0.1) {
+      findings.push({
+        code: "audio-true-peak-hot",
+        severity: "risk",
+        message: `true peak 为 ${truePeakDbtp.toFixed(2)} dBTP，已经顶到 0 dBTP。`,
+        suggestion: "给 limiter/总线留至少 -1 dBTP，或降低发送与主推子。",
+      });
+    } else if (truePeakDbtp > -1) {
+      findings.push({
+        code: "audio-true-peak-low-headroom",
+        severity: "warn",
+        message: `true peak 为 ${truePeakDbtp.toFixed(2)} dBTP，余量小于 1 dB。`,
+      });
+    }
+    if (truePeakAboveSampleDb > 0.5) {
+      findings.push({
+        code: "audio-intersample-peak",
+        severity: "info",
+        message: `4× 过采样 true peak 比 sample peak 高 ${truePeakAboveSampleDb.toFixed(2)} dB，存在采样点之间的峰值。`,
+        suggestion: "发行母带按 dBTP 而不是 dBFS 检查 limiter 输出。",
+      });
+    }
+  }
   if (integrated !== null) {
     if (integrated > -9) {
       findings.push({
@@ -420,17 +745,59 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
       });
     }
   }
-  if (peak > 0 && crestFactorDb < 6) {
+  if (loudnessRangeLu !== null) {
+    if (loudnessRangeLu < 2) {
+      findings.push({
+        code: "audio-lra-flat",
+        severity: "info",
+        message: `LRA 只有 ${loudnessRangeLu.toFixed(1)} LU，响度非常一致（可能压缩/限制较强）。`,
+      });
+    } else if (loudnessRangeLu > 15) {
+      findings.push({
+        code: "audio-lra-wide",
+        severity: "info",
+        message: `LRA 为 ${loudnessRangeLu.toFixed(1)} LU，动态范围较大。`,
+      });
+    }
+  }
+  if (spectrum) {
+    const share = new Map(spectrum.bands.map((band) => [band.name, band.sharePercent]));
+    const lowShare = (share.get("31.5") ?? 0) + (share.get("63") ?? 0) + (share.get("125") ?? 0);
+    const highShare = (share.get("8k") ?? 0) + (share.get("16k") ?? 0);
+    const midShare = (share.get("500") ?? 0) + (share.get("1k") ?? 0) + (share.get("2k") ?? 0);
+    if (lowShare > 45) {
+      findings.push({
+        code: "audio-spectrum-low",
+        severity: "info",
+        message: `低频（31.5–125 Hz）占频谱能量 ${lowShare.toFixed(0)}%，低频偏重。`,
+      });
+    }
+    if (highShare > 25) {
+      findings.push({
+        code: "audio-spectrum-bright",
+        severity: "info",
+        message: `高频（8–16 kHz）占频谱能量 ${highShare.toFixed(0)}%，整体偏亮。`,
+      });
+    }
+    if (midShare < 15) {
+      findings.push({
+        code: "audio-spectrum-mid-scoop",
+        severity: "info",
+        message: `中频（500 Hz–2 kHz）只占 ${midShare.toFixed(0)}%，可能有中频凹陷。`,
+      });
+    }
+  }
+  if (peak > 0 && Math.max(crestFactorDb, truePeakCrestDb) < 6) {
     findings.push({
       code: "audio-compressed",
       severity: "info",
-      message: `crest factor 只有 ${crestFactorDb.toFixed(1)} dB，动态余量较小。`,
+      message: `true-peak crest 只有 ${Math.max(crestFactorDb, truePeakCrestDb).toFixed(1)} dB，动态余量较小。`,
     });
-  } else if (peak > 0 && crestFactorDb > 20) {
+  } else if (peak > 0 && Math.max(crestFactorDb, truePeakCrestDb) > 20) {
     findings.push({
       code: "audio-dynamic",
       severity: "info",
-      message: `crest factor 为 ${crestFactorDb.toFixed(1)} dB，瞬态余量很大。`,
+      message: `true-peak crest 为 ${Math.max(crestFactorDb, truePeakCrestDb).toFixed(1)} dB，瞬态余量很大。`,
     });
   }
   if (stereoCorrelation !== null && stereoCorrelation < -0.1) {
@@ -471,7 +838,7 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
     ok: true,
     measurementAvailable: true,
     measurementNote:
-      "sample peak / RMS / crest / DC / 削波 / 立体声相关为波形统计；integrated LUFS 按 ITU-R BS.1770-4（400ms 块、75% 重叠、绝对/相对门限）计算；不是 true peak，也不做频谱分析。",
+      "sample peak 与 4× 过采样 true peak（窗函数 sinc）为波形统计；RMS/crest/DC/削波/立体声相关为时域统计；integrated LUFS 按 ITU-R BS.1770-4，LRA 按 EBU Tech 3342 的短时响度分布；频谱为 Hann 窗 FFT 的声道平均倍频程能量。不是实验室级 true-peak 表，也不做逐帧频谱图。",
     file,
     format: data.formatLabel,
     sampleRate,
@@ -480,11 +847,18 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
     frames,
     durationSeconds: frames / sampleRate,
     peakDbfs,
+    truePeakDbtp,
+    truePeakOversampling: TRUE_PEAK_PHASES,
+    truePeakAboveSampleDb,
     rmsDbfs,
     integratedLufs: integrated,
+    shortTermLufsMin: shortTermMin,
     shortTermLufsMax: shortTermMax,
+    loudnessRangeLu,
     crestFactorDb,
+    truePeakCrestDb,
     peakToLoudnessDb,
+    truePeakToLoudnessDb,
     dcOffset,
     clippedSamples,
     clippedFrames,
@@ -492,6 +866,7 @@ function analyzeDecoded(data: WavData, file: string | null): AudioAnalysis {
     midRmsDbfs,
     sideRmsDbfs,
     stereoWidth,
+    spectrum,
     findings,
   };
 }

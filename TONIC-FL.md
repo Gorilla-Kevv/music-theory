@@ -74,10 +74,10 @@ npm run fl:bridge -- --launch-fl --panel
 
 - 在 FL 里导出 WAV（PCM 16/24/32-bit 或 IEEE float）；
 - 打开面板 **FL** 标签 → **MIX ANALYSIS / WAV** → 选择文件 → **分析 WAV**；
-- 得到 sample peak、RMS、integrated LUFS、short-term max、crest、peak-to-loudness、DC、削波、立体声相关/宽度，以及 risk/warn/info 发现；
+- 得到 sample peak、4× 过采样 true peak、RMS、integrated LUFS、short-term min/max、LRA、crest、true-peak crest、peak-to-loudness、DC、削波、立体声相关/宽度、倍频程频谱（31.5 Hz–16 kHz）、频谱质心与 85% rolloff，以及 risk/warn/info 发现；
 - 也可用命令行：`npm run audio:analyze -- "F:\Exports\mix.wav"`（输出 JSON）；
 - 外部 Agent 用 MCP 工具 `analyze_audio({ path })`。
-- 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；`sample peak` 不是 true peak，频谱分析未提供。
+- 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；true peak 为 4× windowed-sinc 近似（非实验室级表），频谱是声道平均倍频程能量，不做逐帧频谱图。
 
 **Agent**
 
@@ -157,7 +157,7 @@ npm run fl:bridge -- --panel
 | `fl_write_notes` | 写入 | 任意 MIDI 音符写入当前/指定钢琴卷帘，写后读回音符数 |
 | `fl_compose` | 写入 | 多通道/多段作曲：每段可用 TONIC 谱例或显式音符，指定 channel/mode/startBeat/transpose |
 | `fl_arrange` | 预览/写入 | 把 TONIC 谱例展开成 bass/comp/pad/melody/arp 多声部；默认只预览，`write:true` 才写入，不自动创建通道 |
-| `analyze_audio` | 只读 | 分析导出的 WAV：sample peak、RMS、BS.1770 integrated LUFS、crest、DC、削波、立体声相关；FL 不能渲染，需先导出 WAV |
+| `analyze_audio` | 只读 | 分析导出的 WAV：true peak（4× 过采样）、sample peak、RMS、BS.1770 integrated LUFS、LRA、倍频程频谱、crest、DC、削波、立体声相关；FL 不能渲染，需先导出 WAV |
 
 面板中的 **FL** 标签页显示结构诊断，并可直接选择 FL 导出的 WAV 做真实电平分析；路由、发送、总线、多轨编配可交给面板 Agent 或外部 MCP Agent。
 
@@ -187,7 +187,7 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 5. 其他 FL 操作先 `fl_list_tools`，再 `fl_call_tool`；执行前说明意图，写入后报告实际 payload / 读回音符数。
 6. FL 2026 的 `open_piano_roll_for_channel` 参数是 `target_channel`（1-based 索引或通道名），不是 `channel`。
 7. `run_piano_roll_script` 只作用于当前钢琴卷帘；没有打开钢琴卷帘时先打开通道。
-8. `fl_session_report` 是结构诊断；真实峰值/LUFS 用 `analyze_audio` 分析导出的 WAV，不能声称 FL 已测量响度。
+8. `fl_session_report` 是结构诊断；真实峰值/LUFS/LRA/频谱用 `analyze_audio` 分析导出的 WAV，不能声称 FL 已测量响度。
 
 ## FL 内启动方式与 VST3
 
@@ -211,6 +211,7 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 外部 MCP 用真实 stdio 客户端复验：27 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
 - `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
 - WAV 分析实测：16-bit/48k 立体声正弦 peak -6.02 dBFS、RMS -9.03 dBFS、integrated LUFS -6.7、相关 1.00；24-bit 反相立体声相关 -1.00 并给出 phase 警告；削波文件检测到 35920 个削波样本/17960 帧；面板上传 WAV 后显示同样指标与发现。
+- true peak/频谱/LRA 实测：12 kHz、相位 45°、幅度 0.9 的正弦 sample peak -3.93 dBFS、true peak -0.80 dBTP（高出 3.12 dB，触发 intersample peak）；频谱质心 12000 Hz、16k 倍频程占 100%；5 秒 -10 dBFS + 5 秒 -20 dBFS 的信号 LRA 10.0 LU、short-term -17.0 到 -7.0 LUFS。
 
 ## 故障排查
 
@@ -229,7 +230,7 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 面板 Agent 只访问你配置的 LLM 端点；API Key 存本机 localStorage。
 - FL 2026 内置 MCP 是官方控制面，但 `run_piano_roll_script` 可执行任意 `flpianoroll` Python；只对可信 Agent 开放。
 - 不能通过 FL API 加载插件、加载音频或渲染音频；这些仍需在 FL 界面完成。
-- `fl_session_report` 是**结构诊断**（推子/声像/路由拓扑/插件链/通道电平），不是音频测量；峰值、LUFS 必须用 `analyze_audio` 分析导出的 WAV。`analyze_audio` 给的是 **sample peak**，不是 true peak，也不做频谱分析。
+- `fl_session_report` 是**结构诊断**（推子/声像/路由拓扑/插件链/通道电平），不是音频测量；峰值、LUFS/LRA、频谱必须用 `analyze_audio` 分析导出的 WAV。`analyze_audio` 的 true peak 是 4× windowed-sinc 近似，不是实验室级 true-peak 表；频谱是声道平均倍频程能量，不做逐帧频谱图。
 - FL API 不能自动渲染/导出音频；`analyze_audio` 需要你先在 FL 里导出 WAV。
 - `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；`fl_arrange` 也是确定性的声部展开起点，曲式与配器仍由 Agent/用户决定。
 - `fl_bus` 会对总线名做 `\uXXXX` 转义后再调用 FL；直接通过 `fl_call_tool` 给 `rename_mixer_tracks` 传字面非 ASCII 名称可能被写成 U+FFFD。

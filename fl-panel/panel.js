@@ -173,24 +173,60 @@
     const target = $("#wav-report");
     const number = (value, digits = 1) =>
       typeof value === "number" && Number.isFinite(value) ? value.toFixed(digits) : "—";
+    const bands = data.spectrum?.bands || [];
+    const maxShare = bands.reduce((max, band) => Math.max(max, band.sharePercent), 1);
+    const spectrumHtml = data.spectrum
+      ? `<div class="spectrum">
+          ${bands
+            .map(
+              (band) => `
+            <div class="spectrum-row" title="${number(band.energyDb, 1)} dB">
+              <span class="spectrum-band">${escapeHtml(band.name)}</span>
+              <span class="spectrum-bar"><i style="width:${Math.max(
+                0,
+                Math.min(100, (band.sharePercent / maxShare) * 100),
+              ).toFixed(1)}%"></i></span>
+              <span class="spectrum-share">${number(band.sharePercent, 1)}%</span>
+            </div>`,
+            )
+            .join("")}
+          <p class="muted">${escapeHtml(data.spectrum.method)} · 质心 ${number(
+            data.spectrum.centroidHz,
+            0,
+          )} Hz · rolloff85 ${number(data.spectrum.rolloff85Hz, 0)} Hz · tilt ${number(
+            data.spectrum.tiltDbPerOctave,
+            1,
+          )} dB/oct</p>
+        </div>`
+      : data.peakDbfs <= -119
+        ? `<p class="muted">全静音，没有可分析的频谱。</p>`
+        : `<p class="muted">文件太短，无法计算频谱（至少 256 帧）。</p>`;
     target.innerHTML = `
       <div class="fl-summary">
         <span>${escapeHtml(data.format)}</span>
         <span>${escapeHtml(data.sampleRate)} Hz / ${escapeHtml(data.channels)} CH</span>
         <span>${number(data.durationSeconds, 1)} S</span>
         <span>${number(data.peakDbfs, 2)} dBFS PEAK</span>
+        <span>${number(data.truePeakDbtp, 2)} dBTP TRUE</span>
         <span>${number(data.integratedLufs, 1)} LUFS</span>
       </div>
       <div class="audio-metrics">
+        <div class="audio-metric"><span>TRUE PEAK (${escapeHtml(data.truePeakOversampling)}×)</span>${number(data.truePeakDbtp, 2)} dBTP</div>
+        <div class="audio-metric"><span>TRUE − SAMPLE</span>${number(data.truePeakAboveSampleDb, 2)} dB</div>
         <div class="audio-metric"><span>RMS</span>${number(data.rmsDbfs, 2)} dBFS</div>
-        <div class="audio-metric"><span>CREST</span>${number(data.crestFactorDb, 1)} dB</div>
-        <div class="audio-metric"><span>SHORT-TERM MAX</span>${number(data.shortTermLufsMax, 1)} LUFS</div>
+        <div class="audio-metric"><span>CREST / TRUE</span>${number(data.crestFactorDb, 1)} / ${number(data.truePeakCrestDb, 1)} dB</div>
+        <div class="audio-metric"><span>LRA</span>${number(data.loudnessRangeLu, 1)} LU</div>
+        <div class="audio-metric"><span>SHORT-TERM MIN / MAX</span>${number(data.shortTermLufsMin, 1)} / ${number(data.shortTermLufsMax, 1)} LUFS</div>
         <div class="audio-metric"><span>PEAK TO LOUDNESS</span>${number(data.peakToLoudnessDb, 1)} dB</div>
+        <div class="audio-metric"><span>TRUE PEAK TO LOUDNESS</span>${number(data.truePeakToLoudnessDb, 1)} dB</div>
+        <div class="audio-metric"><span>SPECTRAL CENTROID</span>${number(data.spectrum?.centroidHz, 0)} Hz</div>
+        <div class="audio-metric"><span>ROLLOFF 85%</span>${number(data.spectrum?.rolloff85Hz, 0)} Hz</div>
         <div class="audio-metric"><span>STEREO CORR</span>${number(data.stereoCorrelation, 2)}</div>
         <div class="audio-metric"><span>STEREO WIDTH</span>${number(data.stereoWidth, 2)}</div>
         <div class="audio-metric"><span>DC OFFSET</span>${number(data.dcOffset, 4)}</div>
         <div class="audio-metric"><span>CLIPPED</span>${escapeHtml(data.clippedSamples)} samples / ${escapeHtml(data.clippedFrames)} frames</div>
       </div>
+      ${spectrumHtml}
       <p class="muted">${escapeHtml(data.measurementNote || "")}</p>
       ${
         findings.length

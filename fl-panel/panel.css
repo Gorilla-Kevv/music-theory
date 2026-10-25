@@ -728,3 +728,41 @@ code {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+.spectrum {
+  margin-top: 6px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  padding: 8px 9px;
+}
+
+.spectrum-row {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 6px;
+  min-height: 14px;
+}
+
+.spectrum-band,
+.spectrum-share {
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.spectrum-share {
+  text-align: right;
+}
+
+.spectrum-bar {
+  display: block;
+  height: 5px;
+  background: rgba(11, 13, 16, 0.08);
+}
+
+.spectrum-bar i {
+  display: block;
+  height: 100%;
+  background: var(--cobalt);
+}

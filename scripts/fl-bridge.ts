@@ -829,7 +829,7 @@ async function sessionReport() {
     ok: true,
     measurementAvailable: false,
     measurementNote:
-      "这是基于推子、声像、路由拓扑、插件链与通道电平的结构诊断；FL 内置 MCP 不提供峰值/LUFS/频谱。需要真实响度时，先在 FL 导出 WAV，再用 analyze_audio 分析。",
+      "这是基于推子、声像、路由拓扑、插件链与通道电平的结构诊断；FL 内置 MCP 不提供峰值/LUFS/频谱。需要真实响度时，先在 FL 导出 WAV，再用 analyze_audio 分析（true peak/LUFS/LRA/频谱）。",
     tempoBpm: session.tempo_bpm ?? null,
     channelCount: channels.length,
     mixerTrackCount: mixerTracks.length,
@@ -1862,7 +1862,7 @@ const AGENT_TOOLS = [
     function: {
       name: "analyze_audio",
       description:
-        "分析导出的 WAV：sample peak、RMS、BS.1770 integrated LUFS、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/IEEE float WAV。",
+        "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、BS.1770 integrated LUFS、LRA、倍频程频谱、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/IEEE float WAV。",
       parameters: {
         type: "object",
         properties: {
@@ -2344,7 +2344,7 @@ const AGENT_SYSTEM_PROMPT = `你是 TONIC-FL，一个乐理优先的 FL Studio 2
 3. 用户要写钢琴卷帘时，先 get_fl_payload 或直接 apply_example；多通道/多段作曲用 fl_compose，多声部编配用 fl_arrange（默认只预览，write:true 才写入），原始音符用 fl_write_notes；不要凭空发明 MIDI 音符。
 4. 混音/路由改动前先调用 fl_session_report 或 fl_mixer_routing；用 fl_route 路由通道、fl_bus 建总线、fl_send 建发送、fl_set_levels 调整绝对电平/声像/静音/独奏。这些会修改工程，执行前说明，执行后报告 verified 结果。
 5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；执行前说明意图。
-6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV。
+6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV（4× true peak/LUFS/LRA/倍频程频谱）；true peak 是近似值，不是实验室级表。
 7. 用中文回答：先结论，再依据，最后说明实际写入了什么。不要声称自己听到了声音。
 8. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。`;
 

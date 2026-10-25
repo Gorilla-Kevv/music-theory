@@ -133,7 +133,7 @@ src/content/
 - 外部 harness：MCP 27 工具（已用真实 stdio 客户端验证）；非 MCP 的本地脚本/harness 也可直连 `127.0.0.1:5127` 的 `/api/status`、`/api/fl/*`、`/api/audio/analyze`。
 - FL 2026 内置 MCP 通过 Gopher WebView2 的 `script_handler` 暴露 48 个工具；`run_piano_roll_script` 可执行 `flpianoroll` Python。桥用 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，CDP 目标为 Gopher 页面；**不要假设 44 个工具**，以实际目录为准。
 - 写入规则：先 `get_fl_payload` 核对音符，再 `apply_example`（或 `fl_call_tool`）；`open_piano_roll_for_channel` 的参数是 `target_channel`（1-based 字符串/名称）；写后桥会用抛异常的方式读回 `fp.score.noteCount`，返回 `verifiedNotes`。
-- 操作封装层：`fl_session_report`（只读结构诊断，含通道电平/总线/返回/环路/死端）、`fl_mixer_routing`（只读完整矩阵）、`fl_route`、`fl_bus`（总线名自动做 `\uXXXX` 转义）、`fl_send`（默认拒绝反馈环路）、`fl_set_levels`、`fl_write_notes`、`fl_compose`、`fl_arrange`（多声部展开，默认预览）、`analyze_audio`（WAV 峰值/LUFS/削波/立体声）；MCP 共 27 工具；面板 FL 标签页显示 session 报告与 WAV 分析。结构诊断不含峰值/LUFS；`analyze_audio` 的 sample peak 不是 true peak，且 FL 不能自动渲染。路由/电平/写入会修改工程，执行前说明、执行后报告 verified。`fl_compose` 是多通道写入，`fl_arrange` 是确定性声部展开，都不是自动编曲。
+- 操作封装层：`fl_session_report`（只读结构诊断，含通道电平/总线/返回/环路/死端）、`fl_mixer_routing`（只读完整矩阵）、`fl_route`、`fl_bus`（总线名自动做 `\uXXXX` 转义）、`fl_send`（默认拒绝反馈环路）、`fl_set_levels`、`fl_write_notes`、`fl_compose`、`fl_arrange`（多声部展开，默认预览）、`analyze_audio`（WAV true peak/LUFS/LRA/频谱/削波/立体声）；MCP 共 27 工具；面板 FL 标签页显示 session 报告与 WAV 分析。结构诊断不含峰值/LUFS；`analyze_audio` 的 true peak 是 4× windowed-sinc 近似，频谱是声道平均倍频程，且 FL 不能自动渲染。路由/电平/写入会修改工程，执行前说明、执行后报告 verified。`fl_compose` 是多通道写入，`fl_arrange` 是确定性声部展开，都不是自动编曲。
 - 知识规则不变：理论断言必须带章节级 locator；Agent 先查 TONIC，再操作 FL；MCP instructions 已写入这些约束。
 - 安全：桥只绑定 `127.0.0.1:5127`；不关闭用户 FL（无调试端口时提示保存后重启）；测试添加的通道/音符要清理；`run_piano_roll_script` 只对可信 Agent 开放。
 - 面板 Agent 的 LLM 层支持五种协议：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生；面板设置里选择协议并填 Base URL/模型/Key，服务端按协议补端点与工具格式。若模型不支持工具，自动降级纯文本回答。配置存面板 localStorage `tonic.fl.llm.v1`（Gopher WebView2 与普通浏览器各自独立），不写入仓库或桥文件。
@@ -165,7 +165,7 @@ src/content/
 - 线上：`https://gorilla-kevv.github.io/music-theory/`（GitHub Pages，Actions 部署；电子书不发布）
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图、学习路径视图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
-- FL Studio 2026：`tonic-mcp`（27 个知识/FL 工具）+ `fl-bridge`（48 个 FL 内置工具代理）+ Gopher 内嵌面板（查概念/Agent/FL 诊断/WAV 分析）；实测写入并读回 15 音符、结构诊断/路由/总线/发送/电平/多段写入/三轨编配，WAV 峰值/LUFS/削波/立体声分析
+- FL Studio 2026：`tonic-mcp`（27 个知识/FL 工具）+ `fl-bridge`（48 个 FL 内置工具代理）+ Gopher 内嵌面板（查概念/Agent/FL 诊断/WAV 分析）；实测写入并读回 15 音符、结构诊断/路由/总线/发送/电平/多段写入/三轨编配，WAV true peak/LUFS/LRA/倍频程频谱/削波/立体声分析
 - 站点待读：已清空（C63 元音乐理论、C74/75 多义论已于阶段 30 补录；C47–49 延伸音细节并入 J-04，C39–40 转位/持续音/混合和弦由既有条目覆盖）
 - 书库深化：Levine/Laitz 已读透；Sposobin 电子版无法获取，深化任务搁置（60/60 章名级笔记保留）
 - 未交付：全量教材正文（版权边界）、FL 原生插件/VST（不做）

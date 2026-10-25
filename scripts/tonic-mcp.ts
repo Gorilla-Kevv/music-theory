@@ -291,7 +291,7 @@ const FL_TOOLS: ToolSchema[] = [
   {
     name: "analyze_audio",
     description:
-      "分析导出的 WAV：sample peak、RMS、ITU-R BS.1770 integrated LUFS、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/float WAV。",
+      "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、ITU-R BS.1770 integrated LUFS、LRA、倍频程频谱、crest、DC、削波、立体声相关。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/float WAV。",
     inputSchema: {
       type: "object",
       properties: {
@@ -502,7 +502,7 @@ const server = new Server(
 3. 写钢琴卷帘前先用 get_fl_payload 核对音符，再调用 apply_example；多通道/多段作曲用 fl_compose，多声部编配用 fl_arrange（默认只预览，write:true 才写入），原始音符用 fl_write_notes；不要凭空生成 MIDI。
 4. 混音/路由改动前先调用 fl_session_report 或 fl_mixer_routing；用 fl_route 路由通道、fl_bus 建总线、fl_send 建发送、fl_set_levels 调整绝对电平/声像/静音/独奏。这些操作会修改 FL 工程，执行前说明，执行后报告 verified 结果。
 5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；写入后报告实际提交的 payload。
-6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV（FL 不能渲染）。
+6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV（4× true peak/LUFS/LRA/倍频程频谱；FL 不能渲染，true peak 是近似值）。
 7. FL 2026 必须通过 \`npm run fl:bridge -- --launch-fl --panel\` 启动，并打开 Gopher 面板（Alt+F1）；桥服务地址可用 TONIC_FL_BRIDGE 覆盖。`,
   },
 );

@@ -229,7 +229,7 @@ theoryApi.videos({ status: "read" });`}
           <section className="border border-line p-4 sm:p-5">
             <h2 className="text-lg font-semibold">5 · FL Studio 2026</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。面板 Agent 支持 OpenAI Chat Completions / Responses、Anthropic、Gemini、Ollama 五种协议；FL 标签页显示 session 结构诊断（路由/总线/发送/通道电平），并可直接分析 FL 导出的 WAV（sample peak、LUFS、削波、立体声）。写钢琴卷帘前先用
+              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。面板 Agent 支持 OpenAI Chat Completions / Responses、Anthropic、Gemini、Ollama 五种协议；FL 标签页显示 session 结构诊断（路由/总线/发送/通道电平），并可直接分析 FL 导出的 WAV（true peak、LUFS/LRA、倍频程频谱、削波、立体声）。写钢琴卷帘前先用
               <code className="font-mono text-xs"> get_fl_payload </code>
               核对音符，写入后桥会读回实际音符数。
             </p>
