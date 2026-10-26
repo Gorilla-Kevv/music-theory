@@ -72,6 +72,21 @@ export class LiveAnalyzer {
     }
   }
 
+  pushFloat32(buffer: Buffer, frames: number, channels: number): void {
+    const usableChannels = Math.min(channels, this.channels);
+    for (let frame = 0; frame < frames; frame += 1) {
+      const base = frame * channels;
+      for (let channel = 0; channel < this.channels; channel += 1) {
+        const sourceChannel = Math.min(channel, usableChannels - 1);
+        this.buffers[channel][this.writeIndex] =
+          buffer.readFloatLE((base + sourceChannel) * 4);
+      }
+      this.writeIndex = (this.writeIndex + 1) % this.capacity;
+      if (this.available < this.capacity) this.available += 1;
+      this.totalFrames += 1;
+    }
+  }
+
   private recent(seconds: number): Float32Array[] {
     const frames = Math.min(this.available, Math.max(0, Math.round(seconds * this.sampleRate)));
     if (frames === 0) return this.buffers.map(() => new Float32Array(0));

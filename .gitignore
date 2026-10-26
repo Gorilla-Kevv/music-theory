@@ -13,3 +13,7 @@ review-state.json
 
 # local Python env for WASAPI live capture
 .venv-audio/
+
+# local CLAP headers / built plugin
+native/clap/
+native/tonic-analyzer/*.exe

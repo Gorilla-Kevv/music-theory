@@ -15,6 +15,7 @@ import { buildArrangement, type ArrangementPartRequest } from "./arranger";
 import { analyzeWavBuffer } from "./audio-analyze";
 import { compareAudioAnalyses } from "./audio-compare";
 import { LiveCapture } from "./live-capture";
+import { PluginLiveServer } from "./plugin-live";
 import {
   getFlPayload,
   listFlExamples,
@@ -37,6 +38,7 @@ const OPEN_PANEL = FLAGS.has("--panel");
 
 const fl = new FlCdp(DEBUG_PORT);
 const liveCapture = new LiveCapture();
+const pluginLive = new PluginLiveServer();
 let lastFlError = "";
 let lastTools: unknown = null;
 let panelInjected = false;
@@ -2601,6 +2603,10 @@ const server = createServer(async (req, res) => {
       return;
     }
     if (req.method === "POST" && url.pathname === "/api/live/start") {
+      if (pluginLive.status().connected) {
+        json(res, 200, pluginLive.status());
+        return;
+      }
       const body = await readJson(req);
       json(
         res,
@@ -2614,11 +2620,13 @@ const server = createServer(async (req, res) => {
       return;
     }
     if (req.method === "POST" && url.pathname === "/api/live/stop") {
-      json(res, 200, liveCapture.stop());
+      liveCapture.stop();
+      json(res, 200, pluginLive.status().connected ? pluginLive.status() : liveCapture.status());
       return;
     }
     if (req.method === "GET" && url.pathname === "/api/live/status") {
-      json(res, 200, liveCapture.status());
+      const plugin = pluginLive.status();
+      json(res, 200, plugin.connected ? plugin : { ...liveCapture.status(), source: "system" });
       return;
     }
     if (req.method === "GET" && url.pathname === "/api/fl/report") {
@@ -2702,16 +2710,19 @@ server.listen(PORT, "127.0.0.1", async () => {
 
 process.on("SIGINT", () => {
   liveCapture.stop();
+  pluginLive.close();
   fl.close();
   server.close(() => process.exit(0));
 });
 
 process.on("SIGTERM", () => {
   liveCapture.stop();
+  pluginLive.close();
   fl.close();
   server.close(() => process.exit(0));
 });
 
 process.on("exit", () => {
   liveCapture.stop();
+  pluginLive.close();
 });

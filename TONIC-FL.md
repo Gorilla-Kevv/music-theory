@@ -22,7 +22,8 @@ Qoder / Claude Desktop
               ▼
        fl-bridge (npm run fl:bridge)
          ├─ CDP → FL 2026 Gopher WebView2 → script_handler → FL 内置 MCP（48 tools）
-         ├─ Python WASAPI loopback → 5s 内存环形缓冲 → 实时 LUFS/true peak/vectorscope
+         ├─ TONIC Analyzer CLAP（插在 Master/任意 Mixer Insert）→ TCP 5128 → 实时分析
+         ├─ Python WASAPI loopback（回退）→ 5s 内存环形缓冲 → 实时 LUFS/true peak/vectorscope
          ├─ /panel 本地面板（查概念 / 写入 / Agent / 混音分析 / 实时矢量示波器）
          └─ 写后读回钢琴卷帘音符数 + 混音矩阵验证
 ```
@@ -83,14 +84,24 @@ npm run fl:bridge -- --launch-fl --panel
 - 外部 Agent 用 MCP 工具 `analyze_audio({ path, referencePath, target })`。
 - 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；true peak 为 4× windowed-sinc 近似（非实验室级表），频谱是声道平均倍频程能量，多段热力图不是逐帧 FFT 瀑布图。
 
-**实时分析（FL 标签 / LIVE ANALYSIS）**
+**实时分析（直插调音台 CLAP，推荐）**
+
+- FL 不向外部进程暴露调音台音频；直接监听 Master/任意 Insert 需要插件。TONIC Analyzer CLAP 是纯 pass-through，插在效果槽后把该点音频送到 TONIC。
+- 构建：`native\tonic-analyzer\build.bat`（输出 `TONIC-Analyzer.clap`）。
+- 安装：**右键 `native\tonic-analyzer\install.bat` → 以管理员身份运行**，复制到 `C:\Program Files\Common Files\CLAP\TONIC\`。FL 2026 的插件管理器只扫描这个系统 CLAP 目录，**不扫描** `%LOCALAPPDATA%\Programs\Common\CLAP`（已由 PluginManager 日志确认）。
+- FL：Options → Manage plugins → **Verify plugins / Scan**（必要时 Ctrl+click Scan 全量扫描）；如果插件在 Blacklist 里先移除；扫描结果里勾选 **TONIC Analyzer**。
+- 在 **Master 或任意 Mixer Insert** 效果槽插入 **TONIC Analyzer**；打开面板 FL → LIVE ANALYSIS，来源应显示 `FL Mixer CLAP`。
+- 这样只分析插入点（Master = 总线；Insert = 指定线），不捕获其他系统声音，不需要导出 WAV。
+- 插件是 64-bit CLAP；不修改音频、不增加延迟、不落盘。桥不在时每 2 秒重连，音频不受影响。
+
+**实时分析（系统回环，回退）**
 
 - 首次使用运行根目录 **`setup-live-audio.bat`**：创建 `.venv-audio` 并安装 `PyAudioWPatch`（只装到项目本地，不写系统 Python）。
 - 面板 FL 标签 → **LIVE ANALYSIS / WASAPI LOOPBACK** → **开始实时分析**；停止按钮释放音频设备。
 - 捕获的是 **Windows 默认输出**（包含 FL 与其他应用），不是 FL 内部总线；如果 FL 输出到其他设备，先在 Windows 里切换默认输出。
 - 只在内存保留约 5 秒环形缓冲，**不录音、不落盘、不上传**；必须手动开始；桥退出会结束 Python 捕获进程。
 - 实时指标：momentary/short-term LUFS、sample peak、4× true peak、RMS、crest、立体声相关/宽度、削波计数、257 点矢量示波器、10 个倍频程频谱。
-- 外部 Agent 用 `live_audio_start` / `live_audio_status` / `live_audio_stop`；MCP 工具与面板共用同一个桥。
+- 外部 Agent 用 `live_audio_start` / `live_audio_status` / `live_audio_stop`；有 CLAP 连接时 `/api/live/status` 优先返回 `source: "fl-clap"`。
 
 **Agent**
 

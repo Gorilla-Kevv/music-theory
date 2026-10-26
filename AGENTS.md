@@ -127,17 +127,17 @@ src/content/
 
 ## FL Studio 2026 集成（TONIC-FL）
 
-- 目标：把知识库接进 FL 2026，而不是做 VST。外部 Agent 走 `tonic-mcp`；FL 内走 Gopher WebView2 的 TONIC 面板。
-- 文件：`scripts/tonic-mcp.ts`（stdio MCP）、`scripts/fl-bridge.ts`（本地 HTTP + 面板 + 启动/附加 FL）、`scripts/fl-cdp.ts`（WebView2 CDP 与 `script_handler` 注入）、`scripts/fl-payload.ts`（谱例→FL 音符/Python）、`scripts/arranger.ts`（多声部展开）、`scripts/audio-analyze.ts`（WAV 分析）、`scripts/audio-compare.ts`（目标/参考对比）、`scripts/live-analyze.ts`（实时计量）、`scripts/live-capture.ts` / `scripts/live-capture.py`（WASAPI loopback）、`fl-panel/`（Gopher 内嵌 UI）、`TONIC-FL.md`（安装/配置/规则）。
-- 启动：双击根目录 `start-tonic-fl.bat`（桥已运行会尝试切回 TONIC 面板；否则启动桥 + FL）；等价 `npm run fl:start` / `npm run fl:attach`；手动 `npm run fl:bridge -- --launch-fl --panel`。外部 MCP：`npm run mcp`。WAV 分析 CLI：`npm run audio:analyze -- <file.wav>`。实时分析首次需运行 `setup-live-audio.bat`（创建 `.venv-audio` 并安装 PyAudioWPatch）。
+- 目标：把知识库接进 FL 2026；不做乐器/VST 产品。外部 Agent 走 `tonic-mcp`；FL 内走 Gopher WebView2 的 TONIC 面板；实时分析用辅助 CLAP 直接监听 Master/任意 Mixer Insert，WASAPI 只作回退。
+- 文件：`scripts/tonic-mcp.ts`（stdio MCP）、`scripts/fl-bridge.ts`（本地 HTTP + 面板 + 启动/附加 FL）、`scripts/fl-cdp.ts`（WebView2 CDP 与 `script_handler` 注入）、`scripts/fl-payload.ts`（谱例→FL 音符/Python）、`scripts/arranger.ts`（多声部展开）、`scripts/audio-analyze.ts`（WAV 分析）、`scripts/audio-compare.ts`（目标/参考对比）、`scripts/live-analyze.ts`（实时计量）、`scripts/live-capture.ts` / `scripts/live-capture.py`（WASAPI loopback）、`scripts/plugin-live.ts`（CLAP 音频接收）、`native/tonic-analyzer/`（直插调音台的 TONIC Analyzer CLAP）、`fl-panel/`（Gopher 内嵌 UI）、`TONIC-FL.md`（安装/配置/规则）。
+- 启动：双击根目录 `start-tonic-fl.bat`（桥已运行会尝试切回 TONIC 面板；否则启动桥 + FL）；等价 `npm run fl:start` / `npm run fl:attach`；手动 `npm run fl:bridge -- --launch-fl --panel`。外部 MCP：`npm run mcp`。WAV 分析 CLI：`npm run audio:analyze -- <file.wav>`。实时分析优先：`native\tonic-analyzer\build.bat` → `install.bat`（管理员）→ FL 扫描并插入 Master/Insert；系统回环回退需 `setup-live-audio.bat`。
 - 外部 harness：MCP 30 工具（已用真实 stdio 客户端验证）；非 MCP 的本地脚本/harness 也可直连 `127.0.0.1:5127` 的 `/api/status`、`/api/fl/*`、`/api/audio/analyze`、`/api/live/*`。
 - FL 2026 内置 MCP 通过 Gopher WebView2 的 `script_handler` 暴露 48 个工具；`run_piano_roll_script` 可执行 `flpianoroll` Python。桥用 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 启动 FL，CDP 目标为 Gopher 页面；**不要假设 44 个工具**，以实际目录为准。
 - 写入规则：先 `get_fl_payload` 核对音符，再 `apply_example`（或 `fl_call_tool`）；`open_piano_roll_for_channel` 的参数是 `target_channel`（1-based 字符串/名称）；写后桥会用抛异常的方式读回 `fp.score.noteCount`，返回 `verifiedNotes`。
-- 操作封装层：`fl_session_report`（只读结构诊断，含通道电平/总线/返回/环路/死端）、`fl_mixer_routing`（只读完整矩阵）、`fl_route`、`fl_bus`（总线名自动做 `\uXXXX` 转义）、`fl_send`（默认拒绝反馈环路）、`fl_set_levels`、`fl_write_notes`、`fl_compose`、`fl_arrange`（多声部展开，默认预览）、`analyze_audio`（WAV true peak/LUFS/LRA/频谱/多段热力图/削波/立体声，可对目标或参考 WAV 做对比）、`live_audio_start` / `live_audio_stop` / `live_audio_status`（Windows WASAPI loopback 实时分析）；MCP 共 30 工具；面板 FL 标签页显示 session 报告、WAV 分析与实时矢量示波器。结构诊断不含峰值/LUFS；`analyze_audio` 的 true peak 是 4× windowed-sinc 近似，频谱是声道平均倍频程，且 FL 不能自动渲染。目标预设是通用检查值，不是平台强制标准；参考频段比较按占比归一化。实时分析捕获默认系统输出（含其他应用），只在内存分析、不落盘，必须由用户手动开始，用完停止。路由/电平/写入会修改工程，执行前说明、执行后报告 verified。`fl_compose` 是多通道写入，`fl_arrange` 是确定性声部展开，都不是自动编曲。
+- 操作封装层：`fl_session_report`（只读结构诊断，含通道电平/总线/返回/环路/死端）、`fl_mixer_routing`（只读完整矩阵）、`fl_route`、`fl_bus`（总线名自动做 `\uXXXX` 转义）、`fl_send`（默认拒绝反馈环路）、`fl_set_levels`、`fl_write_notes`、`fl_compose`、`fl_arrange`（多声部展开，默认预览）、`analyze_audio`（WAV true peak/LUFS/LRA/频谱/多段热力图/削波/立体声，可对目标或参考 WAV 做对比）、`live_audio_start` / `live_audio_stop` / `live_audio_status`（优先 CLAP 调音台直插；WASAPI 为回退）；MCP 共 30 工具；面板 FL 标签页显示 session 报告、WAV 分析与实时矢量示波器。结构诊断不含峰值/LUFS；`analyze_audio` 的 true peak 是 4× windowed-sinc 近似，频谱是声道平均倍频程，且 FL 不能自动渲染。目标预设是通用检查值，不是平台强制标准；参考频段比较按占比归一化。直插 CLAP 只分析插入点（Master/指定 Insert），系统回环才捕获默认输出（含其他应用）；两者都只在内存分析、不落盘。直插插件用 `install.bat` 装到 `C:\Program Files\Common Files\CLAP\TONIC`，因为 FL 2026 只扫描系统 CLAP 目录。路由/电平/写入会修改工程，执行前说明、执行后报告 verified。`fl_compose` 是多通道写入，`fl_arrange` 是确定性声部展开，都不是自动编曲。
 - 知识规则不变：理论断言必须带章节级 locator；Agent 先查 TONIC，再操作 FL；MCP instructions 已写入这些约束。
-- 安全：桥只绑定 `127.0.0.1:5127`；不关闭用户 FL（无调试端口时提示保存后重启）；测试添加的通道/音符要清理；`run_piano_roll_script` 只对可信 Agent 开放；实时分析必须手动开始，捕获默认系统输出、只在内存分析、不落盘，用完调用 stop。
+- 安全：桥只绑定 `127.0.0.1:5127`；不关闭用户 FL（无调试端口时提示保存后重启）；测试添加的通道/音符要清理；`run_piano_roll_script` 只对可信 Agent 开放；实时分析必须手动开始，只在内存分析、不落盘；直插 CLAP 只分析插入点，系统回环才捕获默认输出（含其他应用），用完调用 stop。
 - 面板 Agent 的 LLM 层支持五种协议：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages、Google Gemini、Ollama 原生；面板设置里选择协议并填 Base URL/模型/Key，服务端按协议补端点与工具格式。若模型不支持工具，自动降级纯文本回答。配置存面板 localStorage `tonic.fl.llm.v1`（Gopher WebView2 与普通浏览器各自独立），不写入仓库或桥文件。
-- 限制：FL API 不能加载插件/音频或渲染；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。FL 没有公开的第三方工具栏按钮 API，所以启动入口是 `start-tonic-fl.bat` / 桌面快捷方式而不是 FL 内按钮；VST3 未实现，需要独立 C++/JUCE + VST3 SDK 工程，成本高，当前不排期。
+- 限制：FL API 不能加载插件/音频或渲染；Gopher 被替换后关闭/重启 FL 即恢复官方 Gopher。FL 没有公开的第三方工具栏按钮 API，所以启动入口是 `start-tonic-fl.bat` / 桌面快捷方式而不是 FL 内按钮；已实现辅助 CLAP（`native/tonic-analyzer/`），但 FL 2026 只扫描 `C:\Program Files\Common Files\CLAP\`，需管理员安装；VST3 未实现，需要独立 C++/JUCE + VST3 SDK 工程，成本高，当前不排期。
 
 ## 编辑与构建规则
 
@@ -165,7 +165,7 @@ src/content/
 - 线上：`https://gorilla-kevv.github.io/music-theory/`（GitHub Pages，Actions 部署；电子书不发布）
 - 视觉：五度圈、调式轮、半音尺、张力光谱、相邻属和弦路径（dominant-path）、分层体系图、学习路径视图
 - 音频：本地 Salamander 采样 + Web Audio 合成回退
-- FL Studio 2026：`tonic-mcp`（30 个知识/FL 工具）+ `fl-bridge`（48 个 FL 内置工具代理）+ Gopher 内嵌面板（查概念/Agent/FL 诊断/WAV 分析/实时矢量示波器）；实测写入并读回 15 音符、结构诊断/路由/总线/发送/电平/多段写入/三轨编配，WAV true peak/LUFS/LRA/倍频程频谱/多段热力图/目标与参考对比，WASAPI 实时 LUFS/true peak/vectorscope
+- FL Studio 2026：`tonic-mcp`（30 个知识/FL 工具）+ `fl-bridge`（48 个 FL 内置工具代理）+ Gopher 内嵌面板（查概念/Agent/FL 诊断/WAV 分析/实时矢量示波器）+ TONIC Analyzer CLAP（直插 Master/任意 Mixer Insert）；实测写入并读回 15 音符、结构诊断/路由/总线/发送/电平/多段写入/三轨编配，WAV true peak/LUFS/LRA/倍频程频谱/多段热力图/目标与参考对比，CLAP 宿主链路与实时 LUFS/true peak/vectorscope
 - 站点待读：已清空（C63 元音乐理论、C74/75 多义论已于阶段 30 补录；C47–49 延伸音细节并入 J-04，C39–40 转位/持续音/混合和弦由既有条目覆盖）
 - 书库深化：Levine/Laitz 已读透；Sposobin 电子版无法获取，深化任务搁置（60/60 章名级笔记保留）
-- 未交付：全量教材正文（版权边界）、FL 原生插件/VST（不做）
+- 未交付：全量教材正文（版权边界）；VST3/乐器插件不做；辅助分析 CLAP 已交付（需管理员安装到系统 CLAP 目录）

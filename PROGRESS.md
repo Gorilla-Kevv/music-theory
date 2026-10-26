@@ -2,8 +2,8 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 44 已完成（WASAPI 实时分析 + 矢量示波器）
-- 下一阶段任务：用户实际 LLM 端点验证；线上内容维护；参考曲线/目标库细化
+- 当前正在开发任务：阶段 45 代码完成（TONIC Analyzer CLAP 直插调音台；待管理员安装到系统 CLAP 目录并在 FL 扫描）
+- 下一阶段任务：在 FL 中扫描/启用插件并验证 Master/Insert 实时数据；用户实际 LLM 端点验证；参考曲线/目标库细化
 - 可提前进行的任务：更多编曲模板（鼓组/节奏型）、完整 FFT 瀑布图、母带链路检查
 - 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写；VST3 未排期
 
@@ -283,3 +283,19 @@
 - 边界：实时分析捕获默认系统输出（含其他应用），不录音/落盘/上传，内存约 5s；必须手动开始；需要本机 Python + PyAudioWPatch；实时 LUFS 使用窗口计算，integrated/LRA 仍以离线 WAV 为准；true peak 仍为 4× windowed-sinc 近似。
 - 下一阶段入口：用户实际 LLM 端点验证；参考曲线/目标库；完整 FFT 瀑布图与母带链路检查。
 - 本次文档更新时间：10.26 12:05
+
+## 阶段 45 TONIC Analyzer CLAP 直插调音台 [计划时间：10.26 12:20 BY solo-agent][完成时间：10.26 14:10 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 45.1 `native/tonic-analyzer/tonic-analyzer.cpp`：无 UI 的 64-bit CLAP pass-through，立体声输入/输出；音频线程写入无锁环形缓冲，后台线程通过 TCP 5128 发送 `TONIC1 <rate> <channels>` 握手 + f32le 音频帧；可插 Master 或任意 Mixer Insert。
+  - 45.2 `scripts/plugin-live.ts`：接收 CLAP 音频、校验帧、驱动 `LiveAnalyzer`；`/api/live/status` 在 CLAP 连接时优先返回 `source: "fl-clap"`，WASAPI 回退保留。
+  - 45.3 `build.bat` 支持 MinGW g++（本机实际构建成功）并保留 MSVC 回退；`install.bat` 自提升管理员，安装到 FL 唯一扫描的 `C:\Program Files\Common Files\CLAP\TONIC\`。
+  - 45.4 最小宿主 `host-test.exe` 验证插件加载/激活/process/pass-through；1 kHz 正弦通过插件后桥收到 `fl-clap` 数据：LUFS、true peak、correlation、257 点 vectorscope、10 个倍频程正常。
+  - 45.5 文档/面板说明改为“CLAP 直插优先，WASAPI 回退”；MCP `live_audio_status` 自动返回 CLAP 数据。
+- 关键发现：FL 2026 PluginManager 日志显示 CLAP 只扫描 `C:\Program Files\Common Files\CLAP\`，不扫描 `%LOCALAPPDATA%\Programs\Common\CLAP`；用户目录安装会被忽略。必须管理员安装到系统 CLAP 目录，再在 FL Plugin Manager 扫描/启用。
+- 当前阻塞：尚未把插件复制到系统 CLAP 目录（需要管理员权限）；FL 插件库尚未出现 TONIC Analyzer。插件本身已通过独立 CLAP 宿主测试，不是编译/协议问题。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：CLAP 直插只分析插入点；系统回环才包含其他应用。插件/桥都不落盘；实时 LUFS 为窗口值，integrated/LRA 仍看离线 WAV；Y2Kmeter 仅作功能参考（GPL-3.0，未复制代码）。
+- 下一阶段入口：管理员运行 `native\tonic-analyzer\install.bat` → FL Options > Manage plugins > Verify/Scan → 勾选 TONIC Analyzer → 插 Master/Insert → 面板确认 `FL Mixer CLAP`。
+- 本次文档更新时间：10.26 14:10

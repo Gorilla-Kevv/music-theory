@@ -33,7 +33,8 @@
   - `src/components/`：外壳、检索面板、五线谱（可点击命中区）、钢琴、谱例、可视化、试听坞。
   - `src/routes/`：`/`、`/library`、`/books`、`/atlas`、`/theory/:slug`、`/drill`、`/references`、`/agent`。
   - `src/hooks/`：左轨章节大纲的 scroll spy。
-  - `scripts/`：知识包构建、CLI、`tonic-mcp.ts`（stdio MCP）、`fl-bridge.ts` / `fl-cdp.ts` / `fl-payload.ts`（FL 2026 桥）、`arranger.ts`（多声部展开）、`audio-analyze.ts` / `audio-analyze-cli.ts` / `audio-compare.ts`（WAV 分析与目标/参考对比）、`live-analyze.ts` / `live-capture.ts` / `live-capture.py`（WASAPI 实时分析）。
+  - `scripts/`：知识包构建、CLI、`tonic-mcp.ts`（stdio MCP）、`fl-bridge.ts` / `fl-cdp.ts` / `fl-payload.ts`（FL 2026 桥）、`arranger.ts`（多声部展开）、`audio-analyze.ts` / `audio-analyze-cli.ts` / `audio-compare.ts`（WAV 分析与目标/参考对比）、`live-analyze.ts` / `live-capture.ts` / `live-capture.py`（WASAPI 实时分析）、`plugin-live.ts`（CLAP 音频接收）。
+  - `native/tonic-analyzer/`：直插 FL 调音台的 TONIC Analyzer CLAP（pass-through → TCP 5128 → TONIC），含 build/install 脚本与最小宿主测试。
   - `fl-panel/`：Gopher WebView2 内的 TONIC 面板（查概念 / 写入 Piano Roll / 多协议 LLM Agent / FL 结构诊断与 WAV 分析 / 实时矢量示波器）。
   - `TONIC-FL.md`：FL 2026 安装、MCP 配置、Agent 规则与故障排查。
   - `public/knowledge.json`：构建时生成的 Agent 知识包。
@@ -75,7 +76,7 @@
 - 🔴 FL 操作封装层（阶段 39–42）：`fl_session_report`（结构诊断：未路由/未命名通道、推子 > +0.5 dB / ≤ -24 dB、硬声像、通道增益叠加、总线/返回/环路/死端、主轨插件）、`fl_mixer_routing`（完整矩阵）、`fl_route`、`fl_bus`（安全命名/路由/回主发送）、`fl_send`（建立/关闭发送并按矩阵验证 level；默认拒绝会形成反馈环路的发送）、`fl_set_levels`、`fl_write_notes`、`fl_compose`、`fl_arrange`（bass/comp/pad/melody/arp 多声部展开，默认预览）、`analyze_audio`（true peak/LUFS/LRA/频谱/削波/立体声）。所有写操作都做写后快照或矩阵 verify；mute/solo 快照不可读，报告里要说明。⚠️ `get_session_context` 与 `get_mixer_routing` 返回文本可能多重转义/带未转义引号；`flResultJson` 现在会逐级 unescape（`\\\\n` / `\\n`）后再解析，不能裸 `JSON.parse`。**session 报告不是音频测量**：峰值/LUFS/LRA/频谱用 `analyze_audio` 分析导出的 WAV；true peak 是 4× windowed-sinc 近似，频谱是声道平均倍频程；FL 不能自动渲染。
 - 🔴 WAV 分析实现：`scripts/audio-analyze.ts` 纯 Node 解析 PCM 8/16/24/32-bit 与 IEEE float 32/64；integrated LUFS 按 ITU-R BS.1770-4（400ms 块、75% 重叠、绝对 -70 / 相对 -10 门限、K-weighting），LRA 按 EBU Tech 3342 的 3s 短时响度、绝对/相对 -20 LU 门限；true peak 用 4× windowed-sinc（16 taps/phase）近似；频谱用 Hann 窗 FFT（4096/2048，声道平均）输出 31.5 Hz–16 kHz 倍频程、质心、rolloff85、tilt，并生成最多 120 列的倍频程多段热力图。`scripts/audio-compare.ts` 支持通用流媒体预设/自定义 LUFS-LRA-dBTP 目标和参考 WAV 的响度/频段对比（频段按占比归一化）。面板 FL 标签可直接上传混音/参考 WAV 并选目标；CLI `npm run audio:analyze -- <file.wav> [--reference ...] [--preset streaming|--lufs ...]`；MCP `analyze_audio`。只支持 WAV，不支持 MP3/FLAC。
 - 🔴 多轨编配：`scripts/arranger.ts` 从 TONIC 谱例事件生成声部。低音按原谱最低音做八度折叠；comp/pad 保持原和弦音并按音域就近连接；melody 取和弦音就近进行；arp 八分音符循环。`fl_arrange` 默认只预览，`write:true` 才写入，且必须显式给每个声部 channel；不自动创建通道。它是确定性编配起点，不是自动作曲。
-- 🔴 实时分析（阶段 44）：`scripts/live-capture.py` 用 PyAudioWPatch 捕获 Windows 默认输出的 WASAPI loopback，stdout 输出 s16le PCM、stderr 输出 `TONIC_META`；`scripts/live-capture.ts` 管理 Python 子进程与 5s 环形缓冲；`scripts/live-analyze.ts` 计算 momentary/short-term LUFS、4× true peak、RMS/crest、相关/宽度、257 点 vectorscope 与倍频程频谱。面板 FL 标签有 LIVE 区域；MCP `live_audio_start/status/stop`。捕获会包含系统其他声音，只在内存分析、不落盘、不录音；必须手动开始；Python 带 stdin watchdog，桥退出会结束捕获。首次运行 `setup-live-audio.bat` 创建 `.venv-audio` 并装 PyAudioWPatch（已 gitignore）。
+- 🔴 实时分析（阶段 44–45）：**主路径 = TONIC Analyzer CLAP 直插 FL Master/任意 Mixer Insert**。`native/tonic-analyzer/tonic-analyzer.cpp` 是 pass-through CLAP，后台线程通过 TCP 5128 把 float32 PCM 发给 `scripts/plugin-live.ts`，再复用 `scripts/live-analyze.ts`。FL 2026 只扫描 `C:\Program Files\Common Files\CLAP\`（PluginManager 日志确认），不扫描 `%LOCALAPPDATA%\Programs\Common\CLAP`；因此必须用管理员运行 `native/tonic-analyzer/install.bat`，再在 FL Plugin Manager 扫描/启用。系统回环（`scripts/live-capture.py` PyAudioWPatch）保留为回退：捕获默认输出、包含其他应用；两条路径都只在内存保留约 5s、不落盘；回环需手动开始，Python 带 stdin watchdog。
 - ⚠️ `fl_bus` 在调用 FL 前会对总线名做 `\uXXXX` 转义；直接通过 `fl_call_tool` 给 `rename_mixer_tracks` 传字面非 ASCII 名称可能被写成 U+FFFD。通道路由改用数值索引，避免中文通道名在 CDP 参数里乱码。
 - 🔴 FL 启动与 API 存放：根目录 `start-tonic-fl.bat`（ASCII + CRLF）是推荐入口——桥未运行时 `npm run fl:start` 启动桥 + FL，桥已运行时 POST `/api/panel` 把 Gopher 切回 TONIC；`npm run fl:attach` 只附加已带调试端口的 FL。面板 API 配置只在「设置」里填，存 `localStorage["tonic.fl.llm.v1"]`（origin `http://127.0.0.1:5127`）；**Gopher WebView2 与普通浏览器存储互相独立**，要各自填；桥不落盘。FL 没有公开的第三方工具栏按钮 API，VST3 需要独立原生工程（未排期），当前用 bat / 桌面快捷方式。
 - 🔴 可视化预览的音频：张力光谱/五度圈等点击走 `audioEngine.previewChord`；CDP 实测点击后 AudioContext `running`、4 个采样源启动，代码路径有声。组件挂载即 `preloadSamples()` 预热（避免首次点击等 9 个 mp3 下载造成“没声音”的错觉）；若排查外放问题先看系统输出设备与标签页静音，再看 AudioContext 状态。
@@ -101,7 +102,8 @@
 - CLI 书库：`npm run theory -- books` / `npm run theory -- source levine-13` / `npm run theory -- sources "转调" --book sposobin --dimension relationship`
 - CLI 复习队列：`npm run theory -- queue --state ./tonic-review-state.json --json`
 - TONIC MCP：`npm run mcp`（stdio；知识与 FL 工具 30 个）
-- 实时分析：先运行 `setup-live-audio.bat`，再在面板 FL → LIVE ANALYSIS 点击开始；或 MCP `live_audio_start` / `live_audio_status` / `live_audio_stop`
+- 实时分析：先从 `native\tonic-analyzer\build.bat` 构建，再右键 `native\tonic-analyzer\install.bat` 以管理员运行（装到系统 CLAP 目录）；FL → Options → Manage plugins → Scan/Verify，插入 Master 或任意 Mixer Insert。系统回环回退需 `setup-live-audio.bat`。
+- 实时分析状态：面板 FL → LIVE ANALYSIS；或 MCP `live_audio_start` / `live_audio_status` / `live_audio_stop`
 - WAV 分析：`npm run audio:analyze -- "F:\Exports\mix.wav"`（JSON 输出）
 - FL 一键启动：双击 `start-tonic-fl.bat`；或 `npm run fl:start`（桥 + FL）/ `npm run fl:attach`（FL 已带调试端口）
 - FL 桥/面板：`npm run fl:bridge -- --launch-fl --panel`（已运行的 FL 用 `--panel`）
@@ -109,7 +111,7 @@
 
 ## 状态
 
-- 当前状态：v0.4 进行中；已上线 GitHub Pages：`https://gorilla-kevv.github.io/music-theory/`（Actions 构建，电子书不发布）；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库章节笔记 143）；FL 2026 集成已跑通（外部 MCP 30 工具 + Gopher 面板，48 个内置工具，操作封装层含 session 结构诊断/路由拓扑/总线/发送/绝对电平/多段写音符/三轨编配并全部写后读回，WAV 分析含 4× true peak/LUFS/LRA/倍频程频谱/多段热力图/目标与参考对比，WASAPI 实时 LUFS/true peak/vectorscope；面板 Agent 支持 OpenAI Chat/Responses、Anthropic、Gemini、Ollama 五协议；`start-tonic-fl.bat` 一键启动）；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、缩放拖拽画布、路径自动分列取景、完整先修/后续闭包、跨书章节对照）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
+- 当前状态：v0.4 进行中；已上线 GitHub Pages：`https://gorilla-kevv.github.io/music-theory/`（Actions 构建，电子书不发布）；66 概念（含站点来源 16 条：泛音列/连接系统论/轴心体系/新里曼/LCC/调性引力/Shuffle/王道进行/流行转调/Clave/外质与 K·S/line cliché/旋律和声化/元音乐理论/和声多义性/经过和弦）/ 76 谱例 / 240 引用 / 66 条白话拆解 / 209 张复习卡（概念 66 + 书库章节笔记 143）；FL 2026 集成已跑通（外部 MCP 30 工具 + Gopher 面板，48 个内置工具，操作封装层含 session 结构诊断/路由拓扑/总线/发送/绝对电平/多段写音符/三轨编配并全部写后读回，WAV 分析含 4× true peak/LUFS/LRA/倍频程频谱/多段热力图/目标与参考对比，TONIC Analyzer CLAP 直插调音台实时 LUFS/true peak/vectorscope；面板 Agent 支持 OpenAI Chat/Responses、Anthropic、Gemini、Ollama 五协议；`start-tonic-fl.bat` 一键启动）；书库 117/117 章节笔记（真实原书结构：Levine 24、Laitz 4e 33、Sposobin 60），Levine/Laitz 内嵌电子书章节深链，深化流水线见“决策与坑”；B 站台账 5 合集/板块 · 112 条 / 20 条已读；`/atlas` 体系图谱（关系图/学习路径双视图、缩放拖拽画布、路径自动分列取景、完整先修/后续闭包、跨书章节对照）；构建通过；三视口无横向溢出；谱面点击、钢琴、长按发声、五度圈/调式轮/半音尺/张力光谱/相邻属和弦路径、检索、复习、听辨、书库、体系图、Agent API 均已实测。
 - 验收标准：
   - `npm run typecheck` 与 `npm run build` 通过。
   - `/` 可在 375/768/1280 正常渲染；hero 谱例可播放并高亮琴键。
@@ -135,4 +137,4 @@
   5. FL Studio 2026 集成已完成（`npm run fl:bridge -- --launch-fl --panel` 或 `start-tonic-fl.bat`）：CDP 复用官方内置 MCP（48 工具）、Gopher 内嵌 TONIC 面板、操作封装层（结构诊断/路由拓扑/总线/发送/电平/写音符/多段 compose/多轨编配）与写后读回；WAV 分析用 `analyze_audio`（4× true peak/LUFS/LRA/倍频程频谱/多段热力图，目标与参考对比）；实时分析用 WASAPI loopback + `live_analyze`（momentary/short-term LUFS、true peak、vectorscope）。后续接用户实际 LLM 端点、更多编曲动作与混音参考曲线/目标评估。VST3 未做（需独立 C++/JUCE 工程，成本高）；若要做“更像应用”的启动器，优先 Tauri/Electron 托盘。
   6. 若要精确页码，按用户手头版本补 `CitationRef.locator`，不要批量猜；Sposobin 无电子版，深化已搁置。
 - 快速启动脚本：`start.bat`。ASCII + CRLF；检查 Node/npm；首次 `npm install`；检测 5173 是否已有 TONIC（不是 TONIC 则报端口占用）；`--strictPort`；3 秒后打开浏览器。
-- 本次文档更新时间：10.26 12:05 BY solo-agent（阶段 44 WASAPI 实时分析）
+- 本次文档更新时间：10.26 14:10 BY solo-agent（阶段 45 调音台 CLAP 直插）
