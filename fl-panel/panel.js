@@ -274,7 +274,7 @@
         <span>${escapeHtml(snapshot.status.toUpperCase())}</span>
         <span>${number(snapshot.momentaryLufs)} LUFS M</span>
         <span>${number(snapshot.shortTermLufs)} LUFS S</span>
-        <span>${number(snapshot.truePeakDbtp, 2)} dBTP</span>
+        <span>${number(snapshot.truePeakDbtp, 2)} dBTP (1s)</span>
         <span>${number(snapshot.correlation, 2)} CORR</span>
       </div>
       <div class="audio-metrics">
