@@ -158,6 +158,185 @@
 
   $("#refresh-fl").addEventListener("click", () => refreshFlReport());
 
+  let liveTimer = null;
+  const liveCanvas = $("#live-vectorscope");
+  const liveContext = liveCanvas ? liveCanvas.getContext("2d") : null;
+
+  function clearVectorscope() {
+    if (!liveContext) return;
+    liveContext.fillStyle = "#0b0d10";
+    liveContext.fillRect(0, 0, liveCanvas.width, liveCanvas.height);
+  }
+
+  function drawVectorscope(points, correlation) {
+    if (!liveContext) return;
+    const width = liveCanvas.width;
+    const height = liveCanvas.height;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const scale = 100;
+    liveContext.fillStyle = "#0b0d10";
+    liveContext.fillRect(0, 0, width, height);
+    liveContext.strokeStyle = "rgba(246,242,232,0.16)";
+    liveContext.lineWidth = 1;
+    liveContext.beginPath();
+    liveContext.arc(centerX, centerY, scale, 0, Math.PI * 2);
+    liveContext.stroke();
+    liveContext.beginPath();
+    liveContext.moveTo(centerX, centerY - scale);
+    liveContext.lineTo(centerX, centerY + scale);
+    liveContext.moveTo(centerX - scale, centerY);
+    liveContext.lineTo(centerX + scale, centerY);
+    liveContext.moveTo(centerX - scale * 0.707, centerY - scale * 0.707);
+    liveContext.lineTo(centerX + scale * 0.707, centerY + scale * 0.707);
+    liveContext.moveTo(centerX + scale * 0.707, centerY - scale * 0.707);
+    liveContext.lineTo(centerX - scale * 0.707, centerY + scale * 0.707);
+    liveContext.stroke();
+    liveContext.fillStyle = "rgba(216,255,62,0.55)";
+    for (const point of points || []) {
+      const left = Math.max(-1, Math.min(1, point.left));
+      const right = Math.max(-1, Math.min(1, point.right));
+      const x = centerX + ((right - left) * scale) / 2;
+      const y = centerY - ((left + right) * scale) / 2;
+      liveContext.fillRect(x, y, 1.6, 1.6);
+    }
+    liveContext.fillStyle = "rgba(246,242,232,0.65)";
+    liveContext.font = "10px 'Cascadia Mono', Consolas, monospace";
+    liveContext.fillText("L", centerX - scale - 16, centerY + 4);
+    liveContext.fillText("R", centerX + scale + 8, centerY + 4);
+    liveContext.fillText("M", centerX - 4, centerY - scale - 8);
+    liveContext.fillText(
+      `CORR ${typeof correlation === "number" ? correlation.toFixed(2) : "—"}`,
+      centerX + scale + 14,
+      centerY - scale,
+    );
+  }
+
+  function renderLiveSpectrum(spectrum) {
+    const target = $("#live-spectrum");
+    if (!target) return;
+    if (!spectrum || !spectrum.bands || !spectrum.bands.length) {
+      target.innerHTML = "";
+      return;
+    }
+    const maxShare = spectrum.bands.reduce(
+      (max, band) => Math.max(max, band.sharePercent),
+      1,
+    );
+    target.innerHTML = `
+      <p class="muted">质心 ${Math.round(spectrum.centroidHz || 0)} Hz · rolloff85 ${Math.round(
+        spectrum.rolloff85Hz || 0,
+      )} Hz</p>
+      ${spectrum.bands
+        .map(
+          (band) => `
+        <div class="spectrum-row">
+          <span class="spectrum-band">${escapeHtml(band.name)}</span>
+          <span class="spectrum-bar"><i style="width:${Math.max(
+            0,
+            Math.min(100, (band.sharePercent / maxShare) * 100),
+          ).toFixed(1)}%"></i></span>
+          <span class="spectrum-share">${band.sharePercent.toFixed(1)}%</span>
+        </div>`,
+        )
+        .join("")}
+    `;
+  }
+
+  function renderLiveStatus(data) {
+    const state = $("#live-state");
+    const start = $("#live-start");
+    const stop = $("#live-stop");
+    if (start) start.disabled = data.running || data.starting;
+    if (stop) stop.disabled = !data.running && !data.starting;
+    if (data.starting) {
+      state.textContent = "启动中…";
+    } else if (data.running) {
+      const device = data.meta?.device || "默认输出";
+      state.textContent = `运行中 · ${device} · ${data.meta?.rate ?? "?"} Hz`;
+    } else {
+      state.textContent = data.error ? "错误" : "未启动";
+    }
+
+    const snapshot = data.snapshot;
+    if (!snapshot) {
+      $("#live-metrics").innerHTML = data.error
+        ? `<p class="muted">${escapeHtml(data.error)}</p>`
+        : `<p class="muted">${data.starting ? "等待音频设备…" : "点击开始实时分析。"}</p>`;
+      $("#live-spectrum").innerHTML = "";
+      clearVectorscope();
+      return;
+    }
+    const number = (value, digits = 1) =>
+      typeof value === "number" && Number.isFinite(value) ? value.toFixed(digits) : "—";
+    $("#live-metrics").innerHTML = `
+      <div class="fl-summary">
+        <span>${escapeHtml(snapshot.status.toUpperCase())}</span>
+        <span>${number(snapshot.momentaryLufs)} LUFS M</span>
+        <span>${number(snapshot.shortTermLufs)} LUFS S</span>
+        <span>${number(snapshot.truePeakDbtp, 2)} dBTP</span>
+        <span>${number(snapshot.correlation, 2)} CORR</span>
+      </div>
+      <div class="audio-metrics">
+        <div class="audio-metric"><span>SAMPLE PEAK</span>${number(snapshot.samplePeakDbfs, 2)} dBFS</div>
+        <div class="audio-metric"><span>RMS</span>${number(snapshot.rmsDbfs, 2)} dBFS</div>
+        <div class="audio-metric"><span>CREST</span>${number(snapshot.crestFactorDb, 1)} dB</div>
+        <div class="audio-metric"><span>STEREO WIDTH</span>${number(snapshot.stereoWidth, 2)}</div>
+        <div class="audio-metric"><span>CLIPPED (1S)</span>${escapeHtml(snapshot.clippedSamples)}</div>
+        <div class="audio-metric"><span>ELAPSED</span>${number(snapshot.elapsedSeconds, 1)} s</div>
+      </div>
+      ${data.error ? `<p class="muted">${escapeHtml(data.error)}</p>` : ""}
+    `;
+    renderLiveSpectrum(snapshot.spectrum);
+    drawVectorscope(snapshot.vectorscope, snapshot.correlation);
+  }
+
+  async function pollLive() {
+    try {
+      const data = await api("/api/live/status");
+      renderLiveStatus(data);
+      if (data.running || data.starting) {
+        ensureLivePolling();
+      } else if (liveTimer) {
+        window.clearInterval(liveTimer);
+        liveTimer = null;
+      }
+    } catch (error) {
+      $("#live-state").textContent = "桥未连接";
+      $("#live-metrics").innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
+      if (liveTimer) {
+        window.clearInterval(liveTimer);
+        liveTimer = null;
+      }
+    }
+  }
+
+  function ensureLivePolling() {
+    if (!liveTimer) liveTimer = window.setInterval(pollLive, 500);
+  }
+
+  $("#live-start").addEventListener("click", async () => {
+    $("#live-start").disabled = true;
+    $("#live-state").textContent = "启动中…";
+    try {
+      const data = await api("/api/live/start", { method: "POST", body: "{}" });
+      renderLiveStatus(data);
+      ensureLivePolling();
+    } catch (error) {
+      $("#live-state").textContent = "错误";
+      $("#live-metrics").innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
+    }
+  });
+
+  $("#live-stop").addEventListener("click", async () => {
+    try {
+      const data = await api("/api/live/stop", { method: "POST", body: "{}" });
+      renderLiveStatus(data);
+    } catch (error) {
+      $("#live-metrics").innerHTML = `<p class="muted">${escapeHtml(error.message)}</p>`;
+    }
+  });
+
   function toBase64(buffer) {
     const bytes = new Uint8Array(buffer);
     let binary = "";
@@ -753,6 +932,7 @@
   });
 
   fillSettings();
+  pollLive();
 
   const initialSlug = new URLSearchParams(location.search).get("slug");
   if (initialSlug) loadConcept(initialSlug);

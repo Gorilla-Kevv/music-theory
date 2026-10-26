@@ -76,7 +76,7 @@ export interface AudioAnalysis {
   findings: AudioFinding[];
 }
 
-interface Biquad {
+export interface Biquad {
   b0: number;
   b1: number;
   b2: number;
@@ -193,7 +193,7 @@ function parseWav(buffer: Buffer): WavData {
   };
 }
 
-function kWeighting(sampleRate: number): [Biquad, Biquad] {
+export function kWeighting(sampleRate: number): [Biquad, Biquad] {
   let shelf: Biquad;
   let highPass: Biquad;
   if (Math.abs(sampleRate - 48000) < 0.5) {
@@ -243,7 +243,7 @@ function kWeighting(sampleRate: number): [Biquad, Biquad] {
   return [shelf, highPass];
 }
 
-function applyBiquad(input: Float32Array, coefficients: Biquad): Float32Array {
+export function applyBiquad(input: Float32Array, coefficients: Biquad): Float32Array {
   const output = new Float32Array(input.length);
   let x1 = 0;
   let x2 = 0;
@@ -299,7 +299,7 @@ function buildTruePeakKernels(): Float64Array[] {
 
 const TRUE_PEAK_KERNELS = buildTruePeakKernels();
 
-function measureTruePeak(
+export function measureTruePeak(
   channels: Float32Array[],
   frames: number,
   samplePeak: number,
@@ -384,7 +384,7 @@ function percentile(sorted: number[], fraction: number): number {
   return sorted[lower] + (sorted[upper] - sorted[lower]) * (position - lower);
 }
 
-function analyzeSpectrum(
+export function analyzeSpectrum(
   channels: Float32Array[],
   frames: number,
   sampleRate: number,
@@ -588,7 +588,7 @@ function channelWeight(channels: number, index: number): number {
   return 1;
 }
 
-function blockLoudness(
+export function blockLoudness(
   weighted: Float32Array[],
   channels: number,
   start: number,

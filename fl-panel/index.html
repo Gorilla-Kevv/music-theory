@@ -81,6 +81,20 @@
             <p class="muted">点击“刷新”读取当前 FL session；路由、电平、多段写入可交给 Agent。</p>
           </div>
 
+          <div class="live-audio">
+            <p class="mono muted">LIVE ANALYSIS / WASAPI LOOPBACK</p>
+            <p class="agent-hint">捕获 Windows 默认输出（含 FL 与其他应用）；只在内存分析，不录音落盘。需要手动开始。</p>
+            <div class="live-controls">
+              <button id="live-start" type="button">开始实时分析</button>
+              <button id="live-stop" type="button" class="ghost">停止</button>
+              <span id="live-state" class="muted">未启动</span>
+            </div>
+            <div id="live-metrics" class="fl-report"></div>
+            <canvas id="live-vectorscope" class="vectorscope" width="640" height="240"></canvas>
+            <div id="live-spectrum" class="spectrum"></div>
+            <p class="muted audio-note">矢量示波器：上=中置，左/右=声像；实时值来自默认输出。若 FL 使用其他输出设备，请先在 Windows 里切换默认输出。</p>
+          </div>
+
           <div class="audio-analyze">
             <p class="mono muted">MIX ANALYSIS / WAV</p>
             <p class="agent-hint">在 FL 导出 WAV 后选择文件；分析 true peak、LUFS/LRA、频谱、削波与立体声相关。</p>

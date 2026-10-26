@@ -2,8 +2,8 @@
 
 ## 进度看板
 
-- 当前正在开发任务：阶段 43 已完成（目标/参考 WAV 对比 + 多段频谱热力图）
-- 下一阶段任务：用户实际 LLM 端点验证；线上内容维护；混音目标/参考库细化
+- 当前正在开发任务：阶段 44 已完成（WASAPI 实时分析 + 矢量示波器）
+- 下一阶段任务：用户实际 LLM 端点验证；线上内容维护；参考曲线/目标库细化
 - 可提前进行的任务：更多编曲模板（鼓组/节奏型）、完整 FFT 瀑布图、母带链路检查
 - 未完成的任务：全量教材正文（版权边界，不做）；Sposobin 60 章仍为章名级初稿（电子版无法获取，搁置）；面板 Agent 的真实 LLM 配置待用户填写；VST3 未排期
 
@@ -268,3 +268,18 @@
 - 边界：目标预设是通用检查值，不是平台强制标准；参考对比不是投放目标，频段比较按占比归一化；多段热力图是倍频程聚合，不是完整 FFT 瀑布图；true peak 仍是 4× windowed-sinc 近似。
 - 下一阶段入口：用户实际 LLM 端点验证；参考库/多种目标；完整 FFT 瀑布图与母带链路检查。
 - 本次文档更新时间：10.26 00:30
+
+## 阶段 44 WASAPI 实时分析 + 矢量示波器 [计划时间：10.26 11:20 BY solo-agent][完成时间：10.26 12:05 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 44.1 Python helper `scripts/live-capture.py`：PyAudioWPatch 捕获 Windows 默认输出 WASAPI loopback，stdout 输出 s16le PCM，stderr 输出 `TONIC_META`；支持设备/采样率选择；`setup-live-audio.bat` 创建 `.venv-audio` 并安装依赖。
+  - 44.2 Node 管理 `scripts/live-capture.ts`：子进程、5s 环形缓冲、starting/meta/error 状态、停止释放；Python 带 stdin watchdog，桥退出/被强杀时捕获进程退出。
+  - 44.3 实时分析 `scripts/live-analyze.ts`：momentary/short-term LUFS、sample/4× true peak、RMS、crest、立体声相关/宽度、削波计数、257 点 vectorscope、10 个倍频程频谱与质心/rolloff。
+  - 44.4 面板 FL 标签新增 LIVE 区域：开始/停止、状态、实时指标、canvas 矢量示波器、频谱条；只手动开始，不自动采集。
+  - 44.5 桥 `/api/live/start|stop|status`；MCP 扩至 30 工具（`live_audio_start/status/stop`）；AGENTS/TONIC-FL/HANDOFF/PRODUCT/线上 `/agent` 同步。
+- 实测：本机默认输出 `耳机 (Mishuai Awaken Max) [Loopback]`、44100 Hz/2ch；实时得到 momentary/short-term LUFS、true peak、相关、257 点 vectorscope、10 个倍频程；面板 canvas 正常绘制；停止后设备释放；强制结束桥后 Python 捕获进程退出。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：实时分析捕获默认系统输出（含其他应用），不录音/落盘/上传，内存约 5s；必须手动开始；需要本机 Python + PyAudioWPatch；实时 LUFS 使用窗口计算，integrated/LRA 仍以离线 WAV 为准；true peak 仍为 4× windowed-sinc 近似。
+- 下一阶段入口：用户实际 LLM 端点验证；参考曲线/目标库；完整 FFT 瀑布图与母带链路检查。
+- 本次文档更新时间：10.26 12:05

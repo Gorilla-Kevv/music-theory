@@ -317,6 +317,29 @@ const FL_TOOLS: ToolSchema[] = [
       },
     },
   },
+  {
+    name: "live_audio_start",
+    description:
+      "开始 Windows WASAPI loopback 实时分析默认系统输出（含 FL 与其他应用）。只在内存分析、不录音落盘；仅在用户明确要求实时分析时调用。需要先安装 PyAudioWPatch（setup-live-audio.bat）。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        device: { type: "string", description: "可选 loopback 设备索引或名称片段" },
+        rate: { type: "number", description: "可选采样率；默认设备采样率" },
+      },
+    },
+  },
+  {
+    name: "live_audio_stop",
+    description: "停止 WASAPI 实时分析并释放音频设备。",
+    inputSchema: { type: "object", properties: {} },
+  },
+  {
+    name: "live_audio_status",
+    description:
+      "读取实时分析：momentary/short-term LUFS、sample/true peak、RMS、crest、相关、vectorscope 点与倍频程频谱。",
+    inputSchema: { type: "object", properties: {} },
+  },
 ];
 
 const ALL_TOOLS: ToolSchema[] = [...TOOL_SCHEMAS, ...FL_TOOLS];
@@ -516,6 +539,18 @@ async function runTool(name: string, args: Record<string, unknown>): Promise<unk
       const comparison = compareAudioAnalyses(mix, reference, args.target);
       return comparison ? { ...mix, comparison } : mix;
     }
+    case "live_audio_start":
+      return bridgeJson("/api/live/start", {
+        method: "POST",
+        body: JSON.stringify({
+          ...(typeof args.device === "string" ? { device: args.device } : {}),
+          ...(typeof args.rate === "number" ? { rate: args.rate } : {}),
+        }),
+      });
+    case "live_audio_stop":
+      return bridgeJson("/api/live/stop", { method: "POST", body: "{}" });
+    case "live_audio_status":
+      return bridgeJson("/api/live/status");
     default:
       throw new Error(`未知工具：${name}`);
   }
@@ -533,7 +568,8 @@ const server = new Server(
 4. 混音/路由改动前先调用 fl_session_report 或 fl_mixer_routing；用 fl_route 路由通道、fl_bus 建总线、fl_send 建发送、fl_set_levels 调整绝对电平/声像/静音/独奏。这些操作会修改 FL 工程，执行前说明，执行后报告 verified 结果。
 5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；写入后报告实际提交的 payload。
 6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV（4× true peak/LUFS/LRA/倍频程频谱；FL 不能渲染，true peak 是近似值）。
-7. FL 2026 必须通过 \`npm run fl:bridge -- --launch-fl --panel\` 启动，并打开 Gopher 面板（Alt+F1）；桥服务地址可用 TONIC_FL_BRIDGE 覆盖。`,
+7. 实时分析只在用户明确要求时用 live_audio_start 启动；它捕获默认系统输出（含其他应用），只在内存分析、不落盘；用完调用 live_audio_stop。
+8. FL 2026 必须通过 \`npm run fl:bridge -- --launch-fl --panel\` 启动，并打开 Gopher 面板（Alt+F1）；桥服务地址可用 TONIC_FL_BRIDGE 覆盖。`,
   },
 );
 

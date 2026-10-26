@@ -681,6 +681,58 @@ code {
   padding-top: 10px;
 }
 
+.live-audio {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.live-controls {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.live-controls button {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 5px 9px;
+  font-size: 10px;
+}
+
+.live-controls button.ghost {
+  background: transparent;
+  color: var(--ink);
+}
+
+.live-controls button:hover {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+  color: var(--paper);
+}
+
+.live-controls button:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+#live-state {
+  font-size: 10px;
+}
+
+.vectorscope {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-top: 7px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+}
+
 .audio-controls {
   margin-top: 7px;
   display: flex;

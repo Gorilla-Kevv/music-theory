@@ -14,6 +14,7 @@ import { FlCdp } from "./fl-cdp";
 import { buildArrangement, type ArrangementPartRequest } from "./arranger";
 import { analyzeWavBuffer } from "./audio-analyze";
 import { compareAudioAnalyses } from "./audio-compare";
+import { LiveCapture } from "./live-capture";
 import {
   getFlPayload,
   listFlExamples,
@@ -35,6 +36,7 @@ const LAUNCH_FL = FLAGS.has("--launch-fl");
 const OPEN_PANEL = FLAGS.has("--panel");
 
 const fl = new FlCdp(DEBUG_PORT);
+const liveCapture = new LiveCapture();
 let lastFlError = "";
 let lastTools: unknown = null;
 let panelInjected = false;
@@ -1883,6 +1885,38 @@ const AGENT_TOOLS = [
   {
     type: "function",
     function: {
+      name: "live_audio_start",
+      description:
+        "开始 Windows WASAPI loopback 实时分析默认系统输出（含 FL）。只做内存分析，不录音落盘；需用户明确同意后调用。",
+      parameters: {
+        type: "object",
+        properties: {
+          device: { type: "string", description: "可选 loopback 设备索引或名称片段" },
+          rate: { type: "number", description: "可选采样率；默认设备采样率" },
+        },
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "live_audio_stop",
+      description: "停止 WASAPI 实时分析并释放音频设备。",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "live_audio_status",
+      description:
+        "读取实时分析状态：momentary/short-term LUFS、sample/true peak、RMS、crest、立体声相关、vectorscope 点与倍频程频谱。",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "analyze_audio",
       description:
         "分析导出的 WAV：true peak（4× 过采样 windowed-sinc）、sample peak、RMS、BS.1770 integrated LUFS、LRA、倍频程频谱/多段频谱、crest、DC、削波、立体声相关。可对比目标 LUFS/LRA/true peak，或与参考 WAV 比较频段。FL 不能渲染，需先在 FL 导出 WAV；只支持 PCM/IEEE float WAV。",
@@ -2358,6 +2392,15 @@ async function executeAgentTool(name: string, args: Record<string, unknown>): Pr
       return setupBuses(args);
     case "fl_arrange":
       return arrange(args);
+    case "live_audio_start":
+      return liveCapture.start({
+        device: typeof args.device === "string" ? args.device : undefined,
+        rate: typeof args.rate === "number" ? args.rate : undefined,
+      });
+    case "live_audio_stop":
+      return liveCapture.stop();
+    case "live_audio_status":
+      return liveCapture.status();
     case "analyze_audio":
       return analyzeAudio(args);
     default:
@@ -2385,7 +2428,8 @@ const AGENT_SYSTEM_PROMPT = `你是 TONIC-FL，一个乐理优先的 FL Studio 2
 5. 其他 FL 操作先调用 fl_list_tools 查看目录，再用 fl_call_tool；执行前说明意图。
 6. fl_session_report 的诊断基于推子/声像/路由/插件链/通道电平，不包含峰值/LUFS；不要声称已测量响度或削波。真实混音测量用 analyze_audio 分析导出的 WAV（4× true peak/LUFS/LRA/倍频程频谱）；true peak 是近似值，不是实验室级表。
 7. 用中文回答：先结论，再依据，最后说明实际写入了什么。不要声称自己听到了声音。
-8. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。`;
+8. 如果工具失败，如实报告错误，并给出下一步（例如先打开钢琴卷帘或通道）。
+9. 实时分析只在用户明确要求时用 live_audio_start 启动；它捕获默认系统输出（含其他应用），只在内存分析、不落盘；用完调用 live_audio_stop。`;
 
 async function runAgent(
   rawMessages: unknown,
@@ -2556,6 +2600,27 @@ const server = createServer(async (req, res) => {
       json(res, 200, await analyzeAudio(await readJson(req)));
       return;
     }
+    if (req.method === "POST" && url.pathname === "/api/live/start") {
+      const body = await readJson(req);
+      json(
+        res,
+        200,
+        liveCapture.start({
+          device: typeof body.device === "string" ? body.device : undefined,
+          rate: typeof body.rate === "number" ? body.rate : undefined,
+          channels: typeof body.channels === "number" ? body.channels : undefined,
+        }),
+      );
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/live/stop") {
+      json(res, 200, liveCapture.stop());
+      return;
+    }
+    if (req.method === "GET" && url.pathname === "/api/live/status") {
+      json(res, 200, liveCapture.status());
+      return;
+    }
     if (req.method === "GET" && url.pathname === "/api/fl/report") {
       json(res, 200, await sessionReport());
       return;
@@ -2636,6 +2701,17 @@ server.listen(PORT, "127.0.0.1", async () => {
 });
 
 process.on("SIGINT", () => {
+  liveCapture.stop();
   fl.close();
   server.close(() => process.exit(0));
+});
+
+process.on("SIGTERM", () => {
+  liveCapture.stop();
+  fl.close();
+  server.close(() => process.exit(0));
+});
+
+process.on("exit", () => {
+  liveCapture.stop();
 });

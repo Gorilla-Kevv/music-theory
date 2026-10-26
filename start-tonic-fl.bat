@@ -36,6 +36,11 @@ if not exist "node_modules\.bin\tsx.cmd" (
   )
 )
 
+if not exist ".venv-audio\Scripts\python.exe" (
+  echo [INFO] Live capture is optional. Run setup-live-audio.bat to enable WASAPI loopback.
+  echo.
+)
+
 powershell -NoProfile -Command "try{$r=Invoke-WebRequest -UseBasicParsing 'http://127.0.0.1:5127/api/status' -TimeoutSec 2; if($r.StatusCode -eq 200 -and $r.Content -match 'panelUrl'){exit 0}else{exit 2}}catch{if($_.Exception.Response){exit 2}else{exit 1}}"
 if errorlevel 2 (
   echo [ERROR] Port 5127 is used by another application.

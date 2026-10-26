@@ -188,7 +188,7 @@ theoryApi.videos({ status: "read" });`}
           <section className="border border-line p-4 sm:p-5">
             <h2 className="text-lg font-semibold">4 · MCP 工具映射</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-              <code className="font-mono text-xs">npm run mcp</code> 已启动 stdio server（27 个知识/FL 工具）；下列为知识侧 schema。FL 侧另有
+              <code className="font-mono text-xs">npm run mcp</code> 已启动 stdio server（30 个知识/FL 工具）；下列为知识侧 schema。FL 侧另有
               <code className="font-mono text-xs"> get_fl_payload </code>、<code className="font-mono text-xs">apply_example</code>、
               <code className="font-mono text-xs"> fl_status </code>、<code className="font-mono text-xs">fl_list_tools</code>、
               <code className="font-mono text-xs"> fl_call_tool </code>，以及操作封装层
@@ -196,7 +196,9 @@ theoryApi.videos({ status: "read" });`}
               <code className="font-mono text-xs"> fl_route </code>、<code className="font-mono text-xs">fl_bus</code>、
               <code className="font-mono text-xs"> fl_send </code>、<code className="font-mono text-xs">fl_set_levels</code>、
               <code className="font-mono text-xs"> fl_write_notes </code>、<code className="font-mono text-xs">fl_compose</code>、
-              <code className="font-mono text-xs"> fl_arrange </code>、<code className="font-mono text-xs">analyze_audio</code>。
+              <code className="font-mono text-xs"> fl_arrange </code>、<code className="font-mono text-xs">analyze_audio</code>、
+              <code className="font-mono text-xs"> live_audio_start </code>、<code className="font-mono text-xs">live_audio_status</code>、
+              <code className="font-mono text-xs"> live_audio_stop </code>。
             </p>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[560px] border-collapse text-left text-xs">
@@ -229,7 +231,7 @@ theoryApi.videos({ status: "read" });`}
           <section className="border border-line p-4 sm:p-5">
             <h2 className="text-lg font-semibold">5 · FL Studio 2026</h2>
             <p className="reading-column mt-2 text-sm leading-relaxed text-muted">
-              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。面板 Agent 支持 OpenAI Chat Completions / Responses、Anthropic、Gemini、Ollama 五种协议；FL 标签页显示 session 结构诊断（路由/总线/发送/通道电平），并可直接分析 FL 导出的 WAV（true peak、LUFS/LRA、倍频程频谱/多段热力图、目标/参考对比、削波、立体声）。写钢琴卷帘前先用
+              本地桥通过 WebView2 CDP 复用 FL 2026 官方内置 MCP（实测 48 个工具），把 TONIC 面板嵌进 Gopher；外部 Agent 走 stdio MCP。面板 Agent 支持 OpenAI Chat Completions / Responses、Anthropic、Gemini、Ollama 五种协议；FL 标签页显示 session 结构诊断（路由/总线/发送/通道电平），并可直接分析 FL 导出的 WAV（true peak、LUFS/LRA、倍频程频谱/多段热力图、目标/参考对比、削波、立体声），或用 WASAPI loopback 对默认系统输出做实时 LUFS/true peak/矢量示波器（手动开始、内存分析、不落盘）。写钢琴卷帘前先用
               <code className="font-mono text-xs"> get_fl_payload </code>
               核对音符，写入后桥会读回实际音符数。
             </p>
@@ -269,7 +271,10 @@ analyze_audio({
   path: "F:\\Exports\\mix.wav",
   referencePath: "F:\\Exports\\reference.wav",
   target: { preset: "streaming" }
-})`}
+})
+live_audio_start()
+live_audio_status()
+live_audio_stop()`}
             />
             <p className="mt-3 text-xs leading-relaxed text-muted">
               完整安装、MCP 配置、Agent 引用规则与故障排查见仓库根目录

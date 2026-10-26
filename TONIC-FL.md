@@ -16,12 +16,14 @@ Qoder / Claude Desktop
        ├─ get_fl_payload：谱例 → MIDI 音符 + 章节引用
        ├─ FL 工具代理：apply_example / fl_status / fl_list_tools / fl_call_tool
        ├─ 操作层：fl_session_report / fl_mixer_routing / fl_route / fl_bus / fl_send / fl_set_levels / fl_write_notes / fl_compose / fl_arrange
+       ├─ 实时：live_audio_start / live_audio_status / live_audio_stop
        └─ WAV 分析：analyze_audio
               │ HTTP 127.0.0.1:5127
               ▼
        fl-bridge (npm run fl:bridge)
          ├─ CDP → FL 2026 Gopher WebView2 → script_handler → FL 内置 MCP（48 tools）
-         ├─ /panel 本地面板（查概念 / 写入 / Agent / 混音分析）
+         ├─ Python WASAPI loopback → 5s 内存环形缓冲 → 实时 LUFS/true peak/vectorscope
+         ├─ /panel 本地面板（查概念 / 写入 / Agent / 混音分析 / 实时矢量示波器）
          └─ 写后读回钢琴卷帘音符数 + 混音矩阵验证
 ```
 
@@ -80,6 +82,15 @@ npm run fl:bridge -- --launch-fl --panel
 - 命令行：`npm run audio:analyze -- "F:\Exports\mix.wav" --reference "F:\Exports\ref.wav" --preset streaming`；自定义用 `--lufs -14 --lra-min 3 --lra-max 12 --tp -1`；
 - 外部 Agent 用 MCP 工具 `analyze_audio({ path, referencePath, target })`。
 - 分析的是 FL 导出的成品 WAV，不是 FL 内部实时总线；true peak 为 4× windowed-sinc 近似（非实验室级表），频谱是声道平均倍频程能量，多段热力图不是逐帧 FFT 瀑布图。
+
+**实时分析（FL 标签 / LIVE ANALYSIS）**
+
+- 首次使用运行根目录 **`setup-live-audio.bat`**：创建 `.venv-audio` 并安装 `PyAudioWPatch`（只装到项目本地，不写系统 Python）。
+- 面板 FL 标签 → **LIVE ANALYSIS / WASAPI LOOPBACK** → **开始实时分析**；停止按钮释放音频设备。
+- 捕获的是 **Windows 默认输出**（包含 FL 与其他应用），不是 FL 内部总线；如果 FL 输出到其他设备，先在 Windows 里切换默认输出。
+- 只在内存保留约 5 秒环形缓冲，**不录音、不落盘、不上传**；必须手动开始；桥退出会结束 Python 捕获进程。
+- 实时指标：momentary/short-term LUFS、sample peak、4× true peak、RMS、crest、立体声相关/宽度、削波计数、257 点矢量示波器、10 个倍频程频谱。
+- 外部 Agent 用 `live_audio_start` / `live_audio_status` / `live_audio_stop`；MCP 工具与面板共用同一个桥。
 
 **Agent**
 
@@ -140,8 +151,8 @@ npm run fl:bridge -- --panel
 
 **外部 harness 的两种接法**
 
-- **MCP（推荐）**：`tonic-mcp.ts` 是标准 stdio MCP server，Qoder、Claude Desktop、Claude Code 等任意 MCP 客户端都能接。已用真实 MCP 客户端验证：列出 **27 个工具**；`fl_status` 返回 `attached: true` 与 48 个 FL 内置工具；`get_concept_sources("ii-v-i")` 返回 Levine 章节级来源。知识工具不依赖 FL；只有 `apply_example` / `fl_*` 需要桥在跑。
-- **HTTP（给非 MCP 的脚本/harness）**：桥在 `127.0.0.1:5127` 暴露 `GET /api/status`、`GET /api/search`、`GET /api/fl/report|routing`、`POST /api/fl/route|levels|write|compose|send|bus|arrange`、`POST /api/apply`、`POST /api/audio/analyze` 等端点。任何本地 harness 都可以直接 `fetch` 这些端点；数据不出本机。
+- **MCP（推荐）**：`tonic-mcp.ts` 是标准 stdio MCP server，Qoder、Claude Desktop、Claude Code 等任意 MCP 客户端都能接。已用真实 MCP 客户端验证：列出 **30 个工具**；`fl_status` 返回 `attached: true` 与 48 个 FL 内置工具；`get_concept_sources("ii-v-i")` 返回 Levine 章节级来源。知识工具不依赖 FL；只有 `apply_example` / `fl_*` / `live_*` 需要桥在跑。
+- **HTTP（给非 MCP 的脚本/harness）**：桥在 `127.0.0.1:5127` 暴露 `GET /api/status`、`GET /api/search`、`GET /api/fl/report|routing`、`POST /api/fl/route|levels|write|compose|send|bus|arrange`、`POST /api/apply`、`POST /api/audio/analyze`、`GET/POST /api/live/status|start|stop` 等端点。任何本地 harness 都可以直接 `fetch` 这些端点；数据不出本机。
 - 外部 harness 不需要打开 FL 内的 TONIC 面板；面板和 MCP 共用同一个桥。但 FL 必须由桥启动（或带 9222 调试端口启动）并打开过 Gopher，否则 FL 工具没有控制通道。
 
 **知识工具**：`search_theory`、`get_concept`、`get_concept_sources`、`search_sources`、`get_source_note`、`get_book_outline`、`list_examples`、`get_related`、`get_review_queue`、`get_video_research`、`get_bibliography`、`get_citation_policy`。
@@ -160,8 +171,11 @@ npm run fl:bridge -- --panel
 | `fl_compose` | 写入 | 多通道/多段作曲：每段可用 TONIC 谱例或显式音符，指定 channel/mode/startBeat/transpose |
 | `fl_arrange` | 预览/写入 | 把 TONIC 谱例展开成 bass/comp/pad/melody/arp 多声部；默认只预览，`write:true` 才写入，不自动创建通道 |
 | `analyze_audio` | 只读 | 分析导出的 WAV：true peak（4× 过采样）、LUFS/LRA、倍频程频谱与多段热力图、削波/立体声；可对目标或参考 WAV 做响度/频段对比；FL 不能渲染，需先导出 WAV |
+| `live_audio_start` | 写入/采集 | 开始 WASAPI loopback 实时分析默认系统输出；只在内存分析、不落盘；需用户明确同意 |
+| `live_audio_stop` | 采集 | 停止实时分析并释放音频设备 |
+| `live_audio_status` | 只读 | 读取实时 LUFS/true peak/相关/矢量示波器点/倍频程频谱 |
 
-面板中的 **FL** 标签页显示结构诊断，并可直接选择 FL 导出的 WAV 做真实电平分析；路由、发送、总线、多轨编配可交给面板 Agent 或外部 MCP Agent。
+面板中的 **FL** 标签页显示结构诊断，并可直接选择 FL 导出的 WAV 做真实电平分析；LIVE 区域可对默认系统输出做实时矢量示波器与 LUFS/true peak 分析；路由、发送、总线、多轨编配可交给面板 Agent 或外部 MCP Agent。
 
 **混音/编配示例**
 
@@ -173,6 +187,9 @@ fl_arrange({ conceptSlug: "ii-v-i", write: true, parts: [
   { role: "comp", channel: "Keys", pattern: "half" },
   { role: "melody", channel: "Lead" }
 ] })
+live_audio_start()
+live_audio_status()
+live_audio_stop()
 analyze_audio({ path: "F:\\Exports\\mix.wav" })
 analyze_audio({
   path: "F:\\Exports\\mix.wav",
@@ -195,6 +212,7 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 6. FL 2026 的 `open_piano_roll_for_channel` 参数是 `target_channel`（1-based 索引或通道名），不是 `channel`。
 7. `run_piano_roll_script` 只作用于当前钢琴卷帘；没有打开钢琴卷帘时先打开通道。
 8. `fl_session_report` 是结构诊断；真实峰值/LUFS/LRA/频谱用 `analyze_audio` 分析导出的 WAV，不能声称 FL 已测量响度。
+9. 实时分析只在用户明确要求时 `live_audio_start`；捕获默认系统输出、只在内存分析、不落盘，用完 `live_audio_stop`。
 
 ## FL 内启动方式与 VST3
 
@@ -214,13 +232,14 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时三个 FL Keys 通道分别命名为 TONIC Test Bass/Comp/Melody，`fl_bus` 将插入 16 命名为 TONIC Test Bus 并把三通道路由到它，`fl_send` 建立 Bus→Insert 15 的 0.5 发送，`fl_arrange` 写入 3/30/12 个音符并逐轨读回；清理后移除三通道，插入 16 重置为默认空轨（插入 16）、0 dB/pan 0、主发送 0.8。
 - 环路保护实测：建立 16→15 后再发 15→16 被拒绝（“会形成反馈环路”）；关闭 16→15 后矩阵恢复为各自只送主轨 0.8。
 - 中文总线名实测：`fl_bus` 用 `\uXXXX` 转义写入“测试总线”并读回一致，再恢复为“插入 16”；直接通过 `fl_call_tool` 传字面中文给 `rename_mixer_tracks` 仍可能乱码。
-- MCP 工具总数 27；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、总线/返回/环路与发现列表。
-- 外部 MCP 用真实 stdio 客户端复验：27 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
+- MCP 工具总数 30；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、总线/返回/环路与发现列表，并带实时矢量示波器。
+- 外部 MCP 用真实 stdio 客户端复验：30 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
 - `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
 - WAV 分析实测：16-bit/48k 立体声正弦 peak -6.02 dBFS、RMS -9.03 dBFS、integrated LUFS -6.7、相关 1.00；24-bit 反相立体声相关 -1.00 并给出 phase 警告；削波文件检测到 35920 个削波样本/17960 帧；面板上传 WAV 后显示同样指标与发现。
 - true peak/频谱/LRA 实测：12 kHz、相位 45°、幅度 0.9 的正弦 sample peak -3.93 dBFS、true peak -0.80 dBTP（高出 3.12 dB，触发 intersample peak）；频谱质心 12000 Hz、16k 倍频程占 100%；5 秒 -10 dBFS + 5 秒 -20 dBFS 的信号 LRA 10.0 LU、short-term -17.0 到 -7.0 LUFS。
 - 目标/参考/多段频谱实测：10 秒双电平信号对 `streaming` 目标得到 ΔLUFS +4.4、true peak 余量 +5.99 dB、LRA in range；与 440 Hz 参考 WAV 对比时 1k/500 Hz 频段被正确识别为只在混音/参考中有能量；多段频谱为 1s × 10 列 × 10 倍频程，面板显示 100 个热力格。
 - 自定义目标实测：`--lufs -14 --lra-min 3 --lra-max 12 --tp -1` 与预设走同一对比路径；目标预设明确标注为通用检查，不是平台强制标准。
+- 实时分析实测：本机默认输出 `耳机 (Mishuai Awaken Max) [Loopback]`、44100 Hz/2ch；实时得到 momentary/short-term LUFS、true peak、相关、257 点 vectorscope 与 10 个倍频程；面板 canvas 正常绘制；停止后设备释放。强制结束桥后 Python 捕获进程也退出（stdin watchdog）。
 
 ## 故障排查
 
@@ -231,6 +250,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 | 9222 端口不出现 | 如果 FL 已在运行，先保存并关闭；重新用 `--launch-fl` 启动 |
 | 写入报 `target_channel` 错误 | 使用 `open_piano_roll_for_channel({"target_channel":"6"})` 或省略通道直接用当前钢琴卷帘 |
 | Agent 没反应 | 在面板「设置」填 Base URL / 模型，并选择与端点匹配的 **API 协议**（Chat Completions / Responses / Anthropic / Gemini / Ollama） |
+| 实时分析启动失败 | 运行 `setup-live-audio.bat`；确认 `.venv-audio\Scripts\python.exe` 存在；检查默认输出设备；详见 stderr 错误 |
+| 实时分析没有声音 | 捕获的是 Windows 默认输出；若 FL 用其他音频设备，先在 Windows 里切换默认输出 |
 | 想恢复官方 Gopher | 关闭并正常重启 FL，或在 Gopher 面板重新打开官方页面 |
 
 ## 边界与安全
@@ -244,4 +265,5 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - FL API 不能自动渲染/导出音频；`analyze_audio` 需要你先在 FL 里导出 WAV。
 - `fl_compose` 是“按给定音符/谱例写入多个钢琴卷帘”，不是自动生成完整编曲；`fl_arrange` 也是确定性的声部展开起点，曲式与配器仍由 Agent/用户决定。
 - `fl_bus` 会对总线名做 `\uXXXX` 转义后再调用 FL；直接通过 `fl_call_tool` 给 `rename_mixer_tracks` 传字面非 ASCII 名称可能被写成 U+FFFD。
+- 实时分析捕获 **Windows 默认输出**，会包含 FL 以外的系统声音；只在内存保留约 5 秒缓冲，不录音、不落盘、不上传。必须由用户手动开始；桥退出会结束捕获进程。
 - 测试脚本曾临时添加 FL Keys 通道并写入示例，已清理；原始 5 个 808 通道保留，插入 16 已恢复默认空轨。
