@@ -243,8 +243,8 @@ MCP 已内置 instructions，外部 Agent 也建议使用以下规则（可直�
 - 操作封装层实测：`fl_session_report` 读取 5 通道/18 混音轨并给结构发现；临时三个 FL Keys 通道分别命名为 TONIC Test Bass/Comp/Melody，`fl_bus` 将插入 16 命名为 TONIC Test Bus 并把三通道路由到它，`fl_send` 建立 Bus→Insert 15 的 0.5 发送，`fl_arrange` 写入 3/30/12 个音符并逐轨读回；清理后移除三通道，插入 16 重置为默认空轨（插入 16）、0 dB/pan 0、主发送 0.8。
 - 环路保护实测：建立 16→15 后再发 15→16 被拒绝（“会形成反馈环路”）；关闭 16→15 后矩阵恢复为各自只送主轨 0.8。
 - 中文总线名实测：`fl_bus` 用 `\uXXXX` 转义写入“测试总线”并读回一致，再恢复为“插入 16”；直接通过 `fl_call_tool` 传字面中文给 `rename_mixer_tracks` 仍可能乱码。
-- MCP 工具总数 30；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、总线/返回/环路与发现列表，并带实时矢量示波器。
-- 外部 MCP 用真实 stdio 客户端复验：30 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
+- MCP 工具总数 31（另含 5 个 prompts 与 8 个 resources：`tonic://meta`、`tonic://concepts`、`tonic://bibliography`、`tonic://citation-policy`、`tonic://books/<id>`、`tonic://video-research`）；面板 FL 标签页显示 BPM/通道/混音器/RISK/WARN/INFO、总线/返回/环路与发现列表，并带实时矢量示波器。
+- 外部 MCP 用真实 stdio 客户端复验：31 个工具、`fl_status` 显示桥已附加 48 个 FL 工具、`get_concept_sources` 返回 Levine 章节级来源。
 - `start-tonic-fl.bat` 在桥已运行时正确识别、退出码 0，并调用 `/api/panel` 把 Gopher 切回 TONIC；桥未运行时走 `npm run fl:start` 启动桥和 FL。
 - WAV 分析实测：16-bit/48k 立体声正弦 peak -6.02 dBFS、RMS -9.03 dBFS、integrated LUFS -6.7、相关 1.00；24-bit 反相立体声相关 -1.00 并给出 phase 警告；削波文件检测到 35920 个削波样本/17960 帧；面板上传 WAV 后显示同样指标与发现。
 - true peak/频谱/LRA 实测：12 kHz、相位 45°、幅度 0.9 的正弦 sample peak -3.93 dBFS、true peak -0.80 dBTP（高出 3.12 dB，触发 intersample peak）；频谱质心 12000 Hz、16k 倍频程占 100%；5 秒 -10 dBFS + 5 秒 -20 dBFS 的信号 LRA 10.0 LU、short-term -17.0 到 -7.0 LUFS。

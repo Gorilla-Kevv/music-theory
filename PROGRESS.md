@@ -299,3 +299,18 @@
 - 边界：CLAP 直插只分析插入点；系统回环才包含其他应用。插件/桥都不落盘；实时 LUFS 为窗口值，integrated/LRA 仍看离线 WAV；Y2Kmeter 仅作功能参考（GPL-3.0，未复制代码）。
 - 下一阶段入口：管理员运行 `native\tonic-analyzer\install.bat` → FL Options > Manage plugins > Verify/Scan → 勾选 TONIC Analyzer → 插 Master/Insert → 面板确认 `FL Mixer CLAP`。
 - 本次文档更新时间：10.26 14:10
+
+## 阶段 46 MCP prompts/resources + study_pack；CLAP 安装落位 [计划时间：10.28 00:05 BY solo-agent][完成时间：10.28 00:30 BY solo-agent]
+
+- 分支：dev
+- 已完成：
+  - 46.1 解除阶段 45 阻塞：`native/tonic-analyzer/install.bat` 经 UAC 提权执行成功，`TONIC-Analyzer.clap`（496 KB）已安装到 `C:\Program Files\Common Files\CLAP\TONIC\`，SHA-256 与本地构建一致（ae9566f8…）；剩 FL Plugin Manager 扫描/勾选/插入 Master 或 Insert 由用户在 FL 内操作。
+  - 46.2 MCP tools 扩至 31：新增组合工具 `study_pack`（schema 进 `src/lib/theory-api.ts` 的 `TOOL_SCHEMAS`，CLI `tools` 与 knowledge.json 同步收录）；一次返回概念全文 + `getConceptSources` 章节支撑 + `getRelated` 相关 + 概念谱例 + 概念复习卡。
+  - 46.3 MCP prompts（5 个，动态内嵌数据）：`concept_brief`（摘要/维度/相关/章节支撑 + 引用纪律）、`chapter_deep_read`（章节笔记全文展开 + 自测题）、`review_session`（读网页导出的 review-state.json，一次一题 + SM-2 评分建议；无状态时优雅回退）、`fl_write_example`（get_fl_payload 音符预览 + 写入/读回流程）、`mix_check`（analyze_audio 流程与测量边界）。
+  - 46.4 MCP resources（8 个）：`tonic://meta`（buildKnowledgePack().meta）、`tonic://concepts`（66 条索引）、`tonic://bibliography`、`tonic://citation-policy`、`tonic://books/levine|laitz|sposobin`（章目投影 + 电子书深链定位）、`tonic://video-research`（合集 + 读取统计）。
+  - 46.5 capabilities 增 `prompts`/`resources`；server instructions 补 study_pack 与 prompts/resources 说明；`/agent` 页、TONIC-FL.md、AGENTS、PRODUCT、HANDOFF 计数同步（30 → 31）。
+- 实测：真实 stdio 客户端（@modelcontextprotocol/sdk Client + StdioClientTransport）全绿——tools/list=31、study_pack(ii-v-i) 返回 5 章节 + 复习卡 + 谱例、未知 slug 返 isError；prompts/list=5、concept_brief 内嵌章节支撑与 slug、chapter_deep_read(levine-13) 内嵌章号、review_session 无状态回退、fl_write_example 含 verifiedNotes 流程、mix_check 模板；resources/list=8、meta conceptCount=66、books/levine 24 章且带 epub 深链、video-research total=112、未知资源报错。typecheck 与 `npm run build`（prebuild → knowledge）通过。
+- 统计不变：66 概念 / 76 谱例 / 240 引用 / 66 条白话 / 209 张复习卡。
+- 边界：prompts 是“内嵌数据的请求模板”，不代替工具调用；resources 只读、不含章节笔记正文（正文仍走 get_source_note）；review_session 依赖网页导出的 review-state.json，无状态时只给流程不给卡片。
+- 下一阶段入口：FL 内扫描 TONIC Analyzer 并插入（用户操作）；用户实际 LLM 端点验证；混音参考曲线/目标库；更多编曲动作（鼓组/节奏型）。
+- 本次文档更新时间：10.28 00:30

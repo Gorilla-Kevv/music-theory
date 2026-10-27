@@ -156,6 +156,16 @@ export const TOOL_SCHEMAS: ToolSchema[] = [
       },
     },
   },
+  {
+    name: "study_pack",
+    description:
+      "一次取全一个概念的学习包：概念全文 + 书库章节支撑（章号/标题/摘要）+ 相关概念 + 可听谱例 + 复习卡。讲解、引用核对、出题都可以从这一个结果出发。",
+    inputSchema: {
+      type: "object",
+      properties: { slug: { type: "string" } },
+      required: ["slug"],
+    },
+  },
 ];
 
 export interface KnowledgePack {
