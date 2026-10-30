@@ -91,6 +91,16 @@ export class AudioEngine {
     return this.samplePromise;
   }
 
+  /** 预热采样解码；页面挂载时调用，避免第一次点击还在等 decode。 */
+  async warm(): Promise<void> {
+    try {
+      const ctx = this.ensureContext();
+      await this.ensureSamples(ctx);
+    } catch {
+      // 浏览器禁止提前创建 AudioContext 时，首次点击仍会走正常路径。
+    }
+  }
+
   private async ensureSamples(ctx: AudioContext): Promise<void> {
     await this.preloadSamples();
     if (this.sampleBuffers.size > 0) return;
@@ -459,6 +469,17 @@ export class AudioEngine {
     velocity: number,
   ): void {
     const ctx = this.ensureContext();
+    if (!this.bus) return;
+    if (this.sampleBuffers.size === 0) {
+      // 首次点击时采样还没解码完：先用合成器立即发声，避免“点了没声音”。
+      const start = ctx.currentTime + 0.02;
+      midis.forEach((midi, index) => {
+        const noteStart = start + index * stepSeconds;
+        this.scheduleVoice(midi, noteStart, noteStart + duration, velocity, this.bus!);
+      });
+      void this.ensureSamples(ctx);
+      return;
+    }
     void this.ensureSamples(ctx).then(() => {
       if (!this.bus) return;
       const start = ctx.currentTime + 0.02;
@@ -500,6 +521,14 @@ export class AudioEngine {
     hold.gain.gain.value = 1;
     hold.gain.connect(this.holdBus);
     this.holds.set(id, hold);
+    if (this.sampleBuffers.size === 0) {
+      // 首次长按同样先发合成器声音；采样解码完成后供之后的按键使用。
+      const start = ctx.currentTime + 0.01;
+      hold.startedAt = start;
+      for (const midi of midis) this.startHoldVoice(midi, start, 0.46, hold);
+      void this.ensureSamples(ctx);
+      return id;
+    }
     void this.ensureSamples(ctx).then(() => {
       if (!this.ctx || !this.holds.has(id)) return;
       const start = this.ctx.currentTime + 0.01;

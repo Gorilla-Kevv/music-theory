@@ -484,6 +484,7 @@ function IntervalRuler() {
               role="button"
               tabIndex={0}
               aria-label={`${interval}，${index} 个半音，点击试听`}
+              aria-pressed={active}
               onClick={() => select(index)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
@@ -493,6 +494,15 @@ function IntervalRuler() {
               }}
               className="cursor-pointer focus:outline-none"
             >
+              <rect
+                x={x - 18}
+                y={40}
+                width={36}
+                height={122}
+                fill="transparent"
+                pointerEvents="all"
+                aria-hidden
+              />
               <line
                 x1={x}
                 y1={active ? 48 : 78}

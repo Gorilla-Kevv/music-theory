@@ -33,6 +33,8 @@ export function TransportProvider({ children }: { children: ReactNode }) {
   useEffect(() => audioEngine.subscribe(setState), []);
 
   useEffect(() => {
+    // 提前解码采样，避免第一次点击琴键/谱例还在等 mp3 decode。
+    void audioEngine.warm();
     const preload = () => {
       void audioEngine.preloadSamples();
     };
